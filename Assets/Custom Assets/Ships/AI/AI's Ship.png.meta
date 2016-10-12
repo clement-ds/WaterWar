@@ -1,0 +1,500 @@
+fileFormatVersion: 2
+guid: 9dcc508883bdeb24bb616905b79b1b7a
+timeCreated: 1475894653
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: AI's Ship_0
+    21300002: AI's Ship_1
+    21300004: AI's Ship_2
+    21300006: AI's Ship_3
+    21300008: AI's Ship_4
+    21300010: AI's Ship_5
+    21300012: AI's Ship_6
+    21300014: AI's Ship_7
+    21300016: AI's Ship_8
+    21300018: AI's Ship_9
+    21300020: AI's Ship_10
+    21300022: AI's Ship_11
+    21300024: AI's Ship_12
+    21300026: AI's Ship_13
+    21300028: AI's Ship_14
+    21300030: AI's Ship_15
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: AI's Ship_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 7, y: 29}
+        - {x: 10, y: 30}
+        - {x: 12, y: 32}
+        - {x: 14, y: 35}
+        - {x: 0, y: 48}
+        - {x: -13, y: 48}
+        - {x: -24, y: 40}
+        - {x: -24, y: -16}
+        - {x: -18, y: -47}
+        - {x: 8, y: -47}
+        - {x: 32, y: -7}
+        - {x: 32, y: 17}
+        - {x: 11, y: 30}
+    - name: AI's Ship_1
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 288
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 10, y: 28}
+        - {x: 13, y: 29}
+        - {x: 15, y: 31}
+        - {x: 17, y: 34}
+        - {x: 4, y: 48}
+        - {x: -6, y: 48}
+        - {x: -17, y: 37}
+        - {x: -21, y: 15}
+        - {x: -21, y: -12}
+        - {x: -5, y: -48}
+        - {x: 10, y: -48}
+        - {x: 35, y: -3}
+        - {x: 35, y: 14}
+        - {x: 14, y: 29}
+    - name: AI's Ship_2
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 288
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 7, y: 29}
+        - {x: 10, y: 30}
+        - {x: 12, y: 32}
+        - {x: 13, y: 35}
+        - {x: 6, y: 48}
+        - {x: -10, y: 48}
+        - {x: -22, y: 40}
+        - {x: -24, y: 36}
+        - {x: -24, y: -28}
+        - {x: -7, y: -47}
+        - {x: 13, y: -47}
+        - {x: 33, y: 4}
+        - {x: 33, y: 11}
+        - {x: 11, y: 30}
+    - name: AI's Ship_3
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 288
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 11, y: 28}
+        - {x: 14, y: 29}
+        - {x: 16, y: 31}
+        - {x: 18, y: 34}
+        - {x: 5, y: 48}
+        - {x: -8, y: 48}
+        - {x: -20, y: 23}
+        - {x: -20, y: -6}
+        - {x: -1, y: -48}
+        - {x: 13, y: -48}
+        - {x: 36, y: -8}
+        - {x: 36, y: 16}
+        - {x: 15, y: 29}
+    - name: AI's Ship_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 14, y: -17}
+        - {x: 14, y: -18}
+        - {x: 16, y: -20}
+        - {x: 15, y: -20}
+        - {x: 14, y: -21}
+        - {x: 14, y: -18}
+        - {x: 17, y: 11}
+        - {x: 15, y: 20}
+        - {x: -23, y: 20}
+        - {x: -40, y: -15}
+        - {x: -40, y: -47}
+        - {x: 30, y: -47}
+        - {x: 40, y: -45}
+        - {x: 40, y: -10}
+        - {x: 37, y: 0}
+        - {x: 35, y: 2}
+        - {x: 28, y: 5}
+    - name: AI's Ship_5
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 37, y: 5}
+        - {x: 24, y: 1}
+        - {x: 13, y: -18}
+        - {x: 13, y: -19}
+        - {x: 15, y: -21}
+        - {x: 14, y: -21}
+        - {x: 13, y: -22}
+        - {x: 13, y: -19}
+        - {x: 16, y: 10}
+        - {x: 14, y: 19}
+        - {x: 2, y: 19}
+        - {x: -15, y: 17}
+        - {x: -40, y: -18}
+        - {x: -40, y: -39}
+        - {x: -27, y: -48}
+        - {x: 28, y: -48}
+        - {x: 40, y: -42}
+        - {x: 40, y: -40}
+    - name: AI's Ship_6
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 192
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 13, y: -18}
+        - {x: 15, y: -20}
+        - {x: 14, y: -20}
+        - {x: 13, y: -21}
+        - {x: 13, y: -18}
+        - {x: 16, y: 11}
+        - {x: 13, y: 20}
+        - {x: 4, y: 20}
+        - {x: -15, y: 18}
+        - {x: -40, y: -17}
+        - {x: -40, y: -35}
+        - {x: -39, y: -40}
+        - {x: -26, y: -47}
+        - {x: 29, y: -47}
+        - {x: 40, y: -45}
+        - {x: 40, y: -9}
+        - {x: 37, y: 6}
+        - {x: 24, y: 2}
+        - {x: 13, y: -17}
+      - - {x: 37, y: -26}
+        - {x: 39, y: -28}
+        - {x: 40, y: -28}
+        - {x: 40, y: -22}
+        - {x: 37, y: -23}
+    - name: AI's Ship_7
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 192
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 35, y: 5}
+        - {x: 22, y: 1}
+        - {x: 11, y: -18}
+        - {x: 11, y: -19}
+        - {x: 13, y: -21}
+        - {x: 12, y: -21}
+        - {x: 11, y: -22}
+        - {x: 11, y: -19}
+        - {x: 14, y: 10}
+        - {x: 12, y: 19}
+        - {x: 2, y: 19}
+        - {x: -17, y: 17}
+        - {x: -20, y: 5}
+        - {x: -40, y: -20}
+        - {x: -40, y: -47}
+        - {x: -28, y: -48}
+        - {x: 33, y: -48}
+        - {x: 38, y: -43}
+        - {x: 38, y: -40}
+    - name: AI's Ship_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -14, y: 21}
+        - {x: -15, y: 19}
+        - {x: -15, y: 11}
+        - {x: -13, y: -17}
+        - {x: -13, y: -20}
+        - {x: -14, y: -19}
+        - {x: -13, y: -17}
+        - {x: -13, y: -16}
+        - {x: -28, y: 5}
+        - {x: -37, y: 2}
+        - {x: -37, y: -16}
+        - {x: -40, y: -25}
+        - {x: -40, y: -40}
+        - {x: -30, y: -47}
+        - {x: 13, y: -47}
+        - {x: 40, y: -38}
+        - {x: 40, y: -3}
+        - {x: 12, y: 21}
+    - name: AI's Ship_9
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 12, y: 18}
+        - {x: 9, y: 18}
+        - {x: 2, y: 21}
+        - {x: -4, y: 22}
+        - {x: -11, y: 22}
+        - {x: -17, y: 20}
+        - {x: -17, y: 12}
+        - {x: -15, y: -16}
+        - {x: -15, y: -19}
+        - {x: -16, y: -18}
+        - {x: -15, y: -16}
+        - {x: -15, y: -15}
+        - {x: -30, y: 6}
+        - {x: -39, y: 3}
+        - {x: -40, y: -6}
+        - {x: -40, y: -42}
+        - {x: -23, y: -45}
+        - {x: 19, y: -45}
+        - {x: 39, y: -37}
+        - {x: 39, y: -21}
+    - name: AI's Ship_10
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 96
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -16, y: 21}
+        - {x: -17, y: 19}
+        - {x: -17, y: 11}
+        - {x: -15, y: -17}
+        - {x: -15, y: -20}
+        - {x: -16, y: -19}
+        - {x: -15, y: -17}
+        - {x: -15, y: -16}
+        - {x: -30, y: 5}
+        - {x: -39, y: 2}
+        - {x: -40, y: -8}
+        - {x: -40, y: -44}
+        - {x: -31, y: -47}
+        - {x: 20, y: -47}
+        - {x: 39, y: -42}
+        - {x: 39, y: -6}
+        - {x: 8, y: 21}
+      - - {x: 37, y: -38}
+        - {x: 39, y: -40}
+        - {x: 40, y: -40}
+        - {x: 40, y: -35}
+        - {x: 38, y: -35}
+    - name: AI's Ship_11
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 96
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -23, y: 22}
+        - {x: -18, y: 12}
+        - {x: -16, y: -16}
+        - {x: -16, y: -19}
+        - {x: -17, y: -18}
+        - {x: -16, y: -16}
+        - {x: -16, y: -15}
+        - {x: -31, y: 6}
+        - {x: -40, y: 3}
+        - {x: -40, y: -43}
+        - {x: -24, y: -45}
+        - {x: 18, y: -45}
+        - {x: 38, y: -37}
+        - {x: 38, y: -17}
+        - {x: 15, y: 22}
+    - name: AI's Ship_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 8, y: 42}
+        - {x: -8, y: 42}
+        - {x: -19, y: 28}
+        - {x: -19, y: -1}
+        - {x: -13, y: -39}
+        - {x: -9, y: -48}
+        - {x: 7, y: -48}
+        - {x: 20, y: -43}
+        - {x: 32, y: -30}
+        - {x: 32, y: -16}
+        - {x: 26, y: 24}
+    - name: AI's Ship_13
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 7, y: 42}
+        - {x: -9, y: 42}
+        - {x: -20, y: 28}
+        - {x: -20, y: -1}
+        - {x: -14, y: -39}
+        - {x: -10, y: -48}
+        - {x: 6, y: -48}
+        - {x: 19, y: -43}
+        - {x: 31, y: -30}
+        - {x: 31, y: -16}
+        - {x: 25, y: 24}
+    - name: AI's Ship_14
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 7, y: 42}
+        - {x: -9, y: 42}
+        - {x: -20, y: 28}
+        - {x: -20, y: -1}
+        - {x: -14, y: -39}
+        - {x: -10, y: -48}
+        - {x: 6, y: -48}
+        - {x: 19, y: -43}
+        - {x: 31, y: -30}
+        - {x: 31, y: -16}
+        - {x: 25, y: 24}
+    - name: AI's Ship_15
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 80
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 6, y: 42}
+        - {x: -10, y: 42}
+        - {x: -21, y: 28}
+        - {x: -21, y: -1}
+        - {x: -15, y: -39}
+        - {x: -11, y: -48}
+        - {x: 5, y: -48}
+        - {x: 18, y: -43}
+        - {x: 30, y: -30}
+        - {x: 30, y: -16}
+        - {x: 24, y: 24}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
