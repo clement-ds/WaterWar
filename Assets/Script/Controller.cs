@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Controller : MonoBehaviour {
-    public float speed = 1.5f;
+    public float speed = 60f;
     private Vector3 target;
 
     void Start()
