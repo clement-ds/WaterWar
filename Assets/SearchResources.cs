@@ -67,7 +67,7 @@ public class SearchResources : MonoBehaviour {
         if (index != -1)
         {
             this.objective = spawns[index].transform.position;
-        } else if (!toFinal)
+        } else
         {
             this.changeObjectiveFinal();
         }
