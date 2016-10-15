@@ -5,7 +5,7 @@ public class Spawner : MonoBehaviour {
 
 	public Sprite coconutSprite = null;
 	private GameObject coconut = null;
-    public GameObject[] coconuts = new GameObject[9];
+    private GameObject[] coconuts = new GameObject[9];
 
 	// Use this for initialization
 	void Start () {
@@ -25,4 +25,14 @@ public class Spawner : MonoBehaviour {
 	// Update is called once per frame
 	void update () {
 	}
+
+    public GameObject[] getCoconuts()
+    {
+        return this.coconuts;
+    }
+
+    public void setCoconuts(GameObject[] items)
+    {
+        this.coconuts = items;
+    }
 }
