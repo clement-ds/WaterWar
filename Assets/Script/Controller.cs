@@ -4,6 +4,7 @@ using System.Collections;
 public class Controller : MonoBehaviour {
     public float speed = 1.5f;
     private Vector3 target;
+    public DetectClick other;
 
     void Start()
     {
@@ -12,7 +13,7 @@ public class Controller : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && other.getInside())
         {
             target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             target.z = transform.position.z;
