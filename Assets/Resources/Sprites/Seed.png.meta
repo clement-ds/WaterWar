@@ -1,0 +1,1018 @@
+fileFormatVersion: 2
+guid: e8b5cf7c308602746a25b6f8dee53978
+timeCreated: 1477864793
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: All Berries_0
+    21300002: All Berries_1
+    21300004: All Berries_2
+    21300006: All Berries_3
+    21300008: All Berries_4
+    21300010: All Berries_5
+    21300012: All Berries_6
+    21300014: All Berries_7
+    21300016: All Berries_8
+    21300018: All Berries_9
+    21300020: All Berries_10
+    21300022: All Berries_11
+    21300024: All Berries_12
+    21300026: All Berries_13
+    21300028: All Berries_14
+    21300030: All Berries_15
+    21300032: All Berries_16
+    21300034: All Berries_17
+    21300036: All Berries_18
+    21300038: All Berries_19
+    21300040: All Berries_20
+    21300042: All Berries_21
+    21300044: All Berries_22
+    21300046: All Berries_23
+    21300048: All Berries_24
+    21300050: All Berries_25
+    21300052: All Berries_26
+    21300054: All Berries_27
+    21300056: All Berries_28
+    21300058: All Berries_29
+    21300060: All Berries_30
+    21300062: All Berries_31
+    21300064: All Berries_32
+    21300066: All Berries_33
+    21300068: All Berries_34
+    21300070: All Berries_35
+    21300072: All Berries_36
+    21300074: All Berries_37
+    21300076: All Berries_38
+    21300078: All Berries_39
+    21300080: All Berries_40
+    21300082: All Berries_41
+    21300084: All Berries_42
+    21300086: All Berries_43
+    21300088: All Berries_44
+    21300090: All Berries_45
+    21300092: All Berries_46
+    21300094: All Berries_47
+    21300096: All Berries_48
+    21300098: All Berries_49
+    21300100: All Berries_50
+    21300102: All Berries_51
+    21300104: All Berries_52
+    21300106: All Berries_53
+    21300108: All Berries_54
+    21300110: All Berries_55
+    21300112: All Berries_56
+    21300114: All Berries_57
+    21300116: All Berries_58
+    21300118: All Berries_59
+    21300120: All Berries_60
+    21300122: All Berries_61
+    21300124: All Berries_62
+    21300126: All Berries_63
+    21300128: Seeds_0
+    21300130: Seeds_1
+    21300132: Seeds_2
+    21300134: Seeds_3
+    21300136: Seeds_4
+    21300138: Seeds_5
+    21300140: Seeds_6
+    21300142: Seeds_7
+    21300144: Seeds_8
+    21300146: Seeds_9
+    21300148: Seeds_10
+    21300150: Seeds_11
+    21300152: Seeds_12
+    21300154: Seeds_13
+    21300156: Seeds_14
+    21300158: Seeds_15
+    21300160: Seeds_16
+    21300162: Seeds_17
+    21300164: Seeds_18
+    21300166: Seeds_19
+    21300168: Seeds_20
+    21300170: Seeds_21
+    21300172: Seeds_22
+    21300174: Seeds_23
+    21300176: Seeds_24
+    21300178: Seeds_25
+    21300180: Seeds_26
+    21300182: Seeds_27
+    21300184: Seeds_28
+    21300186: Seeds_29
+    21300188: Seeds_30
+    21300190: Seeds_31
+    21300192: Seeds_32
+    21300194: Seeds_33
+    21300196: Seeds_34
+    21300198: Seeds_35
+    21300200: Seeds_36
+    21300202: Seeds_37
+    21300204: Seeds_38
+    21300206: Seeds_39
+    21300208: Seeds_40
+    21300210: Seeds_41
+    21300212: Seeds_42
+    21300214: Seeds_43
+    21300216: Seeds_44
+    21300218: Seeds_45
+    21300220: Seeds_46
+    21300222: Seeds_47
+    21300224: Seeds_48
+    21300226: Seeds_49
+    21300228: Seeds_50
+    21300230: Seeds_51
+    21300232: Seeds_52
+    21300234: Seeds_53
+    21300236: Seeds_54
+    21300238: Seeds_55
+    21300240: Seeds_56
+    21300242: Seeds_57
+    21300244: Seeds_58
+    21300246: Seeds_59
+    21300248: Seeds_60
+    21300250: Seeds_61
+    21300252: Seeds_62
+    21300254: Seeds_63
+    21300256: Seed_0
+    21300258: Seed_1
+    21300260: Seed_2
+    21300262: Seed_3
+    21300264: Seed_4
+    21300266: Seed_5
+    21300268: Seed_6
+    21300270: Seed_7
+    21300272: Seed_8
+    21300274: Seed_9
+    21300276: Seed_10
+    21300278: Seed_11
+    21300280: Seed_12
+    21300282: Seed_13
+    21300284: Seed_14
+    21300286: Seed_15
+    21300288: Seed_16
+    21300290: Seed_17
+    21300292: Seed_18
+    21300294: Seed_19
+    21300296: Seed_20
+    21300298: Seed_21
+    21300300: Seed_22
+    21300302: Seed_23
+    21300304: Seed_24
+    21300306: Seed_25
+    21300308: Seed_26
+    21300310: Seed_27
+    21300312: Seed_28
+    21300314: Seed_29
+    21300316: Seed_30
+    21300318: Seed_31
+    21300320: Seed_32
+    21300322: Seed_33
+    21300324: Seed_34
+    21300326: Seed_35
+    21300328: Seed_36
+    21300330: Seed_37
+    21300332: Seed_38
+    21300334: Seed_39
+    21300336: Seed_40
+    21300338: Seed_41
+    21300340: Seed_42
+    21300342: Seed_43
+    21300344: Seed_44
+    21300346: Seed_45
+    21300348: Seed_46
+    21300350: Seed_47
+    21300352: Seed_48
+    21300354: Seed_49
+    21300356: Seed_50
+    21300358: Seed_51
+    21300360: Seed_52
+    21300362: Seed_53
+    21300364: Seed_54
+    21300366: Seed_55
+    21300368: Seed_56
+    21300370: Seed_57
+    21300372: Seed_58
+    21300374: Seed_59
+    21300376: Seed_60
+    21300378: Seed_61
+    21300380: Seed_62
+    21300382: Seed_63
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Seed_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 373
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_1
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 373
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_2
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 373
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_3
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 373
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_4
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 373
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_5
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 373
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_6
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 373
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_7
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 373
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_8
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 373
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_9
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 373
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_10
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 373
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_11
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 301
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_12
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 301
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_13
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 301
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_14
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 301
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_15
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 301
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_16
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 301
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_17
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 301
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_18
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 301
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_19
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 301
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_20
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 301
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_21
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 301
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 229
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_23
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 229
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_24
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 229
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_25
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 229
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_26
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 229
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_27
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 229
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_28
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 229
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_29
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 229
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_30
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 229
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_31
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 229
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_32
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 229
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_33
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 157
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_34
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 157
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_35
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 157
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_36
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 157
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_37
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 157
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_38
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 157
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_39
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 157
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_40
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 157
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_41
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 157
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_42
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 157
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_43
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 157
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_44
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 85
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_45
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 85
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_46
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 85
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_47
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 85
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_48
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 85
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_49
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 85
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_50
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 85
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_51
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 85
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_52
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 85
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_53
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 85
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_54
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 85
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_55
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 13
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_56
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 13
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_57
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 13
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_58
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 13
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_59
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 13
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_60
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 13
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_61
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 13
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_62
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 13
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - serializedVersion: 2
+      name: Seed_63
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 13
+        width: 56
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

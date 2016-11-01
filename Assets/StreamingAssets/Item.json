@@ -1,0 +1,56 @@
+[
+  {
+    "type": "Seed",
+    "id": 0,
+    "stats": {
+      "power": 2,
+      "defence": 2,
+      "vitality": 2
+    }
+  },
+  {
+    "type": "Seed",
+    "id": 1,
+    "stats": {
+      "power": 3,
+      "defence": 3,
+      "vitality": 14
+    }
+  },
+  {
+    "type": "Seed",
+    "id": 2,
+    "stats": {
+      "power": 2,
+      "defence": 9,
+      "vitality": 1
+    }
+  },
+  {
+    "type": "Seed",
+    "id": 3,
+    "stats": {
+      "power": 8,
+      "defence": 5,
+      "vitality": 6
+    }
+  },
+  {
+    "type":  "Seed",
+    "id": 4,
+    "stats": {
+      "power": 123,
+      "defence": 5000,
+      "vitality": 1000000
+    }
+  },
+  {
+    "type":  "Seed",
+    "id": 5,
+    "stats": {
+      "power": 0,
+      "defence": -5,
+      "vitality": 1
+    }
+  }
+]
