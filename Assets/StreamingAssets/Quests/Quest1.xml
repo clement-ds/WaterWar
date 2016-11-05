@@ -1,0 +1,15 @@
+<Quest>
+  <QuestTitle>Quest1</QuestTitle>
+  <Nodes>
+    <Node>
+      <NodeTitle>Title1</NodeTitle>
+      <NodeText>Text1</NodeText>
+      <NodeImage></NodeImage>
+    </Node>
+    <Node>
+      <NodeTitle>Title2</NodeTitle>
+      <NodeText>Text2</NodeText>
+      <NodeImage></NodeImage>
+    </Node>
+  </Nodes>
+</Quest>
