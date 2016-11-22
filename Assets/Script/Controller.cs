@@ -8,17 +8,22 @@ public class Controller : MonoBehaviour {
 
     void Start()
     {
-        target = transform.position;
+        //target = transform.position;
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && other.getInside())
-        {
-            target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            target.z = transform.position.z;
-        }
-        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        //if (Input.GetMouseButtonDown(0) && other.getInside())
+        //{
+        //    target = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //    target.z = transform.position.z;
+        //}
+        //transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        print("JDIDIDIDIDI");
     }
 }
 

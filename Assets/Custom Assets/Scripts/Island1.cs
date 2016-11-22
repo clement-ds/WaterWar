@@ -5,6 +5,7 @@ public class Island1 : MonoBehaviour {
 
     public GameObject dockingTrigger;
     public GameObject playerShip;
+    public GameManager gm;
 
     private Rigidbody2D playerRb2d;
 
@@ -23,10 +24,11 @@ public class Island1 : MonoBehaviour {
         //print("dockingtrigger : " + dockingTrigger.transform.localPosition);
         //Vector2 dock;
         //dock.x = dockingTrigger.transform.localPosition.x;
-        //dock.y = dockingTrigger.transform.localPosition.y;
+        //dock.y = -dockingTrigger.transform.localPosition.y;
         //print("dock : " + dock);
         //playerRb2d.MovePosition(dock);
         playerShip.transform.position = Vector3.MoveTowards(playerShip.transform.position, dockingTrigger.transform.position, 10000);
+        gm.GoInteraction();
     }
 
 }
