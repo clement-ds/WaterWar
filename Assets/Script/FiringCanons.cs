@@ -5,26 +5,24 @@ using UnityEngine.EventSystems;
 public class FiringCanons : MonoBehaviour {
     public GameObject MainCanon { get; set; }
 
-    void Start()
-    {
+    void Start() {
         MainCanon = null;
     }
 
     // Use this for initialization
-    public void noCanon()
-    {
+    public void noCanon() {
         MainCanon = null;
     }
 
-    public void fireOn(GameObject target)
-    {
-        print("Hellloo");
-        if (MainCanon != null)
-        {
+    public void fireOn(GameObject target) {
+        if (MainCanon != null) {
+            Battle_Enemy enemy = target.GetComponentInParent<Battle_Enemy>();
             print("Canon " + MainCanon.name + " fires on " + target.name);
-        }
-          
-        else
+            if (enemy != null) {
+                enemy.setCurrentLife(enemy.getCurrentLife() - 20);
+                print("Aouch we loose 20 pv");
+            }
+        } else
             print("No Canon");
     }
 }
