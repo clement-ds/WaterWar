@@ -42,11 +42,11 @@ public class Battle_Player : MonoBehaviour {
     }
 
     public void approcheAction() {
-        if (position < 3) position++;
+        if (position > 1) position--;
     }
 
     public void eloignementAction() {
-        if (position > 1) position--;
+        if (position < 3) position++;
     }
 
 }
