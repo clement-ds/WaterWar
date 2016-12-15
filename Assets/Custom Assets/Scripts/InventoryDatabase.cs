@@ -10,7 +10,7 @@ public class InventoryDatabase : MonoBehaviour {
 
     void Start()
     {
-        itemData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Item.json"));
+        itemData = JsonMapper.ToObject(string.Join("", File.ReadAllLines(Application.dataPath + "/StreamingAssets/Item.json")));
         ConstructItemDatabase();
     }
 

@@ -11,7 +11,7 @@ public class CrewDatabase : MonoBehaviour
 
     void Start()
     {
-        itemData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Crew.json"));
+        itemData = JsonMapper.ToObject(string.Join("", File.ReadAllLines(Application.dataPath + "/StreamingAssets/Crew.json")));
         ConstructItemDatabase();
     }
 
