@@ -16,7 +16,6 @@ public class Battle_Enemy : MonoBehaviour
     // Update is called once per frame
     void Update() {
         slider.value = life;
-        print("My life: " + life);
     }
 
     public int getCurrentLife() {
