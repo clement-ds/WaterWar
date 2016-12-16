@@ -16,7 +16,7 @@ public class Tooltip : MonoBehaviour {
         float xPos = obj.transform.position.x + 42;
         float yPos = obj.transform.position.y - obj.GetComponent<RectTransform>().sizeDelta.y - 42;
 
-        this.transform.position = new Vector2(xPos, yPos);
+        //this.transform.position = new Vector2(xPos, yPos);
     }
 	
 	// Update is called once per frame
