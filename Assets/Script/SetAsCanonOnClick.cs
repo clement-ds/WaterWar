@@ -3,10 +3,12 @@ using System.Collections;
 
 public class SetAsCanonOnClick : MonoBehaviour {
     FiringCanons player;
+    public string bouletname { get; set; }
 
     // Use this for initialization
     void Start () {
         player = GameObject.Find("PlayerController").GetComponent<FiringCanons>();
+        bouletname = "Default";
     }
 	
 	// Update is called once per frame
@@ -20,5 +22,11 @@ public class SetAsCanonOnClick : MonoBehaviour {
                 player.MainCanon = this.gameObject;
             }
         }
+    }
+
+    public void setBoulet(GameObject newBoulet)
+    {
+        /*Get boulet effect*/
+        bouletname = newBoulet.GetComponent<SelectAsBoulet>().bouletname;
     }
 }

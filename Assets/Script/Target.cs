@@ -19,6 +19,7 @@ public class Target : MonoBehaviour {
             Vector2 touchPos = new Vector2(wp.x, wp.y);
             if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
             {
+                print("You attack!");
                 player.fireOn(this.gameObject);
             }
         }

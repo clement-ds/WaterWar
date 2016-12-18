@@ -3,11 +3,9 @@ using System.Collections;
 
 public class Tooltippable : MonoBehaviour {
     Tooltip tooltip;
-   // bool show;
     // Use this for initialization
     void Start () {
         tooltip = GameObject.Find("Tooltip").GetComponent<Tooltip>();
-      //  show = false;
     }
 	
 	// Update is called once per frame
@@ -17,12 +15,6 @@ public class Tooltippable : MonoBehaviour {
             if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
             {
                 tooltip.show(this.gameObject);
-         //   show = true;
-            }
-            else// if (show == true)
-            {
-         //  show = false;
-                tooltip.hide();
             }
     }
 }
