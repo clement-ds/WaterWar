@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public string SceneIntroMenuName = "Intro_Scene";
     public string SceneWorldMapName = "World_Map_Scene";
     public string SceneInteractionName = "Interaction_Scene";
+    public string SceneFightName = "Fight";
     public Inventory inventory;
     public static GameManager Instance = null;
 
@@ -38,6 +39,12 @@ public class GameManager : MonoBehaviour
     {
         ChangeScene(SceneInteractionName);
     }
+
+    public void GoFight()
+    {
+        ChangeScene(SceneFightName);
+    }
+
 
     void ChangeScene(string scene)
     {

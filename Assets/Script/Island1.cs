@@ -28,7 +28,12 @@ public class Island1 : MonoBehaviour {
         //print("dock : " + dock);
         //playerRb2d.MovePosition(dock);
         playerShip.transform.position = Vector3.MoveTowards(playerShip.transform.position, dockingTrigger.transform.position, 10000);
-        gm.GoInteraction();
+
+        if (Random.Range(0, 2) == 1)
+            gm.GoFight();
+        else {
+            gm.GoInteraction();
+        }
     }
 
 }
