@@ -1,0 +1,1 @@
+{"name":"The Compass Rose", "life":100}
