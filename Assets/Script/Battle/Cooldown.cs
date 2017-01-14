@@ -24,12 +24,12 @@ public class Cooldown : MonoBehaviour {
         }
     }
 
-    bool getPossibility() {
-        if (possibility == true)
-        {
+    public bool getPossibility() {
+        if (possibility == true) {
             timeLeft = startTime;
             possibility = false;
+            return true;
         }
-        return possibility;    
+        return possibility;
     }
 }

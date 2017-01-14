@@ -15,7 +15,7 @@ public class FiringCanons : MonoBehaviour {
     }
 
     public void fireOn(GameObject target) {
-        if (MainCanon != null) {
+        if (MainCanon != null && MainCanon.GetComponent<Cooldown>().getPossibility() == true) {
             Battle_Enemy enemy = target.GetComponentInParent<Battle_Enemy>();
             print("Canon " + MainCanon.name + " fires on " + target.name + " with boulet " + MainCanon.GetComponent<SetAsCanonOnClick>().bouletname);
             if (enemy != null) {

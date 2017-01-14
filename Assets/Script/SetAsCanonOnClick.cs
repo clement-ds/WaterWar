@@ -10,9 +10,9 @@ public class SetAsCanonOnClick : MonoBehaviour {
         player = GameObject.Find("PlayerController").GetComponent<FiringCanons>();
         bouletname = "Default";
     }
-	
-	// Update is called once per frame
-	void Update () {
+    
+    // Update is called once per frame
+    void Update () {
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
