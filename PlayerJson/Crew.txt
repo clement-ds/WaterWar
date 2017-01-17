@@ -1,0 +1,1 @@
+{"type":"Bego", "attackStrength":1.0, "useRangedWeapon":false, "walkSpeed":1.0, "wage":1.0, "maxHunger":1.0, "maxLife":100.0, "life": 10.0, "satiety":1.0}

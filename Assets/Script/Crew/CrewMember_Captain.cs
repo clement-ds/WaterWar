@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CrewMember_Captain : CrewMember {
 
-	void Start () {
+	public CrewMember_Captain () {
         steerSpeed.timeLeft = 5f;
         attackSpeed.timeLeft = 2f;
         canonReloadSpeed.timeLeft = 5f;

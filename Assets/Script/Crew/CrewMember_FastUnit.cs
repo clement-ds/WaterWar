@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CrewMember_FastUnit : CrewMember {
 
-	void Start () {
+	public CrewMember_FastUnit () {
         attackSpeed.timeLeft = .2f;
         canonReloadSpeed.timeLeft = 4f;
         attackStrength = .25f;

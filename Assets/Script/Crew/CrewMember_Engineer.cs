@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CrewMember_Engineer : CrewMember {
 
-	void Start () {
+	public CrewMember_Engineer () {
         attackSpeed.timeLeft = 3f;
         canonReloadSpeed.timeLeft = 2f;
         repairSpeed.timeLeft = 2f;

@@ -1,10 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public class CrewMember : MonoBehaviour {
+[Serializable]
+public class CrewMember {
+
+    public string type;
+    [NonSerialized]
     protected Cooldown attackSpeed;
+    [NonSerialized]
     protected Cooldown canonReloadSpeed;
+    [NonSerialized]
     protected Cooldown steerSpeed;
+    [NonSerialized]
     protected Cooldown repairSpeed;
     protected float attackStrength = 1f;
     protected bool useRangedWeapon = false;
@@ -18,18 +26,23 @@ public class CrewMember : MonoBehaviour {
 
     //private Room assignedRoom ?
 
+    public CrewMember()
+    {
+        //attackSpeed.timeLeft = 1f;
+        //canonReloadSpeed.timeLeft = 5f;
+        //steerSpeed.timeLeft = 10f;
+        //repairSpeed.timeLeft = 5f;
+    }
+
     // Use this for initialization
-    void Start () {
-        attackSpeed.timeLeft = 1f;
-        canonReloadSpeed.timeLeft = 5f;
-        steerSpeed.timeLeft = 10f;
-        repairSpeed.timeLeft = 5f;
-	}
+ //   void Start () {
+        
+	//}
 	
 	// Update is called once per frame
-	void Update () {
+	//void Update () {
 	
-	}
+	//}
 
     public void attack(GameObject target)
     {
