@@ -6,6 +6,7 @@ public class FiringCanons : MonoBehaviour {
     ArrayList bullets;
     public Sprite bullet;
     public GameObject MainCanon { get; set; }
+    public GameManager gm;
 
     void Start() {
         MainCanon = null;
@@ -31,6 +32,9 @@ public class FiringCanons : MonoBehaviour {
             if (enemy != null) {
                 enemy.setCurrentLife(enemy.getCurrentLife() - 20);
                 print("Aouch we loose 20 pv");
+                if (enemy.getCurrentLife() <= 0)
+                    gm.GoInteraction();
+
             }
         } else
             print("No Canon");
