@@ -27,6 +27,8 @@ public class FiringCanons : MonoBehaviour {
             print("Canon " + MainCanon.name + " fires on " + target.name + " with boulet " + MainCanon.GetComponent<SetAsCanonOnClick>().bouletname);
             if (enemy != null)
             {
+                ParticleSystem explosion = target.GetComponent<ParticleSystem>();
+                explosion.Play();
                 enemy.setCurrentLife(enemy.getCurrentLife() - 20);
                 print("Aouch we loose 20 pv");
                 if (enemy.getCurrentLife() <= 0)
