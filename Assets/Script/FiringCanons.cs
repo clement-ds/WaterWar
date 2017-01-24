@@ -7,8 +7,8 @@ public class FiringCanons : MonoBehaviour {
     public Sprite bullet;
     public GameObject MainCanon { get; set; }
     public GameManager gm;
-    public Rect windowRect = new Rect(Screen.width/2, Screen.height/2, 200, 60);
-    public bool GUIEnabled = false;
+    public Rect windowRect;
+    public bool GUIEnabled = true;
 
     void Start() {
         MainCanon = null;
@@ -43,20 +43,21 @@ public class FiringCanons : MonoBehaviour {
             }
         }
         else {
+            GUIEnabled = true;
             OnGUI(); //print("No Canon");
         }
     }
     void OnGUI()
     {
         if (GUIEnabled)
-        windowRect = GUI.Window(0, windowRect, DoMyWindow, "Victory");
+        windowRect = GUI.Window(0, new Rect(Screen.width/2 - 75, Screen.height/2 - 50, 150, 100), DoMyWindow, "Victory");
     }
 
     void DoMyWindow(int windowID)
     {
-        if (GUI.Button(new Rect(10, 20, 100, 20), "Continue"))
+        GUI.Label(new Rect(25, 25, 100, 40), "Loot here");
+        if (GUI.Button(new Rect(25, 75, 100, 20), "Continue"))
         {
-            print("Have a good day");
             gm.GoInteraction();
         }
 
