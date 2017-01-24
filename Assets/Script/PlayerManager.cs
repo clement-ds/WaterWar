@@ -13,14 +13,21 @@ public class PlayerManager {
 
     protected PlayerManager()
     {
+        //LoadFile("PlayerJson/Player.txt");
+        //CreatePlayer();
+        //Debug.Log("player : " + player.name + "/" + player.life);
+        //LoadFile("PlayerJson/Inventory.txt");
+        //CreateInventory();
+        //Debug.Log("CHECK INVENTORY : " + player.inventory.food.Count + " / " + player.inventory.ammunition.Count);
+        //LoadFile("PlayerJson/Crew.txt");
+        //CreateCrew();
+        //Debug.Log("CHECK CREW : " + player.crew.begos.Count + " / " + player.crew.captains.Count + " / " + player.crew.engineers.Count
+        //    + " / " + player.crew.fastUnits.Count + " / " + player.crew.fighters.Count);
+
         LoadFile("PlayerJson/Player.txt");
-        CreatePlayer();
+        player = JsonUtility.FromJson<Player>(json[0]);
         Debug.Log("player : " + player.name + "/" + player.life);
-        LoadFile("PlayerJson/Inventory.txt");
-        CreateInventory();
         Debug.Log("CHECK INVENTORY : " + player.inventory.food.Count + " / " + player.inventory.ammunition.Count);
-        LoadFile("PlayerJson/Crew.txt");
-        CreateCrew();
         Debug.Log("CHECK CREW : " + player.crew.begos.Count + " / " + player.crew.captains.Count + " / " + player.crew.engineers.Count
             + " / " + player.crew.fastUnits.Count + " / " + player.crew.fighters.Count);
     }
@@ -44,6 +51,21 @@ public class PlayerManager {
 	//void Update () {
 	
 	//}
+
+    public bool WriteToFile()
+    {
+        try
+        {
+            StreamWriter writer = new StreamWriter("PlayerJson/test.txt", false);
+            writer.Write(JsonUtility.ToJson(player));
+            writer.Close();
+        } catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            return false;
+        }
+        return true;
+    }
 
     private bool LoadFile(string fileName)
     {
@@ -121,7 +143,7 @@ public class PlayerManager {
             Debug.Log(tmp.type);
             if (tmp.type == "Bego")
             {
-                player.crew.begos.Add(new CrewMember_Bego());
+                player.crew.begos.Add(new CrewMember_Bego(tmp));
             }
             else if (tmp.type == "Captain")
             {
@@ -149,25 +171,27 @@ public class Player
     public string name;
     public int life;
 
-    [NonSerialized]
+    //[NonSerialized]
     public PlayerInventory inventory = new PlayerInventory();
-    [NonSerialized]
+    //[NonSerialized]
     public PlayerCrew crew = new PlayerCrew();
 }
 
+[Serializable]
 public class PlayerInventory
 {
     public List<InventoryObject> food = new List<InventoryObject>();
     public List<InventoryObject> ammunition = new List<InventoryObject>();
 }
 
+[Serializable]
 public class PlayerCrew
 {
-    public List<CrewMember_Bego> begos = new List<CrewMember_Bego>();
-    public List<CrewMember_Captain> captains = new List<CrewMember_Captain>();
-    public List<CrewMember_Engineer> engineers = new List<CrewMember_Engineer>();
-    public List<CrewMember_FastUnit> fastUnits = new List<CrewMember_FastUnit>();
-    public List<CrewMember_Fighter> fighters = new List<CrewMember_Fighter>();
+    public List<CrewMember> begos = new List<CrewMember>();
+    public List<CrewMember> captains = new List<CrewMember>();
+    public List<CrewMember> engineers = new List<CrewMember>();
+    public List<CrewMember> fastUnits = new List<CrewMember>();
+    public List<CrewMember> fighters = new List<CrewMember>();
 }
 
 [Serializable]
@@ -176,18 +200,4 @@ public class InventoryObject
     public string name;
     public string type;
     public int number;
-}
-
-[Serializable]
-public class crewmember
-{
-    public string type;
-    public float attackStrength = 1f;
-    public bool useRangedWeapon = false;
-    public float walkSpeed = 1f;
-    public float wage = 1f;
-    public float maxHunger = 1f;
-    public float maxLife = 100f;
-    public float life = 10f;
-    public float satiety = 1f;
 }

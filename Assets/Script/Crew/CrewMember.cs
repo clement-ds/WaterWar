@@ -6,6 +6,15 @@ using System;
 public class CrewMember {
 
     public string type;
+    protected float attackStrength = 1f;
+    protected bool useRangedWeapon = false;
+    protected float walkSpeed = 1f;
+    protected float wage = 1f;
+    protected float maxHunger = 1f;
+    protected float maxLife = 100f;
+    public float life = 10f;
+    public float satiety = 1f;
+
     [NonSerialized]
     protected Cooldown attackSpeed;
     [NonSerialized]
@@ -14,15 +23,6 @@ public class CrewMember {
     protected Cooldown steerSpeed;
     [NonSerialized]
     protected Cooldown repairSpeed;
-    protected float attackStrength = 1f;
-    protected bool useRangedWeapon = false;
-    protected float walkSpeed = 1f;
-    protected float wage = 1f;
-    protected float maxHunger = 1f;
-    protected float maxLife = 100f;
-    protected float life = 10f;
-
-    protected float satiety = 1f;
 
     //private Room assignedRoom ?
 
