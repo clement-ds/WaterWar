@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public string SceneFightName = "Fight";
     public Inventory inventory;
     public static GameManager Instance = null;
-
+    public PlayerManager playerManager = PlayerManager.GetInstance();
 
     void Awake()
     {
