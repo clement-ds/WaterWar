@@ -8,17 +8,14 @@ public class SearchResources : MonoBehaviour {
     private bool toFinal = false;
     private Vector3 objective;
 
-	// Use this for initialization
-	void Start ()
-    {
+    // Use this for initialization
+    void Start () {
         this.objective = transform.position;
-	}
-	
-	// Update is called once per frame
-	void Update ()
-    {
-        if (transform.position.x == objective.x && transform.position.y == objective.y)
-        {
+    }
+    
+    // Update is called once per frame
+    void Update () {
+        if (transform.position.x == objective.x && transform.position.y == objective.y) {
             this.changeObjective();
         }
         
@@ -26,8 +23,7 @@ public class SearchResources : MonoBehaviour {
         transform.position = Vector3.MoveTowards(transform.position, this.objective, this.speed * Time.deltaTime);
     }
 
-    void changeObjectiveFinal()
-    {
+    void changeObjectiveFinal() {
         GameObject player = GameObject.Find("Player's ship");
         
         Vector3 pos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
@@ -37,24 +33,19 @@ public class SearchResources : MonoBehaviour {
         this.toFinal = true;
     }
 
-    void changeObjective()
-    {
+    void changeObjective() {
         GameObject[] spawns = FindObjectOfType<Spawner>().getCoconuts();//; GetComponent<Spawner>().coconuts;
         var index = 0;
         
         // start to remove
-        if (Vector3.Equals(this.objective, transform.position))
-        {
-            for (int i = 0; i < spawns.Length; ++i)
-            {
-                if (Vector3.Equals(this.objective, spawns[i].transform.position))
-                {
+        if (Vector3.Equals(this.objective, transform.position)) {
+            for (int i = 0; i < spawns.Length; ++i) {
+                if (Vector3.Equals(this.objective, spawns[i].transform.position)) {
                     var foos = new List<GameObject>(spawns);
                     var toRemove = spawns[i];
                     foos.RemoveAt(i);
                     spawns = foos.ToArray();
-                    if (toRemove != null)
-                    {
+                    if (toRemove != null) {
                         GameObject.Destroy(toRemove);
                     }
                 }
@@ -64,31 +55,24 @@ public class SearchResources : MonoBehaviour {
         // end
         
         index = this.findNearestResource(transform.position, spawns);
-        if (index != -1)
-        {
+        if (index != -1) {
             this.objective = spawns[index].transform.position;
-        } else
-        {
+        } else {
             this.changeObjectiveFinal();
         }
     }
 
-    int findNearestResource(Vector3 body, GameObject[] spawns)
-    {
+    int findNearestResource(Vector3 body, GameObject[] spawns) {
         int index = -1;
         float currentDistance = 0;
         
-        for (int i = 0; i < spawns.Length; ++i)
-        {
-            if (index == -1)
-            {
+        for (int i = 0; i < spawns.Length; ++i) {
+            if (index == -1) {
                 currentDistance = Vector3.Distance(body, spawns[i].transform.position);
                 index = i;
-            } else
-            {
+            } else {
                 float newDist = Vector3.Distance(body, spawns[i].transform.position);
-                if (currentDistance > newDist)
-                {
+                if (currentDistance > newDist) {
                     index = i;
                     currentDistance = newDist;
                 }

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class testManager : MonoBehaviour {
 
-    PlayerManager pm;
+    PlayerManager pm = null;
 
 	// Use this for initialization
 	void Start () {

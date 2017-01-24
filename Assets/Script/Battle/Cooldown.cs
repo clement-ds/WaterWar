@@ -12,8 +12,7 @@ public class Cooldown : MonoBehaviour {
         startTime = timeLeft;
     }
 
-    // Update is called once per frame
-
+    // Update is called once per 
     void Update()
     {
         timeLeft -= Time.deltaTime;

@@ -40,6 +40,8 @@ public class FiringCanons : MonoBehaviour {
                 ParticleSystem targetExplosion = target.transform.Find("BoatExplosion/PS_BoatExplosion").gameObject.GetComponent<ParticleSystem>();
                 targetExplosion.Play();
 
+                if (target.GetComponent<HasLife>())
+                    target.GetComponent<HasLife>().setLife(target.GetComponent<HasLife>().getLife() - 20);
                 enemy.setCurrentLife(enemy.getCurrentLife() - 20);
                 print("Aouch we loose 20 pv");
                 if (enemy.getCurrentLife() <= 0)
