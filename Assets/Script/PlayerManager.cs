@@ -13,17 +13,6 @@ public class PlayerManager {
 
     protected PlayerManager()
     {
-        //LoadFile("PlayerJson/Player.txt");
-        //CreatePlayer();
-        //Debug.Log("player : " + player.name + "/" + player.life);
-        //LoadFile("PlayerJson/Inventory.txt");
-        //CreateInventory();
-        //Debug.Log("CHECK INVENTORY : " + player.inventory.food.Count + " / " + player.inventory.ammunition.Count);
-        //LoadFile("PlayerJson/Crew.txt");
-        //CreateCrew();
-        //Debug.Log("CHECK CREW : " + player.crew.begos.Count + " / " + player.crew.captains.Count + " / " + player.crew.engineers.Count
-        //    + " / " + player.crew.fastUnits.Count + " / " + player.crew.fighters.Count);
-
         LoadFile("PlayerJson/Player.txt");
         player = JsonUtility.FromJson<Player>(json[0]);
         Debug.Log("player : " + player.name + "/" + player.life);
@@ -40,17 +29,6 @@ public class PlayerManager {
         }
         return instance;
     }
-
-	//// Use this for initialization
-	//void Start () {
- //       instance = this;
-        
-	//}
-	
-	//// Update is called once per frame
-	//void Update () {
-	
-	//}
 
     public bool WriteToFile()
     {
@@ -111,58 +89,6 @@ public class PlayerManager {
             return false;
         }
     }
-
-    public void CreatePlayer ()
-    {
-        for (int i = 0; i < json.Count; ++i)
-        {
-            player = JsonUtility.FromJson<Player>(json[i]);
-        }
-    }
-
-    public void CreateInventory()
-    {
-        for (int i = 0; i < json.Count; ++i)
-        {
-            InventoryObject tmp = JsonUtility.FromJson<InventoryObject>(json[i]);
-            if (tmp.type == "Food")
-            {
-                player.inventory.food.Add(tmp);
-            } else if (tmp.type == "Ammunition")
-            {
-                player.inventory.ammunition.Add(tmp);
-            }
-        }
-    }
-
-    public void CreateCrew()
-    {
-        for (int i = 0; i < json.Count; ++i)
-        {
-            CrewMember tmp = JsonUtility.FromJson<CrewMember>(json[i]);
-            Debug.Log(tmp.type);
-            if (tmp.type == "Bego")
-            {
-                player.crew.begos.Add(new CrewMember_Bego(tmp));
-            }
-            else if (tmp.type == "Captain")
-            {
-                player.crew.captains.Add(new CrewMember_Captain());
-            }
-            else if (tmp.type == "Engineer")
-            {
-                player.crew.engineers.Add(new CrewMember_Engineer());
-            }
-            else if (tmp.type == "FastUnit")
-            {
-                player.crew.fastUnits.Add(new CrewMember_FastUnit());
-            }
-            else if (tmp.type == "Fighter")
-            {
-                player.crew.fighters.Add(new CrewMember_Fighter());
-            }
-        }
-    }
 }
 
 [Serializable]
@@ -187,11 +113,11 @@ public class PlayerInventory
 [Serializable]
 public class PlayerCrew
 {
-    public List<CrewMember> begos = new List<CrewMember>();
-    public List<CrewMember> captains = new List<CrewMember>();
-    public List<CrewMember> engineers = new List<CrewMember>();
-    public List<CrewMember> fastUnits = new List<CrewMember>();
-    public List<CrewMember> fighters = new List<CrewMember>();
+    public List<CrewMember_Bego> begos = new List<CrewMember_Bego>();
+    public List<CrewMember_Captain> captains = new List<CrewMember_Captain>();
+    public List<CrewMember_Engineer> engineers = new List<CrewMember_Engineer>();
+    public List<CrewMember_FastUnit> fastUnits = new List<CrewMember_FastUnit>();
+    public List<CrewMember_Fighter> fighters = new List<CrewMember_Fighter>();
 }
 
 [Serializable]

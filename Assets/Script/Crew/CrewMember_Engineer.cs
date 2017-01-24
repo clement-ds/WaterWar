@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
+[Serializable]
 public class CrewMember_Engineer : CrewMember {
 
 	public CrewMember_Engineer () {

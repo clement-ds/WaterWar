@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
+[Serializable]
 public class CrewMember_Fighter : CrewMember {
 
 	public CrewMember_Fighter () {
