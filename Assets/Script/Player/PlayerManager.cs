@@ -19,6 +19,8 @@ public class PlayerManager {
         Debug.Log("CHECK INVENTORY : " + player.inventory.food.Count + " / " + player.inventory.ammunition.Count);
         Debug.Log("CHECK CREW : " + player.crew.begos.Count + " / " + player.crew.captains.Count + " / " + player.crew.engineers.Count
             + " / " + player.crew.fastUnits.Count + " / " + player.crew.fighters.Count);
+        Debug.Log("CHECK QUEST : " + player.questLog.quests.Count);
+        //Save();
     }
 
     public static PlayerManager GetInstance()
@@ -97,10 +99,9 @@ public class Player
     public string name;
     public int life;
 
-    //[NonSerialized]
     public PlayerInventory inventory = new PlayerInventory();
-    //[NonSerialized]
     public PlayerCrew crew = new PlayerCrew();
+    public QuestLog questLog = new QuestLog();
 }
 
 [Serializable]
@@ -128,4 +129,16 @@ public class InventoryObject
     public int number;
 }
 
+[Serializable]
+public class QuestLog
+{
+    public List<PlayerQuest> quests = new List<PlayerQuest>();
+}
 
+[Serializable]
+public class PlayerQuest
+{
+    public string description;
+    public string objective;
+    public InventoryObject reward;
+}
