@@ -23,12 +23,14 @@ public class FiringCanons : MonoBehaviour {
     public void fireOn(GameObject target) {
         if (MainCanon != null && MainCanon.GetComponent<Cooldown>().getPossibility() == true)
         {
+            ParticleSystem canonExplosion = MainCanon.GetComponent<ParticleSystem>();
+            canonExplosion.Play();
             Battle_Enemy enemy = target.GetComponentInParent<Battle_Enemy>();
             print("Canon " + MainCanon.name + " fires on " + target.name + " with boulet " + MainCanon.GetComponent<SetAsCanonOnClick>().bouletname);
             if (enemy != null)
             {
-                ParticleSystem explosion = target.GetComponent<ParticleSystem>();
-                explosion.Play();
+                ParticleSystem explosionRoom = target.GetComponent<ParticleSystem>();
+                explosionRoom.Play();
                 enemy.setCurrentLife(enemy.getCurrentLife() - 20);
                 print("Aouch we loose 20 pv");
                 if (enemy.getCurrentLife() <= 0)
