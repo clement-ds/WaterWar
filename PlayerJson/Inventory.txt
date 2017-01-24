@@ -1,3 +1,0 @@
-{"name":"Coconut", "type":"Food", "number":10}
-{"name":"Rhum", "type":"Food", "number":10}
-{"name":"Canon ball", "type":"Ammunition", "number":10}

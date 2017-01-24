@@ -13,7 +13,7 @@ public class PlayerManager {
 
     protected PlayerManager()
     {
-        LoadFile("PlayerJson/Player.txt");
+        LoadFile("PlayerJson/Save.txt");
         player = JsonUtility.FromJson<Player>(json[0]);
         Debug.Log("player : " + player.name + "/" + player.life);
         Debug.Log("CHECK INVENTORY : " + player.inventory.food.Count + " / " + player.inventory.ammunition.Count);
@@ -30,11 +30,11 @@ public class PlayerManager {
         return instance;
     }
 
-    public bool WriteToFile()
+    public bool Save()
     {
         try
         {
-            StreamWriter writer = new StreamWriter("PlayerJson/test.txt", false);
+            StreamWriter writer = new StreamWriter("PlayerJson/Save.txt", false);
             writer.Write(JsonUtility.ToJson(player));
             writer.Close();
         } catch (Exception e)

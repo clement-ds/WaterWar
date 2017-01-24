@@ -1,1 +1,0 @@
-{"type":"Bego", "life": 5.0, "satiety":0.0}
