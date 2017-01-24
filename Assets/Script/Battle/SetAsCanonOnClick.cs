@@ -19,11 +19,11 @@ public class SetAsCanonOnClick : MonoBehaviour {
             Vector2 touchPos = new Vector2(wp.x, wp.y);
             if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
             {
-                if (player.MainCanon) {
-                    player.MainCanon.GetComponent<SpriteOutline>().enabled = false;
+                if (player.getMainCanon()) {
+                    player.getMainCanon().GetComponent<SpriteOutline>().enabled = false;
                 }
-                player.MainCanon = this.gameObject;
-                player.MainCanon.GetComponent<SpriteOutline>().enabled = true;
+                player.setMainCanon(this.gameObject);
+                player.getMainCanon().GetComponent<SpriteOutline>().enabled = true;
             }
         }
     }

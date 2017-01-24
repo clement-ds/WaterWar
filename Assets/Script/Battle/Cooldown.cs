@@ -25,11 +25,11 @@ public class Cooldown : MonoBehaviour {
     }
 
     public bool getPossibility() {
-        if (possibility == true) {
-            timeLeft = startTime;
-            possibility = false;
-            return true;
-        }
         return possibility;
+    }
+
+    public void resetPossibility() {
+        timeLeft = startTime;
+        possibility = false;
     }
 }

@@ -3,13 +3,16 @@ using System.Collections;
 using UnityEngine.EventSystems;
 
 public class FiringCanons : MonoBehaviour {
-    public GameObject MainCanon { get; set; }
     public GameManager gm;
-    public Rect windowRect;
-    public bool GUIEnabled = true;
+
+    private GameObject MainCanon;
+    private Rect windowRect;
+    private bool GUIEnabled = false;
 
     void Start() {
         MainCanon = null;
+        windowRect.position = new Vector2(20, 20);
+        windowRect.size = new Vector2(120, 50);
     }
 
     void Update() {
@@ -23,6 +26,10 @@ public class FiringCanons : MonoBehaviour {
     public void fireOn(GameObject target) {
         if (MainCanon != null && MainCanon.GetComponent<Cooldown>().getPossibility() == true)
         {
+            // Reset cooldown after attack
+            MainCanon.GetComponent<Cooldown>().resetPossibility();
+
+            // Create particle of canon and play it
             ParticleSystem canonShotExplosion = (ParticleSystem)MainCanon.transform.Find("CanonShotExplosion/PS_CanonShotExplosion").gameObject.GetComponent<ParticleSystem>();
             canonShotExplosion.Play();
 
@@ -37,8 +44,6 @@ public class FiringCanons : MonoBehaviour {
                 print("Aouch we loose 20 pv");
                 if (enemy.getCurrentLife() <= 0)
                     GUIEnabled = true;
-
-
             }
         }
         else {
@@ -55,12 +60,18 @@ public class FiringCanons : MonoBehaviour {
     void DoMyWindow(int windowID)
     {
         GUI.Label(new Rect(25, 25, 100, 40), "Loot here");
-        if (GUI.Button(new Rect(25, 75, 100, 20), "Continue"))
-        {
+        if (GUI.Button(new Rect(25, 75, 100, 20), "Continue")) {
             gm.GoInteraction();
         }
 
     }
 
+    public GameObject getMainCanon() {
+        return MainCanon;
+    }
+
+    public void setMainCanon(GameObject canon) {
+        MainCanon = canon;
+    }
 }
 
