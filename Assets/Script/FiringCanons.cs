@@ -3,8 +3,6 @@ using System.Collections;
 using UnityEngine.EventSystems;
 
 public class FiringCanons : MonoBehaviour {
-    ArrayList bullets;
-    public Sprite bullet;
     public GameObject MainCanon { get; set; }
     public GameManager gm;
     public Rect windowRect;
@@ -12,7 +10,6 @@ public class FiringCanons : MonoBehaviour {
 
     void Start() {
         MainCanon = null;
-        bullets = new ArrayList();
     }
 
     void Update() {
@@ -26,24 +23,20 @@ public class FiringCanons : MonoBehaviour {
     public void fireOn(GameObject target) {
         if (MainCanon != null && MainCanon.GetComponent<Cooldown>().getPossibility() == true)
         {
-            Battle_Enemy enemy = target.GetComponentInParent<Battle_Enemy>();
-
-            bullet = new Sprite();
-            bullets.Add(bullet);
-
+            Battle_Enemy ennemy = target.GetComponentInParent<Battle_Enemy>();
             print("Canon " + MainCanon.name + " fires on " + target.name + " with boulet " + MainCanon.GetComponent<SetAsCanonOnClick>().bouletname);
-            if (enemy != null)
+            if (ennemy != null)
             {
-                enemy.setCurrentLife(enemy.getCurrentLife() - 20);
+                ennemy.setCurrentLife(ennemy.getCurrentLife() - 20);
                 print("Aouch we loose 20 pv");
-                if (enemy.getCurrentLife() <= 0)
+                if (ennemy.getCurrentLife() <= 0)
                     GUIEnabled = true;
 
 
             }
         }
         else {
-            GUIEnabled = true;
+            GUIEnabled = false;
             OnGUI(); //print("No Canon");
         }
     }
