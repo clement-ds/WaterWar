@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
+[Serializable]
 public class CrewMember_Bego : CrewMember {
 
     public CrewMember_Bego()
     {
+        type = "Bego";
         //attackSpeed.timeLeft = 10f;
         //canonReloadSpeed.timeLeft = 10f;
         attackStrength = 0.1f;
@@ -15,5 +18,5 @@ public class CrewMember_Bego : CrewMember {
         maxLife = 10f;
         life = 10f;
     }
-	
+
 }

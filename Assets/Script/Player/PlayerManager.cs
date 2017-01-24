@@ -13,16 +13,14 @@ public class PlayerManager {
 
     protected PlayerManager()
     {
-        LoadFile("PlayerJson/Player.txt");
-        CreatePlayer();
+        LoadFile("PlayerJson/Save.txt");
+        player = JsonUtility.FromJson<Player>(json[0]);
         Debug.Log("player : " + player.name + "/" + player.life);
-        LoadFile("PlayerJson/Inventory.txt");
-        CreateInventory();
         Debug.Log("CHECK INVENTORY : " + player.inventory.food.Count + " / " + player.inventory.ammunition.Count);
-        LoadFile("PlayerJson/Crew.txt");
-        CreateCrew();
         Debug.Log("CHECK CREW : " + player.crew.begos.Count + " / " + player.crew.captains.Count + " / " + player.crew.engineers.Count
             + " / " + player.crew.fastUnits.Count + " / " + player.crew.fighters.Count);
+        Debug.Log("CHECK QUEST : " + player.questLog.quests.Count);
+        //Save();
     }
 
     public static PlayerManager GetInstance()
@@ -34,16 +32,20 @@ public class PlayerManager {
         return instance;
     }
 
-	//// Use this for initialization
-	//void Start () {
- //       instance = this;
-        
-	//}
-	
-	//// Update is called once per frame
-	//void Update () {
-	
-	//}
+    public bool Save()
+    {
+        try
+        {
+            StreamWriter writer = new StreamWriter("PlayerJson/Save.txt", false);
+            writer.Write(JsonUtility.ToJson(player));
+            writer.Close();
+        } catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            return false;
+        }
+        return true;
+    }
 
     private bool LoadFile(string fileName)
     {
@@ -89,58 +91,6 @@ public class PlayerManager {
             return false;
         }
     }
-
-    public void CreatePlayer ()
-    {
-        for (int i = 0; i < json.Count; ++i)
-        {
-            player = JsonUtility.FromJson<Player>(json[i]);
-        }
-    }
-
-    public void CreateInventory()
-    {
-        for (int i = 0; i < json.Count; ++i)
-        {
-            InventoryObject tmp = JsonUtility.FromJson<InventoryObject>(json[i]);
-            if (tmp.type == "Food")
-            {
-                player.inventory.food.Add(tmp);
-            } else if (tmp.type == "Ammunition")
-            {
-                player.inventory.ammunition.Add(tmp);
-            }
-        }
-    }
-
-    public void CreateCrew()
-    {
-        for (int i = 0; i < json.Count; ++i)
-        {
-            CrewMember tmp = JsonUtility.FromJson<CrewMember>(json[i]);
-            Debug.Log(tmp.type);
-            if (tmp.type == "Bego")
-            {
-                player.crew.begos.Add(new CrewMember_Bego());
-            }
-            else if (tmp.type == "Captain")
-            {
-                player.crew.captains.Add(new CrewMember_Captain());
-            }
-            else if (tmp.type == "Engineer")
-            {
-                player.crew.engineers.Add(new CrewMember_Engineer());
-            }
-            else if (tmp.type == "FastUnit")
-            {
-                player.crew.fastUnits.Add(new CrewMember_FastUnit());
-            }
-            else if (tmp.type == "Fighter")
-            {
-                player.crew.fighters.Add(new CrewMember_Fighter());
-            }
-        }
-    }
 }
 
 [Serializable]
@@ -149,18 +99,19 @@ public class Player
     public string name;
     public int life;
 
-    [NonSerialized]
     public PlayerInventory inventory = new PlayerInventory();
-    [NonSerialized]
     public PlayerCrew crew = new PlayerCrew();
+    public QuestLog questLog = new QuestLog();
 }
 
+[Serializable]
 public class PlayerInventory
 {
     public List<InventoryObject> food = new List<InventoryObject>();
     public List<InventoryObject> ammunition = new List<InventoryObject>();
 }
 
+[Serializable]
 public class PlayerCrew
 {
     public List<CrewMember_Bego> begos = new List<CrewMember_Bego>();
@@ -179,15 +130,15 @@ public class InventoryObject
 }
 
 [Serializable]
-public class crewmember
+public class QuestLog
 {
-    public string type;
-    public float attackStrength = 1f;
-    public bool useRangedWeapon = false;
-    public float walkSpeed = 1f;
-    public float wage = 1f;
-    public float maxHunger = 1f;
-    public float maxLife = 100f;
-    public float life = 10f;
-    public float satiety = 1f;
+    public List<PlayerQuest> quests = new List<PlayerQuest>();
+}
+
+[Serializable]
+public class PlayerQuest
+{
+    public string description;
+    public string objective;
+    public InventoryObject reward;
 }
