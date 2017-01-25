@@ -12,6 +12,7 @@ public class Canon : HasLife {
     }
 
     public void destroyCanon() {
+        // Destroy all Components
         if (GetComponent<SpriteRenderer>())
             Destroy(GetComponent<SpriteRenderer>());
         if (GetComponent<Target>())
@@ -19,9 +20,10 @@ public class Canon : HasLife {
     }
 
     // Update is called once per frame
-   	void Update () {
+/*   	void Update () {
+        // Call Update of HasLife
         base.Update();
-    }
+    }*/
 
     string getName() {
         return name;

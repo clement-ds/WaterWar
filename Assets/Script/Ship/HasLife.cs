@@ -11,9 +11,14 @@ public class HasLife : MonoBehaviour {
     // Update is called once per frame
     protected void Update () {
         if (life <= 0) {
-            GetComponentInChildren<Canon>().destroyCanon();
-            Destroy(GetComponentInChildren<Canon>());
-            print("Destroyed !");
+            // Temporary: just for canon
+            if (GetComponentInChildren<Canon>()) {
+                GetComponentInChildren<Canon>().destroyCanon();
+                Destroy(GetComponentInChildren<Canon>());
+                print(GetComponentInChildren<Canon>().name + " destroyed !");
+            } else {
+                print("Destroyed !");
+            }
         }
     }
 

@@ -33,6 +33,14 @@ public class FiringCanons : MonoBehaviour {
             ParticleSystem canonShotExplosion = (ParticleSystem)MainCanon.transform.Find("CanonShotExplosion/PS_CanonShotExplosion").gameObject.GetComponent<ParticleSystem>();
             canonShotExplosion.Play();
 
+
+            /*
+             * It doesn't work but this is a good idea .. I think....
+            CanonBall ball = new CanonBall();
+            ball.Start();
+            ball.setTransformation(MainCanon.transform);
+            ball.setTarget(target.transform);
+            */
             Battle_Enemy enemy = target.GetComponentInParent<Battle_Enemy>();
             print("Canon " + MainCanon.name + " fires on " + target.name + " with boulet " + MainCanon.GetComponent<SetAsCanonOnClick>().bouletname);
             if (enemy != null)
