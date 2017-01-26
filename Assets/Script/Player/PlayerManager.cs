@@ -9,7 +9,7 @@ public class PlayerManager {
     private static PlayerManager instance = null;
 
     private List<String> json = new List<string>();
-    private Player player;
+    public Player player;
 
     protected PlayerManager()
     {
