@@ -1,0 +1,1 @@
+{"description":"Kill captain Flint", "objective":"Captain Flint", "reward":{"name":"Rhum","type":"Food","number":10}}
