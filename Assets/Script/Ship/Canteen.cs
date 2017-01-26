@@ -7,12 +7,37 @@ public class Canteen : ShipElement {
 	// Use this for initialization
 	void Start () {
         life = 100;
-	}
-
-    protected override void doRepairAction()
-    {
+        this.setCurrentLife(life);
     }
 
+    /** ON HIT EFFECT **/
+    protected override void dealDamageAsRepercution(int damage)
+    {
+        this.GetComponentInParent<Battle_Ship>().receiveDamage(damage / 2);
+    }
+
+    protected override void dealDamageOnDestroy()
+    {
+        this.GetComponentInParent<Battle_Ship>().receiveDamage(this.life);
+    }
+
+    protected override void applyMalusOnHit()
+    {
+
+    }
+
+    protected override void applyMalusOnDestroy()
+    {
+
+    }
+
+    /** REPAIR **/
+    protected override void doRepairAction()
+    {
+        this.setCurrentLife(this.currentLife + 20);
+    }
+
+    /** DO DAMAGE **/
     protected override void doDamageAction()
     {
     }
@@ -21,10 +46,10 @@ public class Canteen : ShipElement {
     {
     }
 
-    protected override int receiveDamageAction(int damage)
+    /** RECEIVE DAMAGE **/
+    protected override void receiveDamageAction(int damage)
     {
-        this.setLife(this.life - damage);
-        return 100;
+        this.setCurrentLife(this.currentLife - damage);
     }
 
     protected override void receiveDamageAnimation()

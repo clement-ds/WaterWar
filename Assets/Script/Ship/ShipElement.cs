@@ -1,13 +1,48 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public abstract class ShipElement : MonoBehaviour
 {
     protected int life = 0;
+    protected int currentLife = 0;
     protected bool available = true;
+    public Slider slider = null;
 
-    public bool repair()
+    /** SLIDER HP **/
+    public void updateSliderValue() {
+        if (slider) {
+            slider.value = (currentLife * 100) / life;
+        }
+    }
+
+    void OnMouseEnter()
     {
+        if (slider)
+        {
+            slider.enabled = true;
+        }
+    }
+
+    void OnMouseExit()
+    {
+        if (slider)
+        {
+            slider.enabled = false;
+        }
+    }
+
+    /** ON HIT EFFECT **/
+    protected abstract void dealDamageAsRepercution(int damage);
+
+    protected abstract void dealDamageOnDestroy();
+
+    protected abstract void applyMalusOnHit();
+
+    protected abstract void applyMalusOnDestroy();
+
+    /** REPAIR **/
+    public bool repair() {
         // todo, sailor in parameter
         this.doRepairAction();
         return true;
@@ -15,8 +50,8 @@ public abstract class ShipElement : MonoBehaviour
 
     protected abstract void doRepairAction();
 
-    public bool doDamage()
-    {
+    /** DO DAMAGE **/
+    public bool doDamage() {
         if (this.available)
         {
             this.doDamageAction();
@@ -30,43 +65,52 @@ public abstract class ShipElement : MonoBehaviour
 
     protected abstract void doDamageAnimation();
 
-    public int receiveDamage(int damage)
+    /** RECEIVE DAMAGE **/
+    public bool receiveDamage(int damage)
     {
         if (this.available)
         {
-            int resultDamage = this.receiveDamageAction(damage);
+            this.receiveDamageAction(damage);
             this.receiveDamageAnimation();
-            return resultDamage;
+            this.dealDamageAsRepercution(damage);
+            this.applyMalusOnHit();
+            return true;
          }
-        return -1;
+        return false;
     }
 
-    protected abstract int receiveDamageAction(int damage);
+    protected abstract void receiveDamageAction(int damage);
 
     protected abstract void receiveDamageAnimation();
 
 
     /** GETTERS **/
-
-    public int getLife()
-    {
+    public int getLife() {
         return this.life;
     }
 
-    public bool isAvailable()
-    {
+    public int getCurrentLife() {
+        return this.currentLife;
+    }
+
+    public bool isAvailable() {
         return this.available;
     }
 
     /** SETTERS **/
-    public void setLife(int value)
-    {
-        this.life = value;
-        this.available = (this.life > 0);
+    public void setCurrentLife(int value) {
+        this.currentLife = (value < 0 ? 0 : value);
+        this.currentLife = (this.currentLife > this.life ? this.life : this.currentLife);
+        this.updateSliderValue();
+        this.available = (this.currentLife > 0);
+        if (!available)
+        {
+            this.dealDamageOnDestroy();
+            this.applyMalusOnDestroy();
+        }
     }
 
-    public void setAvailable(bool value)
-    {
+    public void setAvailable(bool value) {
         this.available = value;
     }
 }

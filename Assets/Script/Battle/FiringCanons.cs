@@ -41,15 +41,14 @@ public class FiringCanons : MonoBehaviour {
             ball.setTransformation(MainCanon.transform);
             ball.setTarget(target.transform);
             */
-            Battle_Enemy enemy = target.GetComponentInParent<Battle_Enemy>();
+            Battle_Ship enemy = target.GetComponentInParent<Battle_Ship>();
             print("Canon " + MainCanon.name + " fires on " + target.name + " with boulet " + MainCanon.GetComponent<SetAsCanonOnClick>().bouletname);
             if (enemy != null)
             {
-                int resultDamage = target.receiveDamage(20);
-                if (resultDamage != -1)
+                // TODO send the bullet object with damage, type, inHitEffect etc
+                if (target.receiveDamage(20))
                 {
                     print("Aouch we loose 20 pv");
-                    enemy.receiveDamage(resultDamage);
                 }
                 if (enemy.getCurrentLife() <= 0)
                     GUIEnabled = true;

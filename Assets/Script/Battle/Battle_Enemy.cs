@@ -2,15 +2,15 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Battle_Enemy : Ship
+public class Battle_Enemy : Battle_Ship
 {
     // Use this for initialization
     void Start() {
-        slider.value = life;
+        slider.value = currentLife;
     }
 
     // Update is called once per frame
     void Update() {
-        slider.value = life;
+        slider.value = currentLife;
     }
 }

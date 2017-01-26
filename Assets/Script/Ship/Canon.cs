@@ -11,6 +11,7 @@ public class Canon : ShipElement {
     void Start()
     {
         life = 50;
+        this.setCurrentLife(life);
     }
 
     public void destroyCanon() {
@@ -35,16 +36,33 @@ public class Canon : ShipElement {
         return viewFinder;
     }
 
-
-    public void onMouseOver()
+    /** ON HIT EFFECT **/
+    protected override void dealDamageAsRepercution(int damage)
     {
-        print("mouse over " + name);
     }
 
+    protected override void dealDamageOnDestroy()
+    {
+        this.GetComponentInParent<Battle_Ship>().receiveDamage(20);
+    }
+
+    protected override void applyMalusOnHit()
+    {
+
+    }
+
+    protected override void applyMalusOnDestroy()
+    {
+
+    }
+
+    /** REPAIR **/
     protected override void doRepairAction()
     {
+        this.setCurrentLife(this.currentLife + 20);
     }
 
+    /** DO DAMAGE **/
     protected override void doDamageAction()
     {
     }
@@ -55,10 +73,10 @@ public class Canon : ShipElement {
         canonShotExplosion.Play();
     }
 
-    protected override int receiveDamageAction(int damage)
+    /** RECEIVE DAMAGE **/
+    protected override void receiveDamageAction(int damage)
     {
-        this.setLife(this.life - damage);
-        return 10;
+        this.setCurrentLife(this.currentLife - damage);
     }
 
     protected override void receiveDamageAnimation()

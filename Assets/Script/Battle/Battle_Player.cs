@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Battle_Player : Ship {
+public class Battle_Player : Battle_Ship {
     public Text distanceText = null;
     public Button actionFuite = null;
     public Button actionAbordage = null;
@@ -12,7 +12,7 @@ public class Battle_Player : Ship {
 
     // Use this for initialization
     void Start () {
-        slider.value = life;
+        slider.value = currentLife;
         distanceText.text = position.ToString();
         actionFuite.gameObject.SetActive(false);
         actionAbordage.gameObject.SetActive(false);
@@ -49,21 +49,55 @@ public class Battle_Player : Ship {
         {
             Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 touchPos = new Vector2(wp.x, wp.y);
-            GameObject player = GameObject.Find("Enemy");
 
-            foreach (Transform child in player.transform)
+            if (!this.checkSelfShip(touchPos))
             {
-                ShipElement target = child.GetComponent<ShipElement>();
+                this.checkEnemyShip(touchPos);
+            }
+        }
+    }
 
-                if (target != null)
+    private bool checkSelfShip(Vector2 touchPos)
+    {
+        GameObject player = GameObject.Find("Player");
+        bool result = false;
+
+        foreach (Transform child in player.transform)
+        {
+            ShipElement target = child.GetComponent<ShipElement>();
+
+            if (target != null)
+            {
+                if (target.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
                 {
-                    if (target.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
-                    {
-                        transform.GetComponentInParent<FiringCanons>().fireOn(target);
-                    }
+                    // todo find a way to use a preselected sailor here (maybe assign sailor first to some place)
+                    target.repair();
+                    result = true;
                 }
             }
         }
+        return result;
+    }
+
+    private bool checkEnemyShip(Vector2 touchPos)
+    {
+        GameObject player = GameObject.Find("Enemy");
+        bool result = false;
+
+        foreach (Transform child in player.transform)
+        {
+            ShipElement target = child.GetComponent<ShipElement>();
+
+            if (target != null)
+            {
+                if (target.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
+                {
+                    transform.GetComponentInParent<FiringCanons>().fireOn(target);
+                    result = true;
+                }
+            }
+        }
+        return result;
     }
 
 }
