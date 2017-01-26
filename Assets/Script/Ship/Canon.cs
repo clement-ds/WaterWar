@@ -17,8 +17,6 @@ public class Canon : ShipElement {
         // Destroy all Components
         if (GetComponent<SpriteRenderer>())
             Destroy(GetComponent<SpriteRenderer>());
-        if (GetComponent<Target>())
-            Destroy(GetComponent<Target>());
     }
 
     string getName() {
