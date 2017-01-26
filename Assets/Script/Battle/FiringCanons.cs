@@ -23,15 +23,15 @@ public class FiringCanons : MonoBehaviour {
         MainCanon = null;
     }
 
-    public void fireOn(GameObject target) {
+    public void fireOn(ShipElement target) {
         if (MainCanon != null && MainCanon.GetComponent<Cooldown>().getPossibility() == true)
         {
             // Reset cooldown after attack
             MainCanon.GetComponent<Cooldown>().resetPossibility();
 
             // Create particle of canon and play it
-            ParticleSystem canonShotExplosion = (ParticleSystem)MainCanon.transform.Find("CanonShotExplosion/PS_CanonShotExplosion").gameObject.GetComponent<ParticleSystem>();
-            canonShotExplosion.Play();
+            MainCanon.GetComponent<Canon>().doDamage();
+
 
 
             /*
@@ -45,13 +45,12 @@ public class FiringCanons : MonoBehaviour {
             print("Canon " + MainCanon.name + " fires on " + target.name + " with boulet " + MainCanon.GetComponent<SetAsCanonOnClick>().bouletname);
             if (enemy != null)
             {
-                ParticleSystem targetExplosion = target.transform.Find("BoatExplosion/PS_BoatExplosion").gameObject.GetComponent<ParticleSystem>();
-                targetExplosion.Play();
-
-                if (target.GetComponent<HasLife>())
-                    target.GetComponent<HasLife>().setLife(target.GetComponent<HasLife>().getLife() - 20);
-                enemy.setCurrentLife(enemy.getCurrentLife() - 20);
-                print("Aouch we loose 20 pv");
+                int resultDamage = target.receiveDamage(20);
+                if (resultDamage != -1)
+                {
+                    print("Aouch we loose 20 pv");
+                    enemy.receiveDamage(resultDamage);
+                }
                 if (enemy.getCurrentLife() <= 0)
                     GUIEnabled = true;
             }

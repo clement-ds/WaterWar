@@ -7,7 +7,8 @@ public class SetAsCanonOnClick : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        player = GameObject.Find("PlayerController").GetComponent<FiringCanons>();
+        player = GameObject.Find("Player").GetComponent<FiringCanons>();
+        print("Player canons: " + player.name);
         bouletname = "Default";
     }
     

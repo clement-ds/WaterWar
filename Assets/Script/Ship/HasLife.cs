@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/** DEPRECATED **/
 public class HasLife : MonoBehaviour {
     protected int life = 100;
 

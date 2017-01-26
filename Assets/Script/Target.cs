@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/** DEPRECATED **/
 public class Target : MonoBehaviour {
     FiringCanons player;
 
@@ -12,7 +13,7 @@ public class Target : MonoBehaviour {
 
     // Update is called once per frame
     void Update()
-    {
+    {/*
         if (player != null && Input.GetMouseButtonDown(0))
         {
             Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -23,6 +24,6 @@ public class Target : MonoBehaviour {
                 print("You attack!");
                 player.fireOn(this.gameObject);
             }
-        }
+        }*/
     }
 }

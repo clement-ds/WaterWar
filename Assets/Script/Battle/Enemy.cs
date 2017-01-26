@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
+/** DEPRECATED **/
 public class Enemy : MonoBehaviour {
     public Slider slider = null;
 
