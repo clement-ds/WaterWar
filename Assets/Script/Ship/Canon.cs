@@ -6,12 +6,14 @@ public class Canon : ShipElement {
     private int power = 5;       // Random number
     private int damage = 5;      // Random number
     private int viewFinder = 0;  // Random number
+    
+    public Canon() : base(50)
+    {
+    }
 
     // Use this for initialization
     void Start()
     {
-        life = 50;
-        this.setCurrentLife(life);
     }
 
     public void destroyCanon() {

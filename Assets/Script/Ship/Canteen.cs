@@ -4,10 +4,9 @@ using System;
 
 public class Canteen : ShipElement {
 
-	// Use this for initialization
-	void Start () {
-        life = 100;
-        this.setCurrentLife(life);
+    // Use this for initialization
+    public Canteen() : base(100)
+    {
     }
 
     /** ON HIT EFFECT **/

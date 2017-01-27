@@ -5,15 +5,24 @@ using System.Collections;
 public class Battle_Ship : MonoBehaviour
 {
     public Slider slider = null;
-    protected int life = 100;
-    protected int currentLife = 100;
+    protected readonly int life;
+    protected int currentLife;
+
+    protected Battle_Ship(int lifeValue)
+    {
+        life = lifeValue;
+        this.setCurrentLife(life);
+    }
 
     public void updateSliderValue() {
-        slider.value = (currentLife * 100) / life;
+        if (slider)
+        {
+            slider.value = (currentLife * 100) / life;
+        }
     }
 
     public void receiveDamage(int damage) {
-        currentLife -= damage;
+        this.setCurrentLife(this.currentLife - damage);
     }
 
     /** GETTERS **/
@@ -24,6 +33,8 @@ public class Battle_Ship : MonoBehaviour
     /** SETTERS **/
     public void setCurrentLife(int value) {
         this.currentLife = value;
+        this.currentLife = (value < 0 ? 0 : value);
+        this.currentLife = (this.currentLife > this.life ? this.life : this.currentLife);
         this.updateSliderValue();
     }
 }

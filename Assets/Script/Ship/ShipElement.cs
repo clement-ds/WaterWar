@@ -4,10 +4,16 @@ using UnityEngine.UI;
 
 public abstract class ShipElement : MonoBehaviour
 {
-    protected int life = 0;
-    protected int currentLife = 0;
+    protected readonly int life;
+    protected int currentLife;
     protected bool available = true;
     public Slider slider = null;
+
+    protected ShipElement(int lifeValue)
+    {
+        life = lifeValue;
+        this.setCurrentLife(life);
+    }
 
     /** SLIDER HP **/
     public void updateSliderValue() {

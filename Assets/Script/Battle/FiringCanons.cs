@@ -24,7 +24,7 @@ public class FiringCanons : MonoBehaviour {
     }
 
     public void fireOn(ShipElement target) {
-        if (MainCanon != null && MainCanon.GetComponent<Cooldown>().getPossibility() == true)
+        if (MainCanon != null && MainCanon.GetComponent<Canon>().isAvailable() && MainCanon.GetComponent<Cooldown>().getPossibility() == true)
         {
             // Reset cooldown after attack
             MainCanon.GetComponent<Cooldown>().resetPossibility();
@@ -42,7 +42,7 @@ public class FiringCanons : MonoBehaviour {
             ball.setTarget(target.transform);
             */
             Battle_Ship enemy = target.GetComponentInParent<Battle_Ship>();
-            print("Canon " + MainCanon.name + " fires on " + target.name + " with boulet " + MainCanon.GetComponent<SetAsCanonOnClick>().bouletname);
+            print("Canon " + MainCanon.name + " fires on " + target.name);
             if (enemy != null)
             {
                 // TODO send the bullet object with damage, type, inHitEffect etc

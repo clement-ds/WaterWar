@@ -9,10 +9,12 @@ public class Battle_Player : Battle_Ship {
     
     private int position = 2;
 
+    public Battle_Player() : base(200)
+    {
+    }
 
     // Use this for initialization
     void Start () {
-        slider.value = currentLife;
         distanceText.text = position.ToString();
         actionFuite.gameObject.SetActive(false);
         actionAbordage.gameObject.SetActive(false);
@@ -21,7 +23,6 @@ public class Battle_Player : Battle_Ship {
     // Update is called once per frame
     void Update () {
         this.hasInputMouse();
-        slider.value = life;
         distanceText.text = position.ToString();
         if (position == 3) {
             actionFuite.gameObject.SetActive(true); 
