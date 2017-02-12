@@ -69,6 +69,12 @@ public class FiringCanons : MonoBehaviour {
     {
         GUI.Label(new Rect(25, 25, 100, 40), "Loot here");
         if (GUI.Button(new Rect(25, 75, 100, 20), "Continue")) {
+            Player p = PlayerManager.GetInstance().player;
+            if (p.questLog.quests.Count > 0)
+            {
+                p.inventory.food.Add(p.questLog.quests[0].reward);
+                PlayerManager.GetInstance().Save();
+            }
             gm.GoInteraction();
         }
 
