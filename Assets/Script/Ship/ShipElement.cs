@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public abstract class ShipElement : MonoBehaviour
 {
@@ -16,8 +17,10 @@ public abstract class ShipElement : MonoBehaviour
     }
 
     /** SLIDER HP **/
-    public void updateSliderValue() {
-        if (slider) {
+    public void updateSliderValue()
+    {
+        if (slider)
+        {
             slider.value = (currentLife * 100) / life;
         }
     }
@@ -48,7 +51,8 @@ public abstract class ShipElement : MonoBehaviour
     protected abstract void applyMalusOnDestroy();
 
     /** REPAIR **/
-    public bool repair() {
+    public bool repair()
+    {
         // todo, sailor in parameter
         this.doRepairAction();
         return true;
@@ -57,7 +61,8 @@ public abstract class ShipElement : MonoBehaviour
     protected abstract void doRepairAction();
 
     /** DO DAMAGE **/
-    public bool doDamage() {
+    public bool doDamage()
+    {
         if (this.available)
         {
             this.doDamageAction();
@@ -81,7 +86,7 @@ public abstract class ShipElement : MonoBehaviour
             this.dealDamageAsRepercution(damage);
             this.applyMalusOnHit();
             return true;
-         }
+        }
         return false;
     }
 
@@ -91,20 +96,24 @@ public abstract class ShipElement : MonoBehaviour
 
 
     /** GETTERS **/
-    public int getLife() {
+    public int getLife()
+    {
         return this.life;
     }
 
-    public int getCurrentLife() {
+    public int getCurrentLife()
+    {
         return this.currentLife;
     }
 
-    public bool isAvailable() {
+    public bool isAvailable()
+    {
         return this.available;
     }
 
     /** SETTERS **/
-    public void setCurrentLife(int value) {
+    public void setCurrentLife(int value)
+    {
         this.currentLife = (value < 0 ? 0 : value);
         this.currentLife = (this.currentLife > this.life ? this.life : this.currentLife);
         this.updateSliderValue();
@@ -116,7 +125,8 @@ public abstract class ShipElement : MonoBehaviour
         }
     }
 
-    public void setAvailable(bool value) {
+    public void setAvailable(bool value)
+    {
         this.available = value;
     }
 }

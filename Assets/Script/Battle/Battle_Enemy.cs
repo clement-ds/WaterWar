@@ -8,13 +8,18 @@ public class Battle_Enemy : Battle_Ship
     {
     }
 
+    // CREATE
+    protected override void createCrew()
+    {
+    }
+
     // Use this for initialization
     void Start() {
     }
 
     // Update is called once per frame
     void Update() {
-        this.attackMode();
+        //this.attackMode();
     }
 
     /** ATTACK **/

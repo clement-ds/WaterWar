@@ -5,6 +5,7 @@ using System;
 [Serializable]
 public class CrewMember {
 
+    public string id;
     public string type;
     protected float attackStrength = 1f;
     protected bool useRangedWeapon = false;
@@ -71,5 +72,9 @@ public class CrewMember {
         }
     }
 
-
+    /** GETTERS **/
+    public string getId()
+    {
+        return this.id;
+    }
 }

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class Battle_Ship : MonoBehaviour
+public abstract class Battle_Ship : MonoBehaviour
 {
     public Slider slider = null;
     protected readonly int life;
@@ -24,6 +24,8 @@ public class Battle_Ship : MonoBehaviour
     public void receiveDamage(int damage) {
         this.setCurrentLife(this.currentLife - damage);
     }
+
+    protected abstract void createCrew();
 
     /** GETTERS **/
     public int getCurrentLife() {
