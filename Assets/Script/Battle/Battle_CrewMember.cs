@@ -36,7 +36,7 @@ public class Battle_CrewMember : MonoBehaviour
                 this.unselect();
             }
         }
-        else if (Input.GetMouseButtonDown(1))
+        else if (Input.GetMouseButtonDown(1) && this.isSelected())
         {
             GameObject player = GameObject.Find("Player");
             foreach (Transform child in player.transform)
