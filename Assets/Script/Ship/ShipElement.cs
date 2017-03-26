@@ -21,24 +21,27 @@ public abstract class ShipElement : MonoBehaviour
         slider = itemObj.GetComponent<Slider>();
         itemObj.transform.localScale = new Vector3(1, 1, 1);
         mSlider = itemObj;
-
-        Debug.Log(this.transform.position);
-        Debug.Log(this.transform.localPosition);
     }
 
     void Update()
     {
+        float camHalfHeight = Camera.main.orthographicSize;
+        float camHalfWidth = Camera.main.aspect * camHalfHeight;
+
+        Bounds bounds = this.GetComponent<SpriteRenderer>().bounds;
         var wantedPos = Camera.main.WorldToViewportPoint(this.transform.position);
 
-        /*  wantedPos.x = wantedPos.x / 4.5f * (679 / 2) + 10;
-          wantedPos.y = wantedPos.y / 9.36450662739f * (1413 / 2) + 10;*/
-        wantedPos.x = wantedPos.x * 540;
-        wantedPos.y = wantedPos.y * 290;
+        // Set a new vector to the top left of the scene 
+        Vector3 topLeftPosition = new Vector3(-camHalfWidth, camHalfHeight, 0) + Camera.main.transform.position;
 
-        wantedPos.z = -10000;
-        if (mSlider != null)
-        {
-            mSlider.transform.localPosition = wantedPos;
+        // Offset it by the size of the object 
+        topLeftPosition += new Vector3(bounds.size.x / 2, -bounds.size.y / 2, 0);
+
+        topLeftPosition.x += (wantedPos.y);
+        topLeftPosition.y -= (wantedPos.x);
+
+        if (mSlider) { 
+            mSlider.transform.position = topLeftPosition;
         }
     }
 
