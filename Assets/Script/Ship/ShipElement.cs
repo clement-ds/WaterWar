@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
 
 public abstract class ShipElement : MonoBehaviour
 {
@@ -9,11 +10,42 @@ public abstract class ShipElement : MonoBehaviour
     protected int currentLife;
     protected bool available = true;
     public Slider slider = null;
+    protected GameObject pSlider = null;
+    protected GameObject mSlider = null;
+
+    void Start()
+    {
+        GameObject pSlider = GameObject.Find("Battle_UI/ex_slidder").gameObject;
+        GameObject itemObj = Instantiate(pSlider);
+        itemObj.transform.SetParent(GameObject.Find("Battle_UI").transform);
+        slider = itemObj.GetComponent<Slider>();
+        itemObj.transform.localScale = new Vector3(1, 1, 1);
+        mSlider = itemObj;
+
+        Debug.Log(this.transform.position);
+        Debug.Log(this.transform.localPosition);
+    }
+
+    void Update()
+    {
+        var wantedPos = Camera.main.WorldToViewportPoint(this.transform.position);
+
+        /*  wantedPos.x = wantedPos.x / 4.5f * (679 / 2) + 10;
+          wantedPos.y = wantedPos.y / 9.36450662739f * (1413 / 2) + 10;*/
+        wantedPos.x = wantedPos.x * 540;
+        wantedPos.y = wantedPos.y * 290;
+
+        wantedPos.z = -10000;
+        if (mSlider != null)
+        {
+            mSlider.transform.localPosition = wantedPos;
+        }
+    }
 
     protected ShipElement(int lifeValue)
     {
-        life = lifeValue;
-        this.setCurrentLife(life);
+         life = lifeValue;
+         this.setCurrentLife(life);
     }
 
     /** SLIDER HP **/
