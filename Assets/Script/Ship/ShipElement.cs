@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System;
 
 public abstract class ShipElement : MonoBehaviour
 {
@@ -9,11 +10,45 @@ public abstract class ShipElement : MonoBehaviour
     protected int currentLife;
     protected bool available = true;
     public Slider slider = null;
+    protected GameObject pSlider = null;
+    protected GameObject mSlider = null;
+
+    void Start()
+    {
+        GameObject pSlider = GameObject.Find("Battle_UI/ex_slidder").gameObject;
+        GameObject itemObj = Instantiate(pSlider);
+        itemObj.transform.SetParent(GameObject.Find("Battle_UI").transform);
+        slider = itemObj.GetComponent<Slider>();
+        itemObj.transform.localScale = new Vector3(1, 1, 1);
+        mSlider = itemObj;
+    }
+
+    void Update()
+    {
+        float camHalfHeight = Camera.main.orthographicSize;
+        float camHalfWidth = Camera.main.aspect * camHalfHeight;
+
+        Bounds bounds = this.GetComponent<SpriteRenderer>().bounds;
+        var wantedPos = Camera.main.WorldToViewportPoint(this.transform.position);
+
+        // Set a new vector to the top left of the scene 
+        Vector3 topLeftPosition = new Vector3(-camHalfWidth, camHalfHeight, 0) + Camera.main.transform.position;
+
+        // Offset it by the size of the object 
+        topLeftPosition += new Vector3(bounds.size.x / 2, -bounds.size.y / 2, 0);
+
+        topLeftPosition.x += (wantedPos.y);
+        topLeftPosition.y -= (wantedPos.x);
+
+        if (mSlider) { 
+            mSlider.transform.position = topLeftPosition;
+        }
+    }
 
     protected ShipElement(int lifeValue)
     {
-        life = lifeValue;
-        this.setCurrentLife(life);
+         life = lifeValue;
+         this.setCurrentLife(life);
     }
 
     /** SLIDER HP **/
