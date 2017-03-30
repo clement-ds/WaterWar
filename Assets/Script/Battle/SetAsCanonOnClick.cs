@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//DEPRECATED
 public class SetAsCanonOnClick : MonoBehaviour {
     FiringCanons player;
     public string bouletname { get; set; }

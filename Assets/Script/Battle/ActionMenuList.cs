@@ -25,8 +25,6 @@ public class ActionMenuList : MonoBehaviour
     public Transform contentPanel;
     protected SimpleObjectPool buttonObjectPool = null;
 
-    private ShipElement ship;
-
     // Use this for initialization
     void Start()
     {
@@ -41,11 +39,10 @@ public class ActionMenuList : MonoBehaviour
         AddButtons();
     }
 
-    public void init(List<ActionMenuItem> items, ShipElement ship)
+    public void init(List<ActionMenuItem> items)
     {
         this.itemList.AddRange(items);
         buttonObjectPool = GameObject.Find("SimpleActionMenuItemPool").GetComponent<SimpleObjectPool>();
-        this.ship = ship;
     }
 
     public void update(List<ActionMenuItem> items)

@@ -17,6 +17,13 @@ public class Canteen : ShipElement {
             this.actionList.Add(new ActionMenuItem("Repair", doRepair));
     }
 
+    /** AVAILABLE POSITION CREATOR **/
+    protected override void createAvailableCrewMemberPosition()
+    {
+        this.availablePosition.Add(new AvailablePosition(new Vector3(-0.1f, -0.1f, 0f)));
+        this.availablePosition.Add(new AvailablePosition(new Vector3(0.1f, -0.1f, 0f)));
+    }
+
     /** ON HIT EFFECT **/
     protected override void dealDamageAsRepercution(int damage)
     {

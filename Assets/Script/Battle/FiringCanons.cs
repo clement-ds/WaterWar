@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
+// DEPRECATED
 public class FiringCanons : MonoBehaviour {
     public GameManager gm;
 

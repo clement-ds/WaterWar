@@ -28,12 +28,20 @@ public class Canon : ShipElement
         this.actionList.RemoveRange(0, this.actionList.Count);
         if (this.getMember() && this.target && !this.attacking && !this.reloading)
             this.actionList.Add(new ActionMenuItem("Attack", doDamage));
-        if (this.attacking)
+        if (this.attacking && this.canAttack)
             this.actionList.Add(new ActionMenuItem("Stop Attack", stopAttack));
+        if (this.reloading)
+            this.actionList.Add(new ActionMenuItem("Reloading..", none));
         if (this.currentLife != this.life)
             this.actionList.Add(new ActionMenuItem("Repair", doRepair));
         if (this.getMember() && !ready && !this.reloading)
             this.actionList.Add(new ActionMenuItem("Load canon", doReload));
+    }
+
+    /** AVAILABLE POSITION CREATOR **/
+    protected override void createAvailableCrewMemberPosition()
+    {
+        this.availablePosition.Add(new AvailablePosition(new Vector3(0f, -0.6f, 0f)));
     }
 
     /** ON HIT EFFECT **/
@@ -69,6 +77,7 @@ public class Canon : ShipElement
     protected bool stopAttack()
     {
         this.canAttack = false;
+        this.updateActionMenu();
         return true;
     }
 
@@ -76,8 +85,8 @@ public class Canon : ShipElement
     protected bool doReload()
     {
         this.reloading = true;
-        Invoke("setCanonReady", 3);
         this.updateActionMenu();
+        Invoke("setCanonReady", 3);
         return true;
     }
 
@@ -205,6 +214,7 @@ public class Canon : ShipElement
     {
         this.reloading = false;
         this.ready = true;
+        this.updateActionMenu();
         print("canon ready");
     }
 }

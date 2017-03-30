@@ -4,35 +4,35 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
-public abstract class ShipElement : MonoBehaviour
+public class AvailablePosition
+{
+    public Vector3 position;
+    public bool available;
+    public int crewId;
+
+    public AvailablePosition(Vector3 position)
+    {
+        this.position = position;
+        this.available = true;
+    }
+}
+
+public abstract class ShipElement : GuiElement
 {
     protected readonly int life;
     protected int currentLife;
-    protected string id;
-    protected bool selected = false;
-    protected bool focused = false;
     protected bool available = true;
     protected bool repairing = false;
     protected bool attacking = false;
     protected bool canAttack = true;
     public Slider slider = null;
-    protected SimpleObjectPool buttonObjectPool;
     protected GameObject pSlider = null;
     protected GameObject mSlider = null;
-    protected GameObject actionMenu = null;
-    protected SpriteOutline outline = null;
-    protected List<ActionMenuItem> actionList = new List<ActionMenuItem>();
+    protected List<AvailablePosition> availablePosition = new List<AvailablePosition>();
 
-    void Start()
+    protected override void StartMySelf()
     {
-        this.id = Guid.NewGuid().ToString();
-        this.buttonObjectPool = GameObject.Find("SimpleActionMenuPool").GetComponent<SimpleObjectPool>();
-        this.outline = GetComponent<SpriteOutline>();
-
-        if (this.GetComponentInParent<Battle_Player>())
-        {
-            createActionMenu();
-        }
+        createAvailableCrewMemberPosition();
         //TODO garance ça plante
         /*
         GameObject pSlider = GameObject.Find("Battle_UI/ex_slidder").gameObject;
@@ -73,84 +73,6 @@ public abstract class ShipElement : MonoBehaviour
         }
     }
 
-    /** INPUT **/
-    public void hasInputMouse(Boolean clicked)
-    {
-        if (clicked)
-        {
-            if (this.focused)
-            {
-                this.unfocus();
-            }
-            else
-            {
-                this.focus();
-            }
-        }
-        else
-        {
-            this.unselect();
-        }
-    }
-
-    /** INTERACTION **/
-    public void focus()
-    {
-        this.selected = true;
-        this.focused = true;
-        this.outline.enabled = true;
-        this.updateActionMenu();
-    }
-
-    public void unfocus()
-    {
-        this.selected = false;
-        this.focused = false;
-        this.outline.enabled = false;
-        this.actionMenu.SetActive(false);
-    }
-
-    public void unselect()
-    {
-        this.selected = false;
-    }
-
-    /** GUI CREATOR **/
-    protected abstract void createActionList();
-
-    private void createActionMenu()
-    {
-        this.actionMenu = buttonObjectPool.GetObject();
-        this.actionMenu.transform.SetParent(GameObject.Find("Battle_UI").gameObject.transform);
-
-        this.actionMenu.GetComponent<RectTransform>().offsetMin = new Vector2(-100, -100);
-        this.actionMenu.GetComponent<RectTransform>().offsetMax = new Vector2(100, 100);
-        this.actionMenu.transform.localScale = new Vector3(1, 1, 1);
-
-        this.actionMenu.GetComponentInChildren<ActionMenuList>().init(this.actionList, this);
-        this.actionMenu.SetActive(false);
-    }
-
-    private void updateActionMenuItem()
-    {
-        if (!this.actionMenu)
-            return;
-        this.createActionList();
-        this.actionMenu.GetComponentInChildren<ActionMenuList>().update(this.actionList);
-    }
-
-    public void updateActionMenu()
-    {
-        print("update menu");
-        if (!this.actionMenu)
-            return;
-        this.updateActionMenuItem();
-        if (this.actionList.Count != 0)
-            this.actionMenu.SetActive(true);
-        else
-            this.actionMenu.SetActive(false);
-    }
-
     /** SLIDER HP **/
     public void updateSliderValue()
     {
@@ -173,6 +95,35 @@ public abstract class ShipElement : MonoBehaviour
         if (slider)
         {
             slider.enabled = false;
+        }
+    }
+
+    /** AVAILABLE POSITION **/
+    protected abstract void createAvailableCrewMemberPosition();
+
+    public Vector3 chooseAvailableCrewMemberPosition(int id)
+    {
+        for (int i = 0; i < this.availablePosition.Count; ++i)
+        {
+            if (this.availablePosition[i].available)
+            {
+                this.availablePosition[i].available = false;
+                this.availablePosition[i].crewId = id;
+                return this.availablePosition[i].position;
+            }
+        }
+        return new Vector3(0f, 0f, 0f);
+    }
+
+    public void freeCrewMemberPosition(Vector3 pos)
+    {
+        for (int i = 0; i < this.availablePosition.Count; ++i)
+        {
+            if (this.availablePosition[i].position == pos)
+            {
+                this.availablePosition[i].available = true;
+                break;
+            }
         }
     }
 
@@ -255,11 +206,6 @@ public abstract class ShipElement : MonoBehaviour
         return transform.GetComponentInChildren<Battle_CrewMember>();
     }
 
-    public string getId()
-    {
-        return this.id;
-    }
-
     public int getLife()
     {
         return this.life;
@@ -275,15 +221,6 @@ public abstract class ShipElement : MonoBehaviour
         return this.available;
     }
 
-    public bool isSelected()
-    {
-        return this.selected;
-    }
-
-    public bool isFocused()
-    {
-        return this.focused;
-    }
     /** SETTERS **/
     public void setCurrentLife(int value)
     {
