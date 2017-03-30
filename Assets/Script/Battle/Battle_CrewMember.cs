@@ -7,6 +7,7 @@ public class Battle_CrewMember : MonoBehaviour
     ShipElement room = null;
     CrewMember member = null;
     bool selected = false;
+    bool focused = false;
 
     // Use this for initialization
     void Start()
@@ -46,6 +47,7 @@ public class Battle_CrewMember : MonoBehaviour
                 {
                     this.transform.SetParent(target.transform);
                     this.transform.localPosition = new Vector3(0, 0, 0);
+                    target.updateActionMenu();
                 }
             }
         }

@@ -75,7 +75,7 @@ public class Battle_Enemy : Battle_Ship
 
             if (canon != null && !canon.isAvailable())
             {
-                canon.repair();
+                canon.doRepair();
             }
         }
     }

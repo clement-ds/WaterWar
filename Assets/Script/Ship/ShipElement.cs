@@ -8,19 +8,46 @@ public abstract class ShipElement : MonoBehaviour
 {
     protected readonly int life;
     protected int currentLife;
+    protected string id;
+    protected bool selected = false;
+    protected bool focused = false;
     protected bool available = true;
+    protected bool repairing = false;
+    protected bool attacking = false;
+    protected bool canAttack = true;
     public Slider slider = null;
+    protected SimpleObjectPool buttonObjectPool;
     protected GameObject pSlider = null;
     protected GameObject mSlider = null;
+    protected GameObject actionMenu = null;
+    protected SpriteOutline outline = null;
+    protected List<ActionMenuItem> actionList = new List<ActionMenuItem>();
 
     void Start()
     {
+        this.id = Guid.NewGuid().ToString();
+        this.buttonObjectPool = GameObject.Find("SimpleActionMenuPool").GetComponent<SimpleObjectPool>();
+        this.outline = GetComponent<SpriteOutline>();
+
+        if (this.GetComponentInParent<Battle_Player>())
+        {
+            createActionMenu();
+        }
+        //TODO garance ça plante
+        /*
         GameObject pSlider = GameObject.Find("Battle_UI/ex_slidder").gameObject;
         GameObject itemObj = Instantiate(pSlider);
         itemObj.transform.SetParent(GameObject.Find("Battle_UI").transform);
         slider = itemObj.GetComponent<Slider>();
         itemObj.transform.localScale = new Vector3(1, 1, 1);
-        mSlider = itemObj;
+        mSlider = itemObj;*/
+
+    }
+
+    protected ShipElement(int lifeValue)
+    {
+        this.life = lifeValue;
+        this.setCurrentLife(life);
     }
 
     void Update()
@@ -40,15 +67,88 @@ public abstract class ShipElement : MonoBehaviour
         topLeftPosition.x += (wantedPos.y);
         topLeftPosition.y -= (wantedPos.x);
 
-        if (mSlider) { 
+        if (mSlider)
+        {
             mSlider.transform.position = topLeftPosition;
         }
     }
 
-    protected ShipElement(int lifeValue)
+    /** INPUT **/
+    public void hasInputMouse(Boolean clicked)
     {
-         life = lifeValue;
-         this.setCurrentLife(life);
+        if (clicked)
+        {
+            if (this.focused)
+            {
+                this.unfocus();
+            }
+            else
+            {
+                this.focus();
+            }
+        }
+        else
+        {
+            this.unselect();
+        }
+    }
+
+    /** INTERACTION **/
+    public void focus()
+    {
+        this.selected = true;
+        this.focused = true;
+        this.outline.enabled = true;
+        this.updateActionMenu();
+    }
+
+    public void unfocus()
+    {
+        this.selected = false;
+        this.focused = false;
+        this.outline.enabled = false;
+        this.actionMenu.SetActive(false);
+    }
+
+    public void unselect()
+    {
+        this.selected = false;
+    }
+
+    /** GUI CREATOR **/
+    protected abstract void createActionList();
+
+    private void createActionMenu()
+    {
+        this.actionMenu = buttonObjectPool.GetObject();
+        this.actionMenu.transform.SetParent(GameObject.Find("Battle_UI").gameObject.transform);
+
+        this.actionMenu.GetComponent<RectTransform>().offsetMin = new Vector2(-100, -100);
+        this.actionMenu.GetComponent<RectTransform>().offsetMax = new Vector2(100, 100);
+        this.actionMenu.transform.localScale = new Vector3(1, 1, 1);
+
+        this.actionMenu.GetComponentInChildren<ActionMenuList>().init(this.actionList, this);
+        this.actionMenu.SetActive(false);
+    }
+
+    private void updateActionMenuItem()
+    {
+        if (!this.actionMenu)
+            return;
+        this.createActionList();
+        this.actionMenu.GetComponentInChildren<ActionMenuList>().update(this.actionList);
+    }
+
+    public void updateActionMenu()
+    {
+        print("update menu");
+        if (!this.actionMenu)
+            return;
+        this.updateActionMenuItem();
+        if (this.actionList.Count != 0)
+            this.actionMenu.SetActive(true);
+        else
+            this.actionMenu.SetActive(false);
     }
 
     /** SLIDER HP **/
@@ -85,29 +185,45 @@ public abstract class ShipElement : MonoBehaviour
 
     protected abstract void applyMalusOnDestroy();
 
+    /** ACTIONS **/
+    public abstract bool actionIsRunning();
+
     /** REPAIR **/
-    public bool repair()
-    {
-        // todo, sailor in parameter
-        this.doRepairAction();
-        return true;
-    }
+    protected abstract void doRepairEnd();
 
-    protected abstract void doRepairAction();
-
-    /** DO DAMAGE **/
-    public bool doDamage()
+    public bool doRepair()
     {
-        if (this.available)
+        if (getMember() != null)
         {
-            this.doDamageAction();
-            this.doDamageAnimation();
+            this.doRepairAction();
+            this.updateActionMenu();
             return true;
         }
         return false;
     }
 
-    protected abstract void doDamageAction();
+    protected abstract bool doRepairAction();
+
+    /** DO DAMAGE **/
+    public bool doDamage()
+    {
+        if (this.available && getMember() != null)
+        {
+            if (this.doDamageAction())
+            {
+                this.doDamageAnimation();
+            }
+            this.updateActionMenu();
+            return true;
+        }
+        else
+        {
+            this.setAttacking(false);
+        }
+        return false;
+    }
+
+    protected abstract bool doDamageAction();
 
     protected abstract void doDamageAnimation();
 
@@ -116,21 +232,34 @@ public abstract class ShipElement : MonoBehaviour
     {
         if (this.available)
         {
-            this.receiveDamageAction(damage);
-            this.receiveDamageAnimation();
+            if (this.receiveDamageAction(damage))
+            {
+                this.receiveDamageAnimation();
+            }
             this.dealDamageAsRepercution(damage);
             this.applyMalusOnHit();
+            this.updateActionMenu();
             return true;
         }
         return false;
     }
 
-    protected abstract void receiveDamageAction(int damage);
+    protected abstract bool receiveDamageAction(int damage);
 
     protected abstract void receiveDamageAnimation();
 
 
     /** GETTERS **/
+    public Battle_CrewMember getMember()
+    {
+        return transform.GetComponentInChildren<Battle_CrewMember>();
+    }
+
+    public string getId()
+    {
+        return this.id;
+    }
+
     public int getLife()
     {
         return this.life;
@@ -146,6 +275,15 @@ public abstract class ShipElement : MonoBehaviour
         return this.available;
     }
 
+    public bool isSelected()
+    {
+        return this.selected;
+    }
+
+    public bool isFocused()
+    {
+        return this.focused;
+    }
     /** SETTERS **/
     public void setCurrentLife(int value)
     {
@@ -163,5 +301,13 @@ public abstract class ShipElement : MonoBehaviour
     public void setAvailable(bool value)
     {
         this.available = value;
+    }
+
+    protected void setAttacking(bool value)
+    {
+        this.attacking = value;
+        if (!this.attacking)
+            canAttack = true;
+        this.updateActionMenu();
     }
 }
