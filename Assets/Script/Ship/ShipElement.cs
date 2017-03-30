@@ -115,11 +115,11 @@ public abstract class ShipElement : GuiElement
         return new Vector3(0f, 0f, 0f);
     }
 
-    public void freeCrewMemberPosition(Vector3 pos)
+    public void freeCrewMemberPosition(int id)
     {
         for (int i = 0; i < this.availablePosition.Count; ++i)
         {
-            if (this.availablePosition[i].position == pos)
+            if (this.availablePosition[i].crewId == id)
             {
                 this.availablePosition[i].available = true;
                 break;
@@ -139,13 +139,23 @@ public abstract class ShipElement : GuiElement
     /** ACTIONS **/
     public abstract bool actionIsRunning();
 
-    /** REPAIR **/
-    protected abstract void doRepairEnd();
+    public abstract bool actionStopRunning();
 
+    /** REPAIR **/
+    protected abstract void doRepairActionEnd();
+
+    private void doRepairEnd()
+    {
+        this.repairing = false;
+        this.doRepairActionEnd();
+        this.updateActionMenu();
+    }
+    
     public bool doRepair()
     {
-        if (getMember() != null)
+        if (getMember() != null && !this.isRepairing())
         {
+            this.repairing = true;
             this.doRepairAction();
             this.updateActionMenu();
             return true;
@@ -179,6 +189,16 @@ public abstract class ShipElement : GuiElement
     protected abstract void doDamageAnimation();
 
     /** RECEIVE DAMAGE **/
+    protected void die()
+    {
+        this.dealDamageOnDestroy();
+        this.applyMalusOnDestroy();
+        Battle_CrewMember member = this.GetComponent<Battle_CrewMember>();
+        if (member)
+        {
+            member.freeCrewMemberFromShipElement(this, this.transform.parent.gameObject);
+        }
+    }
     public bool receiveDamage(int damage)
     {
         if (this.available)
@@ -216,9 +236,19 @@ public abstract class ShipElement : GuiElement
         return this.currentLife;
     }
 
+    public float getPercentLife()
+    {
+        return this.currentLife * 100 / this.life;
+    }
+
     public bool isAvailable()
     {
         return this.available;
+    }
+
+    public bool isRepairing()
+    {
+        return this.repairing;
     }
 
     /** SETTERS **/
@@ -230,8 +260,7 @@ public abstract class ShipElement : GuiElement
         this.available = (this.currentLife > 0);
         if (!available)
         {
-            this.dealDamageOnDestroy();
-            this.applyMalusOnDestroy();
+            this.die();
         }
     }
 

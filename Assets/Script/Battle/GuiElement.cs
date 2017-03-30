@@ -52,16 +52,20 @@ public abstract class GuiElement : MonoBehaviour
     {
         this.selected = true;
         this.focused = true;
-        this.outline.enabled = true;
-        this.updateActionMenu();
+        if (this.outline)
+            this.outline.enabled = true;
+        if (this.actionMenu)
+            this.updateActionMenu();
     }
 
     public void unfocus()
     {
         this.selected = false;
         this.focused = false;
-        this.outline.enabled = false;
-        this.actionMenu.SetActive(false);
+        if (this.outline)
+            this.outline.enabled = false;
+        if (this.actionMenu)
+            this.actionMenu.SetActive(false);
     }
 
     public void unselect()

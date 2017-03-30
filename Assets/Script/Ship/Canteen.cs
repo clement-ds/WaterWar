@@ -13,7 +13,7 @@ public class Canteen : ShipElement {
     protected override void createActionList()
     {
         this.actionList.RemoveRange(0, this.actionList.Count);
-        if (this.currentLife != this.life)
+        if (this.getMember() && !this.isRepairing() && this.currentLife != this.life)
             this.actionList.Add(new ActionMenuItem("Repair", doRepair));
     }
 
@@ -55,11 +55,17 @@ public class Canteen : ShipElement {
         return false;
     }
 
+    public override bool actionStopRunning()
+    {
+        return false;
+    }
+
     /** REPAIR **/
-    protected override void doRepairEnd()
+    protected override void doRepairActionEnd()
     {
         //TODO value life en fonction du member
         this.setCurrentLife(this.currentLife + 20);
+        this.GetComponent<Battle_CrewMember>().freeCrewMemberFromShipElement(this, this.transform.parent.gameObject);
     }
 
     protected override bool doRepairAction()

@@ -4,6 +4,8 @@ using System.Collections;
 
 public class Battle_Enemy : Battle_Ship
 {
+    protected bool needAFreeCrewMember = false;
+
     public Battle_Enemy() : base(200)
     {
     }
@@ -14,39 +16,129 @@ public class Battle_Enemy : Battle_Ship
     }
 
     // Use this for initialization
-    void Start() {
+    void Start()
+    {
     }
 
     // Update is called once per frame
-    void Update() {
-        //this.attackMode();
+    void Update()
+    {
+        this.doScriptAction();
+    }
+
+    /** SCRIPT **/
+
+    public void doScriptAction()
+    {
+        Battle_CrewMember member = getFreeCrewMember();
+
+        if (!this.repairCanteen(member))
+        {
+            if (!this.repairCanon(member))
+            {
+                this.attackMode(member);
+            }
+            else
+            {
+                this.needAFreeCrewMember = false;
+            }
+        }
+        else
+        {
+            this.needAFreeCrewMember = false;
+        }
+        print("NEED A CREW : " + needAFreeCrewMember);
+        if (this.needAFreeCrewMember)
+        {
+            this.freeACrewMember();
+        }
+    }
+
+    /** UTILS **/
+    protected bool freeACrewMember()
+    {
+        GameObject player = GameObject.Find("Enemy");
+
+        foreach (Transform child in player.transform)
+        {
+            ShipElement element = child.GetComponent<ShipElement>();
+
+            if (element)
+            {
+                if (!element.actionIsRunning())
+                {
+                    foreach (Transform child2 in element.transform)
+                    {
+                        Battle_CrewMember member = child2.GetComponent<Battle_CrewMember>();
+
+                        if (member)
+                        {
+                            member.freeCrewMemberFromShipElement(element, element.transform.parent.gameObject);
+                            print("MEMBER CREW FREE");
+                            return true;
+                        }
+                    }
+                }
+                else if (element.actionStopRunning())
+                {
+                    print("ACTION STOP");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    protected Battle_CrewMember getFreeCrewMember()
+    {
+        Battle_CrewMember result = null;
+
+        GameObject player = GameObject.Find("Enemy");
+
+        foreach (Transform child in player.transform)
+        {
+            Battle_CrewMember member = child.GetComponent<Battle_CrewMember>();
+
+            if (member != null)
+            {
+                return member;
+            }
+        }
+        return result;
     }
 
     /** ATTACK **/
-    public void attackMode()
+    public bool attackMode(Battle_CrewMember member)
     {
         ShipElement target = this.findTargetElement();
 
         if (target)
         {
-            bool find = false;
             foreach (Transform child in this.transform)
             {
                 Canon canon = child.GetComponent<Canon>();
 
-                if (canon != null && canon.isAvailable() && canon.GetComponent<Cooldown>().getPossibility())
+                if (canon != null && canon.isAvailable() && !canon.isAttacking() && !canon.actionIsRunning())
                 {
-                    transform.GetComponentInParent<FiringCanons>().setMainCanon(canon.gameObject);
-                    transform.GetComponentInParent<FiringCanons>().fireOn(target);
-                    find = true;
-                    break;
+                    if (canon.getTarget() == null)
+                    {
+                        canon.setTarget(target);
+                    }
+                    if (canon.getMember() == null)
+                    {
+                        if (member == null)
+                        {
+                            this.needAFreeCrewMember = true;
+                            return false;
+                        }
+                        member.assignCrewMemberToShipElement(canon, this.gameObject);
+                    }
+                    canon.doDamage();
+                    return true;
                 }
             }
-            if (!find)
-            {
-                this.repearCanon();
-            }
         }
+        return false;
     }
 
     /** RESEARCH **/
@@ -67,7 +159,7 @@ public class Battle_Enemy : Battle_Ship
     }
 
     /** REPAIR **/
-    void repearCanon()
+    bool repairCanon(Battle_CrewMember member)
     {
         foreach (Transform child in this.transform)
         {
@@ -75,8 +167,36 @@ public class Battle_Enemy : Battle_Ship
 
             if (canon != null && !canon.isAvailable())
             {
+                if (member == null)
+                {
+                    this.needAFreeCrewMember = true;
+                    return false;
+                }
+                member.assignCrewMemberToShipElement(canon, this.gameObject);
                 canon.doRepair();
+                return true;
             }
         }
+        return false;
+    }
+
+    bool repairCanteen(Battle_CrewMember member)
+    {
+        Canteen canteen = this.GetComponent<Canteen>();
+
+        if (canteen)
+            print("canteeLife: " + canteen.getPercentLife());
+        if (canteen && canteen.getPercentLife() < 90)
+        {
+            if (member == null)
+            {
+                this.needAFreeCrewMember = true;
+                return false;
+            }
+            member.assignCrewMemberToShipElement(canteen, this.gameObject);
+            canteen.doRepair();
+            return true; ;
+        }
+        return false;
     }
 }

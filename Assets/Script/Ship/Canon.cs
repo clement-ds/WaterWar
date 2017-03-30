@@ -26,13 +26,13 @@ public class Canon : ShipElement
     protected override void createActionList()
     {
         this.actionList.RemoveRange(0, this.actionList.Count);
-        if (this.getMember() && this.target && !this.attacking && !this.reloading)
+        if (this.isAvailable() && this.getMember() && this.getTarget() && !this.attacking && !this.reloading)
             this.actionList.Add(new ActionMenuItem("Attack", doDamage));
         if (this.attacking && this.canAttack)
             this.actionList.Add(new ActionMenuItem("Stop Attack", stopAttack));
         if (this.reloading)
             this.actionList.Add(new ActionMenuItem("Reloading..", none));
-        if (this.currentLife != this.life)
+        if (this.getMember() && !this.isRepairing() && this.currentLife != this.life)
             this.actionList.Add(new ActionMenuItem("Repair", doRepair));
         if (this.getMember() && !ready && !this.reloading)
             this.actionList.Add(new ActionMenuItem("Load canon", doReload));
@@ -74,6 +74,15 @@ public class Canon : ShipElement
         return false;
     }
 
+    public override bool actionStopRunning()
+    {
+        if (this.isAttacking())
+        {
+            return this.stopAttack();
+        }
+        return false;
+    }
+
     protected bool stopAttack()
     {
         this.canAttack = false;
@@ -104,7 +113,7 @@ public class Canon : ShipElement
     }
 
     /** REPAIR **/
-    protected override void doRepairEnd()
+    protected override void doRepairActionEnd()
     {
         //TODO value life en fonction du member
         this.setCurrentLife(this.currentLife + 20);
@@ -132,6 +141,7 @@ public class Canon : ShipElement
                 if (!target.isAvailable())
                 {
                     this.stopAttack();
+                    this.target = null;
                     result = false;
                 }
                 if (enemy != null && canAttack)
@@ -198,9 +208,19 @@ public class Canon : ShipElement
         return this.viewFinder;
     }
 
-    public Boolean isReloading()
+    public bool isReloading()
     {
         return this.reloading;
+    }
+
+    public bool isAttacking()
+    {
+        return this.attacking;
+    }
+
+    public ShipElement getTarget()
+    {
+        return this.target;
     }
 
     /** SETTERS **/

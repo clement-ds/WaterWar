@@ -28,7 +28,6 @@ public class ActionMenuButton : MonoBehaviour
 
     public void HandleClick()
     {
-        print("JE TE CLIQUE");
         item.actionDelegate();
     }
 }

@@ -181,19 +181,8 @@ public class Battle_Player : Battle_Ship
                 if ((crewMember.GetComponentInParent<ShipElement>() == null || !crewMember.GetComponentInParent<ShipElement>().actionIsRunning())
                     && target.GetComponent<Battle_CrewMember>() == null)
                 {
-                    crewMember.transform.SetParent(target.transform);
-                    crewMember.transform.localPosition = target.chooseAvailableCrewMemberPosition(crewMember.GetInstanceID());
-                    target.focus();
-                    target.updateActionMenu();
+                    crewMember.assignCrewMemberToShipElement(target, player);
                     result = true;
-                    foreach (Transform child2 in player.transform)
-                    {
-                        ShipElement target2 = child2.GetComponent<ShipElement>();
-                        if (target2 != null && target.GetInstanceID() != target2.GetInstanceID())
-                        {
-                            target2.unfocus();
-                        }
-                    }
                 }
                 break;
             }

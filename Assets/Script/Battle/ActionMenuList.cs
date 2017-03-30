@@ -56,7 +56,6 @@ public class ActionMenuList : MonoBehaviour
     {
         while (contentPanel.childCount > 0)
         {
-            print("remove");
             GameObject toRemove = transform.GetChild(0).gameObject;
             buttonObjectPool.ReturnObject(toRemove);
         }
@@ -66,7 +65,6 @@ public class ActionMenuList : MonoBehaviour
     {
         for (int i = 0; i < itemList.Count; i++)
         {
-            print("add " + itemList[i].actionName);
             ActionMenuItem item = itemList[i];
             GameObject newButton = buttonObjectPool.GetObject();
             newButton.transform.SetParent(contentPanel);
