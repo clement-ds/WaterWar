@@ -18,7 +18,7 @@ public class IslandManager {
         island.x = 5;
         island.y = 9;
         Debug.Log("island : " + island.name);
-        Debug.Log("CHECK INVENTORY : " + island.inventory.food.Count + " / " + island.inventory.ammunition.Count);
+        Debug.Log("CHECK INVENTORY : " + island.inventory.food.Count + " / " + island.inventory.weapons.Count);
         Debug.Log("CHECK CREW : " + island.crew.begos.Count + " / " + island.crew.captains.Count + " / " + island.crew.engineers.Count
             + " / " + island.crew.fastUnits.Count + " / " + island.crew.fighters.Count);
         Debug.Log("CHECK QUEST : " + island.questLog.quests.Count);
@@ -111,7 +111,7 @@ public class Island
 public class IslandInventory
 {
     public List<InventoryObject> food = new List<InventoryObject>();
-    public List<InventoryObject> ammunition = new List<InventoryObject>();
+    public List<InventoryObject> weapons = new List<InventoryObject>();
 }
 
 [Serializable]

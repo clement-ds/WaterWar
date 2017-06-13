@@ -1,1 +1,5 @@
-{"description":"Kill captain Flint", "objective":"Captain Flint", "reward":{"name":"Rhum","type":"Food","number":10}}
+{"description":"Captain Flint", "objective":"Captain Flint", "reward":{"name":"Rhum","type":"Food","number":50}}
+{"description":"The lost treasure of Skull Island", "objective":"Collect the treasure", "reward":{"name":"Black powder","type":"Weapon","number":200}}
+{"description":"Apples !", "objective":"Collect 20 apples", "reward":{"name":"Apple","type":"Food","number":20}}
+{"description":"More apples !", "objective":"Collect 30 more apples", "reward":{"name":"Apples","type":"Food","number":30}}
+{"description":"Extermination 1", "objective":"Sink 10 ships", "reward":{"name":"Canon","type":"Weapon","number":10}}
