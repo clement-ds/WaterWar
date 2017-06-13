@@ -21,8 +21,10 @@ public class ListController : MonoBehaviour
 
     inventoryI = managerI.island.inventory;
     inventoryP = managerP.player.inventory;
-    FillBuyShop();
-    FillSellShop();
+    if (name == "BuyPanel")
+      FillBuyShop();
+    if (name == "SellPanel")
+      FillSellShop();
   }
 
   void FillBuyShop()
