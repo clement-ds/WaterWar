@@ -19,10 +19,10 @@
             "number":10
          }
       ],
-      "ammunition":[  
+      "weapons":[  
          {  
             "name":"Canon ball",
-            "type":"Ammunition",
+            "type":"Weapon",
             "number":10
          }
       ]
