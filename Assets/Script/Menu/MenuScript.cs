@@ -9,8 +9,8 @@ public class MenuScript : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        menu = GameObject.FindGameObjectWithTag("MenuCanvas");
-        menu.SetActive(false);
+        menu = GameObject.Find("UI_Interaction_Canvas");
+//        menu.SetActive(false);
     }
 	
 	// Update is called once per frame
