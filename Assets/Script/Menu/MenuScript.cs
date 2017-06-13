@@ -2,15 +2,13 @@
 using System.Collections;
 
 public class MenuScript : MonoBehaviour {
-
-    GameObject menu;
     public Canvas inventory;
     public Canvas crew;
     
+    GameObject menu;
 
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
         menu = GameObject.FindGameObjectWithTag("MenuCanvas");
         menu.SetActive(false);
     }
@@ -20,25 +18,21 @@ public class MenuScript : MonoBehaviour {
 	
 	}
 
-    public void OpenMenu()
-    {
+    public void OpenMenu() {
         menu.SetActive(!menu.active);
         inventory.enabled = false;
         crew.enabled = false;
     }
 
-    public void CloseMenu()
-    {
+    public void CloseMenu() {
         menu.SetActive(false);
     }
 
-    public void OpenInventory()
-    {
+    public void OpenInventory() {
         inventory.enabled = true;
     }
 
-    public void OpenCrew()
-    {
+    public void OpenCrew() {
         crew.enabled = true;
     }
 }

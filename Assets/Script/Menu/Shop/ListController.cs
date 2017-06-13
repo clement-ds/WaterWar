@@ -3,19 +3,15 @@ using System.Collections;
 
 public class ListController : MonoBehaviour
 {
-  IslandInventory inventoryI;
-  PlayerInventory inventoryP;
+  private IslandInventory inventoryI;
+  private PlayerInventory inventoryP;
 
   public Sprite[] Icons;
   public GameObject ContentPanel;
   public GameObject ListItemPrefab;
-  public GameObject shopList;
-
-  public int ressourceNumber;
 
   // Use this for initialization
-  void Start()
-  {
+  void Start() {
     IslandManager managerI = IslandManager.GetInstance();
     PlayerManager managerP = PlayerManager.GetInstance();
     IslandGenerator generator = new IslandGenerator();
@@ -84,7 +80,6 @@ public class ListController : MonoBehaviour
   }
 
   // Update is called once per frame
-  void Update()
-  {
+  void Update() {
   }
 }
