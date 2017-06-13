@@ -35,7 +35,7 @@ public class ListController : MonoBehaviour
       controller.Name.text = inventoryI.food[i].name;
       controller.Count.text = inventoryI.food[i].number.ToString();
       controller.Price.text = inventoryI.food[i].number.ToString();
-      newItem.transform.parent = ContentPanel.transform;
+      newItem.transform.SetParent(ContentPanel.transform);
       newItem.transform.localScale = Vector3.one;
     }
 
@@ -47,7 +47,7 @@ public class ListController : MonoBehaviour
       controller.Name.text = inventoryI.weapons[i].name;
       controller.Count.text = inventoryI.weapons[i].number.ToString();
       controller.Price.text = inventoryI.weapons[i].number.ToString();
-      newItem.transform.parent = ContentPanel.transform;
+      newItem.transform.SetParent(ContentPanel.transform);
       newItem.transform.localScale = Vector3.one;
     }
   }
@@ -62,7 +62,7 @@ public class ListController : MonoBehaviour
       controller.Name.text = inventoryP.food[i].name;
       controller.Count.text = inventoryP.food[i].number.ToString();
       controller.Price.text = inventoryP.food[i].number.ToString();
-      newItem.transform.parent = ContentPanel.transform;
+      newItem.transform.SetParent(ContentPanel.transform);
       newItem.transform.localScale = Vector3.one;
     }
 
@@ -74,7 +74,7 @@ public class ListController : MonoBehaviour
       controller.Name.text = inventoryP.weapons[i].name;
       controller.Count.text = inventoryP.weapons[i].number.ToString();
       controller.Price.text = inventoryP.weapons[i].number.ToString();
-      newItem.transform.parent = ContentPanel.transform;
+      newItem.transform.SetParent(ContentPanel.transform);
       newItem.transform.localScale = Vector3.one;
     }
   }
