@@ -99,6 +99,7 @@ public class IslandGenerator {
 
     public void GenerateIsland(Island island)
     {
+        island.questLog = new QuestLog();
         island.inventory = new IslandInventory();
         System.Random rng = new System.Random();
         GenerateFood(rng, island);
@@ -144,7 +145,9 @@ public class IslandGenerator {
 
     public void generateQuests(System.Random rng, Island island)
     {
-        JsonUtility.FromJson<Island>(json[0]);
+        int i = rng.Next(0, 5);
+        PlayerQuest quest = JsonUtility.FromJson<PlayerQuest>(json[i]);
+        island.questLog.quests.Add(quest);
     }
 
     bool CheckingDouble(InventoryObject obj, Island island)

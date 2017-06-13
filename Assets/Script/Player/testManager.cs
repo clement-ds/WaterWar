@@ -15,6 +15,7 @@ public class testManager : MonoBehaviour {
         iG.GenerateIsland(im.island);
         Debug.Log("Generated island inventory : " + im.island.inventory.food[0].name + " " + im.island.inventory.food[0].number);
         Debug.Log("Generated island inventory : " + im.island.inventory.weapons[0].name + " " + im.island.inventory.weapons[0].number);
+        Debug.Log("Generated island questlog : " + im.island.questLog.quests[0].description + " " + im.island.questLog.quests[0].objective);
     }
 	
 	// Update is called once per frame
