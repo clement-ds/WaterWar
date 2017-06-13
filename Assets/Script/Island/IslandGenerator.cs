@@ -104,13 +104,14 @@ public class IslandGenerator {
         System.Random rng = new System.Random();
         GenerateFood(rng, island);
         GenerateWeapons(rng, island);
+        generateQuests(rng, island);
     }
 
     void GenerateFood(System.Random rng, Island island)
     {
         for (int i = 0; i < 5; ++i)
         {
-            int a = rng.Next(1, 14);
+            int a = rng.Next(0, 13);
             int b = rng.Next(10, 101);
             objects[a].number = b;
             //Debug.Log("obj gen : " + objects[a].name + " " + objects[a].number);
@@ -145,6 +146,7 @@ public class IslandGenerator {
 
     public void generateQuests(System.Random rng, Island island)
     {
+        LoadFile("PlayerJson/Quests.txt");
         int i = rng.Next(0, 5);
         PlayerQuest quest = JsonUtility.FromJson<PlayerQuest>(json[i]);
         island.questLog.quests.Add(quest);
