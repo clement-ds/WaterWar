@@ -16,7 +16,7 @@ public class PlayerManager {
         LoadFile("PlayerJson/Save.txt");
         player = JsonUtility.FromJson<Player>(json[0]);
         Debug.Log("player : " + player.name + "/" + player.life);
-        Debug.Log("CHECK INVENTORY : " + player.inventory.food.Count + " / " + player.inventory.ammunition.Count);
+        Debug.Log("CHECK INVENTORY : " + player.inventory.food.Count + " / " + player.inventory.weapons.Count);
         Debug.Log("CHECK CREW : " + player.crew.begos.Count + " / " + player.crew.captains.Count + " / " + player.crew.engineers.Count
             + " / " + player.crew.fastUnits.Count + " / " + player.crew.fighters.Count);
         Debug.Log("CHECK QUEST : " + player.questLog.quests.Count);
@@ -108,7 +108,7 @@ public class Player
 public class PlayerInventory
 {
     public List<InventoryObject> food = new List<InventoryObject>();
-    public List<InventoryObject> ammunition = new List<InventoryObject>();
+    public List<InventoryObject> weapons = new List<InventoryObject>();
 }
 
 [Serializable]

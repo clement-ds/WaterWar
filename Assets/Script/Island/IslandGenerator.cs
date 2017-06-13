@@ -97,12 +97,6 @@ public class IslandGenerator {
         objects.Add(new InventoryObject("Tea", "Food", 1));
     }
 
-
-    public void generateQuests()
-    {
-        JsonUtility.FromJson<Island>(json[0]);
-    }
-
     public void GenerateIsland(Island island)
     {
         island.inventory = new IslandInventory();
@@ -146,6 +140,11 @@ public class IslandGenerator {
         island.inventory.weapons.Add(new InventoryObject("Bullet", "weapon", a));
         a = rng.Next(20, 101);
         island.inventory.weapons.Add(new InventoryObject("Graplin hooks", "weapon", a));
+    }
+
+    public void generateQuests(System.Random rng, Island island)
+    {
+        JsonUtility.FromJson<Island>(json[0]);
     }
 
     bool CheckingDouble(InventoryObject obj, Island island)
