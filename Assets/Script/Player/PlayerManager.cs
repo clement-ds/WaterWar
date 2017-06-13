@@ -124,6 +124,20 @@ public class PlayerCrew
 [Serializable]
 public class InventoryObject
 {
+    public InventoryObject(string name, string type, int number)
+    {
+        this.name = name;
+        this.type = type;
+        this.number = number;
+    }
+
+    public InventoryObject(InventoryObject invObj)
+    {
+        this.name = invObj.name;
+        this.type = invObj.type;
+        this.number = invObj.number;
+    }
+
     public string name;
     public string type;
     public int number;
