@@ -12,19 +12,24 @@ public class ListController : MonoBehaviour
 
   // Use this for initialization
   void Start() {
-    IslandManager managerI = IslandManager.GetInstance();
-    PlayerManager managerP = PlayerManager.GetInstance();
-    IslandGenerator generator = new IslandGenerator();
-
-    generator.GenerateObjects();
-    generator.GenerateIsland(managerI.island);
-
-    inventoryI = managerI.island.inventory;
-    inventoryP = managerP.player.inventory;
-    if (name == "BuyPanel")
-      FillBuyShop();
-    if (name == "SellPanel")
+    // For player shop
+    if (name == "SellPanel") {
+      PlayerManager managerP = PlayerManager.GetInstance();
+      inventoryP = managerP.player.inventory;
       FillSellShop();
+    }
+
+    // For island shop
+    if (name == "BuyPanel") {
+      IslandManager managerI = IslandManager.GetInstance();
+      IslandGenerator generator = new IslandGenerator();
+
+      generator.GenerateObjects();
+      generator.GenerateIsland(managerI.island);
+
+      inventoryI = managerI.island.inventory;
+      FillBuyShop();
+    }
   }
 
   void FillBuyShop()
