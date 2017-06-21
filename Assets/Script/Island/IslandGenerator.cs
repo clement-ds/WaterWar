@@ -105,19 +105,21 @@ public class IslandGenerator {
         GenerateFood(rng, island);
         GenerateWeapons(rng, island);
         generateQuests(rng, island);
+        generateCrew(rng, island);
     }
 
     void GenerateFood(System.Random rng, Island island)
     {
+        LoadFile("PlayerJson/Quests.txt");
         for (int i = 0; i < 5; ++i)
         {
             int a = rng.Next(0, 13);
             int b = rng.Next(10, 101);
-            objects[a].number = b;
-            //Debug.Log("obj gen : " + objects[a].name + " " + objects[a].number);
-            if (CheckingDouble(objects[a], island))
+            InventoryObject obj = JsonUtility.FromJson<InventoryObject>(json[a]);
+            obj.number = b;
+            if (CheckingDouble(obj, island))
             {
-                island.inventory.food.Add(new InventoryObject(objects[a]));
+                island.inventory.food.Add(obj);
             }
         }
     }
@@ -150,6 +152,35 @@ public class IslandGenerator {
         int i = rng.Next(0, 5);
         PlayerQuest quest = JsonUtility.FromJson<PlayerQuest>(json[i]);
         island.questLog.quests.Add(quest);
+    }
+
+    public void generateCrew(System.Random rng, Island island)
+    {
+        int a = rng.Next(0, 10);
+        for (int i = 0; i < a; ++i)
+        {
+            island.crew.begos.Add(new CrewMember_Bego());
+        }
+        a = rng.Next(0, 5);
+        for (int i = 0; i < a; ++i)
+        {
+            island.crew.fighters.Add(new CrewMember_Fighter());
+        }
+        a = rng.Next(0, 5);
+        for (int i = 0; i < a; ++i)
+        {
+            island.crew.engineers.Add(new CrewMember_Engineer());
+        }
+        a = rng.Next(0, 5);
+        for (int i = 0; i < a; ++i)
+        {
+            island.crew.fastUnits.Add(new CrewMember_FastUnit());
+        }
+        a = rng.Next(0, 1);
+        for (int i = 0; i < a; ++i)
+        {
+            island.crew.captains.Add(new CrewMember_Captain());
+        }
     }
 
     bool CheckingDouble(InventoryObject obj, Island island)

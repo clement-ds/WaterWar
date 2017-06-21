@@ -1,0 +1,12 @@
+{"name":"Coconut","type":"Food","number":1}
+{"name":"Rhum","type":"Food","number":1}
+{"name":"Banana","type":"Food","number":1}
+{"name":"Fish","type":"Food","number":1}
+{"name":"Beef","type":"Food","number":1}
+{"name":"Biscuit","type":"Food","number":1}
+{"name":"Apple","type":"Food","number":1}
+{"name":"Olive","type":"Food","number":1}
+{"name":"Water","type":"Food","number":1}
+{"name":"Bread","type":"Food","number":1}
+{"name":"Coffee","type":"Food","number":1}
+{"name":"Tea","type":"Food","number":1}
