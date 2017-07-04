@@ -98,6 +98,7 @@ public class Player
 {
     public string name;
     public int life;
+    public int money;
 
     public PlayerInventory inventory = new PlayerInventory();
     public PlayerCrew crew = new PlayerCrew();
@@ -124,23 +125,26 @@ public class PlayerCrew
 [Serializable]
 public class InventoryObject
 {
-    public InventoryObject(string name, string type, int number)
+    public InventoryObject(string name, string type, int number, int price)
     {
         this.name = name;
         this.type = type;
-        this.number = number;
+        this.quantity = number;
+        this.price = price;
     }
 
     public InventoryObject(InventoryObject invObj)
     {
         this.name = invObj.name;
         this.type = invObj.type;
-        this.number = invObj.number;
+        this.quantity = invObj.quantity;
+        this.price = invObj.price;
     }
 
     public string name;
     public string type;
-    public int number;
+    public int quantity;
+    public int price;
 }
 
 [Serializable]
@@ -155,4 +159,5 @@ public class PlayerQuest
     public string description;
     public string objective;
     public InventoryObject reward;
+    public int moneyReward;
 }

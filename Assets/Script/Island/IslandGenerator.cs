@@ -78,25 +78,6 @@ public class IslandGenerator {
         }
     }
 
-    private List<InventoryObject> objects = new List<InventoryObject>();
-
-    public void GenerateObjects()
-    {
-        objects.Add(new InventoryObject("Coconut", "Food", 1));
-        objects.Add(new InventoryObject("Ruhm", "Food", 1));
-        objects.Add(new InventoryObject("Banana", "Food", 1));
-        objects.Add(new InventoryObject("Fish", "Food", 1));
-        objects.Add(new InventoryObject("Beef", "Food", 1));
-        objects.Add(new InventoryObject("Biscuit", "Food", 1));
-        objects.Add(new InventoryObject("Apple", "Food", 1));
-        objects.Add(new InventoryObject("Wine", "Food", 1));
-        objects.Add(new InventoryObject("Olives", "Food", 1));
-        objects.Add(new InventoryObject("Water", "Food", 1));
-        objects.Add(new InventoryObject("Bread", "Food", 1));
-        objects.Add(new InventoryObject("Coffee", "Food", 1));
-        objects.Add(new InventoryObject("Tea", "Food", 1));
-    }
-
     public void GenerateIsland(Island island)
     {
         island.questLog = new QuestLog();
@@ -105,48 +86,50 @@ public class IslandGenerator {
         GenerateFood(rng, island);
         GenerateWeapons(rng, island);
         generateQuests(rng, island);
-        generateCrew(rng, island);
+        //generateCrew(rng, island);
     }
 
-    void GenerateFood(System.Random rng, Island island)
+    private void GenerateFood(System.Random rng, Island island)
     {
-        LoadFile("PlayerJson/Objects.txt");
+        LoadFile("PlayerJson/Food.txt");
         for (int i = 0; i < 5; ++i)
         {
             int a = rng.Next(0, 12);
             int b = rng.Next(10, 101);
             InventoryObject obj = JsonUtility.FromJson<InventoryObject>(json[a]);
-            obj.number = b;
+            obj.quantity = b;
+            Debug.Log(obj.name + " / " + obj.quantity + " / " + obj.type);
             if (CheckingDouble(obj, island))
             {
+                Debug.Log("heyo");
                 island.inventory.food.Add(obj);
             }
         }
     }
 
-    void GenerateWeapons(System.Random rng, Island island)
+    private void GenerateWeapons(System.Random rng, Island island)
     {
         int a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Black powder", "weapon", a));
+        island.inventory.weapons.Add(new InventoryObject("Black powder", "weapon", a, 10));
         a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Canon ball", "weapon", a));
+        island.inventory.weapons.Add(new InventoryObject("Canon ball", "weapon", a, 10));
         a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Shrapnel", "weapon", a));
+        island.inventory.weapons.Add(new InventoryObject("Shrapnel", "weapon", a, 10));
         a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Sabre", "weapon", a));
+        island.inventory.weapons.Add(new InventoryObject("Sabre", "weapon", a, 10));
         a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Musket", "weapon", a));
+        island.inventory.weapons.Add(new InventoryObject("Musket", "weapon", a, 10));
         a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Rifle", "weapon", a));
+        island.inventory.weapons.Add(new InventoryObject("Rifle", "weapon", a, 10));
         a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Canon", "weapon", a));
+        island.inventory.weapons.Add(new InventoryObject("Canon", "weapon", a, 10));
         a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Bullet", "weapon", a));
+        island.inventory.weapons.Add(new InventoryObject("Bullet", "weapon", a, 10));
         a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Graplin hooks", "weapon", a));
+        island.inventory.weapons.Add(new InventoryObject("Graplin hooks", "weapon", a, 10));
     }
 
-    public void generateQuests(System.Random rng, Island island)
+    private void generateQuests(System.Random rng, Island island)
     {
         LoadFile("PlayerJson/Quests.txt");
         int i = rng.Next(0, 5);
@@ -154,7 +137,7 @@ public class IslandGenerator {
         island.questLog.quests.Add(quest);
     }
 
-    public void generateCrew(System.Random rng, Island island)
+    private void generateCrew(System.Random rng, Island island)
     {
         int a = rng.Next(0, 10);
         for (int i = 0; i < a; ++i)

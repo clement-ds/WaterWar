@@ -1,0 +1,12 @@
+{"name":"Coconut","type":"Food","quantity":1, "price":10}
+{"name":"Rhum","type":"Food","quantity":1, "price":10}
+{"name":"Banana","type":"Food","quantity":1, "price":10}
+{"name":"Fish","type":"Food","quantity":1, "price":10}
+{"name":"Beef","type":"Food","quantity":1, "price":10}
+{"name":"Biscuit","type":"Food","quantity":1, "price":10}
+{"name":"Apple","type":"Food","quantity":1, "price":10}
+{"name":"Olive","type":"Food","quantity":1, "price":10}
+{"name":"Water","type":"Food","quantity":1, "price":10}
+{"name":"Bread","type":"Food","quantity":1, "price":10}
+{"name":"Coffee","type":"Food","quantity":1, "price":10}
+{"name":"Tea","type":"Food","quantity":1, "price":10}
