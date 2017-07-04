@@ -110,10 +110,10 @@ public class IslandGenerator {
 
     void GenerateFood(System.Random rng, Island island)
     {
-        LoadFile("PlayerJson/Quests.txt");
+        LoadFile("PlayerJson/Objects.txt");
         for (int i = 0; i < 5; ++i)
         {
-            int a = rng.Next(0, 13);
+            int a = rng.Next(0, 12);
             int b = rng.Next(10, 101);
             InventoryObject obj = JsonUtility.FromJson<InventoryObject>(json[a]);
             obj.number = b;
