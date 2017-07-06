@@ -10,9 +10,18 @@ public class Canon : ShipElement
     private int power = 5;       // Random number
     private int damage = 5;      // Random number
     private int viewFinder = 0;  // Random number
+    private ShotCutscene shotCutscene;
+
 
     public Canon() : base(50)
     {
+    }
+
+    protected override void StartMySelf()
+    {
+        base.StartMySelf();
+        shotCutscene = GameObject.Find("CutsceneManager").GetComponent<ShotCutscene>();
+
     }
 
     public void destroyCanon()
@@ -137,6 +146,11 @@ public class Canon : ShipElement
         {
             if (ready)
             {
+                if (UnityEngine.Random.value > 0.75)
+                {
+                    shotCutscene.StartCutscene();
+                    WaitForX(shotCutscene.duration);
+                }
                 Battle_Ship enemy = target.GetComponentInParent<Battle_Ship>();
                 if (!target.isAvailable())
                 {
@@ -168,6 +182,10 @@ public class Canon : ShipElement
         return result;
     }
 
+    IEnumerator WaitForX(long x)
+    {
+        yield return new WaitForSeconds(x);
+    }
     protected override void doDamageAnimation()
     {
         ParticleSystem canonShotExplosion = (ParticleSystem)transform.Find("CanonShotExplosion/PS_CanonShotExplosion").gameObject.GetComponent<ParticleSystem>();

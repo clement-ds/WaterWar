@@ -2,7 +2,13 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-// DEPRECATED
+//
+//
+//
+// DEPRECATED DEPRECATED DEPRECATED DEPRECATED DEPRECATED DEPRECATED DEPRECATED DEPRECATED DEPRECATED DEPRECATED DEPRECATED DEPRECATED DEPRECATED DEPRECATED
+//
+//
+//
 public class FiringCanons : MonoBehaviour {
     public GameManager gm;
 
@@ -25,6 +31,7 @@ public class FiringCanons : MonoBehaviour {
     }
 
     public void fireOn(ShipElement target) {
+        print("In fireOn");
         if (MainCanon != null && MainCanon.GetComponent<Canon>().isAvailable() && MainCanon.GetComponent<Cooldown>().getPossibility() == true)
         {
             // Reset cooldown after attack

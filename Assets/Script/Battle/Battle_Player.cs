@@ -81,18 +81,20 @@ public class Battle_Player : Battle_Ship
 
     void hasInputMouse()
     {
-        Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 touchPos = new Vector2(wp.x, wp.y);
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (!this.checkSelfShip(touchPos))
+        if (Camera.main) {
+            Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 touchPos = new Vector2(wp.x, wp.y);
+            if (Input.GetMouseButtonDown(0))
             {
-                this.checkEnemyShip(touchPos);
+                if (!this.checkSelfShip(touchPos))
+                {
+                    this.checkEnemyShip(touchPos);
+                }
             }
-        }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            checkTargetForCrewMember(touchPos);
+            else if (Input.GetMouseButtonDown(1))
+            {
+                checkTargetForCrewMember(touchPos);
+            }
         }
     }
 

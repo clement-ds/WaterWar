@@ -52,24 +52,27 @@ public abstract class ShipElement : GuiElement
 
     void Update()
     {
-        float camHalfHeight = Camera.main.orthographicSize;
-        float camHalfWidth = Camera.main.aspect * camHalfHeight;
-
-        Bounds bounds = this.GetComponent<SpriteRenderer>().bounds;
-        var wantedPos = Camera.main.WorldToViewportPoint(this.transform.position);
-
-        // Set a new vector to the top left of the scene 
-        Vector3 topLeftPosition = new Vector3(-camHalfWidth, camHalfHeight, 0) + Camera.main.transform.position;
-
-        // Offset it by the size of the object 
-        topLeftPosition += new Vector3(bounds.size.x / 2, -bounds.size.y / 2, 0);
-
-        topLeftPosition.x += (wantedPos.y);
-        topLeftPosition.y -= (wantedPos.x);
-
-        if (mSlider)
+        if (Camera.main)
         {
-            mSlider.transform.position = topLeftPosition;
+            float camHalfHeight = Camera.main.orthographicSize;
+            float camHalfWidth = Camera.main.aspect * camHalfHeight;
+
+            Bounds bounds = this.GetComponent<SpriteRenderer>().bounds;
+            var wantedPos = Camera.main.WorldToViewportPoint(this.transform.position);
+
+            // Set a new vector to the top left of the scene 
+            Vector3 topLeftPosition = new Vector3(-camHalfWidth, camHalfHeight, 0) + Camera.main.transform.position;
+
+            // Offset it by the size of the object 
+            topLeftPosition += new Vector3(bounds.size.x / 2, -bounds.size.y / 2, 0);
+
+            topLeftPosition.x += (wantedPos.y);
+            topLeftPosition.y -= (wantedPos.x);
+
+            if (mSlider)
+            {
+                mSlider.transform.position = topLeftPosition;
+            }
         }
     }
 
