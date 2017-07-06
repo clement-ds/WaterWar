@@ -165,6 +165,7 @@ public class Battle_Player : Battle_Ship
 
             if (crewMember != null && crewMember.isFocused())
             {
+                crewMember.freeCrewMemberFromParent(player);
                 foreach (Transform child2 in player.transform)
                 {
                     target = child2.GetComponent<ShipElement>();
@@ -177,14 +178,17 @@ public class Battle_Player : Battle_Ship
                         target = null;
                     }
                 }
-            }
-            if (target != null)
-            {
-                if ((crewMember.GetComponentInParent<ShipElement>() == null || !crewMember.GetComponentInParent<ShipElement>().actionIsRunning())
-                    && target.GetComponent<Battle_CrewMember>() == null)
+                if (target != null)
                 {
-                    crewMember.assignCrewMemberToShipElement(target, player);
-                    result = true;
+                    if ((crewMember.GetComponentInParent<ShipElement>() == null || !crewMember.GetComponentInParent<ShipElement>().actionIsRunning())
+                        && target.GetComponent<Battle_CrewMember>() == null)
+                    {
+                        crewMember.assignCrewMemberToShipElement(target, player);
+                        result = true;
+                    }
+                } else
+                {
+                    crewMember.moveTo(new Vector3(touchPos.x, touchPos.y, crewMember.transform.position.z));
                 }
                 break;
             }

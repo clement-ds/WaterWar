@@ -7,12 +7,12 @@ public class CrewMember {
 
     public string id;
     public string type;
-    protected float attackStrength = 1f;
-    protected bool useRangedWeapon = false;
-    protected float walkSpeed = 1f;
-    protected float wage = 1f;
-    protected float maxHunger = 1f;
-    protected float maxLife = 100f;
+    public float attackStrength = 1f;
+    public bool useRangedWeapon = false;
+    public float walkSpeed = 1f;
+    public float wage = 1f;
+    public float maxHunger = 1f;
+    public float maxLife = 100f;
     public float life = 10f;
     public float satiety = 1f;
 
@@ -29,6 +29,10 @@ public class CrewMember {
 
     public CrewMember()
     {
+        attackSpeed = new Cooldown();
+        canonReloadSpeed = new Cooldown();
+        steerSpeed = new Cooldown();
+        repairSpeed = new Cooldown();
         //attackSpeed.timeLeft = 1f;
         //canonReloadSpeed.timeLeft = 5f;
         //steerSpeed.timeLeft = 10f;
