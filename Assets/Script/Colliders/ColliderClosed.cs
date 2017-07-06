@@ -12,13 +12,13 @@ public class ColliderClosed : MonoBehaviour {
 	
 	}
 
-    void OnTriggerExit(Collider other)
-    {
-        print("exit: " + other.transform.gameObject);
-    }
+	void OnTriggerExit2D(Collider2D other)
+	{
+		print("exit: " + other.transform.gameObject);
+	}
 
-    void OnTriggerEnter(Collider other)
-    {
-        print("enter: " + other.transform.gameObject);
-    }
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		print("enter: " + other.transform.gameObject);
+	}
 }
