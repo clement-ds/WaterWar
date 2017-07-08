@@ -25,7 +25,11 @@ public class ListItemController : MonoBehaviour {
     Debug.Log("Click ! ");
   }
 
-  bool getExchange() {
-    return toExchange;
+  public bool getExchange() {
+    if (toExchange) {
+      toExchange = false;
+      return true;
+    }
+    return false;
   }
 }
