@@ -69,8 +69,16 @@ public class RecruitUIController : UIController
 
     private void PreRemoveCrew(CrewMember member)
     {
-        IslandManager.GetInstance().islands[PlayerManager.GetInstance().player.currentIsland].removeCrewMember(member);
-        PlayerManager.GetInstance().player.crew.AddCrew(member);
+        Player player = PlayerManager.GetInstance().player;
+        if (player.money >= member.wage) // TODO: replace by price
+        {
+            IslandManager.GetInstance().islands[PlayerManager.GetInstance().player.currentIsland].removeCrewMember(member);
+            player.crew.AddCrew(member);
+            player.money -= (int)member.wage;
+        } else
+        {
+            //TODO : popup qui dit t'as pas de thune
+        }
         Populate();
     }
 
