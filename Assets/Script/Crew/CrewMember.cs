@@ -80,4 +80,9 @@ public class CrewMember {
         }
     }
 
+    public void AdjustWage(float newWage)
+    {
+        this.wage = newWage;
+    }
+
 }
