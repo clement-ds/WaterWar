@@ -48,6 +48,7 @@ public class StatUIController : MonoBehaviour
                     Debug.Log("In MemberName");
                     InputField nameText = (InputField)child.GetComponent<InputField>();
                     nameText.text = member.memberName;
+                    nameText.onEndEdit.AddListener((string txt) => { member.memberName = txt; });
 
                 }
                 else if (child.name == "MemberType")
@@ -60,6 +61,7 @@ public class StatUIController : MonoBehaviour
                     Debug.Log("In WageField");
                     InputField wageField = (InputField)child.GetComponent<InputField>();
                     wageField.text = member.wage + "£";
+                    wageField.onEndEdit.AddListener((string txt) => { member.wage = float.Parse(txt); });
                 }
                 else if (child.name == "SackButton")
                 {
