@@ -7,6 +7,7 @@ public class ListItemController : MonoBehaviour {
   public Image Icon;
   public Text Count, Name, Price;
   private bool toExchange = false;
+    public ListController lc;
 
   private Button btn;
 
