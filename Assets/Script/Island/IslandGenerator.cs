@@ -112,23 +112,23 @@ public class IslandGenerator {
     private void GenerateWeapons(System.Random rng, Island island)
     {
         int a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Black powder", "weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Black powder", "Weapon", a, 10));
         a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Canon ball", "weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Canon ball", "Weapon", a, 10));
         a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Shrapnel", "weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Shrapnel", "Weapon", a, 10));
         a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Sabre", "weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Sabre", "Weapon", a, 10));
         a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Musket", "weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Musket", "Weapon", a, 10));
         a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Rifle", "weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Rifle", "Weapon", a, 10));
         a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Canon", "weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Canon", "Weapon", a, 10));
         a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Bullet", "weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Bullet", "Weapon", a, 10));
         a = rng.Next(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Graplin hooks", "weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Graplin hooks", "Weapon", a, 10));
     }
 
     private void GenerateQuests(System.Random rng, Island island)
