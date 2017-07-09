@@ -10,6 +10,9 @@ public class ListController : MonoBehaviour
 
   private int currentIsland;
 
+  static string idIsland = "";
+  static string idPlayer = "";
+
   public Sprite[] Icons;
   public GameObject ContentPanelShop;
   public GameObject ContentPanelPlayer;
@@ -94,8 +97,6 @@ public class ListController : MonoBehaviour
       newItem.transform.localScale = Vector3.one;
     }
   }
-  static string idIsland =  "";
-  static string idPlayer =  "";
 
   void doTradeAction()
   {
