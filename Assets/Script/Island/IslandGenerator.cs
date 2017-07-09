@@ -176,6 +176,7 @@ public class IslandGenerator {
             if (island.inventory.food[i].quantity >= max)
             {
                 island.name = island.inventory.food[i].name + " Island";
+                max = island.inventory.food[i].quantity;
             }
         }
     }

@@ -8,13 +8,15 @@ public class ListController : MonoBehaviour
   private IslandInventory inventoryI;
   private PlayerInventory inventoryP;
 
+  private int currentIsland;
+
   public Sprite[] Icons;
   public GameObject ContentPanel;
   public GameObject ListItemPrefab;
 
   // Use this for initialization
   void Start() {
-
+    
     // For player shop
     if (name == "SellPanel") {
       PlayerManager managerP = PlayerManager.GetInstance();
@@ -22,11 +24,13 @@ public class ListController : MonoBehaviour
       FillSellShop();
     }
 
+        currentIsland = PlayerManager.GetInstance().player.currentIsland;
+
     // For island shop
-    if (name == "BuyPanel") {
+        if (name == "BuyPanel") {
       IslandManager managerI = IslandManager.GetInstance();
 
-      inventoryI = managerI.island.inventory;
+      inventoryI = managerI.islands[currentIsland].inventory;
       FillBuyShop();
     }
   }

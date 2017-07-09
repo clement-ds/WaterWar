@@ -99,6 +99,7 @@ public class Player
     public string name;
     public int life;
     public int money;
+    public int currentIsland;
 
     public PlayerInventory inventory = new PlayerInventory();
     public PlayerCrew crew = new PlayerCrew();

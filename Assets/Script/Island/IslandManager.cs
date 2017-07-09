@@ -9,6 +9,7 @@ public class IslandManager {
     private static IslandManager instance = null;
 
     private List<String> json = new List<string>();
+    public List<Island> islands = new List<Island>();
     public Island island;
     public Island island2;
     public Island island3;
@@ -25,22 +26,28 @@ public class IslandManager {
         //island = JsonUtility.FromJson<Island>(json[0]);
         //island.x = 5;
         //island.y = 9;
-        
+        islands.Add(new Island());
+        islands.Add(new Island());
+        islands.Add(new Island());
+        islands.Add(new Island());
+        islands.Add(new Island());
+        islands.Add(new Island());
+        islands.Add(new Island());
+        islands.Add(new Island());
+        islands.Add(new Island());
+
         IslandGenerator iGen = new IslandGenerator();
-        island = iGen.GenerateIsland(island);
-        //iGen.GenerateIsland(island2);
-        //iGen.GenerateIsland(island3);
-        //iGen.GenerateIsland(island4);
-        //iGen.GenerateIsland(island5);
-        //iGen.GenerateIsland(island6);
-        //iGen.GenerateIsland(island7);
-        //iGen.GenerateIsland(island8);
-        //iGen.GenerateIsland(island9);
-        Debug.Log("island : " + island.name);
-        Debug.Log("CHECK INVENTORY : " + island.inventory.food.Count + " / " + island.inventory.weapons.Count);
-        //Debug.Log("CHECK CREW : " + island.crew.begos.Count + " / " + island.crew.captains.Count + " / " + island.crew.engineers.Count
-            //+ " / " + island.crew.fastUnits.Count + " / " + island.crew.fighters.Count);
-        Debug.Log("CHECK QUEST : " + island.questLog.quests.Count);
+        for (int i = 0; i < islands.Count; ++i)
+        {
+            islands[i] = iGen.GenerateIsland(islands[i]);
+        }
+
+        Debug.Log("island : " + islands[0].name);
+        Debug.Log("CHECK INVENTORY : " + islands[0].inventory.food.Count + " / " + islands[0].inventory.weapons.Count);
+        Debug.Log("CHECK CREW : " + islands[0].crew.begos.Count + " / " + islands[0].crew.captains.Count + " / " + islands[0].crew.engineers.Count
+            + " / " + islands[0].crew.fastUnits.Count + " / " + islands[0].crew.fighters.Count);
+        Debug.Log("CHECK QUEST : " + islands[0].questLog.quests.Count);
+
         Save();
     }
 
