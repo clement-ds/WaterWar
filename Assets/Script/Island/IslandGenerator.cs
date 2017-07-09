@@ -78,15 +78,19 @@ public class IslandGenerator {
         }
     }
 
-    public void GenerateIsland(Island island)
+    public Island GenerateIsland(Island island)
     {
-        island.questLog = new QuestLog();
-        island.inventory = new IslandInventory();
+        island = new Island();
+        //island.questLog = new QuestLog();
+        //island.inventory = new IslandInventory();
+        //island.crew = new IslandCrew();
         System.Random rng = new System.Random();
         GenerateFood(rng, island);
         GenerateWeapons(rng, island);
-        generateQuests(rng, island);
-        //generateCrew(rng, island);
+        GenerateQuests(rng, island);
+        //GenerateCrew(rng, island);
+        GenerateName(island);
+        return island;
     }
 
     private void GenerateFood(System.Random rng, Island island)
@@ -98,10 +102,8 @@ public class IslandGenerator {
             int b = rng.Next(10, 101);
             InventoryObject obj = JsonUtility.FromJson<InventoryObject>(json[a]);
             obj.quantity = b;
-            Debug.Log(obj.name + " / " + obj.quantity + " / " + obj.type);
             if (CheckingDouble(obj, island))
             {
-                Debug.Log("heyo");
                 island.inventory.food.Add(obj);
             }
         }
@@ -129,7 +131,7 @@ public class IslandGenerator {
         island.inventory.weapons.Add(new InventoryObject("Graplin hooks", "weapon", a, 10));
     }
 
-    private void generateQuests(System.Random rng, Island island)
+    private void GenerateQuests(System.Random rng, Island island)
     {
         LoadFile("PlayerJson/Quests.txt");
         int i = rng.Next(0, 5);
@@ -137,7 +139,7 @@ public class IslandGenerator {
         island.questLog.quests.Add(quest);
     }
 
-    private void generateCrew(System.Random rng, Island island)
+    private void GenerateCrew(System.Random rng, Island island)
     {
         int a = rng.Next(0, 10);
         for (int i = 0; i < a; ++i)
@@ -163,6 +165,18 @@ public class IslandGenerator {
         for (int i = 0; i < a; ++i)
         {
             island.crew.captains.Add(new CrewMember_Captain());
+        }
+    }
+
+    void GenerateName(Island island)
+    {
+        int max = 0;
+        for (int i = 0; i < island.inventory.food.Count; ++i)
+        {
+            if (island.inventory.food[i].quantity >= max)
+            {
+                island.name = island.inventory.food[i].name + " Island";
+            }
         }
     }
 

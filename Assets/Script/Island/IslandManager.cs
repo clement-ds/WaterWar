@@ -10,20 +10,37 @@ public class IslandManager {
 
     private List<String> json = new List<string>();
     public Island island;
+    public Island island2;
+    public Island island3;
+    public Island island4;
+    public Island island5;
+    public Island island6;
+    public Island island7;
+    public Island island8;
+    public Island island9;
 
     protected IslandManager()
     {
-        LoadFile("PlayerJson/IslandSave.txt");
-        island = JsonUtility.FromJson<Island>(json[0]);
-        island.x = 5;
-        island.y = 9;
-        //Debug.Log("island : " + island.name);
-        //Debug.Log("CHECK INVENTORY : " + island.inventory.food.Count + " / " + island.inventory.weapons.Count);
-        //Debug.Log("CHECK CREW : " + island.crew.begos.Count + " / " + island.crew.captains.Count + " / " + island.crew.engineers.Count
-        //    + " / " + island.crew.fastUnits.Count + " / " + island.crew.fighters.Count);
-        //Debug.Log("CHECK QUEST : " + island.questLog.quests.Count);
+        //LoadFile("PlayerJson/IslandSave.txt");
+        //island = JsonUtility.FromJson<Island>(json[0]);
+        //island.x = 5;
+        //island.y = 9;
+        
         IslandGenerator iGen = new IslandGenerator();
-        iGen.GenerateIsland(island);
+        island = iGen.GenerateIsland(island);
+        //iGen.GenerateIsland(island2);
+        //iGen.GenerateIsland(island3);
+        //iGen.GenerateIsland(island4);
+        //iGen.GenerateIsland(island5);
+        //iGen.GenerateIsland(island6);
+        //iGen.GenerateIsland(island7);
+        //iGen.GenerateIsland(island8);
+        //iGen.GenerateIsland(island9);
+        Debug.Log("island : " + island.name);
+        Debug.Log("CHECK INVENTORY : " + island.inventory.food.Count + " / " + island.inventory.weapons.Count);
+        //Debug.Log("CHECK CREW : " + island.crew.begos.Count + " / " + island.crew.captains.Count + " / " + island.crew.engineers.Count
+            //+ " / " + island.crew.fastUnits.Count + " / " + island.crew.fighters.Count);
+        Debug.Log("CHECK QUEST : " + island.questLog.quests.Count);
         Save();
     }
 

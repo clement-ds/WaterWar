@@ -15,12 +15,12 @@ public class SearchResources : MonoBehaviour {
     
     // Update is called once per frame
     void Update () {
-        if (transform.position.x == objective.x && transform.position.y == objective.y) {
-            this.changeObjective();
-        }
+        //if (transform.position.x == objective.x && transform.position.y == objective.y) {
+        //    this.changeObjective();
+        //}
         
-        //print(transform.position + " move to " + objective);
-        transform.position = Vector3.MoveTowards(transform.position, this.objective, this.speed * Time.deltaTime);
+        ////print(transform.position + " move to " + objective);
+        //transform.position = Vector3.MoveTowards(transform.position, this.objective, this.speed * Time.deltaTime);
     }
 
     void changeObjectiveFinal() {
