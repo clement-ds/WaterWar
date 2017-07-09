@@ -73,19 +73,6 @@ public class StatUIController : MonoBehaviour
     }
     // -----------------------------------------
 
-
-    private CrewMember GetMemberById(string id)
-    {
-        List<CrewMember> members = PlayerManager.GetInstance().player.crew.crewMembers;
-        
-        foreach (CrewMember m in members)
-        {
-            if (m.id == id)
-                return m;
-        }
-        return null;
-    }
-
     private void PreRemoveCrew(CrewMember member)
     {
         PlayerManager.GetInstance().player.crew.RemoveCrew(member.id);
