@@ -9,6 +9,7 @@ using System;
 public class RecruitUIController : UIController
 {
     private List<CrewMember> crewList;
+    public int unitPriceMultiplier;
 
 
     public override void Populate()
@@ -47,12 +48,12 @@ public class RecruitUIController : UIController
                 else if (child.name == "MemberPrice")
                 {
                     Text price = (Text)child.GetComponent<Text>();
-                    price.text = member.wage + "£";
+                    price.text = ((int)member.wage * unitPriceMultiplier) + "£";
                 }
                 else if (child.name == "RecruitButton")
                 {
                     Button recruitButton = (Button)child.GetComponent<Button>();
-                    CreateClosureForRecruit(member, recruitButton);
+                    CreateClosureForRecruit(member, recruitButton, (int)member.wage * unitPriceMultiplier);
                 }
             }
             crewRow.transform.SetParent(panel.transform, false);
@@ -61,20 +62,20 @@ public class RecruitUIController : UIController
     }
 
     // Necessary because of unity bug in lambda
-    void CreateClosureForRecruit(CrewMember member, Button button)
+    void CreateClosureForRecruit(CrewMember member, Button button, int price)
     {
-        button.onClick.AddListener(() => PreRemoveCrew(member));
+        button.onClick.AddListener(() => PreRemoveCrew(member, price));
     }
     // -----------------------------------------
 
-    private void PreRemoveCrew(CrewMember member)
+    private void PreRemoveCrew(CrewMember member, int price)
     {
         Player player = PlayerManager.GetInstance().player;
-        if (player.money >= member.wage) // TODO: replace by price
+        if (player.money >= price)
         {
             IslandManager.GetInstance().islands[PlayerManager.GetInstance().player.currentIsland].removeCrewMember(member);
             player.crew.AddCrew(member);
-            player.money -= (int)member.wage;
+            player.money -= price;
         } else
         {
             //TODO : popup qui dit t'as pas de thune
