@@ -5,141 +5,154 @@ using System.Collections.Generic;
 
 public class ListController : MonoBehaviour
 {
-  private IslandInventory inventoryI;
-  private PlayerInventory inventoryP;
+    private IslandInventory inventoryI;
+    private PlayerInventory inventoryP;
 
-  private int currentIsland;
+    private int currentIsland;
 
-  static string idIsland = "";
-  static string idPlayer = "";
+    static string idIsland = "";
+    static string idPlayer = "";
 
-  public Sprite[] Icons;
-  public GameObject ContentPanelShop;
-  public GameObject ContentPanelPlayer;
-  public GameObject ListItemPrefab;
+    public Sprite[] Icons;
+    public GameObject ContentPanelShop;
+    public GameObject ContentPanelPlayer;
+    public GameObject ListItemPrefab;
 
-  // Use this for initialization
-  void Start() {
-    
-    // For player shop
-    //if (name == "SellPanel") {
-      PlayerManager managerP = PlayerManager.GetInstance();
-      inventoryP = managerP.player.inventory;
-      FillSellShop();
-    //}
+    // Use this for initialization
+    void Start()
+    {
 
-      currentIsland = PlayerManager.GetInstance().player.currentIsland;
+        // For player shop
+        //if (name == "SellPanel") {
+        PlayerManager managerP = PlayerManager.GetInstance();
+        inventoryP = managerP.player.inventory;
+        FillSellShop();
+        //}
 
-    // For island shop
+        currentIsland = PlayerManager.GetInstance().player.currentIsland;
+
+        // For island shop
         //if (name == "BuyPanel") {
-      IslandManager managerI = IslandManager.GetInstance();
+        IslandManager managerI = IslandManager.GetInstance();
 
-      inventoryI = managerI.islands[currentIsland].inventory;
-      FillBuyShop();
-    //}
-  }
-
-  void FillBuyShop()
-  {
-    for (int i = 0; i < inventoryI.food.Count; ++i)
-    {
-      GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
-      ListItemController controller = newItem.GetComponent<ListItemController>();
-
-      controller.name = inventoryI.food[i].name;
-      controller.Name.text = inventoryI.food[i].name;
-      controller.Count.text = inventoryI.food[i].quantity.ToString();
-      controller.Price.text = inventoryI.food[i].price.ToString();
-
-      newItem.transform.SetParent(ContentPanelShop.transform);
-      newItem.transform.localScale = Vector3.one;
+        inventoryI = managerI.islands[currentIsland].inventory;
+        FillBuyShop();
+        //}
     }
 
-    for (int i = 0; i < inventoryI.weapons.Count; ++i)
+    void FillBuyShop()
     {
-      GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
-      ListItemController controller = newItem.GetComponent<ListItemController>();
+        for (int i = 0; i < inventoryI.food.Count; ++i)
+        {
+            GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
+            ListItemController controller = newItem.GetComponent<ListItemController>();
 
-      controller.name = inventoryI.weapons[i].name;
-      controller.Name.text = inventoryI.weapons[i].name;
-      controller.Count.text = inventoryI.weapons[i].quantity.ToString();
-      controller.Price.text = inventoryI.weapons[i].price.ToString();
-      newItem.transform.SetParent(ContentPanelShop.transform);
-      newItem.transform.localScale = Vector3.one;
+            controller.lc = this;
+            controller.source = inventoryI.food[i];
+            //controller.name = inventoryI.food[i].name;
+            //controller.Name.text = inventoryI.food[i].name;
+            //controller.Count.text = inventoryI.food[i].quantity.ToString();
+            //controller.Price.text = inventoryI.food[i].price.ToString();
+            controller.InitCell();
+            newItem.transform.SetParent(ContentPanelShop.transform);
+            newItem.transform.localScale = Vector3.one;
+        }
+
+        for (int i = 0; i < inventoryI.weapons.Count; ++i)
+        {
+            GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
+            ListItemController controller = newItem.GetComponent<ListItemController>();
+
+            controller.lc = this;
+            controller.source = inventoryI.weapons[i];
+            //controller.name = inventoryI.weapons[i].name;
+            //controller.Name.text = inventoryI.weapons[i].name;
+            //controller.Count.text = inventoryI.weapons[i].quantity.ToString();
+            //controller.Price.text = inventoryI.weapons[i].price.ToString();
+            controller.InitCell();
+            newItem.transform.SetParent(ContentPanelShop.transform);
+            newItem.transform.localScale = Vector3.one;
+        }
     }
-  }
 
-  void FillSellShop()
-  {
-    for (int i = 0; i < inventoryP.food.Count; ++i)
+    void FillSellShop()
     {
-      GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
-      ListItemController controller = newItem.GetComponent<ListItemController>();
+        for (int i = 0; i < inventoryP.food.Count; ++i)
+        {
+            GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
+            ListItemController controller = newItem.GetComponent<ListItemController>();
 
-      controller.name = inventoryP.food[i].name;
-      controller.Name.text = inventoryP.food[i].name;
-      controller.Count.text = inventoryP.food[i].quantity.ToString();
-      controller.Price.text = inventoryP.food[i].price.ToString();
-      newItem.transform.SetParent(ContentPanelPlayer.transform);
-      newItem.transform.localScale = Vector3.one;
+            controller.lc = this;
+            controller.source = inventoryP.food[i];
+            //controller.name = inventoryP.food[i].name;
+            //controller.Name.text = inventoryP.food[i].name;
+            //controller.Count.text = inventoryP.food[i].quantity.ToString();
+            //controller.Price.text = inventoryP.food[i].price.ToString();
+            controller.InitCell();
+            newItem.transform.SetParent(ContentPanelPlayer.transform);
+            newItem.transform.localScale = Vector3.one;
+        }
+
+        for (int i = 0; i < inventoryP.weapons.Count; ++i)
+        {
+            GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
+            ListItemController controller = newItem.GetComponent<ListItemController>();
+
+            controller.lc = this;
+            controller.source = inventoryP.weapons[i];
+            //.name = inventoryP.weapons[i].name;
+            //controller.Name.text = inventoryP.weapons[i].name;
+            //controller.Count.text = inventoryP.weapons[i].quantity.ToString();
+            //controller.Price.text = inventoryP.weapons[i].price.ToString();
+            controller.InitCell();
+            newItem.transform.SetParent(ContentPanelPlayer.transform);
+            newItem.transform.localScale = Vector3.one;
+        }
     }
 
-    for (int i = 0; i < inventoryP.weapons.Count; ++i)
+    public void DoTradeAction()
     {
-      GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
-      ListItemController controller = newItem.GetComponent<ListItemController>();
+        //ListItemController[] allChildren = GetComponentsInChildren<ListItemController>();
 
-      controller.name = inventoryP.weapons[i].name;
-      controller.Name.text = inventoryP.weapons[i].name;
-      controller.Count.text = inventoryP.weapons[i].quantity.ToString();
-      controller.Price.text = inventoryP.weapons[i].price.ToString();
-      newItem.transform.SetParent(ContentPanelPlayer.transform);
-      newItem.transform.localScale = Vector3.one;
+        //foreach (ListItemController child in allChildren) {
+
+        //  if (idIsland != "" && child.transform.parent.name == "SellContent")
+        //  {
+        //    foreach (ListItemController stuff in allChildren)
+        //    {
+        //      if (stuff.Name.text == idIsland)
+        //      {
+        //        stuff.Count.text = (int.Parse(stuff.Count.text) + 1).ToString();
+        //        idIsland = "";
+        //        return;
+        //      }
+        //    }
+
+        //    GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
+        //    ListItemController controller = newItem.GetComponent<ListItemController>();
+
+        //    controller.name = idIsland;
+        //    controller.Name.text = idIsland;
+        //    controller.Count.text = "1";
+        //    controller.Price.text = "0";
+        //    newItem.transform.SetParent(ContentPanel.transform);
+        //    newItem.transform.localScale = Vector3.one;
+        //    return;
+        //  }
+        //  if (child.getExchange() && child.Count.text != "0") {
+        //    child.Count.text = (int.Parse(child.Count.text) - 1).ToString();
+        //    if (child.transform.parent.name == "BuyContent")
+        //      idIsland = child.Name.text;
+        //    if (child.transform.parent.name == "SellContent")
+        //      idPlayer = child.Name.text;
+        //    return;
+        //  }
+        //}
     }
-  }
 
-  void doTradeAction()
-  {
-    //ListItemController[] allChildren = GetComponentsInChildren<ListItemController>();
+    // Update is called once per frame
+    void Update()
+    {
 
-    //foreach (ListItemController child in allChildren) {
-
-    //  if (idIsland != "" && child.transform.parent.name == "SellContent")
-    //  {
-    //    foreach (ListItemController stuff in allChildren)
-    //    {
-    //      if (stuff.Name.text == idIsland)
-    //      {
-    //        stuff.Count.text = (int.Parse(stuff.Count.text) + 1).ToString();
-    //        idIsland = "";
-    //        return;
-    //      }
-    //    }
-
-    //    GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
-    //    ListItemController controller = newItem.GetComponent<ListItemController>();
-
-    //    controller.name = idIsland;
-    //    controller.Name.text = idIsland;
-    //    controller.Count.text = "1";
-    //    controller.Price.text = "0";
-    //    newItem.transform.SetParent(ContentPanel.transform);
-    //    newItem.transform.localScale = Vector3.one;
-    //    return;
-    //  }
-    //  if (child.getExchange() && child.Count.text != "0") {
-    //    child.Count.text = (int.Parse(child.Count.text) - 1).ToString();
-    //    if (child.transform.parent.name == "BuyContent")
-    //      idIsland = child.Name.text;
-    //    if (child.transform.parent.name == "SellContent")
-    //      idPlayer = child.Name.text;
-    //    return;
-    //  }
-    //}
-  }
-
-  // Update is called once per frame
-  void Update() {
-    doTradeAction();
-  }
+    }
 }
