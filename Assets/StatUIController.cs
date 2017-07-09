@@ -65,7 +65,7 @@ public class StatUIController : MonoBehaviour
                 {
                     Debug.Log("In SackButton");
                     Button sackButton = (Button)child.GetComponent<Button>();
-                    // DO STUFF TO SACK
+                    sackButton.onClick.AddListener( () => PreRemoveCrew(member));
                 }
             }
             crewRow.transform.SetParent(panel.transform, false);
@@ -73,6 +73,12 @@ public class StatUIController : MonoBehaviour
 
 
         }
+    }
+
+    private void PreRemoveCrew(CrewMember member)
+    {
+        PlayerManager.GetInstance().player.crew.RemoveCrew(member.id);
+        Populate();
     }
 
     public void TogglePanel()
