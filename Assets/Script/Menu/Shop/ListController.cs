@@ -22,21 +22,21 @@ public class ListController : MonoBehaviour
   void Start() {
     
     // For player shop
-    if (name == "SellPanel") {
+    //if (name == "SellPanel") {
       PlayerManager managerP = PlayerManager.GetInstance();
       inventoryP = managerP.player.inventory;
       FillSellShop();
-    }
+    //}
 
-        currentIsland = PlayerManager.GetInstance().player.currentIsland;
+      currentIsland = PlayerManager.GetInstance().player.currentIsland;
 
     // For island shop
-        if (name == "BuyPanel") {
+        //if (name == "BuyPanel") {
       IslandManager managerI = IslandManager.GetInstance();
 
       inventoryI = managerI.islands[currentIsland].inventory;
       FillBuyShop();
-    }
+    //}
   }
 
   void FillBuyShop()
