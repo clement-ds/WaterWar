@@ -122,13 +122,12 @@ public class PlayerCrew
 
     public PlayerCrew()
     {
-        Debug.Log("CONSTRUCT");
-        addCrew("Captain");
-        addCrew("Bego");
+        AddCrew("Captain");
+        AddCrew("Bego");
 
     }
 
-    public void addCrew(string type)
+    public void AddCrew(string type)
     {
         string id = "CrewMember_" + type;
         string crewID = type + crewIncrement.ToString();
@@ -146,13 +145,19 @@ public class PlayerCrew
             Debug.Log("Invalid crew type: " + id);
         ++crewIncrement;
     }
-    /*    
-    public List<CrewMember_Bego> begos = new List<CrewMember_Bego>();
-    public List<CrewMember_Captain> captains = new List<CrewMember_Captain>();
-    public List<CrewMember_Engineer> engineers = new List<CrewMember_Engineer>();
-    public List<CrewMember_FastUnit> fastUnits = new List<CrewMember_FastUnit>();
-    public List<CrewMember_Fighter> fighters = new List<CrewMember_Fighter>();
-    */
+
+    public void RemoveCrew(string id)
+    {
+        foreach (CrewMember member in crewMembers)
+        {
+            if (member.id.Equals(id))
+            {
+                crewMembers.Remove(member);
+                break;
+            }
+        }
+    }
+
 }
 
 [Serializable]
