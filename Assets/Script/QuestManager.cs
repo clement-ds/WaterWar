@@ -9,15 +9,14 @@ public class QuestManager : MonoBehaviour
 
     public Sprite[] icons;
 
-    public GameObject createdDialog;
+    public GameObject displayUI;
 
     void Start()
     {
-
-        createdDialog.SetActive(false);                 //hide the dialog ui
-        iconDict = new Dictionary<string, Sprite>();
-        foreach (Sprite sprite in icons)
-            iconDict.Add(sprite.name, sprite);          //Loads icons into dictionary to allow quick lookup
+       displayUI.SetActive(false);                 //hide the dialog ui
+       iconDict = new Dictionary<string, Sprite>();
+       foreach (Sprite sprite in icons)
+          iconDict.Add(sprite.name, sprite);          //Loads icons into dictionary to allow quick lookup
     }
 
 
@@ -27,15 +26,15 @@ public class QuestManager : MonoBehaviour
      **/
     public void StartQuest(string questName)
     {
-        createdDialog.SetActive(true);
-        createdDialog.GetComponent<QuestDisplay>().Initialize(Quest.LoadQuest(questName));      //Uses the Dialog UI and initializes the quest onto the display
-    }
+      displayUI.SetActive(!displayUI.active);
+    //displayUI.GetComponent<QuestDisplay>().Initialize(Quest.LoadQuest(questName));      //Uses the Dialog UI and initializes the quest onto the display
+  }
 
-    /**
-     * iconName: Name of the icon
-     * Return: Icon
-     **/
-    public Sprite GetIcon(string iconName)
+  /**
+   * iconName: Name of the icon
+   * Return: Icon
+   **/
+  public Sprite GetIcon(string iconName)
     {
         if (iconName != "" && iconDict[iconName] != null)
             return iconDict[iconName];
