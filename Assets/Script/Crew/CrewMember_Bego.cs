@@ -5,9 +5,8 @@ using System;
 [Serializable]
 public class CrewMember_Bego : CrewMember {
 
-    public CrewMember_Bego()
+    public CrewMember_Bego(string id) : base(id)
     {
-        type = "Bego";
         //attackSpeed.timeLeft = 10f;
         //canonReloadSpeed.timeLeft = 10f;
         attackStrength = 0.1f;

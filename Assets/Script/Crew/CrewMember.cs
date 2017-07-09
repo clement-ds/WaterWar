@@ -25,14 +25,18 @@ public class CrewMember {
     [NonSerialized]
     protected Cooldown repairSpeed;
 
-    //private Room assignedRoom ?
+    // should be a class "Room"
+    private string assignedRoom;
 
-    public CrewMember()
+    public CrewMember(string id)
     {
+        this.id = id;
+        type = this.GetType().Name.Substring(this.GetType().Name.IndexOf("_") + 1);
         attackSpeed = new Cooldown();
         canonReloadSpeed = new Cooldown();
         steerSpeed = new Cooldown();
         repairSpeed = new Cooldown();
+        assignedRoom = "Bridge";
         //attackSpeed.timeLeft = 1f;
         //canonReloadSpeed.timeLeft = 5f;
         //steerSpeed.timeLeft = 10f;
@@ -49,7 +53,7 @@ public class CrewMember {
 	
 	//}
 
-    public void attack(GameObject target)
+    public void Attack(GameObject target)
     {
         if (attackSpeed.getPossibility())
         {
@@ -58,7 +62,7 @@ public class CrewMember {
         }
     }
 
-    public void reloadCanon(GameObject canon)
+    public void ReloadCanon(GameObject canon)
     {
         if (canonReloadSpeed.getPossibility())
         {
@@ -67,7 +71,7 @@ public class CrewMember {
         }
     }
 
-    public void repair()
+    public void Repair()
     {
         if (repairSpeed.getPossibility())
         {
@@ -76,9 +80,4 @@ public class CrewMember {
         }
     }
 
-    /** GETTERS **/
-    public string getId()
-    {
-        return this.id;
-    }
 }
