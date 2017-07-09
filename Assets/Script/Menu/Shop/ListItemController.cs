@@ -16,20 +16,32 @@ public class ListItemController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        btn = this.GetComponent<Button>();
-        btn.onClick.AddListener(lc.DoTradeAction);
+        //btn = this.GetComponent<Button>();
+        //btn.onClick.AddListener(delegate { lc.Buy(source); });
     }
 
-    public void InitCell()
+    public void InitBuyCell()
     {
         count.text = source.quantity.ToString();
         objName.text = source.name;
         price.text = source.price.ToString();
+        btn = this.GetComponent<Button>();
+        btn.onClick.AddListener(delegate { lc.Buy(source); });
+    }
+
+    public void InitSellCell()
+    {
+        count.text = source.quantity.ToString();
+        objName.text = source.name;
+        price.text = source.price.ToString();
+        btn = this.GetComponent<Button>();
+        btn.onClick.AddListener(delegate { lc.Sell(source); });
     }
 
     // Update is called once per frame
     void Update()
     {
+        count.text = source.quantity.ToString();
     }
 
     void TaskOnClick()
