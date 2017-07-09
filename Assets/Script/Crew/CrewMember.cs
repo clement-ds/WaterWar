@@ -7,6 +7,7 @@ public class CrewMember {
 
     public string id;
     public string type;
+    public string memberName;
     public float attackStrength = 1f;
     public bool useRangedWeapon = false;
     public float walkSpeed = 1f;
@@ -37,6 +38,7 @@ public class CrewMember {
         steerSpeed = new Cooldown();
         repairSpeed = new Cooldown();
         assignedRoom = "Bridge";
+        memberName = id;
         //attackSpeed.timeLeft = 1f;
         //canonReloadSpeed.timeLeft = 5f;
         //steerSpeed.timeLeft = 10f;
