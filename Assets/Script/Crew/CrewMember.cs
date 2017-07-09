@@ -27,8 +27,10 @@ public class CrewMember {
 
     //private Room assignedRoom ?
 
-    public CrewMember()
+    public CrewMember(string id)
     {
+        this.id = id;
+        type = this.GetType().Name.Substring(this.GetType().Name.IndexOf("_") + 1);
         attackSpeed = new Cooldown();
         canonReloadSpeed = new Cooldown();
         steerSpeed = new Cooldown();

@@ -144,27 +144,27 @@ public class IslandGenerator {
         int a = rng.Next(0, 10);
         for (int i = 0; i < a; ++i)
         {
-            island.crew.begos.Add(new CrewMember_Bego());
+            island.crew.begos.Add(new CrewMember_Bego("b"));
         }
         a = rng.Next(0, 5);
         for (int i = 0; i < a; ++i)
         {
-            island.crew.fighters.Add(new CrewMember_Fighter());
+            island.crew.fighters.Add(new CrewMember_Fighter("b"));
         }
         a = rng.Next(0, 5);
         for (int i = 0; i < a; ++i)
         {
-            island.crew.engineers.Add(new CrewMember_Engineer());
+            island.crew.engineers.Add(new CrewMember_Engineer("b"));
         }
         a = rng.Next(0, 5);
         for (int i = 0; i < a; ++i)
         {
-            island.crew.fastUnits.Add(new CrewMember_FastUnit());
+            island.crew.fastUnits.Add(new CrewMember_FastUnit("b"));
         }
         a = rng.Next(0, 1);
         for (int i = 0; i < a; ++i)
         {
-            island.crew.captains.Add(new CrewMember_Captain());
+            island.crew.captains.Add(new CrewMember_Captain("b"));
         }
     }
 
