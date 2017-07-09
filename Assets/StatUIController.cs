@@ -8,21 +8,9 @@ public class StatUIController : MonoBehaviour
 {
 
     public RectTransform panel;
+    public GameObject rootPanel;
     public GameObject rowPrefab;
     private List<CrewMember> crewList;
-    private Dictionary<string, Func<int>> itemFillerDic;
-
-
-    // Use this for initialization
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
 
     public void Populate()
@@ -30,7 +18,6 @@ public class StatUIController : MonoBehaviour
         ClearPanel();
         crewList = PlayerManager.GetInstance().player.crew.crewMembers;
 
-        int turn = 0;
         foreach (CrewMember member in crewList)
         {
             GameObject crewRow = (GameObject)Instantiate(rowPrefab);
@@ -39,16 +26,14 @@ public class StatUIController : MonoBehaviour
             {
                 if (child.name == "MemberImage")
                 {
-                    Debug.Log("In MemberImage");
                     Image img = (Image)child.GetComponent<Image>();
                     img.sprite = new Sprite(); // TODO: GET IMG
                 }
                 else if (child.name == "MemberName")
                 {
-                    Debug.Log("In MemberName");
                     InputField nameText = (InputField)child.GetComponent<InputField>();
                     nameText.text = member.memberName;
-                    nameText.onEndEdit.AddListener((string txt) => { member.memberName = txt; });
+                    CreateClosureForName(member, nameText);
 
                 }
                 else if (child.name == "MemberType")
@@ -58,23 +43,47 @@ public class StatUIController : MonoBehaviour
                 }
                 else if (child.name == "WageField")
                 {
-                    Debug.Log("In WageField");
                     InputField wageField = (InputField)child.GetComponent<InputField>();
                     wageField.text = member.wage + "£";
-                    wageField.onEndEdit.AddListener((string txt) => { member.wage = float.Parse(txt); });
+                    CreateClosureForWage(member, wageField);
                 }
                 else if (child.name == "SackButton")
                 {
-                    Debug.Log("In SackButton");
                     Button sackButton = (Button)child.GetComponent<Button>();
-                    sackButton.onClick.AddListener( () => PreRemoveCrew(member));
+                    CreateClosureForSack(member, sackButton);
                 }
             }
             crewRow.transform.SetParent(panel.transform, false);
-            crewRow.transform.Translate(new Vector3(0, -50 * turn++));
-
 
         }
+    }
+
+    // Necessary because of unity bug in lambda
+    void CreateClosureForName(CrewMember member, InputField field)
+    {
+        field.onEndEdit.AddListener((string txt) => { member.memberName = txt; });
+    }
+    void CreateClosureForWage(CrewMember member, InputField field)
+    {
+        field.onEndEdit.AddListener((string txt) => { member.wage = float.Parse(txt); });
+    }
+    void CreateClosureForSack(CrewMember member, Button button)
+    {
+        button.onClick.AddListener(() => PreRemoveCrew(member));
+    }
+    // -----------------------------------------
+
+
+    private CrewMember GetMemberById(string id)
+    {
+        List<CrewMember> members = PlayerManager.GetInstance().player.crew.crewMembers;
+        
+        foreach (CrewMember m in members)
+        {
+            if (m.id == id)
+                return m;
+        }
+        return null;
     }
 
     private void PreRemoveCrew(CrewMember member)
@@ -85,7 +94,8 @@ public class StatUIController : MonoBehaviour
 
     public void TogglePanel()
     {
-        panel.gameObject.SetActive(!panel.gameObject.active);
+        rootPanel.SetActive(!rootPanel.active);
+        panel.gameObject.SetActive(rootPanel.active);
         if (panel.gameObject.active)
             Populate();
     }

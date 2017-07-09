@@ -124,6 +124,7 @@ public class PlayerCrew
     {
         AddCrew("Captain");
         AddCrew("Bego");
+        AddCrew("Fighter");
 
     }
 
