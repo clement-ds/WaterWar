@@ -88,7 +88,7 @@ public class IslandGenerator {
         GenerateFood(rng, island);
         GenerateWeapons(rng, island);
         GenerateQuests(rng, island);
-        //GenerateCrew(rng, island);
+        GenerateCrew(rng, island);
         GenerateName(island);
         return island;
     }
@@ -144,27 +144,22 @@ public class IslandGenerator {
         int a = rng.Next(0, 10);
         for (int i = 0; i < a; ++i)
         {
-            island.crew.begos.Add(new CrewMember_Bego("b"));
+            island.crew.Add(new CrewMember_Bego(island.name + "Bego" + i));
         }
         a = rng.Next(0, 5);
         for (int i = 0; i < a; ++i)
         {
-            island.crew.fighters.Add(new CrewMember_Fighter("b"));
+            island.crew.Add(new CrewMember_Fighter(island.name + "Fighter" + i));
         }
         a = rng.Next(0, 5);
         for (int i = 0; i < a; ++i)
         {
-            island.crew.engineers.Add(new CrewMember_Engineer("b"));
+            island.crew.Add(new CrewMember_Engineer(island.name + "Engineer" + i));
         }
         a = rng.Next(0, 5);
         for (int i = 0; i < a; ++i)
         {
-            island.crew.fastUnits.Add(new CrewMember_FastUnit("b"));
-        }
-        a = rng.Next(0, 1);
-        for (int i = 0; i < a; ++i)
-        {
-            island.crew.captains.Add(new CrewMember_Captain("b"));
+            island.crew.Add(new CrewMember_FastUnit(island.name + "FastUnit" + i));
         }
     }
 

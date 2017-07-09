@@ -4,18 +4,22 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
 
-public class StatUIController : MonoBehaviour
-{
 
-    public RectTransform panel;
-    public GameObject rootPanel;
-    public GameObject rowPrefab;
+// works with ListPanelRoot/ListReceiverPanel/ListRowPanel
+public class StatUIController : UIController
+{
     private List<CrewMember> crewList;
 
 
-    public void Populate()
+    public override void Populate()
     {
-        ClearPanel();
+        base.Populate();
+        FillItems();
+    }
+
+
+    private void FillItems()
+    {
         crewList = PlayerManager.GetInstance().player.crew.crewMembers;
 
         foreach (CrewMember member in crewList)
@@ -77,23 +81,6 @@ public class StatUIController : MonoBehaviour
     {
         PlayerManager.GetInstance().player.crew.RemoveCrew(member.id);
         Populate();
-    }
-
-    public void TogglePanel()
-    {
-        rootPanel.SetActive(!rootPanel.active);
-        panel.gameObject.SetActive(rootPanel.active);
-        if (panel.gameObject.active)
-            Populate();
-    }
-
-    private void ClearPanel()
-    {
-        foreach (Transform child in panel)
-        {
-            if (child != panel.transform)
-                Destroy(child.gameObject);
-        }
     }
 
 

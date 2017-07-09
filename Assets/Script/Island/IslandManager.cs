@@ -44,8 +44,8 @@ public class IslandManager {
 
         Debug.Log("island : " + islands[0].name);
         Debug.Log("CHECK INVENTORY : " + islands[0].inventory.food.Count + " / " + islands[0].inventory.weapons.Count);
-        Debug.Log("CHECK CREW : " + islands[0].crew.begos.Count + " / " + islands[0].crew.captains.Count + " / " + islands[0].crew.engineers.Count
-            + " / " + islands[0].crew.fastUnits.Count + " / " + islands[0].crew.fighters.Count);
+//        Debug.Log("CHECK CREW : " + islands[0].crew.begos.Count + " / " + islands[0].crew.captains.Count + " / " + islands[0].crew.engineers.Count
+//            + " / " + islands[0].crew.fastUnits.Count + " / " + islands[0].crew.fighters.Count);
         Debug.Log("CHECK QUEST : " + islands[0].questLog.quests.Count);
 
         Save();
@@ -129,8 +129,14 @@ public class Island
     public int y;
 
     public IslandInventory inventory = new IslandInventory();
-    public IslandCrew crew = new IslandCrew();
+    public List<CrewMember> crew = new List<CrewMember>();
     public QuestLog questLog = new QuestLog();
+
+
+    public void removeCrewMember(CrewMember member)
+    {
+        crew.Remove(member);
+    }
 }
 
 [Serializable]
@@ -140,14 +146,5 @@ public class IslandInventory
     public List<InventoryObject> weapons = new List<InventoryObject>();
 }
 
-[Serializable]
-public class IslandCrew
-{
-    public List<CrewMember_Bego> begos = new List<CrewMember_Bego>();
-    public List<CrewMember_Captain> captains = new List<CrewMember_Captain>();
-    public List<CrewMember_Engineer> engineers = new List<CrewMember_Engineer>();
-    public List<CrewMember_FastUnit> fastUnits = new List<CrewMember_FastUnit>();
-    public List<CrewMember_Fighter> fighters = new List<CrewMember_Fighter>();
-}
 
 

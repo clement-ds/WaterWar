@@ -128,6 +128,11 @@ public class PlayerCrew
 
     }
 
+    public void AddCrew(CrewMember member)
+    {
+        crewMembers.Add(member);
+    }
+
     public void AddCrew(string type)
     {
         string id = "CrewMember_" + type;
