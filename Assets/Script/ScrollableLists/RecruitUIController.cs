@@ -10,6 +10,7 @@ public class RecruitUIController : UIController
 {
     private List<CrewMember> crewList;
     public int unitPriceMultiplier;
+    public Button closeButton;
 
 
     public override void Populate()
@@ -21,6 +22,7 @@ public class RecruitUIController : UIController
 
     private void FillItems()
     {
+        Debug.Log("Current island: " + PlayerManager.GetInstance().player.currentIsland);
         crewList = IslandManager.GetInstance().islands[PlayerManager.GetInstance().player.currentIsland].crew;
 
         foreach (CrewMember member in crewList)
@@ -87,6 +89,7 @@ public class RecruitUIController : UIController
     public void OnClick()
     {
         TogglePanel();
+        closeButton.gameObject.SetActive(panel.gameObject.active);
     }
 
 }

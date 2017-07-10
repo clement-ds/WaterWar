@@ -21,16 +21,19 @@ public class Island1 : MonoBehaviour {
 	
 	}
 
-	void OnMouseDown()
+	public void OnMouseDown()
 	{
-		//print("dockingtrigger : " + dockingTrigger.transform.localPosition);
+		print("dockingtrigger : " + dockingTrigger.transform.localPosition);
 		//Vector2 dock;
 		//dock.x = dockingTrigger.transform.localPosition.x;
 		//dock.y = -dockingTrigger.transform.localPosition.y;
 		//print("dock : " + dock);
 		//playerRb2d.MovePosition(dock);
 		playerShip.transform.position = Vector3.MoveTowards(playerShip.transform.position, dockingTrigger.transform.position, 10000);
-		travelCutscene.StartCutscene();
+        PlayerManager.GetInstance().player.mapPosition = new Vector2(dockingTrigger.transform.position.x,
+                                                                    dockingTrigger.transform.position.y);
+
+        travelCutscene.StartCutscene();
         StartCoroutine(MoveShip());
 	}
 

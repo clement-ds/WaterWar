@@ -10,18 +10,23 @@ public class PlayerManager {
 
     private List<String> json = new List<string>();
     public Player player;
+    public Player ai;
 
     protected PlayerManager()
     {
         LoadFile("PlayerJson/Save.txt");
         player = JsonUtility.FromJson<Player>(json[0]);
         Debug.Log("player : " + player.name + "/" + player.life);
-        Debug.Log("CHECK INVENTORY : " + player.inventory.food.Count + " / " + player.inventory.weapons.Count);
-        Debug.Log("CREW : ");
-        foreach (CrewMember member in player.crew.crewMembers)
-            Debug.Log("--- " + member.type + " = " + member.id);
-        Debug.Log("CHECK QUEST : " + player.questLog.quests.Count);
+        //Debug.Log("CHECK INVENTORY : " + player.inventory.food.Count + " / " + player.inventory.weapons.Count);
+        //Debug.Log("CREW : ");
+        //foreach (CrewMember member in player.crew.crewMembers)
+        //    Debug.Log("--- " + member.type + " = " + member.id);
+        //Debug.Log("CHECK QUEST : " + player.questLog.quests.Count);
         //Save();
+
+        LoadFile("PlayerJson/AISave.txt");
+        ai = JsonUtility.FromJson<Player>(json[0]);
+        Debug.Log("player : " + player.name + "/" + player.life);
     }
 
     public static PlayerManager GetInstance()
@@ -41,6 +46,22 @@ public class PlayerManager {
             writer.Write(JsonUtility.ToJson(player));
             writer.Close();
         } catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            return false;
+        }
+        return true;
+    }
+
+    public bool SaveAI()
+    {
+        try
+        {
+            StreamWriter writer = new StreamWriter("PlayerJson/AISave.txt", false);
+            writer.Write(JsonUtility.ToJson(ai));
+            writer.Close();
+        }
+        catch (Exception e)
         {
             Debug.Log(e.Message);
             return false;
@@ -101,6 +122,7 @@ public class Player
     public int life;
     public int money;
     public int currentIsland;
+    public Vector2 mapPosition;
 
     public PlayerInventory inventory = new PlayerInventory();
     public PlayerCrew crew = new PlayerCrew();
@@ -204,4 +226,5 @@ public class PlayerQuest
     public string objective;
     public InventoryObject reward;
     public int moneyReward;
+    public bool taken = false;
 }

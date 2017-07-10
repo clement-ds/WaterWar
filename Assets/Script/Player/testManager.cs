@@ -5,11 +5,16 @@ public class testManager : MonoBehaviour {
 
     PlayerManager pm = null;
     IslandManager im = null;
+    public GameObject playerShip;
 
     // Use this for initialization
     void Start() {
         //pm = PlayerManager.GetInstance();
         im = IslandManager.GetInstance();
+
+        Vector2 goodPos = PlayerManager.GetInstance().player.mapPosition;
+        playerShip.transform.position = new Vector3(goodPos.x, goodPos.y, playerShip.transform.position.z);
+        print("SHIP PUT IN POS " + goodPos);
     }
 	
 	// Update is called once per frame
