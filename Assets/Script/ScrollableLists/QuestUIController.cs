@@ -75,6 +75,8 @@ public class QuestUIController : UIController
         button.onClick.AddListener(() =>
         {
             Player player = PlayerManager.GetInstance().player;
+
+            quest.taken = true;
             player.questLog.quests.Add(quest);
             IslandManager.GetInstance().islands[player.currentIsland].questLog.quests.Remove(quest);
             Populate();
