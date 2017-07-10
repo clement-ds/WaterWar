@@ -127,6 +127,7 @@ public class Player
     public PlayerInventory inventory = new PlayerInventory();
     public PlayerCrew crew = new PlayerCrew();
     public QuestLog questLog = new QuestLog();
+    public ShipDisposition ship = new ShipDisposition();
 }
 
 [Serializable]
@@ -227,4 +228,29 @@ public class PlayerQuest
     public InventoryObject reward;
     public int moneyReward;
     public bool taken = false;
+}
+
+[Serializable]
+public class ShipDisposition
+{
+    public List<Room> rooms = new List<Room>();
+}
+
+[Serializable]
+public class Room
+{
+    public int place;
+    public string type;
+
+    public Room(string type, int place)
+    {
+        this.place = place;
+        this.type = type;
+    }
+
+    public Room(Room roomm)
+    {
+        this.place = roomm.place;
+        this.type = roomm.type;
+    }
 }
