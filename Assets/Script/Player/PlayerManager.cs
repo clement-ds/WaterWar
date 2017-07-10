@@ -226,4 +226,5 @@ public class PlayerQuest
     public string objective;
     public InventoryObject reward;
     public int moneyReward;
+    public bool taken = false;
 }
