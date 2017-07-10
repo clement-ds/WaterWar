@@ -50,6 +50,16 @@ public abstract class ShipElement : GuiElement
         this.setCurrentLife(life);
     }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        Battle_CanonBall canonBall = col.gameObject.GetComponent<Battle_CanonBall>();
+        if (canonBall)
+        {
+            this.receiveDamage(canonBall);
+            Destroy(col.gameObject);
+        }
+    }
+
     void Update()
     {
         if (Camera.main)
@@ -131,11 +141,11 @@ public abstract class ShipElement : GuiElement
     }
 
     /** ON HIT EFFECT **/
-    protected abstract void dealDamageAsRepercution(int damage);
+    protected abstract void dealDamageAsRepercution(Battle_CanonBall canonBall);
 
     protected abstract void dealDamageOnDestroy();
 
-    protected abstract void applyMalusOnHit();
+    protected abstract void applyMalusOnHit(Battle_CanonBall canonBall);
 
     protected abstract void applyMalusOnDestroy();
 
@@ -202,23 +212,23 @@ public abstract class ShipElement : GuiElement
             member.freeCrewMemberFromShipElement(this, this.transform.parent.gameObject);
         }
     }
-    public bool receiveDamage(int damage)
+    public bool receiveDamage(Battle_CanonBall canonBall)
     {
         if (this.available)
         {
-            if (this.receiveDamageAction(damage))
+            if (this.receiveDamageAction(canonBall))
             {
                 this.receiveDamageAnimation();
             }
-            this.dealDamageAsRepercution(damage);
-            this.applyMalusOnHit();
+            this.dealDamageAsRepercution(canonBall);
+            this.applyMalusOnHit(canonBall);
             this.updateActionMenu();
             return true;
         }
         return false;
     }
 
-    protected abstract bool receiveDamageAction(int damage);
+    protected abstract bool receiveDamageAction(Battle_CanonBall canonBall);
 
     protected abstract void receiveDamageAnimation();
 

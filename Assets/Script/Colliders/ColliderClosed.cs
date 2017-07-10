@@ -15,6 +15,7 @@ public class ColliderClosed : MonoBehaviour {
 	void OnTriggerExit2D(Collider2D other)
 	{
 		print("exit: " + other.transform.gameObject);
+        other.transform.gameObject.GetComponent<Battle_CrewMember>().stopMove();
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
