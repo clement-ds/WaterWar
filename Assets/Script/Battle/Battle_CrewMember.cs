@@ -14,7 +14,7 @@ public class Battle_CrewMember : GuiElement
     // Use this for initialization
     protected override void StartMySelf()
     {
-        member = new CrewMember_Captain();
+        member = new CrewMember_Captain("cquoica");
     }
 
     // Update is called once per frame
@@ -84,10 +84,4 @@ public class Battle_CrewMember : GuiElement
         this.freeCrewMemberFromShipElement(this.transform.parent.GetComponent<ShipElement>(), container);
     }
 
-    /** GETTERS **/
-
-    public string getId()
-    {
-        return this.member.getId();
-    }
 }

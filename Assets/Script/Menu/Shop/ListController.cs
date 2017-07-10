@@ -5,97 +5,232 @@ using System.Collections.Generic;
 
 public class ListController : MonoBehaviour
 {
-  private IslandInventory inventoryI;
-  private PlayerInventory inventoryP;
+    private IslandInventory inventoryI;
+    private PlayerInventory inventoryP;
 
-  private List<ListItemController> listI;
-  private List<ListItemController> listP;
+    private int currentIsland;
 
-  public Sprite[] Icons;
-  public GameObject ContentPanel;
-  public GameObject ListItemPrefab;
+    static string idIsland = "";
+    static string idPlayer = "";
 
-  // Use this for initialization
-  void Start() {
+    public Sprite[] Icons;
+    public GameObject ContentPanelShop;
+    public GameObject ContentPanelPlayer;
+    public GameObject ListItemPrefab;
 
-    // For player shop
-    if (name == "SellPanel") {
-      PlayerManager managerP = PlayerManager.GetInstance();
-      inventoryP = managerP.player.inventory;
-      FillSellShop();
-    }
+    private List<GameObject> buyList = new List<GameObject>();
+    private List<GameObject> sellList = new List<GameObject>();
 
-    // For island shop
-    if (name == "BuyPanel") {
-      IslandManager managerI = IslandManager.GetInstance();
-
-      inventoryI = managerI.island.inventory;
-      FillBuyShop();
-    }
-  }
-
-  void FillBuyShop()
-  {
-    for (int i = 0; i < inventoryI.food.Count; ++i)
+    // Use this for initialization
+    void Start()
     {
-      GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
-      ListItemController controller = newItem.GetComponent<ListItemController>();
 
-      print("fillbuyshop : " + inventoryI.food[i].name);
-      controller.name = inventoryI.food[i].name;
-      controller.Name.text = inventoryI.food[i].name;
-      controller.Count.text = inventoryI.food[i].quantity.ToString();
-      controller.Price.text = inventoryI.food[i].quantity.ToString();
+        // For player shop
+        //if (name == "SellPanel") {
+        PlayerManager managerP = PlayerManager.GetInstance();
+        inventoryP = managerP.player.inventory;
+        FillSellShop();
+        //}
 
-      newItem.transform.SetParent(ContentPanel.transform);
-      newItem.transform.localScale = Vector3.one;
+        currentIsland = PlayerManager.GetInstance().player.currentIsland;
+
+        // For island shop
+        //if (name == "BuyPanel") {
+        IslandManager managerI = IslandManager.GetInstance();
+
+        inventoryI = managerI.islands[currentIsland].inventory;
+        FillBuyShop();
+        //}
     }
 
-    for (int i = 0; i < inventoryI.weapons.Count; ++i)
+    void FillBuyShop()
     {
-      GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
-      ListItemController controller = newItem.GetComponent<ListItemController>();
+        for (int i = 0; i < buyList.Count; ++i)
+        {
+            Destroy(buyList[i]);
+        }
 
-      controller.name = inventoryI.weapons[i].name;
-      controller.Name.text = inventoryI.weapons[i].name;
-      controller.Count.text = inventoryI.weapons[i].quantity.ToString();
-      controller.Price.text = inventoryI.weapons[i].quantity.ToString();
-      newItem.transform.SetParent(ContentPanel.transform);
-      newItem.transform.localScale = Vector3.one;
+        for (int i = 0; i < inventoryI.food.Count; ++i)
+        {
+            GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
+            ListItemController controller = newItem.GetComponent<ListItemController>();
+
+            controller.lc = this;
+            controller.source = inventoryI.food[i];
+
+            controller.InitBuyCell();
+            newItem.transform.SetParent(ContentPanelShop.transform);
+            newItem.transform.localScale = Vector3.one;
+            buyList.Add(newItem);
+        }
+
+        for (int i = 0; i < inventoryI.weapons.Count; ++i)
+        {
+            GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
+            ListItemController controller = newItem.GetComponent<ListItemController>();
+
+            controller.lc = this;
+            controller.source = inventoryI.weapons[i];
+
+            controller.InitBuyCell();
+            newItem.transform.SetParent(ContentPanelShop.transform);
+            newItem.transform.localScale = Vector3.one;
+            buyList.Add(newItem);
+        }
     }
-  }
 
-  void FillSellShop()
-  {
-    for (int i = 0; i < inventoryP.food.Count; ++i)
+    void FillSellShop()
     {
-      GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
-      ListItemController controller = newItem.GetComponent<ListItemController>();
+        for (int i = 0; i < sellList.Count; ++i)
+        {
+            Destroy(sellList[i]);
+        }
+        for (int i = 0; i < inventoryP.food.Count; ++i)
+        {
+            GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
+            ListItemController controller = newItem.GetComponent<ListItemController>();
 
-      controller.name = inventoryP.food[i].name;
-      controller.Name.text = inventoryP.food[i].name;
-      controller.Count.text = inventoryP.food[i].quantity.ToString();
-      controller.Price.text = inventoryP.food[i].quantity.ToString();
-      newItem.transform.SetParent(ContentPanel.transform);
-      newItem.transform.localScale = Vector3.one;
+            controller.lc = this;
+            controller.source = inventoryP.food[i];
+
+            controller.InitSellCell();
+            newItem.transform.SetParent(ContentPanelPlayer.transform);
+            newItem.transform.localScale = Vector3.one;
+            sellList.Add(newItem);
+        }
+
+        for (int i = 0; i < inventoryP.weapons.Count; ++i)
+        {
+            GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
+            ListItemController controller = newItem.GetComponent<ListItemController>();
+
+            controller.lc = this;
+            controller.source = inventoryP.weapons[i];
+
+            controller.InitSellCell();
+            newItem.transform.SetParent(ContentPanelPlayer.transform);
+            newItem.transform.localScale = Vector3.one;
+            sellList.Add(newItem);
+        }
     }
 
-    for (int i = 0; i < inventoryP.weapons.Count; ++i)
+    public void Buy(InventoryObject source)
     {
-      GameObject newItem = Instantiate(ListItemPrefab) as GameObject;
-      ListItemController controller = newItem.GetComponent<ListItemController>();
-
-      controller.name = inventoryP.weapons[i].name;
-      controller.Name.text = inventoryP.weapons[i].name;
-      controller.Count.text = inventoryP.weapons[i].quantity.ToString();
-      controller.Price.text = inventoryP.weapons[i].quantity.ToString();
-      newItem.transform.SetParent(ContentPanel.transform);
-      newItem.transform.localScale = Vector3.one;
+        Player p = PlayerManager.GetInstance().player;
+        if (p.money >= source.price)
+        {
+            p.money -= source.price;
+            source.quantity -= 1;
+            if (source.type == "Food")
+            {
+                bool flag = true;
+                for (int i = 0; i < p.inventory.food.Count; ++i)
+                {
+                    if (source.name == p.inventory.food[i].name)
+                    {
+                        p.inventory.food[i].quantity += 1;
+                        flag = false;
+                    }
+                }
+                if (flag)
+                {
+                    InventoryObject obj = new InventoryObject(source);
+                    obj.quantity = 1;
+                    p.inventory.food.Add(new InventoryObject(obj));
+                }
+                if (source.quantity <= 0)
+                {
+                    inventoryI.food.Remove(source);
+                }
+            }
+            else if (source.type == "Weapon")
+            {
+                bool flag = true;
+                for (int i = 0; i < p.inventory.weapons.Count; ++i)
+                {
+                    if (source.name == p.inventory.weapons[i].name)
+                    {
+                        p.inventory.weapons[i].quantity += 1;
+                        flag = false;
+                    }
+                }
+                if (flag)
+                {
+                    InventoryObject obj = new InventoryObject(source);
+                    obj.quantity = 1;
+                    p.inventory.weapons.Add(new InventoryObject(obj));
+                }
+                if (source.quantity <= 0)
+                {
+                    inventoryI.weapons.Remove(source);
+                }
+            }
+            FillSellShop();
+            FillBuyShop();
+        }
+        else
+        {
+            // MESSAGE D'ERREUR
+        }
     }
-  }
 
-  // Update is called once per frame
-  void Update() {
-    
-  }
+    public void Sell(InventoryObject source)
+    {
+        Player p = PlayerManager.GetInstance().player;
+        Island isl = IslandManager.GetInstance().islands[currentIsland];
+        p.money += source.price;
+        source.quantity -= 1;
+        if (source.type == "Food")
+        {
+            bool flag = true;
+            for (int i = 0; i < isl.inventory.food.Count; ++i)
+            {
+                if (source.name == isl.inventory.food[i].name)
+                {
+                    isl.inventory.food[i].quantity += 1;
+                    flag = false;
+                }
+            }
+            if (flag)
+            {
+                InventoryObject obj = new InventoryObject(source);
+                obj.quantity = 1;
+                isl.inventory.food.Add(new InventoryObject(obj));
+            }
+            if (source.quantity <= 0)
+            {
+                inventoryP.food.Remove(source);
+            }
+        }
+        else if (source.type == "Weapon")
+        {
+            bool flag = true;
+            for (int i = 0; i < isl.inventory.weapons.Count; ++i)
+            {
+                if (source.name == isl.inventory.weapons[i].name)
+                {
+                    isl.inventory.weapons[i].quantity += 1;
+                    flag = false;
+                }
+            }
+            if (flag)
+            {
+                InventoryObject obj = new InventoryObject(source);
+                obj.quantity = 1;
+                isl.inventory.weapons.Add(new InventoryObject(obj));
+            }
+            if (source.quantity <= 0)
+            {
+                inventoryP.weapons.Remove(source);
+            }
+        }
+        FillBuyShop();
+        FillSellShop();
+    }
+
+// Update is called once per frame
+void Update()
+{
+
+}
 }

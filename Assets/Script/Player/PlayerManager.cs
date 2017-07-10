@@ -17,8 +17,9 @@ public class PlayerManager {
         player = JsonUtility.FromJson<Player>(json[0]);
         Debug.Log("player : " + player.name + "/" + player.life);
         Debug.Log("CHECK INVENTORY : " + player.inventory.food.Count + " / " + player.inventory.weapons.Count);
-        Debug.Log("CHECK CREW : " + player.crew.begos.Count + " / " + player.crew.captains.Count + " / " + player.crew.engineers.Count
-            + " / " + player.crew.fastUnits.Count + " / " + player.crew.fighters.Count);
+        Debug.Log("CREW : ");
+        foreach (CrewMember member in player.crew.crewMembers)
+            Debug.Log("--- " + member.type + " = " + member.id);
         Debug.Log("CHECK QUEST : " + player.questLog.quests.Count);
         //Save();
     }
@@ -99,6 +100,7 @@ public class Player
     public string name;
     public int life;
     public int money;
+    public int currentIsland;
 
     public PlayerInventory inventory = new PlayerInventory();
     public PlayerCrew crew = new PlayerCrew();
@@ -115,11 +117,53 @@ public class PlayerInventory
 [Serializable]
 public class PlayerCrew
 {
-    public List<CrewMember_Bego> begos = new List<CrewMember_Bego>();
-    public List<CrewMember_Captain> captains = new List<CrewMember_Captain>();
-    public List<CrewMember_Engineer> engineers = new List<CrewMember_Engineer>();
-    public List<CrewMember_FastUnit> fastUnits = new List<CrewMember_FastUnit>();
-    public List<CrewMember_Fighter> fighters = new List<CrewMember_Fighter>();
+    public List<CrewMember> crewMembers = new List<CrewMember>();
+    public long crewIncrement = 0;
+
+    public PlayerCrew()
+    {
+        AddCrew("Captain");
+        AddCrew("Bego");
+        AddCrew("Fighter");
+
+    }
+
+    public void AddCrew(CrewMember member)
+    {
+        crewMembers.Add(member);
+    }
+
+    public void AddCrew(string type)
+    {
+        string id = "CrewMember_" + type;
+        string crewID = type + crewIncrement.ToString();
+        if (id.Equals("CrewMember_Captain"))
+            crewMembers.Add(new CrewMember_Captain(crewID));
+        else if (id.Equals("CrewMember_Bego"))
+            crewMembers.Add(new CrewMember_Bego(crewID));
+        else if (id.Equals("CrewMember_Engineer"))
+            crewMembers.Add(new CrewMember_Engineer(crewID));
+        else if (id.Equals("CrewMember_FastUnit"))
+            crewMembers.Add(new CrewMember_FastUnit(crewID));
+        else if (id.Equals("CrewMember_Fighter"))
+            crewMembers.Add(new CrewMember_Fighter(crewID));
+        else
+            Debug.Log("Invalid crew type: " + id);
+        ++crewIncrement;
+    }
+
+    public void RemoveCrew(string id)
+    {
+        foreach (CrewMember member in crewMembers)
+        {
+            if (member.id.Equals(id))
+            {
+                crewMembers.Remove(member);
+                break;
+            }
+        }
+    }
+
 }
 
 [Serializable]

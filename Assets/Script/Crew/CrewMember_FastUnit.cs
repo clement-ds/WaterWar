@@ -5,7 +5,8 @@ using System;
 [Serializable]
 public class CrewMember_FastUnit : CrewMember {
 
-	public CrewMember_FastUnit () {
+	public CrewMember_FastUnit (string id) : base(id)
+    {
         attackSpeed.timeLeft = .2f;
         canonReloadSpeed.timeLeft = 4f;
         attackStrength = .25f;

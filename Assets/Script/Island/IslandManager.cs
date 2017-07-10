@@ -9,21 +9,45 @@ public class IslandManager {
     private static IslandManager instance = null;
 
     private List<String> json = new List<string>();
+    public List<Island> islands = new List<Island>();
     public Island island;
+    public Island island2;
+    public Island island3;
+    public Island island4;
+    public Island island5;
+    public Island island6;
+    public Island island7;
+    public Island island8;
+    public Island island9;
 
     protected IslandManager()
     {
-        LoadFile("PlayerJson/IslandSave.txt");
-        island = JsonUtility.FromJson<Island>(json[0]);
-        island.x = 5;
-        island.y = 9;
-        //Debug.Log("island : " + island.name);
-        //Debug.Log("CHECK INVENTORY : " + island.inventory.food.Count + " / " + island.inventory.weapons.Count);
-        //Debug.Log("CHECK CREW : " + island.crew.begos.Count + " / " + island.crew.captains.Count + " / " + island.crew.engineers.Count
-        //    + " / " + island.crew.fastUnits.Count + " / " + island.crew.fighters.Count);
-        //Debug.Log("CHECK QUEST : " + island.questLog.quests.Count);
+        //LoadFile("PlayerJson/IslandSave.txt");
+        //island = JsonUtility.FromJson<Island>(json[0]);
+        //island.x = 5;
+        //island.y = 9;
+        islands.Add(new Island());
+        islands.Add(new Island());
+        islands.Add(new Island());
+        islands.Add(new Island());
+        islands.Add(new Island());
+        islands.Add(new Island());
+        islands.Add(new Island());
+        islands.Add(new Island());
+        islands.Add(new Island());
+
         IslandGenerator iGen = new IslandGenerator();
-        iGen.GenerateIsland(island);
+        for (int i = 0; i < islands.Count; ++i)
+        {
+            islands[i] = iGen.GenerateIsland(islands[i]);
+        }
+
+        Debug.Log("island : " + islands[0].name);
+        Debug.Log("CHECK INVENTORY : " + islands[0].inventory.food.Count + " / " + islands[0].inventory.weapons.Count);
+//        Debug.Log("CHECK CREW : " + islands[0].crew.begos.Count + " / " + islands[0].crew.captains.Count + " / " + islands[0].crew.engineers.Count
+//            + " / " + islands[0].crew.fastUnits.Count + " / " + islands[0].crew.fighters.Count);
+        Debug.Log("CHECK QUEST : " + islands[0].questLog.quests.Count);
+
         Save();
     }
 
@@ -105,8 +129,14 @@ public class Island
     public int y;
 
     public IslandInventory inventory = new IslandInventory();
-    public IslandCrew crew = new IslandCrew();
+    public List<CrewMember> crew = new List<CrewMember>();
     public QuestLog questLog = new QuestLog();
+
+
+    public void removeCrewMember(CrewMember member)
+    {
+        crew.Remove(member);
+    }
 }
 
 [Serializable]
@@ -116,14 +146,5 @@ public class IslandInventory
     public List<InventoryObject> weapons = new List<InventoryObject>();
 }
 
-[Serializable]
-public class IslandCrew
-{
-    public List<CrewMember_Bego> begos = new List<CrewMember_Bego>();
-    public List<CrewMember_Captain> captains = new List<CrewMember_Captain>();
-    public List<CrewMember_Engineer> engineers = new List<CrewMember_Engineer>();
-    public List<CrewMember_FastUnit> fastUnits = new List<CrewMember_FastUnit>();
-    public List<CrewMember_Fighter> fighters = new List<CrewMember_Fighter>();
-}
 
 

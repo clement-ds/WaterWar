@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Cooldown : MonoBehaviour {
+public class Cooldown {
 
     public float timeLeft = 30.0f;
     private float startTime = 0;
     private bool possibility = false;
 
     // Use this for initialization
-    void Start() {
+    public Cooldown() {
         startTime = timeLeft;
     }
 
