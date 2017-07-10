@@ -125,8 +125,8 @@ public class IslandManager {
 public class Island
 {
     public string name;
-    public int x;
-    public int y;
+    public float x;
+    public float y;
 
     public IslandInventory inventory = new IslandInventory();
     public List<CrewMember> crew = new List<CrewMember>();

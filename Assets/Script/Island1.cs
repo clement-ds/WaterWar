@@ -14,10 +14,16 @@ public class Island1 : MonoBehaviour {
 	void Start () {
 		playerRb2d = playerShip.GetComponent<Rigidbody2D>();
 		travelCutscene = GameObject.Find("CutsceneManager").GetComponent<TravelCutscene>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+        Island island = IslandManager.GetInstance().islands[int.Parse(tag)];
+        island.x = dockingTrigger.transform.position.x;
+        island.y = dockingTrigger.transform.position.y;
+        Debug.Log(island.name + " position is " + island.x + " - " + island.y);
+
+    }
+
+    // Update is called once per frame
+    void Update () {
 	
 	}
 
