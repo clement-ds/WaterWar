@@ -10,14 +10,12 @@ public class ShopInteraction : MonoBehaviour {
         shopMenu.SetActive(false);
     }
 
-  void Update () {
-      if (Input.GetMouseButtonDown(0)) {
-            Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 touchPos = new Vector2(wp.x, wp.y);
-            if (GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos) && shopMenu) {
-                shopMenu.SetActive(true);
-            }
-        }
+    public void TriggerButton()
+    {
+        shopMenu.SetActive(!shopMenu.active);
+    }
+
+    void Update () {
       if (Input.GetKeyDown(KeyCode.Escape) && shopMenu)
         shopMenu.SetActive(false);
     }
