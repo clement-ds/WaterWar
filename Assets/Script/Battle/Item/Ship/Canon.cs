@@ -7,7 +7,7 @@ public class Canon : ShipElement
     private ShipElement target = null;
     private bool ready = false;
     private bool reloading = false;
-    private int power = 5;       // Random number
+    private int power = 150;       // Random number
     private int damage = 5;      // Random number
     private int viewFinder = 0;  // Random number
     private ShotCutscene shotCutscene;
@@ -21,7 +21,6 @@ public class Canon : ShipElement
     {
         base.StartMySelf();
         shotCutscene = GameObject.Find("CutsceneManager").GetComponent<ShotCutscene>();
-
     }
 
     public void destroyCanon()
@@ -54,7 +53,7 @@ public class Canon : ShipElement
     }
 
     /** ON HIT EFFECT **/
-    protected override void dealDamageAsRepercution(int damage)
+    protected override void dealDamageAsRepercution(Battle_CanonBall canonBall)
     {
     }
 
@@ -63,7 +62,7 @@ public class Canon : ShipElement
         this.GetComponentInParent<Battle_Ship>().receiveDamage(20);
     }
 
-    protected override void applyMalusOnHit()
+    protected override void applyMalusOnHit(Battle_CanonBall canonBall)
     {
 
     }
@@ -140,34 +139,42 @@ public class Canon : ShipElement
     protected override bool doDamageAction()
     {
         bool result = false;
-
-        print("fire canon");
+        
         if (target != null)
         {
             if (ready)
             {
-                if (UnityEngine.Random.value > 0.75)
-                {
-                    shotCutscene.StartCutscene();
-                    WaitForX(shotCutscene.duration);
-                }
-                Battle_Ship enemy = target.GetComponentInParent<Battle_Ship>();
                 if (!target.isAvailable())
                 {
                     this.stopAttack();
                     this.target = null;
                     result = false;
                 }
-                if (enemy != null && canAttack)
+                else
                 {
-                    this.setAttacking(true);
-                    // TODO send the bullet object with damage, type, onHitEffect etc
-                    if (target.receiveDamage(20))
+                    if (UnityEngine.Random.value > 0.75)
                     {
-                        print("Aouch they lost 20 pv");
+                        shotCutscene.StartCutscene();
+                        WaitForX(shotCutscene.duration);
                     }
-                    this.ready = false;
-                    result = true;
+                    Battle_Ship enemy = target.GetComponentInParent<Battle_Ship>();
+
+                    GameObject canonBall = GameObject.Find("CanonBallPool").GetComponent<SimpleObjectPool>().GetObject();
+
+                    Battle_CanonBall battleCanonBall = canonBall.GetComponent<Battle_CanonBall>();
+                    battleCanonBall.initialize(new CanonBall());
+                    canonBall.transform.position = this.transform.position;
+                    canonBall.transform.SetParent(this.transform);
+                    canonBall.GetComponent<Rigidbody2D>().AddRelativeForce((target.transform.position - canonBall.transform.position).normalized * this.getBulletSpeed(battleCanonBall.getAmmunition())); // mult by bullet speed
+
+                    Physics2D.IgnoreCollision(canonBall.transform.GetComponent<Collider2D>(), this.transform.GetComponent<Collider2D>(), true);
+                    if (enemy != null && canAttack)
+                    {
+                        this.setAttacking(true);
+                        this.ready = false;
+                        result = true;
+                    }
+
                 }
             }
             if (canAttack)
@@ -192,10 +199,15 @@ public class Canon : ShipElement
         canonShotExplosion.Play();
     }
 
-    /** RECEIVE DAMAGE **/
-    protected override bool receiveDamageAction(int damage)
+    private int getBulletSpeed(Ammunition ammunition)
     {
-        this.setCurrentLife(this.currentLife - damage);
+        return (this.power / ammunition.getWeight()) * 8;
+    }
+
+    /** RECEIVE DAMAGE **/
+    protected override bool receiveDamageAction(Battle_CanonBall canonBall)
+    {
+        this.setCurrentLife(this.currentLife - canonBall.getAmmunition().getDamage());
         return true;
     }
 
@@ -244,6 +256,13 @@ public class Canon : ShipElement
     /** SETTERS **/
     public void setTarget(ShipElement target)
     {
+        Vector3 targetDir = target.transform.position - transform.position;
+        /*
+        float step = 10 * Time.deltaTime;
+        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0F);
+        Debug.DrawRay(transform.position, newDir, Color.red);
+        transform.rotation = Quaternion.LookRotation(newDir);*/
+
         this.target = target;
         this.updateActionMenu();
     }
@@ -253,6 +272,5 @@ public class Canon : ShipElement
         this.reloading = false;
         this.ready = true;
         this.updateActionMenu();
-        print("canon ready");
     }
 }

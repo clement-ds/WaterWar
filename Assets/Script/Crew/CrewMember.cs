@@ -27,7 +27,7 @@ public class CrewMember {
     protected Cooldown repairSpeed;
 
     // should be a class "Room"
-    private string assignedRoom;
+    public string assignedRoom;
 
     public CrewMember(string id)
     {
@@ -37,7 +37,7 @@ public class CrewMember {
         canonReloadSpeed = new Cooldown();
         steerSpeed = new Cooldown();
         repairSpeed = new Cooldown();
-        assignedRoom = "Bridge";
+        assignedRoom = "";
         memberName = id;
         //attackSpeed.timeLeft = 1f;
         //canonReloadSpeed.timeLeft = 5f;
