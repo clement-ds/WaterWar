@@ -52,12 +52,14 @@ public class AltFight : MonoBehaviour
     long aiCooldown = 2000;
     int aiDamage = 5;
 
-    Player p = PlayerManager.GetInstance().player;
-    Player ai = PlayerManager.GetInstance().ai;
+    Player p;
+    Player ai;
 
     // Use this for initialization
     void Start()
     {
+        p = PlayerManager.GetInstance().player;
+        ai = PlayerManager.GetInstance().ai;
         playerPreviousTime = DateTime.Now.Ticks;
         aiPreviousTime = DateTime.Now.Ticks;
         crew = PlayerManager.GetInstance().player.crew.crewMembers;
