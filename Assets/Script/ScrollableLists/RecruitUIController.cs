@@ -10,6 +10,7 @@ public class RecruitUIController : UIController
 {
     private List<CrewMember> crewList;
     public int unitPriceMultiplier;
+    public Button closeButton;
 
 
     public override void Populate()
@@ -88,6 +89,7 @@ public class RecruitUIController : UIController
     public void OnClick()
     {
         TogglePanel();
+        closeButton.gameObject.SetActive(panel.gameObject.active);
     }
 
 }
