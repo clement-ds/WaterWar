@@ -267,7 +267,6 @@ public class AltFight : MonoBehaviour
     void PlayerAttack()
     {
         ai.life -= playerDamage;
-        print(ai.life.ToString());
         aiLife.text = ai.life.ToString();
     }
 
