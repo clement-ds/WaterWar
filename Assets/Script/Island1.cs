@@ -21,7 +21,7 @@ public class Island1 : MonoBehaviour {
 	
 	}
 
-	void OnMouseDown()
+	public void OnMouseDown()
 	{
 		//print("dockingtrigger : " + dockingTrigger.transform.localPosition);
 		//Vector2 dock;

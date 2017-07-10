@@ -21,6 +21,7 @@ public class RecruitUIController : UIController
 
     private void FillItems()
     {
+        Debug.Log("Current island: " + PlayerManager.GetInstance().player.currentIsland);
         crewList = IslandManager.GetInstance().islands[PlayerManager.GetInstance().player.currentIsland].crew;
 
         foreach (CrewMember member in crewList)
