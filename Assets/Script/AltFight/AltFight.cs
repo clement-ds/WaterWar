@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 
 public class AltFight : MonoBehaviour
 {
@@ -36,19 +37,50 @@ public class AltFight : MonoBehaviour
     public Button BegoJaune;
     public Text UnassignedBego;
 
+    public Text aiLife;
+    public Text playerLife;
 
     List<CrewMember> crew;
 
     string selectedRoom = "";
 
+    long playerPreviousTime;
+    long playerCooldown = 1000;
+    int playerDamage = 5;
+
+    long aiPreviousTime;
+    long aiCooldown = 2000;
+    int aiDamage = 5;
+
+    Player p = PlayerManager.GetInstance().player;
+    Player ai = PlayerManager.GetInstance().ai;
+
     // Use this for initialization
     void Start()
     {
+        playerPreviousTime = DateTime.Now.Ticks;
+        aiPreviousTime = DateTime.Now.Ticks;
         crew = PlayerManager.GetInstance().player.crew.crewMembers;
     }
 
     // Update is called once per frame
     void Update()
+    {
+        UpdateCrew();
+        if (TimeSpan.FromTicks(DateTime.Now.Ticks - playerPreviousTime).TotalMilliseconds >= playerCooldown)
+        {
+            PlayerAttack();
+            playerPreviousTime = DateTime.Now.Ticks;
+        }
+        Death();
+        if (TimeSpan.FromTicks(DateTime.Now.Ticks - aiPreviousTime).TotalMilliseconds >= aiCooldown)
+        {
+            AIAttack();
+            aiPreviousTime = DateTime.Now.Ticks;
+        }
+    }
+
+    void UpdateCrew()
     {
         int CaptainRougeCount = 0;
         int CaptainVertCount = 0;
@@ -228,6 +260,31 @@ public class AltFight : MonoBehaviour
         BegoVert.GetComponentInChildren<Text>().text = BegoVertCount.ToString();
         BegoJaune.GetComponentInChildren<Text>().text = BegoJauneCount.ToString();
         UnassignedBego.text = UnassignedBegoCount.ToString();
+    }
+
+    void PlayerAttack()
+    {
+        ai.life -= playerDamage;
+        print(ai.life.ToString());
+        aiLife.text = ai.life.ToString();
+    }
+
+    void AIAttack()
+    {
+        p.life -= aiDamage;
+        playerLife.text = p.life.ToString();
+    }
+
+    void Death()
+    {
+        if (p.life == 0)
+        {
+            print("PERDU");
+        }
+        else if (ai.life == 0)
+        {
+            print("VICTORE");
+        }
     }
 
     public void SelectRouge()
