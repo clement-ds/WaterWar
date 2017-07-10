@@ -84,24 +84,22 @@ public class IslandGenerator {
         //island.questLog = new QuestLog();
         //island.inventory = new IslandInventory();
         //island.crew = new IslandCrew();
-        System.Random rng = new System.Random();
-        GenerateFood(rng, island);
-        GenerateWeapons(rng, island);
-        GenerateQuests(rng, island);
-        GenerateCrew(rng, island);
+        GenerateFood(island);
+        GenerateWeapons(island);
+        GenerateQuests(island);
+        GenerateCrew(island);
         GenerateName(island);
+        Debug.Log("GENERATE: " + island.name);
         return island;
     }
 
-    private void GenerateFood(System.Random rng, Island island)
+    private void GenerateFood(Island island)
     {
         LoadFile("PlayerJson/Food.txt");
         for (int i = 0; i < 5; ++i)
         {
-            int a = rng.Next(0, 12);
-            int b = rng.Next(10, 101);
-            InventoryObject obj = JsonUtility.FromJson<InventoryObject>(json[a]);
-            obj.quantity = b;
+            InventoryObject obj = JsonUtility.FromJson<InventoryObject>(json[UnityEngine.Random.Range(0, 12)]);
+            obj.quantity = UnityEngine.Random.Range(10, 101);
             if (CheckingDouble(obj, island))
             {
                 island.inventory.food.Add(obj);
@@ -109,54 +107,56 @@ public class IslandGenerator {
         }
     }
 
-    private void GenerateWeapons(System.Random rng, Island island)
+    private void GenerateWeapons(Island island)
     {
-        int a = rng.Next(20, 101);
+        int a = UnityEngine.Random.Range(20, 101);
         island.inventory.weapons.Add(new InventoryObject("Black powder", "Weapon", a, 10));
-        a = rng.Next(20, 101);
+        a = UnityEngine.Random.Range(20, 101);
         island.inventory.weapons.Add(new InventoryObject("Canon ball", "Weapon", a, 10));
-        a = rng.Next(20, 101);
+        a = UnityEngine.Random.Range(20, 101);
         island.inventory.weapons.Add(new InventoryObject("Shrapnel", "Weapon", a, 10));
-        a = rng.Next(20, 101);
+        a = UnityEngine.Random.Range(20, 101);
         island.inventory.weapons.Add(new InventoryObject("Sabre", "Weapon", a, 10));
-        a = rng.Next(20, 101);
+        a = UnityEngine.Random.Range(20, 101);
         island.inventory.weapons.Add(new InventoryObject("Musket", "Weapon", a, 10));
-        a = rng.Next(20, 101);
+        a = UnityEngine.Random.Range(20, 101);
         island.inventory.weapons.Add(new InventoryObject("Rifle", "Weapon", a, 10));
-        a = rng.Next(20, 101);
+        a = UnityEngine.Random.Range(20, 101);
         island.inventory.weapons.Add(new InventoryObject("Canon", "Weapon", a, 10));
-        a = rng.Next(20, 101);
+        a = UnityEngine.Random.Range(20, 101);
         island.inventory.weapons.Add(new InventoryObject("Bullet", "Weapon", a, 10));
-        a = rng.Next(20, 101);
+        a = UnityEngine.Random.Range(20, 101);
         island.inventory.weapons.Add(new InventoryObject("Graplin hooks", "Weapon", a, 10));
     }
 
-    private void GenerateQuests(System.Random rng, Island island)
+    private void GenerateQuests(Island island)
     {
         LoadFile("PlayerJson/Quests.txt");
-        int i = rng.Next(0, 5);
+        int i = UnityEngine.Random.Range(0, 5);
+        Debug.Log("rng for quest is " + i);
         PlayerQuest quest = JsonUtility.FromJson<PlayerQuest>(json[i]);
+        Debug.Log("GENERATE --- quest " + quest.description);
         island.questLog.quests.Add(quest);
     }
 
-    private void GenerateCrew(System.Random rng, Island island)
+    private void GenerateCrew(Island island)
     {
-        int a = rng.Next(0, 10);
+        int a = UnityEngine.Random.Range(0, 10);
         for (int i = 0; i < a; ++i)
         {
             island.crew.Add(new CrewMember_Bego(island.name + "Bego" + i));
         }
-        a = rng.Next(0, 5);
+        a = UnityEngine.Random.Range(0, 5);
         for (int i = 0; i < a; ++i)
         {
             island.crew.Add(new CrewMember_Fighter(island.name + "Fighter" + i));
         }
-        a = rng.Next(0, 5);
+        a = UnityEngine.Random.Range(0, 5);
         for (int i = 0; i < a; ++i)
         {
             island.crew.Add(new CrewMember_Engineer(island.name + "Engineer" + i));
         }
-        a = rng.Next(0, 5);
+        a = UnityEngine.Random.Range(0, 5);
         for (int i = 0; i < a; ++i)
         {
             island.crew.Add(new CrewMember_FastUnit(island.name + "FastUnit" + i));
