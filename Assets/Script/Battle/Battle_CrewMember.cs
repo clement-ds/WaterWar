@@ -44,6 +44,11 @@ public class Battle_CrewMember : GuiElement
         this.haveToMove = true;
     }
 
+    public void stopMove()
+    {
+        this.arriveAtFinalPos();
+    }
+
     private void arriveAtFinalPos()
     {
         this.haveToMove = false;
