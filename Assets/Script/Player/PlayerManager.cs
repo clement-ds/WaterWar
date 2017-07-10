@@ -239,18 +239,15 @@ public class ShipDisposition
 [Serializable]
 public class Room
 {
-    public int place;
     public string type;
 
-    public Room(string type, int place)
+    public Room(string type)
     {
-        this.place = place;
         this.type = type;
     }
 
     public Room(Room roomm)
     {
-        this.place = roomm.place;
         this.type = roomm.type;
     }
 }
