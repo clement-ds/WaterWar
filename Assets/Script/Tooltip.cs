@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour {
     // Use this for initialization
-    public SetAsCanonOnClick canon;
+   // public SetAsCanonOnClick canon;
     public GameObject next = null;
     private bool clicked = false;
     private GameObject visibility;
@@ -18,7 +18,7 @@ public class Tooltip : MonoBehaviour {
     private void show (GameObject obj) {
         visibility.SetActive(true);
 
-        canon = obj.GetComponent<SetAsCanonOnClick>();
+        //canon = obj.GetComponent<SetAsCanonOnClick>();
 
         Debug.Log(obj.transform.position);
 

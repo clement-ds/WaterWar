@@ -25,9 +25,9 @@ public class Canteen : ShipElement {
     }
 
     /** ON HIT EFFECT **/
-    protected override void dealDamageAsRepercution(int damage)
+    protected override void dealDamageAsRepercution(Battle_CanonBall canonBall)
     {
-        this.GetComponentInParent<Battle_Ship>().receiveDamage(damage / 2);
+        this.GetComponentInParent<Battle_Ship>().receiveDamage(canonBall.getAmmunition().getDamage() / 2);
     }
 
     protected override void dealDamageOnDestroy()
@@ -35,7 +35,7 @@ public class Canteen : ShipElement {
         this.GetComponentInParent<Battle_Ship>().receiveDamage(this.life);
     }
 
-    protected override void applyMalusOnHit()
+    protected override void applyMalusOnHit(Battle_CanonBall canonBall)
     {
 
     }
@@ -87,9 +87,9 @@ public class Canteen : ShipElement {
     }
 
     /** RECEIVE DAMAGE **/
-    protected override bool receiveDamageAction(int damage)
+    protected override bool receiveDamageAction(Battle_CanonBall canonBall)
     {
-        this.setCurrentLife(this.currentLife - damage);
+        this.setCurrentLife(this.currentLife - canonBall.getAmmunition().getDamage());
         return true;
     }
 

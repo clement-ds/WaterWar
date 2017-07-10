@@ -12,7 +12,7 @@ public class SelectAsBoulet : MonoBehaviour {
 
     public void setAsBoulet()
     {
-        tooltip.canon.setBoulet(this.gameObject);
+       // tooltip.canon.setBoulet(this.gameObject);
         tooltip.hide();
     }
 }
