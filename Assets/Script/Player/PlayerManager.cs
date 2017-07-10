@@ -122,6 +122,7 @@ public class Player
     public int life;
     public int money;
     public int currentIsland;
+    public Vector2 mapPosition;
 
     public PlayerInventory inventory = new PlayerInventory();
     public PlayerCrew crew = new PlayerCrew();
