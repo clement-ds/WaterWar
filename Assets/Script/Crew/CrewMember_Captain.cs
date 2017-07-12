@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CrewMember_Captain : CrewMember {
 
-	public CrewMember_Captain(string id) : base(id)
+	public CrewMember_Captain(string id) : base(id, CrewMember_Job.Captain)
     {
         steerSpeed.timeLeft = 5f;
         attackSpeed.timeLeft = 2f;

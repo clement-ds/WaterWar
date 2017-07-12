@@ -5,7 +5,7 @@ using System;
 [Serializable]
 public class CrewMember_Bego : CrewMember {
 
-    public CrewMember_Bego(string id) : base(id)
+    public CrewMember_Bego(string id) : base(id, CrewMember_Job.Pirate)
     {
         //attackSpeed.timeLeft = 10f;
         //canonReloadSpeed.timeLeft = 10f;

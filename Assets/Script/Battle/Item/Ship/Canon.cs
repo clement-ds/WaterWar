@@ -162,7 +162,7 @@ public class Canon : ShipElement
                     GameObject canonBall = GameObject.Find("CanonBallPool").GetComponent<SimpleObjectPool>().GetObject();
 
                     Battle_CanonBall battleCanonBall = canonBall.GetComponent<Battle_CanonBall>();
-                    battleCanonBall.initialize(new CanonBall());
+                    battleCanonBall.initialize(new CanonBall(), target, new Vector3(0.7f, 0.2f, 0.1f));
                     canonBall.transform.position = this.transform.position;
                     canonBall.transform.SetParent(this.transform);
                     canonBall.GetComponent<Rigidbody2D>().AddRelativeForce((target.transform.position - canonBall.transform.position).normalized * this.getBulletSpeed(battleCanonBall.getAmmunition())); // mult by bullet speed
@@ -256,7 +256,7 @@ public class Canon : ShipElement
     /** SETTERS **/
     public void setTarget(ShipElement target)
     {
-        Vector3 targetDir = target.transform.position - transform.position;
+        //Vector3 targetDir = target.transform.position - transform.position;
         /*
         float step = 10 * Time.deltaTime;
         Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0F);

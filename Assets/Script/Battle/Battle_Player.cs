@@ -6,12 +6,6 @@ using System.Collections.Generic;
 
 public class Battle_Player : Battle_Ship
 {
-    public Text distanceText = null;
-    public Button actionFuite = null;
-    public Button actionAbordage = null;
-
-    private int position = 2;
-
     public Battle_Player() : base(200)
     {
     }
@@ -36,52 +30,55 @@ public class Battle_Player : Battle_Ship
         print("create" + crew1);*/
     }
 
-    // Use this for initialization
-    void Start()
-    {
-        distanceText.text = position.ToString();
-        actionFuite.gameObject.SetActive(false);
-        actionAbordage.gameObject.SetActive(false);
-
-        this.createCrew();
-    }
-
     // Update is called once per frame
     void Update()
     {
         this.hasInputMouse();
-        distanceText.text = position.ToString();
-        if (position == 3)
+        if (!this.canEscapeAction && float.Parse(this.guiAccess.distanceToEnemy.text) > 20)
         {
-            actionFuite.gameObject.SetActive(true);
-            actionAbordage.gameObject.SetActive(false);
+            this.canEscape(true);
         }
-        else if (position == 1)
+        else if (this.canEscapeAction && float.Parse(this.guiAccess.distanceToEnemy.text) < 20)
         {
-            actionFuite.gameObject.SetActive(false);
-            actionAbordage.gameObject.SetActive(true);
+            this.canEscape(false);
         }
-        else
-        {
-            actionFuite.gameObject.SetActive(false);
-            actionAbordage.gameObject.SetActive(false);
-        }
-
     }
 
-    public void approcheAction()
+    /** ACTIONS **/
+
+    public override void aboardingEnemy()
     {
-        if (position > 1) position--;
     }
 
-    public void eloignementAction()
+    public override void escape()
     {
-        if (position < 3) position++;
+        this.guiAccess.endMessage.text = "You escape the fight";
+        this.guiAccess.endPanel.gameObject.SetActive(true);
     }
 
+    public override void canAboarding(bool value)
+    {
+        this.canAboardingAction = value;
+        this.guiAccess.boardingButton.gameObject.SetActive(value);
+    }
+
+    public override void canEscape(bool value)
+    {
+        this.canEscapeAction = value;
+        this.guiAccess.escapeButton.gameObject.SetActive(value);
+    }
+
+    public override void die()
+    {
+        this.guiAccess.endMessage.text = "Your opponent killed you";
+        this.guiAccess.endPanel.gameObject.SetActive(true);
+    }
+
+    /** INPUT **/
     void hasInputMouse()
     {
-        if (Camera.main) {
+        if (Camera.main)
+        {
             Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 touchPos = new Vector2(wp.x, wp.y);
             if (Input.GetMouseButtonDown(0))
@@ -158,7 +155,6 @@ public class Battle_Player : Battle_Ship
         ShipElement target = null;
         bool result = false;
 
-        print("check crew movement: " + player.GetInstanceID() + "  ,  " +  player.transform.GetInstanceID());
         foreach (Transform child in player.transform)
         {
             Battle_CrewMember crewMember = child.GetComponentInChildren<Battle_CrewMember>();
@@ -186,7 +182,8 @@ public class Battle_Player : Battle_Ship
                         crewMember.assignCrewMemberToShipElement(target, player);
                         result = true;
                     }
-                } else
+                }
+                else
                 {
                     crewMember.moveTo(new Vector3(touchPos.x, touchPos.y, crewMember.transform.position.z));
                 }

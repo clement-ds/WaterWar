@@ -15,19 +15,38 @@ public class Battle_Enemy : Battle_Ship
     {
     }
 
-    // Use this for initialization
-    void Start()
-    {
-    }
-
     // Update is called once per frame
     void Update()
     {
         this.doScriptAction();
     }
 
-    /** SCRIPT **/
+    /** ACTIONS **/
+    public override void aboardingEnemy()
+    {
+    }
 
+    public override void escape()
+    {
+    }
+
+    public override void canAboarding(bool value)
+    {
+        this.canAboardingAction = value;
+    }
+
+    public override void canEscape(bool value)
+    {
+        this.canEscapeAction = value;
+    }
+
+    public override void die()
+    {
+        this.guiAccess.endMessage.text = "You killed your ennemy";
+        this.guiAccess.endPanel.gameObject.SetActive(true);
+    }
+
+    /** SCRIPT **/
     public void doScriptAction()
     {
         Battle_CrewMember member = getFreeCrewMember();

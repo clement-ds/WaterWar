@@ -2,6 +2,8 @@
 using System.Collections;
 using System;
 
+public enum CrewMember_Job { Captain, Pirate, Medic, Engineer};
+
 [Serializable]
 public class CrewMember {
 
@@ -16,6 +18,7 @@ public class CrewMember {
     public float maxLife = 100f;
     public float life = 10f;
     public float satiety = 1f;
+    public CrewMember_Job job;
 
     [NonSerialized]
     protected Cooldown attackSpeed;
@@ -29,7 +32,7 @@ public class CrewMember {
     // should be a class "Room"
     private string assignedRoom;
 
-    public CrewMember(string id)
+    public CrewMember(string id, CrewMember_Job job)
     {
         this.id = id;
         type = this.GetType().Name.Substring(this.GetType().Name.IndexOf("_") + 1);
@@ -39,6 +42,7 @@ public class CrewMember {
         repairSpeed = new Cooldown();
         assignedRoom = "Bridge";
         memberName = id;
+        this.job = job;
         //attackSpeed.timeLeft = 1f;
         //canonReloadSpeed.timeLeft = 5f;
         //steerSpeed.timeLeft = 10f;
@@ -86,5 +90,4 @@ public class CrewMember {
     {
         this.wage = newWage;
     }
-
 }

@@ -1,38 +1,52 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 
-public class Canteen : ShipElement {
+public class Helm : ShipElement {
 
+    public Ship_Direction direction;
     // Use this for initialization
-    public Canteen() : base(100)
+    public Helm() : base(200)
     {
+        this.direction = Ship_Direction.FRONT;
     }
 
     /** GUI CREATOR **/
     protected override void createActionList()
     {
         this.actionList.RemoveRange(0, this.actionList.Count);
-        if (this.getMember() && !this.isRepairing() && this.currentLife != this.life)
-            this.actionList.Add(new ActionMenuItem("Repair", doRepair));
+        if (this.getMember())
+        {
+            if (!this.isRepairing() && this.currentLife != this.life)
+            {
+                this.actionList.Add(new ActionMenuItem("Repair", doRepair));
+            } else if (this.getMember().getMember().job == CrewMember_Job.Captain)
+            {
+                print("this direction: " + this.direction);
+                if (this.direction != Ship_Direction.FRONT)
+                    this.actionList.Add(new ActionMenuItem("Front", directionFront));
+                if (this.direction != Ship_Direction.RIGHT)
+                    this.actionList.Add(new ActionMenuItem("Right", directionRight));
+                if (this.direction != Ship_Direction.LEFT)
+                    this.actionList.Add(new ActionMenuItem("Left", directionLeft));
+            }
+        }
     }
 
     /** AVAILABLE POSITION CREATOR **/
     protected override void createAvailableCrewMemberPosition()
     {
         this.availablePosition.Add(new AvailablePosition(new Vector3(-0.1f, -0.1f, 0f)));
-        this.availablePosition.Add(new AvailablePosition(new Vector3(0.1f, -0.1f, 0f)));
     }
 
     /** ON HIT EFFECT **/
     protected override void dealDamageAsRepercution(Battle_CanonBall canonBall)
     {
-        this.GetComponentInParent<Battle_Ship>().receiveDamage(canonBall.getAmmunition().getDamage() / 2);
+        this.GetComponentInParent<Battle_Ship>().receiveDamage(canonBall.getAmmunition().getDamage() / 3);
     }
 
     protected override void dealDamageOnDestroy()
     {
-        this.GetComponentInParent<Battle_Ship>().receiveDamage(this.life * 2);
+        this.GetComponentInParent<Battle_Ship>().receiveDamage(this.life);
     }
 
     protected override void applyMalusOnHit(Battle_CanonBall canonBall)
@@ -58,6 +72,31 @@ public class Canteen : ShipElement {
     public override bool actionStopRunning()
     {
         return false;
+    }
+
+    /** DIRECTION **/
+    public bool directionFront()
+    {
+        this.direction = Ship_Direction.FRONT;
+        this.transform.parent.GetComponent<Battle_Ship>().changeDirection(this.direction);
+        this.updateActionMenu();
+        return true;
+    }
+
+    public bool directionRight()
+    {
+        this.direction = Ship_Direction.RIGHT;
+        this.transform.parent.GetComponent<Battle_Ship>().changeDirection(this.direction);
+        this.updateActionMenu();
+        return true;
+    }
+
+    public bool directionLeft()
+    {
+        this.direction = Ship_Direction.LEFT;
+        this.transform.parent.GetComponent<Battle_Ship>().changeDirection(this.direction);
+        this.updateActionMenu();
+        return true;
     }
 
     /** REPAIR **/

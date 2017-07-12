@@ -84,4 +84,8 @@ public class Battle_CrewMember : GuiElement
         this.freeCrewMemberFromShipElement(this.transform.parent.GetComponent<ShipElement>(), container);
     }
 
+    public CrewMember getMember()
+    {
+        return this.member;
+    }
 }

@@ -17,31 +17,24 @@ public class AvailablePosition
     }
 }
 
+public enum Ship_Direction { FRONT, RIGHT, LEFT, NONE };
+
 public abstract class ShipElement : GuiElement
 {
     protected readonly int life;
     protected int currentLife;
+
     protected bool available = true;
     protected bool repairing = false;
     protected bool attacking = false;
     protected bool canAttack = true;
+
     public Slider slider = null;
-    protected GameObject pSlider = null;
-    protected GameObject mSlider = null;
     protected List<AvailablePosition> availablePosition = new List<AvailablePosition>();
 
     protected override void StartMySelf()
     {
         createAvailableCrewMemberPosition();
-        //TODO garance ça plante
-        /*
-        GameObject pSlider = GameObject.Find("Battle_UI/ex_slidder").gameObject;
-        GameObject itemObj = Instantiate(pSlider);
-        itemObj.transform.SetParent(GameObject.Find("Battle_UI").transform);
-        slider = itemObj.GetComponent<Slider>();
-        itemObj.transform.localScale = new Vector3(1, 1, 1);
-        mSlider = itemObj;*/
-
     }
 
     protected ShipElement(int lifeValue)
@@ -55,8 +48,14 @@ public abstract class ShipElement : GuiElement
         Battle_CanonBall canonBall = col.gameObject.GetComponent<Battle_CanonBall>();
         if (canonBall)
         {
-            this.receiveDamage(canonBall);
-            Destroy(col.gameObject);
+            float value = UnityEngine.Random.value;
+            print(this + " (" + this.GetInstanceID() + ")  :   " + canonBall.getTarget().GetInstanceID() + "  --> " + canonBall.getHitStatus());
+            if ((canonBall.getHitStatus() == HitStatus.HIT && canonBall.getTarget().GetInstanceID() == this.GetInstanceID())
+                || canonBall.getHitStatus() == HitStatus.FAIL)
+            {
+                this.receiveDamage(canonBall);
+                Destroy(col.gameObject);
+            }
         }
     }
 
@@ -78,11 +77,6 @@ public abstract class ShipElement : GuiElement
 
             topLeftPosition.x += (wantedPos.y);
             topLeftPosition.y -= (wantedPos.x);
-
-            if (mSlider)
-            {
-                mSlider.transform.position = topLeftPosition;
-            }
         }
     }
 
