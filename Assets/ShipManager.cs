@@ -4,23 +4,43 @@ using System.Collections;
 
 public class ShipManager : MonoBehaviour {
 
-    public ShipDisposition shipD;
+    private ShipDisposition shipD;
+    private PlayerManager managerP;
 
-    // NEED HELP HERE, HOW TO TEST
     void Start () {
-        PlayerManager managerP = PlayerManager.GetInstance();
+        managerP = PlayerManager.GetInstance();
         shipD = managerP.player.ship;
 
         for (int i = 0; i < shipD.rooms.Count; ++i)
         {
-            if (shipD.rooms[i].type != "None")
-            {
-                GameObject Icon = GameObject.Find("Icon Room " + i.ToString());
-                if (shipD.rooms[i].type == "Food")
-                {
-                    Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Apple");
-                }
-            }
+            setIcon(i, shipD.rooms[i].type);
         }
+    }
+
+    void setIcon(int index, string type)
+    {
+        UnityEngine.UI.Image Icon = GameObject.Find("Zone " + (index + 1).ToString()).transform.GetChild(0).GetChild(0).GetComponent<Image>();
+        switch (type)
+        {
+            case "Food":
+                Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Apple");
+                break;
+            case "Fish":
+                Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Images/Fish");
+                break;
+            case "Powder":
+                Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Images/BlackPowder");
+                break;
+            default:
+                Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Images/Spider Web");
+                break;
+        }
+       
+    }
+
+    void placeRoom(int index, string type)
+    {
+        shipD.ChangeRoom(index, type);
+        setIcon(index, type);
     }
 }

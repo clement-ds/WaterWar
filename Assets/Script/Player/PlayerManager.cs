@@ -234,6 +234,24 @@ public class PlayerQuest
 public class ShipDisposition
 {
     public List<Room> rooms = new List<Room>();
+
+    public ShipDisposition()
+    {
+        AddRoom("None");
+        AddRoom("None");
+        AddRoom("None");
+        AddRoom("None");
+    }
+
+    public void AddRoom(string type)
+    {
+        rooms.Add(new Room(type));
+    }
+
+    public void ChangeRoom(int index, string newtype)
+    {
+        rooms[index].type = newtype;
+    }
 }
 
 [Serializable]
