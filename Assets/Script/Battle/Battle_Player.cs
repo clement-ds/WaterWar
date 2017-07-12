@@ -185,7 +185,7 @@ public class Battle_Player : Battle_Ship
                 }
                 else
                 {
-                    crewMember.moveTo(new Vector3(touchPos.x, touchPos.y, crewMember.transform.position.z));
+                    //crewMember.moveTo(new Vector3(touchPos.x, touchPos.y, crewMember.transform.position.z));
                 }
                 break;
             }
