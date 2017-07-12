@@ -7,7 +7,9 @@ public class CrewMember_Captain : CrewMember {
     {
         steerSpeed.timeLeft = 5f;
         attackSpeed.timeLeft = 2f;
-        canonReloadSpeed.timeLeft = 5f;
+        //canonReloadSpeed.timeLeft = 5f;
+        canonReloadSpeed = 70;
+        repairSpeed = 1;
         attackStrength = 5f;
         walkSpeed = 1f;
         wage = 5f;

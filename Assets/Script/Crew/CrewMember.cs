@@ -23,11 +23,11 @@ public class CrewMember {
     [NonSerialized]
     protected Cooldown attackSpeed;
     [NonSerialized]
-    protected Cooldown canonReloadSpeed;
+    public long canonReloadSpeed;
     [NonSerialized]
     protected Cooldown steerSpeed;
     [NonSerialized]
-    protected Cooldown repairSpeed;
+    public long repairSpeed;
 
     // should be a class "Room"
     public string assignedRoom;
@@ -37,9 +37,11 @@ public class CrewMember {
         this.id = id;
         type = this.GetType().Name.Substring(this.GetType().Name.IndexOf("_") + 1);
         attackSpeed = new Cooldown();
-        canonReloadSpeed = new Cooldown();
+        canonReloadSpeed = 50;
+        //canonReloadSpeed = new Cooldown();
         steerSpeed = new Cooldown();
-        repairSpeed = new Cooldown();
+        //repairSpeed = new Cooldown();
+        repairSpeed = 0;
         assignedRoom = "";
         memberName = id;
         this.job = job;
@@ -70,20 +72,20 @@ public class CrewMember {
 
     public void ReloadCanon(GameObject canon)
     {
-        if (canonReloadSpeed.getPossibility())
-        {
-            ;
-            //canon.reload;
-        }
+        //if (canonReloadSpeed.getPossibility())
+        //{
+        //    ;
+        //    //canon.reload;
+        //}
     }
 
     public void Repair()
     {
-        if (repairSpeed.getPossibility())
-        {
-            ;
-            // assignedRoom.repair();
-        }
+        //if (repairSpeed.getPossibility())
+        //{
+        //    ;
+        //    // assignedRoom.repair();
+        //}
     }
 
     public void AdjustWage(float newWage)

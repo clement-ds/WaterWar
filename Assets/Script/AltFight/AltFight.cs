@@ -46,11 +46,21 @@ public class AltFight : MonoBehaviour
 
     long playerPreviousTime;
     long playerCooldown = 1000;
+    long basePlayerCooldown = 1000;
     int playerDamage = 5;
+    long playerRepairValue = 1;
+    //long playerRepairCooldown = 5000;
+    //long playerRepairPreviousTime;
 
     long aiPreviousTime;
     long aiCooldown = 2000;
+    long baseAICooldown = 2000;
     int aiDamage = 5;
+    long aiRepairValue = 1;
+    long aiRepairCooldown = 5000;
+
+    long repairCooldown = 5000;
+    long repairPreviousTime;
 
     Player p;
     Player ai;
@@ -62,6 +72,7 @@ public class AltFight : MonoBehaviour
         ai = PlayerManager.GetInstance().ai;
         playerPreviousTime = DateTime.Now.Ticks;
         aiPreviousTime = DateTime.Now.Ticks;
+        repairPreviousTime = DateTime.Now.Ticks;
         crew = PlayerManager.GetInstance().player.crew.crewMembers;
     }
 
@@ -69,6 +80,12 @@ public class AltFight : MonoBehaviour
     void Update()
     {
         UpdateCrew();
+        UpdateCooldown();
+        if (TimeSpan.FromTicks(DateTime.Now.Ticks - repairPreviousTime).TotalMilliseconds >= repairCooldown)
+        {
+            Repair();
+            repairPreviousTime = DateTime.Now.Ticks;
+        }
         if (TimeSpan.FromTicks(DateTime.Now.Ticks - playerPreviousTime).TotalMilliseconds >= playerCooldown)
         {
             PlayerAttack();
@@ -262,6 +279,31 @@ public class AltFight : MonoBehaviour
         BegoVert.GetComponentInChildren<Text>().text = BegoVertCount.ToString();
         BegoJaune.GetComponentInChildren<Text>().text = BegoJauneCount.ToString();
         UnassignedBego.text = UnassignedBegoCount.ToString();
+    }
+
+    void UpdateCooldown()
+    {
+        playerCooldown = basePlayerCooldown;
+        foreach (CrewMember member in crew)
+        {
+            if (member.assignedRoom == "Rouge")
+            {
+                playerCooldown -= member.canonReloadSpeed;
+            }
+        }
+    }
+
+    void Repair()
+    {
+        p.life += (int)playerRepairValue;
+        ai.life += (int)aiRepairValue;
+        foreach (CrewMember member in crew)
+        {
+            if (member.assignedRoom == "Vert")
+            {
+                p.life += (int)member.repairSpeed;
+            }
+        }
     }
 
     void PlayerAttack()
