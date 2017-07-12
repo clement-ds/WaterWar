@@ -38,9 +38,18 @@ public class ShipManager : MonoBehaviour {
        
     }
 
-    void placeRoom(int index, string type)
+    public void placeRoom(int index, string type)
     {
         shipD.ChangeRoom(index, type);
         setIcon(index, type);
+    }
+
+    public void placeRoomAsCurrent(int index) // Index + 1 technically
+    {
+        string current = GameObject.Find("CarpenterShop").GetComponent<CarpenterShop>().current;
+        if (current != "Untouched")
+        {
+            placeRoom(index - 1, current);
+        }
     }
 }
