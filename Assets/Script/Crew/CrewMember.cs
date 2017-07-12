@@ -30,7 +30,7 @@ public class CrewMember {
     protected Cooldown repairSpeed;
 
     // should be a class "Room"
-    private string assignedRoom;
+    public string assignedRoom;
 
     public CrewMember(string id, CrewMember_Job job)
     {
@@ -40,7 +40,7 @@ public class CrewMember {
         canonReloadSpeed = new Cooldown();
         steerSpeed = new Cooldown();
         repairSpeed = new Cooldown();
-        assignedRoom = "Bridge";
+        assignedRoom = "";
         memberName = id;
         this.job = job;
         //attackSpeed.timeLeft = 1f;

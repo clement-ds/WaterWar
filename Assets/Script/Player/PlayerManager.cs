@@ -26,7 +26,7 @@ public class PlayerManager {
 
         LoadFile("PlayerJson/AISave.txt");
         ai = JsonUtility.FromJson<Player>(json[0]);
-        Debug.Log("player : " + player.name + "/" + player.life);
+        Debug.Log("ai : " + ai.name + "/" + ai.life);
     }
 
     public static PlayerManager GetInstance()
@@ -127,6 +127,7 @@ public class Player
     public PlayerInventory inventory = new PlayerInventory();
     public PlayerCrew crew = new PlayerCrew();
     public QuestLog questLog = new QuestLog();
+    public ShipDisposition ship = new ShipDisposition();
 }
 
 [Serializable]
@@ -227,4 +228,26 @@ public class PlayerQuest
     public InventoryObject reward;
     public int moneyReward;
     public bool taken = false;
+}
+
+[Serializable]
+public class ShipDisposition
+{
+    public List<Room> rooms = new List<Room>();
+}
+
+[Serializable]
+public class Room
+{
+    public string type;
+
+    public Room(string type)
+    {
+        this.type = type;
+    }
+
+    public Room(Room roomm)
+    {
+        this.type = roomm.type;
+    }
 }
