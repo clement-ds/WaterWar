@@ -6,19 +6,15 @@ public class Battle_Enemy : Battle_Ship
 {
     protected bool needAFreeCrewMember = false;
 
-    public Battle_Enemy() : base(200)
-    {
-    }
-
-    // CREATE
-    protected override void createCrew()
+    public Battle_Enemy() : base(200, false)
     {
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.doScriptAction();
+        if (!GameRulesManager.GetInstance().endOfTheGame)
+            this.doScriptAction();
     }
 
     /** ACTIONS **/
@@ -44,6 +40,7 @@ public class Battle_Enemy : Battle_Ship
     {
         this.guiAccess.endMessage.text = "You killed your ennemy";
         this.guiAccess.endPanel.gameObject.SetActive(true);
+        GameRulesManager.GetInstance().endOfTheGame = true;
     }
 
     /** SCRIPT **/

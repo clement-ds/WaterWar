@@ -6,41 +6,24 @@ using System.Collections.Generic;
 
 public class Battle_Player : Battle_Ship
 {
-    public Battle_Player() : base(200)
+    public Battle_Player() : base(200, true)
     {
-    }
-
-
-    // CREATE
-    protected override void createCrew()
-    {
-        // Doesn't work
-        /*
-        GameObject crew1 = (GameObject)Instantiate(new GameObject("crew"), new Vector3(-6f, -1f, 99f), Quaternion.identity);
-        // Sprite
-        SpriteRenderer renderer = crew1.AddComponent<SpriteRenderer>();
-        Sprite sprite = Resources.Load("pirate1", typeof(Sprite)) as Sprite;
-        renderer.sprite = sprite;
-
-        //transform
-        crew1.transform.localRotation = new Quaternion(0, 0, 0, 0);
-        crew1.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-
-        crew1.transform.parent = this.transform;
-        print("create" + crew1);*/
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.hasInputMouse();
-        if (!this.canEscapeAction && float.Parse(this.guiAccess.distanceToEnemy.text) > 20)
+        if (!GameRulesManager.GetInstance().endOfTheGame)
         {
-            this.canEscape(true);
-        }
-        else if (this.canEscapeAction && float.Parse(this.guiAccess.distanceToEnemy.text) < 20)
-        {
-            this.canEscape(false);
+            this.hasInputMouse();
+            if (!this.canEscapeAction && float.Parse(this.guiAccess.distanceToEnemy.text) > 20)
+            {
+                this.canEscape(true);
+            }
+            else if (this.canEscapeAction && float.Parse(this.guiAccess.distanceToEnemy.text) < 20)
+            {
+                this.canEscape(false);
+            }
         }
     }
 
@@ -72,6 +55,7 @@ public class Battle_Player : Battle_Ship
     {
         this.guiAccess.endMessage.text = "Your opponent killed you";
         this.guiAccess.endPanel.gameObject.SetActive(true);
+        GameRulesManager.GetInstance().endOfTheGame = true;
     }
 
     /** INPUT **/
@@ -179,8 +163,11 @@ public class Battle_Player : Battle_Ship
                     if ((crewMember.GetComponentInParent<ShipElement>() == null || !crewMember.GetComponentInParent<ShipElement>().actionIsRunning())
                         && target.GetComponent<Battle_CrewMember>() == null)
                     {
-                        crewMember.assignCrewMemberToShipElement(target, player);
-                        result = true;
+                        if (target.hasAvailableCrewMemberPosition())
+                        {
+                            crewMember.assignCrewMemberToShipElement(target, player);
+                            result = true;
+                        }
                     }
                 }
                 else

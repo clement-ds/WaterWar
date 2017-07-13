@@ -18,6 +18,7 @@ public class CrewMember_Bego : CrewMember {
         satiety = 15f;
         maxLife = 10f;
         life = 10f;
+        this.assignedRoom = Ship_Item.CANTEEN;
     }
 
 }

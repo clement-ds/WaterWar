@@ -16,6 +16,7 @@ public class CrewMember_FastUnit : CrewMember {
         wage = 3f;
         maxHunger = 1f;
         satiety = 1f;
+        this.assignedRoom = Ship_Item.CANON;
     }
 	
 }

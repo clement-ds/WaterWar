@@ -15,7 +15,6 @@ public abstract class GuiElement : MonoBehaviour
 
     void Start()
     {
-        this.StartMySelf();
         this.buttonObjectPool = GameObject.Find("SimpleActionMenuPool").GetComponent<SimpleObjectPool>();
         this.outline = GetComponent<SpriteOutline>();
 
@@ -25,7 +24,7 @@ public abstract class GuiElement : MonoBehaviour
         }
     }
 
-    protected abstract void StartMySelf();
+    public abstract void StartMyself();
 
     /** INPUT **/
     public void hasInputMouse(Boolean clicked)

@@ -6,7 +6,7 @@ using System;
 
 public class AltFight : MonoBehaviour
 {
-
+    /*
     public Button CaptainRouge;
     public Button CaptainBleu;
     public Button CaptainVert;
@@ -458,5 +458,5 @@ public class AltFight : MonoBehaviour
                 member.assignedRoom = "";
             }
         }
-    }
+    }*/
 }

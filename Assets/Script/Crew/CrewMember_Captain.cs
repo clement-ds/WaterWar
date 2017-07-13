@@ -17,6 +17,7 @@ public class CrewMember_Captain : CrewMember {
         satiety = 1.5f;
         maxLife = 300f;
         life = 300f;
+        this.assignedRoom = Ship_Item.HELM;
     }
 	
 }

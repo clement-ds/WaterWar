@@ -12,9 +12,13 @@ public class Battle_CrewMember : GuiElement
     Boolean haveToMove = false;
 
     // Use this for initialization
-    protected override void StartMySelf()
+    public override void StartMyself()
     {
-        member = new CrewMember_Captain("cquoica");
+    }
+
+    public void initialize(CrewMember crewMember)
+    {
+        this.member = crewMember;
     }
 
     // Update is called once per frame
@@ -54,12 +58,18 @@ public class Battle_CrewMember : GuiElement
         this.haveToMove = false;
         if (this.targetFocus != null)
         {
-            this.transform.SetParent(this.targetFocus.transform);
+            this.directAssignCrewMemberInElement(this.targetFocus);
             this.transform.localPosition = this.targetFocus.chooseAvailableCrewMemberPosition(this.GetInstanceID());
             this.targetFocus.focus();
             this.targetFocus.updateActionMenu();
             this.targetFocus = null;
         }
+    }
+
+    public void directAssignCrewMemberInElement(ShipElement element)
+    {
+        this.transform.SetParent(element.transform);
+        this.transform.localPosition = element.chooseAvailableCrewMemberPosition(this.GetInstanceID());
     }
 
     /** PARENT MANAGER **/

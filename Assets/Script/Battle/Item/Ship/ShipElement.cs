@@ -19,11 +19,14 @@ public class AvailablePosition
 
 public enum Ship_Direction { FRONT, RIGHT, LEFT, NONE };
 
+public enum Ship_Item { CANON, CANTEEN, HELM, INFIRMARY, AMMUNITION, FOOD }
+
 public abstract class ShipElement : GuiElement
 {
     protected readonly float life;
     protected float currentLife;
 
+    protected Ship_Item type;
     protected bool available = true;
     protected bool repairing = false;
     protected bool attacking = false;
@@ -32,13 +35,14 @@ public abstract class ShipElement : GuiElement
     public Slider slider = null;
     protected List<AvailablePosition> availablePosition = new List<AvailablePosition>();
 
-    protected override void StartMySelf()
+    public override void StartMyself()
     {
         createAvailableCrewMemberPosition();
     }
 
-    protected ShipElement(float lifeValue)
+    protected ShipElement(float lifeValue, Ship_Item type)
     {
+        this.type = type;
         this.life = lifeValue;
         this.setCurrentLife(life);
     }
@@ -90,6 +94,18 @@ public abstract class ShipElement : GuiElement
 
     /** AVAILABLE POSITION **/
     protected abstract void createAvailableCrewMemberPosition();
+
+    public bool hasAvailableCrewMemberPosition()
+    {
+        for (int i = 0; i < this.availablePosition.Count; ++i)
+        {
+            if (this.availablePosition[i].available)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public Vector3 chooseAvailableCrewMemberPosition(int id)
     {
@@ -239,6 +255,11 @@ public abstract class ShipElement : GuiElement
     public bool isRepairing()
     {
         return this.repairing;
+    }
+
+    public Ship_Item getType()
+    {
+        return this.type;
     }
 
     /** SETTERS **/

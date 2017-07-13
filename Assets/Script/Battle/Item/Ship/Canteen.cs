@@ -5,7 +5,7 @@ using System;
 public class Canteen : ShipElement {
 
     // Use this for initialization
-    public Canteen() : base(100)
+    public Canteen() : base(100, Ship_Item.CANTEEN)
     {
     }
 

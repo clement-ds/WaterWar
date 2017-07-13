@@ -74,7 +74,7 @@ public class CrewMember_Attribute
 }
 
 [Serializable]
-public class CrewMember
+public abstract class CrewMember
 {
 
     public string id;
@@ -91,6 +91,7 @@ public class CrewMember
 
     public bool available = true;
     public CrewMember_Job job;
+    public Ship_Item assignedRoom;
     protected List<CrewMember_Attribute> attributes;
     protected List<KeyValuePair<SkillAttribute, float>> skills;
 
@@ -104,9 +105,6 @@ public class CrewMember
     [NonSerialized]
     public long repairSpeed;
 
-    // should be a class "Room"
-    public string assignedRoom;
-
     public CrewMember(string id, CrewMember_Job job)
     {
         this.id = id;
@@ -117,7 +115,6 @@ public class CrewMember
         steerSpeed = new Cooldown();
         //repairSpeed = new Cooldown();
         repairSpeed = 0;
-        assignedRoom = "";
         memberName = id;
         this.job = job;
         this.attributes = new List<CrewMember_Attribute>();

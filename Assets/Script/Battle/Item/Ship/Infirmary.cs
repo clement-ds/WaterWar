@@ -11,15 +11,15 @@ public class Infirmary : ShipElement
 
 
     // Use this for initialization
-    public Infirmary() : base(100)
+    public Infirmary() : base(100, Ship_Item.INFIRMARY)
     {
         this.cooldown = 3.0f;
         this.healRatio = 10f;
     }
 
-    protected override void StartMySelf()
+    public override void StartMyself()
     {
-        base.StartMySelf();
+        base.StartMyself();
 
         this.task = new TimerTask(HealCrew, this.cooldown);
     }

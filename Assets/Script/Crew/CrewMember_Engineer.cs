@@ -15,6 +15,7 @@ public class CrewMember_Engineer : CrewMember {
         attackStrength = .5f;
 		walkSpeed = .75f;
 		wage = 4f;
-	}
+        this.assignedRoom = Ship_Item.CANTEEN;
+    }
 	
 }

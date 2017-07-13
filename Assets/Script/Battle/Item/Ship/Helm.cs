@@ -5,7 +5,7 @@ public class Helm : ShipElement {
 
     public Ship_Direction direction;
     // Use this for initialization
-    public Helm() : base(200)
+    public Helm() : base(200, Ship_Item.HELM)
     {
         this.direction = Ship_Direction.FRONT;
     }
@@ -103,14 +103,14 @@ public class Helm : ShipElement {
     protected override void doRepairActionEnd()
     {
         //TODO value life en fonction du member
-        this.setCurrentLife(this.currentLife + 20);
-        this.GetComponent<Battle_CrewMember>().freeCrewMemberFromShipElement(this, this.transform.parent.gameObject);
+        this.setCurrentLife(this.currentLife + this.GetComponentInChildren<Battle_CrewMember>().getMember().getCrewSkill(SkillAttribute.RepairValue));
+        this.GetComponentInChildren<Battle_CrewMember>().freeCrewMemberFromShipElement(this, this.transform.parent.gameObject);
     }
 
     protected override bool doRepairAction()
     {
         //TODO cooldown en fonction du member
-        Invoke("doRepairEnd", 2);
+        Invoke("doRepairEnd", this.GetComponentInChildren<Battle_CrewMember>().getMember().getCrewSkill(SkillAttribute.RepairTime));
         return true;
     }
 

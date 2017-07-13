@@ -14,13 +14,13 @@ public class Canon : ShipElement
     private SimpleObjectPool canonBallPool;
 
 
-    public Canon() : base(50)
+    public Canon() : base(50, Ship_Item.CANON)
     {
     }
 
-    protected override void StartMySelf()
+    public override void StartMyself()
     {
-        base.StartMySelf();
+        base.StartMyself();
         shotCutscene = GameObject.Find("CutsceneManager").GetComponent<ShotCutscene>();
         canonBallPool = GameObject.Find("CanonBallPool").GetComponent<SimpleObjectPool>();
     }

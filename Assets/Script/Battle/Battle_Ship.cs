@@ -21,7 +21,9 @@ public abstract class Battle_Ship : MonoBehaviour
     protected float moveRotation;
     protected Rigidbody2D body;
 
-    protected Battle_Ship(float lifeValue)
+    protected bool isPlayer;
+
+    protected Battle_Ship(float lifeValue, bool isPlayer)
     {
         this.direction = Ship_Direction.FRONT;
         this.saveCollisionDirection = Ship_Direction.NONE;
@@ -29,6 +31,7 @@ public abstract class Battle_Ship : MonoBehaviour
 
         this.canAboardingAction = false;
         this.canEscapeAction = false;
+        this.isPlayer = isPlayer;
 
         this.speed = 50;
         life = lifeValue;
@@ -39,16 +42,67 @@ public abstract class Battle_Ship : MonoBehaviour
     void Start()
     {
         this.guiAccess = GameObject.Find("Battle_UI").GetComponent<GuiAccess>();
+        this.createRoom();
         this.createCrew();
     }
 
-    public void updateSliderValue() {
-        if (slider)
+    /** CREATOR **/
+
+    protected void createRoom()
+    {
+        ShipElement[] items = this.GetComponentsInChildren<ShipElement>();
+
+        foreach (ShipElement it in items)
         {
-            slider.value = (currentLife * 100) / life;
+            it.StartMyself();
         }
     }
 
+    protected void createCrew()
+    {
+        List<CrewMember> members = (this.isPlayer ? PlayerManager.GetInstance().player.crew.crewMembers : PlayerManager.GetInstance().ai.crew.crewMembers);
+        SimpleObjectPool crewPool = GameObject.Find("CrewPool").GetComponent<SimpleObjectPool>();
+
+        foreach (CrewMember member in members)
+        {
+            GameObject crewMember = crewPool.GetObject();
+
+            Battle_CrewMember battleCrewMember = crewMember.GetComponent<Battle_CrewMember>();
+            battleCrewMember.initialize(member);
+
+            ShipElement[] items;
+
+            if (member.assignedRoom == Ship_Item.CANON)
+            {
+                items = this.GetComponentsInChildren<Canon>();
+            }
+            else if (member.assignedRoom == Ship_Item.CANTEEN)
+            {
+                items = this.GetComponentsInChildren<Canteen>();
+            }
+            else if (member.assignedRoom == Ship_Item.HELM)
+            {
+                items = this.GetComponentsInChildren<Helm>();
+            }
+            else
+            {
+                crewMember.transform.position = this.transform.position;
+                crewMember.transform.SetParent(this.transform);
+                break;
+            }
+
+            foreach (ShipElement it in items)
+            {
+                if (it.hasAvailableCrewMemberPosition())
+                {
+                    battleCrewMember.directAssignCrewMemberInElement(it);
+                    break;
+                }
+            }
+        }
+    }
+
+    /** DAMAGE **/
     public void receiveDamage(float damage) {
         this.setCurrentLife(this.currentLife - damage);
         if (this.currentLife <= 0)
@@ -57,7 +111,13 @@ public abstract class Battle_Ship : MonoBehaviour
         }
     }
 
-    protected abstract void createCrew();
+    public void updateSliderValue()
+    {
+        if (slider)
+        {
+            slider.value = (currentLife * 100) / life;
+        }
+    }
 
     /** COLLISION **/
     void OnTriggerEnter2D(Collider2D col)
