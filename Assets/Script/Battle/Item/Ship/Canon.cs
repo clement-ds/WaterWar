@@ -154,12 +154,12 @@ public class Canon : ShipElement
                     result = false;
                 }
                 else
-                {
-                    if (UnityEngine.Random.value > 0.75)
+                {/*
+                    if (UnityEngine.Random.value > 0.10)
                     {
                         shotCutscene.StartCutscene();
                         WaitForX(shotCutscene.duration);
-                    }
+                    }*/
                     Battle_Ship enemy = target.GetComponentInParent<Battle_Ship>();
 
                     GameObject canonBall = canonBallPool.GetObject();

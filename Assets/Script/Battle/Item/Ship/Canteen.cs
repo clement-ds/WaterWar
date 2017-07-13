@@ -4,18 +4,30 @@ using System;
 
 public class Canteen : ShipElement {
 
+    private bool isAutoRepair;
+    private TimerTask autoRepair;
+
     // Use this for initialization
-    public Canteen() : base(100, Ship_Item.CANTEEN)
+    public Canteen() : base(500, Ship_Item.CANTEEN)
     {
+        this.isAutoRepair = false;
+        this.autoRepair = new TimerTask(autoRepairing, 1f, false);
     }
 
-    /** EFFECT **/
+    protected override void updateMyself()
+    {
+        this.autoRepair.update();
+    }
 
     /** GUI CREATOR **/
     protected override void createActionList()
     {
         this.actionList.RemoveRange(0, this.actionList.Count);
-        if (this.getMember() && !this.isRepairing() && this.currentLife != this.life)
+        if (this.getMember() && this.isAutoRepair)
+            this.actionList.Add(new ActionMenuItem("stop AutoRepair", stopAutoRepair));
+        if (this.getMember() && !this.isAutoRepair)
+            this.actionList.Add(new ActionMenuItem("launch AutoRepair", launchAutoRepair));
+        if (this.getMember() && !this.isAutoRepair && !this.isRepairing() && this.currentLife != this.life)
             this.actionList.Add(new ActionMenuItem("Repair", doRepair));
     }
 
@@ -29,7 +41,7 @@ public class Canteen : ShipElement {
     /** ON HIT EFFECT **/
     protected override void dealDamageAsRepercution(Battle_CanonBall canonBall)
     {
-        this.GetComponentInParent<Battle_Ship>().receiveDamage(canonBall.getAmmunition().getDamage() / 2);
+        this.GetComponentInParent<Battle_Ship>().receiveDamage(canonBall.getAmmunition().getDamage() / 4);
     }
 
     protected override void dealDamageOnDestroy()
@@ -63,11 +75,32 @@ public class Canteen : ShipElement {
     }
 
     /** REPAIR **/
+    private bool launchAutoRepair()
+    {
+        this.isAutoRepair = true;
+        this.autoRepair.start();
+        return true;
+    }
+
+    private bool stopAutoRepair()
+    {
+        this.isAutoRepair = false;
+        this.autoRepair.stop();
+        return true;
+    }
+
+    private void autoRepairing()
+    {
+        if (!this.isRepairing())
+        {
+            this.doRepair();
+        }
+    }
+
     protected override void doRepairActionEnd()
     {
         //TODO value life en fonction du member
         this.setCurrentLife(this.currentLife + this.GetComponentInChildren<Battle_CrewMember>().getMember().getCrewSkill(SkillAttribute.RepairValue));
-        this.GetComponentInChildren<Battle_CrewMember>().freeCrewMemberFromShipElement(this, this.transform.parent.gameObject);
     }
 
     protected override bool doRepairAction()

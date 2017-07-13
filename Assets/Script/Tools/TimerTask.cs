@@ -10,22 +10,41 @@ public class TimerTask
 
     public float cooldown;
     private float current;
+    private bool canRun;
 
-    public TimerTask(TaskDelegate task, float cooldown)
+    public TimerTask(TaskDelegate task, float cooldown) : this(task, cooldown, true)
+    {
+    }
+
+    public TimerTask(TaskDelegate task, float cooldown, bool canRun)
     {
         this.taskDelegate = task;
         this.cooldown = cooldown;
         this.current = cooldown;
+        this.canRun = canRun;
     }
 
     public void update()
     {
-        this.current -= Time.deltaTime;
-
-        if (current <= 0)
+        if (this.canRun)
         {
-            taskDelegate();
-            this.current = this.cooldown;
+            this.current -= Time.deltaTime;
+
+            if (current <= 0)
+            {
+                taskDelegate();
+                this.current = this.cooldown;
+            }
         }
+    }
+
+    public void start()
+    {
+        this.canRun = true;
+    }
+
+    public void stop()
+    {
+        this.canRun = false;
     }
 }

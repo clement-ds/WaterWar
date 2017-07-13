@@ -37,6 +37,7 @@ public abstract class GuiElement : MonoBehaviour
             }
             else
             {
+                print("FOCUS " + this);
                 this.focus();
             }
         }
@@ -98,7 +99,7 @@ public abstract class GuiElement : MonoBehaviour
 
     public void updateActionMenu()
     {
-        if (!this.actionMenu)
+        if (!this.actionMenu || !this.focused)
             return;
         this.updateActionMenuItem();
         if (this.actionList.Count != 0)

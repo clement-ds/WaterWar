@@ -122,9 +122,9 @@ public abstract class CrewMember
         this.skills = new List<KeyValuePair<SkillAttribute, float>>();
 
         this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RCanonTime, 3f));
-        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.ShootCanonValue, 310f));
-        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RepairTime, 3f));
-        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RepairValue, 20f));
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.ShootCanonValue, 10f));
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RepairTime, 0.5f));
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RepairValue, 5f));
 
         //attackSpeed.timeLeft = 1f;
         //canonReloadSpeed.timeLeft = 5f;

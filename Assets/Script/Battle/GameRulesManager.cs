@@ -12,6 +12,11 @@ public class GameRulesManager
         this.endOfTheGame = false;
     }
 
+    public void init()
+    {
+        this.endOfTheGame = false;
+    }
+
     public static GameRulesManager GetInstance()
     {
         if (instance == null)

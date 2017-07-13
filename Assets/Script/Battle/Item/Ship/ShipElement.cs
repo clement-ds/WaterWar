@@ -65,6 +65,12 @@ public abstract class ShipElement : GuiElement
 
     void Update()
     {
+        updateMyself();
+    }
+
+    protected virtual void updateMyself()
+    {
+
     }
 
     /** SLIDER HP **/
