@@ -19,6 +19,7 @@ public class CrewMember_Fighter : CrewMember {
         satiety = .5f;
         maxLife = 150f;
         life = 150f;
+        memberImage = "Sprites/axe";
     }
 	
 }
