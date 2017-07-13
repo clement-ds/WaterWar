@@ -46,10 +46,10 @@ public class ShipManager : MonoBehaviour {
 
     public void placeRoomAsCurrent(int index) // Index + 1 technically
     {
-        string current = GameObject.Find("CarpenterShop").GetComponent<CarpenterShop>().current;
-        if (current != "Untouched")
-        {
-            placeRoom(index - 1, current);
-        }
+            string current = GameObject.Find("CarpenterShop").GetComponent<CarpenterShop>().current;
+            if (current != "Untouched")
+            {
+                placeRoom(index - 1, current);
+            }
     }
 }

@@ -21,8 +21,8 @@ public enum Ship_Direction { FRONT, RIGHT, LEFT, NONE };
 
 public abstract class ShipElement : GuiElement
 {
-    protected readonly int life;
-    protected int currentLife;
+    protected readonly float life;
+    protected float currentLife;
 
     protected bool available = true;
     protected bool repairing = false;
@@ -37,7 +37,7 @@ public abstract class ShipElement : GuiElement
         createAvailableCrewMemberPosition();
     }
 
-    protected ShipElement(int lifeValue)
+    protected ShipElement(float lifeValue)
     {
         this.life = lifeValue;
         this.setCurrentLife(life);
@@ -61,23 +61,6 @@ public abstract class ShipElement : GuiElement
 
     void Update()
     {
-        if (Camera.main)
-        {
-            float camHalfHeight = Camera.main.orthographicSize;
-            float camHalfWidth = Camera.main.aspect * camHalfHeight;
-
-            Bounds bounds = this.GetComponent<SpriteRenderer>().bounds;
-            var wantedPos = Camera.main.WorldToViewportPoint(this.transform.position);
-
-            // Set a new vector to the top left of the scene 
-            Vector3 topLeftPosition = new Vector3(-camHalfWidth, camHalfHeight, 0) + Camera.main.transform.position;
-
-            // Offset it by the size of the object 
-            topLeftPosition += new Vector3(bounds.size.x / 2, -bounds.size.y / 2, 0);
-
-            topLeftPosition.x += (wantedPos.y);
-            topLeftPosition.y -= (wantedPos.x);
-        }
     }
 
     /** SLIDER HP **/
@@ -233,12 +216,12 @@ public abstract class ShipElement : GuiElement
         return transform.GetComponentInChildren<Battle_CrewMember>();
     }
 
-    public int getLife()
+    public float getLife()
     {
         return this.life;
     }
 
-    public int getCurrentLife()
+    public float getCurrentLife()
     {
         return this.currentLife;
     }
@@ -259,7 +242,7 @@ public abstract class ShipElement : GuiElement
     }
 
     /** SETTERS **/
-    public void setCurrentLife(int value)
+    public void setCurrentLife(float value)
     {
         this.currentLife = (value < 0 ? 0 : value);
         this.currentLife = (this.currentLife > this.life ? this.life : this.currentLife);

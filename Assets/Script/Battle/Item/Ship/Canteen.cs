@@ -9,6 +9,8 @@ public class Canteen : ShipElement {
     {
     }
 
+    /** EFFECT **/
+
     /** GUI CREATOR **/
     protected override void createActionList()
     {
@@ -64,14 +66,14 @@ public class Canteen : ShipElement {
     protected override void doRepairActionEnd()
     {
         //TODO value life en fonction du member
-        this.setCurrentLife(this.currentLife + 20);
-        this.GetComponent<Battle_CrewMember>().freeCrewMemberFromShipElement(this, this.transform.parent.gameObject);
+        this.setCurrentLife(this.currentLife + this.GetComponentInChildren<Battle_CrewMember>().getMember().getCrewSkill(SkillAttribute.RepairValue));
+        this.GetComponentInChildren<Battle_CrewMember>().freeCrewMemberFromShipElement(this, this.transform.parent.gameObject);
     }
 
     protected override bool doRepairAction()
     {
         //TODO cooldown en fonction du member
-        Invoke("doRepairEnd", 2);
+        Invoke("doRepairEnd", this.GetComponentInChildren<Battle_CrewMember>().getMember().getCrewSkill(SkillAttribute.RepairTime));
         return true;
     }
 
