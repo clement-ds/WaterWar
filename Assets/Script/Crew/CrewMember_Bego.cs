@@ -18,6 +18,8 @@ public class CrewMember_Bego : CrewMember {
         satiety = 15f;
         maxLife = 10f;
         life = 10f;
+        memberImage = "Sprites/poulet";
+        //memberImage = "Sprites/assets_preview_76";
     }
 
 }

@@ -34,7 +34,10 @@ public class RecruitUIController : UIController
                 if (child.name == "MemberImage")
                 {
                     Image img = (Image)child.GetComponent<Image>();
-                    img.sprite = new Sprite(); // TODO: GET IMG
+                    if (member.memberImage != "None")
+                    {
+                        img.sprite = Resources.Load<Sprite>(member.memberImage);
+                    }
                 }
                 else if (child.name == "MemberName")
                 {

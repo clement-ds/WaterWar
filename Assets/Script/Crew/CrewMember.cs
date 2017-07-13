@@ -91,6 +91,7 @@ public class CrewMember
 
     public bool available = true;
     public CrewMember_Job job;
+    public string memberImage = "None";
     protected List<CrewMember_Attribute> attributes;
     protected List<KeyValuePair<SkillAttribute, float>> skills;
 
