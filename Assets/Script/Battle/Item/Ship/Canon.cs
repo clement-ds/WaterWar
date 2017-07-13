@@ -8,9 +8,10 @@ public class Canon : ShipElement
     private bool ready = false;
     private bool reloading = false;
     private int power = 150;       // Random number
-    private int damage = 5;      // Random number
+    private float damage = 5;      // Random number
     private int viewFinder = 0;  // Random number
     private ShotCutscene shotCutscene;
+    private SimpleObjectPool canonBallPool;
 
 
     public Canon() : base(50)
@@ -21,6 +22,7 @@ public class Canon : ShipElement
     {
         base.StartMySelf();
         shotCutscene = GameObject.Find("CutsceneManager").GetComponent<ShotCutscene>();
+        canonBallPool = GameObject.Find("CanonBallPool").GetComponent<SimpleObjectPool>();
     }
 
     public void destroyCanon()
@@ -29,6 +31,9 @@ public class Canon : ShipElement
         if (GetComponent<SpriteRenderer>())
             Destroy(GetComponent<SpriteRenderer>());
     }
+
+    /** EFFECT **/
+
 
     /** GUI CREATOR **/
     protected override void createActionList()
@@ -103,15 +108,14 @@ public class Canon : ShipElement
     {
         this.reloading = true;
         this.updateActionMenu();
-        Invoke("setCanonReady", 3);
+        Invoke("setCanonReady", this.GetComponentInChildren<Battle_CrewMember>().getMember().getCrewSkill(SkillAttribute.RCanonTime));
         return true;
     }
 
     protected void reloadCanon()
     {
-        //TODO: changement du cd en fonction des stat du getMember()
         this.reloading = true;
-        Invoke("reloadEnd", 3);
+        Invoke("reloadEnd", this.GetComponentInChildren<Battle_CrewMember>().getMember().getCrewSkill(SkillAttribute.RCanonTime));
     }
 
     protected void reloadEnd()
@@ -124,14 +128,13 @@ public class Canon : ShipElement
     protected override void doRepairActionEnd()
     {
         //TODO value life en fonction du member
-        this.setCurrentLife(this.currentLife + 20);
+        this.setCurrentLife(this.currentLife + this.GetComponentInChildren<Battle_CrewMember>().getMember().getCrewSkill(SkillAttribute.RepairValue));
     }
 
     protected override bool doRepairAction()
     {
         print("repair canon");
-        //TODO cooldown en fonction du member
-        Invoke("doRepairEnd", 2);
+        Invoke("doRepairEnd", this.GetComponentInChildren<Battle_CrewMember>().getMember().getCrewSkill(SkillAttribute.RepairTime));
         return true;
     }
 
@@ -159,7 +162,7 @@ public class Canon : ShipElement
                     }
                     Battle_Ship enemy = target.GetComponentInParent<Battle_Ship>();
 
-                    GameObject canonBall = GameObject.Find("CanonBallPool").GetComponent<SimpleObjectPool>().GetObject();
+                    GameObject canonBall = canonBallPool.GetObject();
 
                     Battle_CanonBall battleCanonBall = canonBall.GetComponent<Battle_CanonBall>();
                     battleCanonBall.initialize(new CanonBall(), target, new Vector3(0.7f, 0.2f, 0.1f));
@@ -228,7 +231,7 @@ public class Canon : ShipElement
         return this.power;
     }
 
-    public int getDamage()
+    public float getDamage()
     {
         return this.damage;
     }

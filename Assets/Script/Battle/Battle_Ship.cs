@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public abstract class Battle_Ship : MonoBehaviour
 {
     protected GuiAccess guiAccess;
 
     public Slider slider = null;
-    protected readonly int life;
-    protected int currentLife;
+    protected readonly float life;
+    protected float currentLife;
     protected float speed;
 
     protected bool canAboardingAction;
@@ -20,7 +21,7 @@ public abstract class Battle_Ship : MonoBehaviour
     protected float moveRotation;
     protected Rigidbody2D body;
 
-    protected Battle_Ship(int lifeValue)
+    protected Battle_Ship(float lifeValue)
     {
         this.direction = Ship_Direction.FRONT;
         this.saveCollisionDirection = Ship_Direction.NONE;
@@ -28,7 +29,7 @@ public abstract class Battle_Ship : MonoBehaviour
 
         this.canAboardingAction = false;
         this.canEscapeAction = false;
-        
+
         this.speed = 50;
         life = lifeValue;
         this.setCurrentLife(life);
@@ -48,7 +49,7 @@ public abstract class Battle_Ship : MonoBehaviour
         }
     }
 
-    public void receiveDamage(int damage) {
+    public void receiveDamage(float damage) {
         this.setCurrentLife(this.currentLife - damage);
         if (this.currentLife <= 0)
         {
@@ -138,15 +139,19 @@ public abstract class Battle_Ship : MonoBehaviour
     public abstract void die();
 
     /** GETTERS **/
-    public int getCurrentLife() {
+    public float getCurrentLife() {
         return this.currentLife;
     }
 
     /** SETTERS **/
-    public void setCurrentLife(int value) {
+    public void setCurrentLife(float value) {
         this.currentLife = value;
         this.currentLife = (value < 0 ? 0 : value);
         this.currentLife = (this.currentLife > this.life ? this.life : this.currentLife);
         this.updateSliderValue();
+    }
+
+    public void applyCrewAttributes(Attribute effect, float time, float value)
+    {
     }
 }

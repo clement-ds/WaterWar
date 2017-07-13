@@ -2,14 +2,48 @@
 using System.Collections;
 using System;
 
-public class Canteen : ShipElement {
+public class Infirmary : ShipElement
+{
+
+    protected TimerTask task;
+    protected float cooldown;
+    private float healRatio;
+
 
     // Use this for initialization
-    public Canteen() : base(100)
+    public Infirmary() : base(100)
     {
+        this.cooldown = 3.0f;
+        this.healRatio = 10f;
     }
 
-    /** EFFECT **/
+    protected override void StartMySelf()
+    {
+        base.StartMySelf();
+
+        this.task = new TimerTask(HealCrew, this.cooldown);
+    }
+
+    /** SPECIFIC ACTION **/
+    private void HealCrew()
+    {
+        print("heal");
+        Battle_CrewMember[] members = this.transform.GetComponentsInParent<Battle_CrewMember>();
+
+        foreach (Battle_CrewMember member in members)
+        {
+            if (member.getMember().job == CrewMember_Job.Medic)
+            {
+                this.task.cooldown = (this.task.cooldown > 1 ? this.task.cooldown - 1f : this.task.cooldown);
+                this.healRatio += 10f;
+            }
+        }
+
+        foreach (Battle_CrewMember member in members)
+        {
+            member.getMember().healDamage(this.healRatio);
+        }
+    }
 
     /** GUI CREATOR **/
     protected override void createActionList()
@@ -34,17 +68,15 @@ public class Canteen : ShipElement {
 
     protected override void dealDamageOnDestroy()
     {
-        this.GetComponentInParent<Battle_Ship>().receiveDamage(this.life * 2);
+        this.GetComponentInParent<Battle_Ship>().receiveDamage(this.life / 3);
     }
 
     protected override void applyMalusOnHit(Battle_CanonBall canonBall)
     {
-
     }
 
     protected override void applyMalusOnDestroy()
     {
-
     }
 
     /** ACTIONS **/
