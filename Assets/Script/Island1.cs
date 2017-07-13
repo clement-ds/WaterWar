@@ -46,13 +46,14 @@ public class Island1 : MonoBehaviour {
     IEnumerator MoveShip()
     {
         yield return new WaitForSeconds(travelCutscene.duration);
-        //if (Random.Range(0, 2) == 1)
-        //    gm.GoFight();
-        //else {
-        print("TAG : " + tag);
-        PlayerManager.GetInstance().player.currentIsland = int.Parse(tag);
-        gm.GoInteraction();
-        //}
+        if (Random.Range(0, 2) == 1)
+            gm.GoFight();
+        else
+        {
+            print("TAG : " + tag);
+            PlayerManager.GetInstance().player.currentIsland = int.Parse(tag);
+            gm.GoInteraction();
+        }
 
     }
 
