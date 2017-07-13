@@ -37,6 +37,7 @@ public class Battle_Player : Battle_Ship
     {
         GameRulesManager.GetInstance().guiAccess.endMessage.text = "You escape the fight";
         GameRulesManager.GetInstance().guiAccess.endPanel.gameObject.SetActive(true);
+        GameRulesManager.GetInstance().endOfTheGame = true;
     }
 
     public override void canAboarding(bool value)
