@@ -21,7 +21,6 @@ public class Helm : ShipElement {
                 this.actionList.Add(new ActionMenuItem("Repair", doRepair));
             } else if (this.getMember().getMember().job == CrewMember_Job.Captain)
             {
-                print("this direction: " + this.direction);
                 if (this.direction != Ship_Direction.FRONT)
                     this.actionList.Add(new ActionMenuItem("Front", directionFront));
                 if (this.direction != Ship_Direction.RIGHT)
