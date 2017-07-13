@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CrewMember_Captain : CrewMember {
 
@@ -14,6 +15,11 @@ public class CrewMember_Captain : CrewMember {
         life = 300f;
         this.assignedRoom = Ship_Item.HELM;
         memberImage = "Sprites/capt";
+
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RCanonTime, 100f));
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.ShootCanonValue, 100f));
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RepairTime, 100f));
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RepairValue, 100f));
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.WalkValue, 100f));
     }
-	
 }

@@ -110,7 +110,6 @@ public class Battle_Player : Battle_Ship
         if (target != null)
         {
             result = target.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos); ;
-
             target.hasInputMouse(result);
         }
         return result;

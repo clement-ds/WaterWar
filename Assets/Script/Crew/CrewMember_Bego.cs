@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class CrewMember_Bego : CrewMember {
@@ -16,6 +17,12 @@ public class CrewMember_Bego : CrewMember {
         life = 10f;
         this.assignedRoom = Ship_Item.CANTEEN;
         memberImage = "Sprites/poulet";
+
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RCanonTime, 50f));
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.ShootCanonValue, 50f));
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RepairTime, 50f));
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RepairValue, 50f));
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.WalkValue, 100f));
     }
 
 }
