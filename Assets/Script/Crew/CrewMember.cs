@@ -6,15 +6,15 @@ using UnityEngine.UI;
 
 public enum CrewMember_Job { Captain, Pirate, Medic, Engineer };
 
-public enum Attribute { SPEED, AVAILABLE, MORAL, ENERGY }
+public enum Effect { SPEED, AVAILABLE, MORAL, ENERGY }
 
 public class SkillAttribute
 {
-    public static readonly SkillAttribute RCanonTime = new SkillAttribute(Attribute.ENERGY, "RCanonTime");
-    public static readonly SkillAttribute ShootCanonValue = new SkillAttribute(Attribute.MORAL, "ShootCanonValue");
-    public static readonly SkillAttribute RepairTime = new SkillAttribute(Attribute.ENERGY, "RepairTime");
-    public static readonly SkillAttribute RepairValue = new SkillAttribute(Attribute.MORAL, "ReapirValue");
-    public static readonly SkillAttribute WalkValue = new SkillAttribute(Attribute.SPEED, "WalkValue");
+    public static readonly SkillAttribute RCanonTime = new SkillAttribute(Effect.ENERGY, "RCanonTime");
+    public static readonly SkillAttribute ShootCanonValue = new SkillAttribute(Effect.MORAL, "ShootCanonValue");
+    public static readonly SkillAttribute RepairTime = new SkillAttribute(Effect.ENERGY, "RepairTime");
+    public static readonly SkillAttribute RepairValue = new SkillAttribute(Effect.MORAL, "ReapirValue");
+    public static readonly SkillAttribute WalkValue = new SkillAttribute(Effect.SPEED, "WalkValue");
 
     public static IEnumerable<SkillAttribute> Values
     {
@@ -28,27 +28,27 @@ public class SkillAttribute
         }
     }
 
-    private readonly Attribute range;
+    private readonly Effect range;
     private readonly string id;
 
-    SkillAttribute(Attribute range, string id)
+    SkillAttribute(Effect range, string id)
     {
         this.range = range;
         this.id = id;
     }
 
-    public Attribute Range { get { return range; } }
+    public Effect Range { get { return range; } }
     public string Name { get { return id; } }
 }
 
-public class CrewMember_Attribute
+public class CrewMember_Effect
 {
-    public Attribute effect;
+    public Effect effect;
     public TimerTask task;
     public float value;
     public bool available;
 
-    public CrewMember_Attribute(Attribute effect, float timer, float value)
+    public CrewMember_Effect(Effect effect, float timer, float value)
     {
         this.effect = effect;
         if (timer > 0)
@@ -82,9 +82,9 @@ public abstract class CrewMember
     public string memberName;
     public float attackStrength = 1f;
     public bool useRangedWeapon = false;
-    public float walkSpeed = 1f;
     public float wage = 1f;
     public float maxHunger = 1f;
+    public float walkSpeed = 1f;
     public float maxLife = 100f;
     public float life = 10f;
     public float satiety = 1f;
@@ -93,43 +93,23 @@ public abstract class CrewMember
     public CrewMember_Job job;
     public Ship_Item assignedRoom;
     public string memberImage = "None";
-    protected List<CrewMember_Attribute> attributes;
+    protected List<CrewMember_Effect> attributes;
     protected List<KeyValuePair<SkillAttribute, float>> skills;
-
-
-    [NonSerialized]
-    protected Cooldown attackSpeed;
-    [NonSerialized]
-    public long canonReloadSpeed;
-    [NonSerialized]
-    protected Cooldown steerSpeed;
-    [NonSerialized]
-    public long repairSpeed;
 
     public CrewMember(string id, CrewMember_Job job)
     {
         this.id = id;
         type = this.GetType().Name.Substring(this.GetType().Name.IndexOf("_") + 1);
-        attackSpeed = new Cooldown();
-        canonReloadSpeed = 50;
-        //canonReloadSpeed = new Cooldown();
-        steerSpeed = new Cooldown();
-        //repairSpeed = new Cooldown();
-        repairSpeed = 0;
         memberName = id;
         this.job = job;
-        this.attributes = new List<CrewMember_Attribute>();
+        this.attributes = new List<CrewMember_Effect>();
         this.skills = new List<KeyValuePair<SkillAttribute, float>>();
 
-        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RCanonTime, 3f));
-        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.ShootCanonValue, 10f));
-        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RepairTime, 0.5f));
-        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RepairValue, 5f));
-
-        //attackSpeed.timeLeft = 1f;
-        //canonReloadSpeed.timeLeft = 5f;
-        //steerSpeed.timeLeft = 10f;
-        //repairSpeed.timeLeft = 5f;
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RCanonTime, 100f));
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.ShootCanonValue, 100f));
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RepairTime, 100f));
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RepairValue, 100f));
+        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.WalkValue, 100f));
     }
 
     void update()
@@ -165,14 +145,13 @@ public abstract class CrewMember
 
     /** ACTION **/
 
-    public float getCrewSkill(SkillAttribute skill)
+    public float getValueByCrewSkill(SkillAttribute skill, float value)
     {
-        CrewMember_Attribute effect = this.getAttribute(skill.Range);
-        float value = -1;
+        CrewMember_Effect effect = this.getEffect(skill.Range);
 
         if (this.skills.Exists(x => x.Key.Name == skill.Name))
         {
-            value = this.skills.Find(x => x.Key.Name == skill.Name).Value;
+            value = value * this.skills.Find(x => x.Key.Name == skill.Name).Value / 100;
         }
 
         if (value != -1 && effect != null)
@@ -189,15 +168,15 @@ public abstract class CrewMember
 
     /** Attributes **/
 
-    public void addAttribute(Attribute effect, float timer, float value)
+    public void addEffect(Effect effect, float timer, float value)
     {
-        this.removeAttribute(effect);
-        this.attributes.Add(new CrewMember_Attribute(effect, timer, value));
+        this.removeEffect(effect);
+        this.attributes.Add(new CrewMember_Effect(effect, timer, value));
     }
 
-    public void removeAttribute(Attribute effect)
+    public void removeEffect(Effect effect)
     {
-        CrewMember_Attribute item = this.getAttribute(effect);
+        CrewMember_Effect item = this.getEffect(effect);
 
         if (item != null)
         {
@@ -205,7 +184,7 @@ public abstract class CrewMember
         }
     }
 
-    public CrewMember_Attribute getAttribute(Attribute effect)
+    public CrewMember_Effect getEffect(Effect effect)
     {
         return this.attributes.Find(x => x.effect == effect);
     }

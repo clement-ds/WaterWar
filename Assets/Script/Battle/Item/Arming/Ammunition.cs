@@ -3,14 +3,14 @@ using System.Collections;
 
 public abstract class Ammunition
 {
-    protected int damage;
+    protected float damage;
     protected int weight;
 
     protected Ammunition()
     {
     }
 
-    public int getDamage()
+    public float getDamage()
     {
         return this.damage;
     }

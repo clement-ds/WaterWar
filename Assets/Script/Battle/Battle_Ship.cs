@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 public abstract class Battle_Ship : MonoBehaviour
 {
-    protected GuiAccess guiAccess;
-
     public Slider slider = null;
     protected readonly float life;
     protected float currentLife;
@@ -41,7 +39,6 @@ public abstract class Battle_Ship : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        this.guiAccess = GameObject.Find("Battle_UI").GetComponent<GuiAccess>();
         this.createRoom();
         this.createCrew();
     }
@@ -212,7 +209,7 @@ public abstract class Battle_Ship : MonoBehaviour
         this.updateSliderValue();
     }
 
-    public void applyCrewAttributes(Attribute effect, float time, float value)
+    public void applyCrewAttributes(Effect effect, float time, float value)
     {
     }
 }

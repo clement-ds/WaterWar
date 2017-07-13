@@ -104,18 +104,30 @@ public class Canon : ShipElement
     }
 
     /** REALOAD **/
+    protected bool isPossibleToReload()
+    {
+        Gunpowder powder = this.transform.parent.GetComponentInChildren<Gunpowder>();
+
+        print("Powder: " + powder);
+        return (powder != null && powder.isAvailable());
+    }
+
     protected bool doReload()
     {
+        if (!this.isPossibleToReload())
+            return false;
         this.reloading = true;
         this.updateActionMenu();
-        Invoke("setCanonReady", this.GetComponentInChildren<Battle_CrewMember>().getMember().getCrewSkill(SkillAttribute.RCanonTime));
+        Invoke("setCanonReady", this.GetComponentInChildren<Battle_CrewMember>().getMember().getValueByCrewSkill(SkillAttribute.RCanonTime, 3));
         return true;
     }
 
     protected void reloadCanon()
     {
+        if (!this.isPossibleToReload())
+            return;
         this.reloading = true;
-        Invoke("reloadEnd", this.GetComponentInChildren<Battle_CrewMember>().getMember().getCrewSkill(SkillAttribute.RCanonTime));
+        Invoke("reloadEnd", this.GetComponentInChildren<Battle_CrewMember>().getMember().getValueByCrewSkill(SkillAttribute.RCanonTime, 3));
     }
 
     protected void reloadEnd()
@@ -127,14 +139,12 @@ public class Canon : ShipElement
     /** REPAIR **/
     protected override void doRepairActionEnd()
     {
-        //TODO value life en fonction du member
-        this.setCurrentLife(this.currentLife + this.GetComponentInChildren<Battle_CrewMember>().getMember().getCrewSkill(SkillAttribute.RepairValue));
+        this.setCurrentLife(this.currentLife + this.GetComponentInChildren<Battle_CrewMember>().getMember().getValueByCrewSkill(SkillAttribute.RepairValue, 10));
     }
 
     protected override bool doRepairAction()
     {
-        print("repair canon");
-        Invoke("doRepairEnd", this.GetComponentInChildren<Battle_CrewMember>().getMember().getCrewSkill(SkillAttribute.RepairTime));
+        Invoke("doRepairEnd", this.GetComponentInChildren<Battle_CrewMember>().getMember().getValueByCrewSkill(SkillAttribute.RepairTime, 1));
         return true;
     }
 
@@ -142,7 +152,7 @@ public class Canon : ShipElement
     protected override bool doDamageAction()
     {
         bool result = false;
-        
+
         if (target != null)
         {
             if (ready)
@@ -165,10 +175,10 @@ public class Canon : ShipElement
                     GameObject canonBall = canonBallPool.GetObject();
 
                     Battle_CanonBall battleCanonBall = canonBall.GetComponent<Battle_CanonBall>();
-                    battleCanonBall.initialize(new CanonBall(), target, new Vector3(0.7f, 0.2f, 0.1f));
+                    battleCanonBall.initialize(new CanonBall(1, this.GetComponentInChildren<Battle_CrewMember>().getMember().getValueByCrewSkill(SkillAttribute.ShootCanonValue, 1)), target, this.getBulletAccuracy(this.GetComponentInChildren<Battle_CrewMember>()));
                     canonBall.transform.position = this.transform.position;
                     canonBall.transform.SetParent(this.transform);
-                    canonBall.GetComponent<Rigidbody2D>().AddRelativeForce((target.transform.position - canonBall.transform.position).normalized * this.getBulletSpeed(battleCanonBall.getAmmunition())); // mult by bullet speed
+                    canonBall.GetComponent<Rigidbody2D>().AddRelativeForce((target.transform.position - canonBall.transform.position).normalized * this.getBulletSpeed(battleCanonBall.getAmmunition()));
 
                     Physics2D.IgnoreCollision(canonBall.transform.GetComponent<Collider2D>(), this.transform.GetComponent<Collider2D>(), true);
                     if (enemy != null && canAttack)
@@ -205,6 +215,16 @@ public class Canon : ShipElement
     private int getBulletSpeed(Ammunition ammunition)
     {
         return (this.power / ammunition.getWeight()) * 8;
+    }
+
+    private Vector3 getBulletAccuracy(Battle_CrewMember crew)
+    {
+        float x = 0.7f;
+        float y = 0.1f;
+        float z = 0.2f;
+
+        //GameRulesManager.GetInstance().guiAccess.distanceToEnemy;
+        return new Vector3(x, y, z);
     }
 
     /** RECEIVE DAMAGE **/
@@ -259,13 +279,6 @@ public class Canon : ShipElement
     /** SETTERS **/
     public void setTarget(ShipElement target)
     {
-        //Vector3 targetDir = target.transform.position - transform.position;
-        /*
-        float step = 10 * Time.deltaTime;
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0F);
-        Debug.DrawRay(transform.position, newDir, Color.red);
-        transform.rotation = Quaternion.LookRotation(newDir);*/
-
         this.target = target;
         this.updateActionMenu();
     }

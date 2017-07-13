@@ -27,7 +27,6 @@ public class Infirmary : ShipElement
     /** SPECIFIC ACTION **/
     private void HealCrew()
     {
-        print("heal");
         Battle_CrewMember[] members = this.transform.GetComponentsInParent<Battle_CrewMember>();
 
         foreach (Battle_CrewMember member in members)
@@ -68,7 +67,6 @@ public class Infirmary : ShipElement
 
     protected override void dealDamageOnDestroy()
     {
-        this.GetComponentInParent<Battle_Ship>().receiveDamage(this.life / 3);
     }
 
     protected override void applyMalusOnHit(Battle_CanonBall canonBall)
@@ -97,15 +95,12 @@ public class Infirmary : ShipElement
     /** REPAIR **/
     protected override void doRepairActionEnd()
     {
-        //TODO value life en fonction du member
-        this.setCurrentLife(this.currentLife + this.GetComponentInChildren<Battle_CrewMember>().getMember().getCrewSkill(SkillAttribute.RepairValue));
-        this.GetComponentInChildren<Battle_CrewMember>().freeCrewMemberFromShipElement(this, this.transform.parent.gameObject);
+        this.setCurrentLife(this.currentLife + this.GetComponentInChildren<Battle_CrewMember>().getMember().getValueByCrewSkill(SkillAttribute.RepairValue, 40));
     }
 
     protected override bool doRepairAction()
     {
-        //TODO cooldown en fonction du member
-        Invoke("doRepairEnd", this.GetComponentInChildren<Battle_CrewMember>().getMember().getCrewSkill(SkillAttribute.RepairTime));
+        Invoke("doRepairEnd", this.GetComponentInChildren<Battle_CrewMember>().getMember().getValueByCrewSkill(SkillAttribute.RepairTime, 1));
         return true;
     }
 

@@ -16,11 +16,11 @@ public class Battle_Player : Battle_Ship
         if (!GameRulesManager.GetInstance().endOfTheGame)
         {
             this.hasInputMouse();
-            if (!this.canEscapeAction && float.Parse(this.guiAccess.distanceToEnemy.text) > 20)
+            if (!this.canEscapeAction && float.Parse(GameRulesManager.GetInstance().guiAccess.distanceToEnemy.text) > 20)
             {
                 this.canEscape(true);
             }
-            else if (this.canEscapeAction && float.Parse(this.guiAccess.distanceToEnemy.text) < 20)
+            else if (this.canEscapeAction && float.Parse(GameRulesManager.GetInstance().guiAccess.distanceToEnemy.text) < 20)
             {
                 this.canEscape(false);
             }
@@ -35,26 +35,26 @@ public class Battle_Player : Battle_Ship
 
     public override void escape()
     {
-        this.guiAccess.endMessage.text = "You escape the fight";
-        this.guiAccess.endPanel.gameObject.SetActive(true);
+        GameRulesManager.GetInstance().guiAccess.endMessage.text = "You escape the fight";
+        GameRulesManager.GetInstance().guiAccess.endPanel.gameObject.SetActive(true);
     }
 
     public override void canAboarding(bool value)
     {
         this.canAboardingAction = value;
-        this.guiAccess.boardingButton.gameObject.SetActive(value);
+        GameRulesManager.GetInstance().guiAccess.boardingButton.gameObject.SetActive(value);
     }
 
     public override void canEscape(bool value)
     {
         this.canEscapeAction = value;
-        this.guiAccess.escapeButton.gameObject.SetActive(value);
+        GameRulesManager.GetInstance().guiAccess.escapeButton.gameObject.SetActive(value);
     }
 
     public override void die()
     {
-        this.guiAccess.endMessage.text = "Your opponent killed you";
-        this.guiAccess.endPanel.gameObject.SetActive(true);
+        GameRulesManager.GetInstance().guiAccess.endMessage.text = "Your opponent killed you";
+        GameRulesManager.GetInstance().guiAccess.endPanel.gameObject.SetActive(true);
         GameRulesManager.GetInstance().endOfTheGame = true;
     }
 

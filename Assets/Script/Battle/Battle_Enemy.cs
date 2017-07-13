@@ -38,8 +38,8 @@ public class Battle_Enemy : Battle_Ship
 
     public override void die()
     {
-        this.guiAccess.endMessage.text = "You killed your ennemy";
-        this.guiAccess.endPanel.gameObject.SetActive(true);
+        GameRulesManager.GetInstance().guiAccess.endMessage.text = "You killed your ennemy";
+        GameRulesManager.GetInstance().guiAccess.endPanel.gameObject.SetActive(true);
         GameRulesManager.GetInstance().endOfTheGame = true;
     }
 

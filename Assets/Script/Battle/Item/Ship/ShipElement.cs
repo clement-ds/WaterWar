@@ -19,7 +19,7 @@ public class AvailablePosition
 
 public enum Ship_Direction { FRONT, RIGHT, LEFT, NONE };
 
-public enum Ship_Item { CANON, CANTEEN, HELM, INFIRMARY, AMMUNITION, FOOD }
+public enum Ship_Item { CANON, CANTEEN, HELM, INFIRMARY, WAREHOUSE, PLAYGROUND }
 
 public abstract class ShipElement : GuiElement
 {
@@ -55,7 +55,7 @@ public abstract class ShipElement : GuiElement
             float value = UnityEngine.Random.value;
             print(this + " (" + this.GetInstanceID() + ")  :   " + canonBall.getTarget().GetInstanceID() + "  --> " + canonBall.getHitStatus());
             if ((canonBall.getHitStatus() == HitStatus.HIT && canonBall.getTarget().GetInstanceID() == this.GetInstanceID())
-                || canonBall.getHitStatus() == HitStatus.FAIL)
+                || (canonBall.getHitStatus() == HitStatus.FAIL && canonBall.getTarget().GetInstanceID() != this.GetInstanceID()))
             {
                 this.receiveDamage(canonBall);
                 Destroy(col.gameObject);

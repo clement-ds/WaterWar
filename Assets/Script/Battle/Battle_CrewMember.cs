@@ -26,7 +26,7 @@ public class Battle_CrewMember : GuiElement
     {
         if (this.haveToMove)
         {
-            float step = member.walkSpeed * Time.deltaTime;
+            float step = member.getValueByCrewSkill(SkillAttribute.WalkValue, member.walkSpeed) * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, this.finalMovePos, step);
             if (transform.position == this.finalMovePos)
             {

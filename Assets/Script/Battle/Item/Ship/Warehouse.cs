@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Helm : ShipElement {
-
-    public Ship_Direction direction;
+public abstract class Warehouse : ShipElement {
+    
     // Use this for initialization
-    public Helm() : base(200, Ship_Item.HELM)
+    protected Warehouse(float life) : base(life, Ship_Item.WAREHOUSE)
     {
-        this.direction = Ship_Direction.FRONT;
     }
 
     /** GUI CREATOR **/
@@ -19,15 +17,6 @@ public class Helm : ShipElement {
             if (!this.isRepairing() && this.currentLife != this.life)
             {
                 this.actionList.Add(new ActionMenuItem("Repair", doRepair));
-            } else if (this.getMember().getMember().job == CrewMember_Job.Captain)
-            {
-                print("this direction: " + this.direction);
-                if (this.direction != Ship_Direction.FRONT)
-                    this.actionList.Add(new ActionMenuItem("Front", directionFront));
-                if (this.direction != Ship_Direction.RIGHT)
-                    this.actionList.Add(new ActionMenuItem("Right", directionRight));
-                if (this.direction != Ship_Direction.LEFT)
-                    this.actionList.Add(new ActionMenuItem("Left", directionLeft));
             }
         }
     }
@@ -41,7 +30,7 @@ public class Helm : ShipElement {
     /** ON HIT EFFECT **/
     protected override void dealDamageAsRepercution(Battle_CanonBall canonBall)
     {
-        this.GetComponentInParent<Battle_Ship>().receiveDamage(canonBall.getAmmunition().getDamage() / 3);
+        this.GetComponentInParent<Battle_Ship>().receiveDamage(canonBall.getAmmunition().getDamage() / 4);
     }
 
     protected override void dealDamageOnDestroy()
@@ -49,11 +38,6 @@ public class Helm : ShipElement {
     }
 
     protected override void applyMalusOnHit(Battle_CanonBall canonBall)
-    {
-
-    }
-
-    protected override void applyMalusOnDestroy()
     {
 
     }
@@ -73,35 +57,10 @@ public class Helm : ShipElement {
         return false;
     }
 
-    /** DIRECTION **/
-    public bool directionFront()
-    {
-        this.direction = Ship_Direction.FRONT;
-        this.transform.parent.GetComponent<Battle_Ship>().changeDirection(this.direction);
-        this.updateActionMenu();
-        return true;
-    }
-
-    public bool directionRight()
-    {
-        this.direction = Ship_Direction.RIGHT;
-        this.transform.parent.GetComponent<Battle_Ship>().changeDirection(this.direction);
-        this.updateActionMenu();
-        return true;
-    }
-
-    public bool directionLeft()
-    {
-        this.direction = Ship_Direction.LEFT;
-        this.transform.parent.GetComponent<Battle_Ship>().changeDirection(this.direction);
-        this.updateActionMenu();
-        return true;
-    }
-
     /** REPAIR **/
     protected override void doRepairActionEnd()
     {
-        this.setCurrentLife(this.currentLife + this.GetComponentInChildren<Battle_CrewMember>().getMember().getValueByCrewSkill(SkillAttribute.RepairValue, 100));
+        this.setCurrentLife(this.currentLife + this.GetComponentInChildren<Battle_CrewMember>().getMember().getValueByCrewSkill(SkillAttribute.RepairValue, 20));
     }
 
     protected override bool doRepairAction()
