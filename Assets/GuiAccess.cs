@@ -9,4 +9,9 @@ public class GuiAccess : MonoBehaviour {
     public Button boardingButton;
     public Image endPanel;
     public Text endMessage;
+
+    void Start()
+    {
+        GameRulesManager.GetInstance().initializeGui();
+    }
 }

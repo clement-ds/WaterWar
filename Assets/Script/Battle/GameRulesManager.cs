@@ -13,12 +13,16 @@ public class GameRulesManager
     protected GameRulesManager()
     {
         this.endOfTheGame = false;
-        this.guiAccess = GameObject.Find("Battle_UI").GetComponent<GuiAccess>();
     }
 
     public void init()
     {
         this.endOfTheGame = false;
+    }
+
+    public void initializeGui()
+    {
+        this.guiAccess = GameObject.Find("Battle_UI").GetComponent<GuiAccess>();
     }
 
     public static GameRulesManager GetInstance()
