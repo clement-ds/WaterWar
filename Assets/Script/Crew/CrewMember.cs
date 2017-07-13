@@ -104,12 +104,6 @@ public abstract class CrewMember
         this.job = job;
         this.attributes = new List<CrewMember_Effect>();
         this.skills = new List<KeyValuePair<SkillAttribute, float>>();
-
-        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RCanonTime, 100f));
-        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.ShootCanonValue, 100f));
-        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RepairTime, 100f));
-        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RepairValue, 100f));
-        this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.WalkValue, 100f));
     }
 
     void update()

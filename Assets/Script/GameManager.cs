@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour
 
     public void GoFight()
     {
-        GameRulesManager.GetInstance().init();
         ChangeScene(SceneFightName);
     }
 
