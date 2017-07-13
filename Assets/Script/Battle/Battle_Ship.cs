@@ -69,6 +69,7 @@ public abstract class Battle_Ship : MonoBehaviour
 
             Battle_CrewMember battleCrewMember = crewMember.GetComponent<Battle_CrewMember>();
             battleCrewMember.initialize(member);
+            crewMember.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(member.memberImage);
 
             ShipElement[] items;
 

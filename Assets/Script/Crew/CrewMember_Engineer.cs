@@ -16,6 +16,7 @@ public class CrewMember_Engineer : CrewMember {
 		walkSpeed = .75f;
 		wage = 4f;
         this.assignedRoom = Ship_Item.CANTEEN;
+        memberImage = "Sprites/loupe";
     }
 	
 }

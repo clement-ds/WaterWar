@@ -18,6 +18,7 @@ public class CrewMember_Captain : CrewMember {
         maxLife = 300f;
         life = 300f;
         this.assignedRoom = Ship_Item.HELM;
+        memberImage = "Sprites/capt";
     }
 	
 }

@@ -44,7 +44,7 @@ public class QuestUIController : UIController
                 else if (child.name == "MemberItemReward")
                 {
                     Image img = (Image)child.GetComponent<Image>();
-                    img.sprite = new Sprite(); // TODO: GET IMG
+                    img.sprite = Resources.Load<Sprite>("Sprites/quest");
                 }
                 else if (child.name == "MemberDescription")
                 {

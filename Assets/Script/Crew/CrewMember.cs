@@ -92,6 +92,7 @@ public abstract class CrewMember
     public bool available = true;
     public CrewMember_Job job;
     public Ship_Item assignedRoom;
+    public string memberImage = "None";
     protected List<CrewMember_Attribute> attributes;
     protected List<KeyValuePair<SkillAttribute, float>> skills;
 

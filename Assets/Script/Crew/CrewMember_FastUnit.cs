@@ -17,6 +17,7 @@ public class CrewMember_FastUnit : CrewMember {
         maxHunger = 1f;
         satiety = 1f;
         this.assignedRoom = Ship_Item.CANON;
+        memberImage = "Sprites/star";
     }
 	
 }

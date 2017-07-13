@@ -20,6 +20,7 @@ public class CrewMember_Fighter : CrewMember {
         maxLife = 150f;
         life = 150f;
         this.assignedRoom = Ship_Item.CANON;
+        memberImage = "Sprites/axe";
     }
 	
 }

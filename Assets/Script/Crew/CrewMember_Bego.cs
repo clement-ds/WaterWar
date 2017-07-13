@@ -19,6 +19,7 @@ public class CrewMember_Bego : CrewMember {
         maxLife = 10f;
         life = 10f;
         this.assignedRoom = Ship_Item.CANTEEN;
+        memberImage = "Sprites/poulet";
     }
 
 }

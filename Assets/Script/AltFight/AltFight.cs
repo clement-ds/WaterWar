@@ -7,6 +7,10 @@ using System;
 public class AltFight : MonoBehaviour
 {
     /*
+=======
+    public GameObject BegoUnit;
+
+>>>>>>> 2de53f64f1d0e71d93c3fd0ab7fb916f05a468a1
     public Button CaptainRouge;
     public Button CaptainBleu;
     public Button CaptainVert;
@@ -70,10 +74,21 @@ public class AltFight : MonoBehaviour
     {
         p = PlayerManager.GetInstance().player;
         ai = PlayerManager.GetInstance().ai;
+
         playerPreviousTime = DateTime.Now.Ticks;
         aiPreviousTime = DateTime.Now.Ticks;
         repairPreviousTime = DateTime.Now.Ticks;
+
         crew = PlayerManager.GetInstance().player.crew.crewMembers;
+
+        foreach (CrewMember member in crew)
+        {
+            if (member.type == "Bego")
+            {
+                GameObject tmp = Instantiate(BegoUnit);
+                //tmp.transform.position
+            }
+        }
     }
 
     // Update is called once per frame
