@@ -1,0 +1,2 @@
+Delete all files of the LightShaft system Older than version 2.4 before downloading the latest version.
+starting from 2.4 the system contains a new folder structure, any folders/files from older version can corrupt your LightShaft instalation.
