@@ -1,0 +1,128 @@
+fileFormatVersion: 2
+guid: fdce4eb16dc6d7446b1ecd45f19fb66f
+timeCreated: 1500732270
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Chair_Sit_Deco
+    100004: Chair_Sit_Deco001
+    100006: Chair_Sit_Deco002
+    100008: ChairArmRest
+    100010: ChairArmRest001
+    100012: ChairBack
+    100014: ChairLeg002
+    100016: ChairLeg003
+    100018: ChairLeg004
+    100020: ChairLeg005
+    100022: ChairSit
+    400000: //RootNode
+    400002: Chair_Sit_Deco
+    400004: Chair_Sit_Deco001
+    400006: Chair_Sit_Deco002
+    400008: ChairArmRest
+    400010: ChairArmRest001
+    400012: ChairBack
+    400014: ChairLeg002
+    400016: ChairLeg003
+    400018: ChairLeg004
+    400020: ChairLeg005
+    400022: ChairSit
+    2300000: Chair_Sit_Deco
+    2300002: Chair_Sit_Deco001
+    2300004: Chair_Sit_Deco002
+    2300006: ChairArmRest
+    2300008: ChairArmRest001
+    2300010: ChairBack
+    2300012: ChairLeg002
+    2300014: ChairLeg003
+    2300016: ChairLeg004
+    2300018: ChairLeg005
+    2300020: ChairSit
+    3300000: Chair_Sit_Deco
+    3300002: Chair_Sit_Deco001
+    3300004: Chair_Sit_Deco002
+    3300006: ChairArmRest
+    3300008: ChairArmRest001
+    3300010: ChairBack
+    3300012: ChairLeg002
+    3300014: ChairLeg003
+    3300016: ChairLeg004
+    3300018: ChairLeg005
+    3300020: ChairSit
+    4300000: ChairArmRest001
+    4300002: ChairLeg004
+    4300004: ChairSit
+    4300006: ChairBack
+    4300008: ChairArmRest
+    4300010: ChairLeg002
+    4300012: Chair_Sit_Deco
+    4300014: Chair_Sit_Deco001
+    4300016: Chair_Sit_Deco002
+    4300018: ChairLeg003
+    4300020: ChairLeg005
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
