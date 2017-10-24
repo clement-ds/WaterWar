@@ -788,7 +788,7 @@ Directory.CreateDirectory(Application.dataPath+"/Gizmos");
 }
 //then copy the gizmo into the folder
 var info = new DirectoryInfo(Application.dataPath+"/Gizmos");
-var fileInfo = info.GetFiles();
+//var fileInfo = info.GetFiles();
 if(!File.Exists(Application.dataPath+"/Gizmos/LightShaftGizmo.tif")){
 File.Copy(Application.dataPath+"/LightShafts/Source/Resources/UI/LightShaftGizmo.tif",Application.dataPath+"/Gizmos/LightShaftGizmo.tif");
 }

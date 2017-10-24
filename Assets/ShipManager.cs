@@ -9,7 +9,7 @@ public class ShipManager : MonoBehaviour {
 
     void Start () {
         managerP = PlayerManager.GetInstance();
-        shipD = managerP.player.ship;
+        shipD = managerP.player.ship.shipDisposition;
 
         for (int i = 0; i < shipD.rooms.Count; ++i)
         {

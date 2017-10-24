@@ -39,6 +39,7 @@ public abstract class Battle_Ship : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Debug.Log("create crew");
         this.createRoom();
         this.createCrew();
     }

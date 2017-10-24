@@ -127,7 +127,7 @@ public class Player
     public PlayerInventory inventory = new PlayerInventory();
     public PlayerCrew crew = new PlayerCrew();
     public QuestLog questLog = new QuestLog();
-    public ShipDisposition ship = new ShipDisposition();
+    public PlayerShip ship = new PlayerShip();
 }
 
 [Serializable]
@@ -230,23 +230,18 @@ public class PlayerQuest
     public bool taken = false;
 }
 
+
+[Serializable]
+public class PlayerShip
+{
+    public String type;
+    public ShipDisposition shipDisposition;
+}
+
 [Serializable]
 public class ShipDisposition
 {
     public List<Room> rooms = new List<Room>();
-
-    public ShipDisposition()
-    {
-        AddRoom("None");
-        AddRoom("None");
-        AddRoom("None");
-        AddRoom("None");
-    }
-
-    public void AddRoom(string type)
-    {
-        rooms.Add(new Room(type));
-    }
 
     public void ChangeRoom(int index, string newtype)
     {
@@ -257,15 +252,10 @@ public class ShipDisposition
 [Serializable]
 public class Room
 {
-    public string type;
-
-    public Room(string type)
-    {
-        this.type = type;
-    }
-
-    public Room(Room roomm)
-    {
-        this.type = roomm.type;
-    }
+    public String type; // name
+    public int id; // numero
+    public int status; // type de salle autorisé
+    public float x;
+    public float y;
+    public float z;
 }
