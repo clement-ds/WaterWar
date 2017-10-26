@@ -15,6 +15,10 @@ public class CreateGameObject : MonoBehaviour {
         playerShip.AddComponent<Battle_Player>();
         playerShip.GetComponent<Battle_Player>().slider = playerShip.transform.FindChild("Canvas").transform.FindChild("HBar").GetComponent<Slider>();
         playerShip.transform.position = new Vector3((isLeft ? -3 : 3), 0, 100);
+
+        GameObject shortcutManager = new GameObject("ShortcutManager");
+        shortcutManager.AddComponent<ShortCutManager>();
+        shortcutManager.transform.parent = playerShip.transform;
         this.addRoomToShip(playerShip, player.ship.shipDisposition.rooms);
 
         Player ai = PlayerManager.GetInstance().ai;

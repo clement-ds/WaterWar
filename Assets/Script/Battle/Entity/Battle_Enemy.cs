@@ -13,8 +13,10 @@ public class Battle_Enemy : Battle_Ship
     // Update is called once per frame
     void Update()
     {
-        //if (!GameRulesManager.GetInstance().endOfTheGame)
-            //this.doScriptAction();
+        if (!GameRulesManager.GetInstance().endOfTheGame)
+            this.doScriptAction();
+        else
+            this.stopAllAction();
     }
 
     /** ACTIONS **/
@@ -44,6 +46,14 @@ public class Battle_Enemy : Battle_Ship
     }
 
     /** SCRIPT **/
+    public void stopAllAction()
+    {
+        foreach (ShipElement element in this.shipElements)
+        {
+            element.actionStopRunning();
+        }
+    }
+
     public void doScriptAction()
     {
         Battle_CrewMember member = getFreeCrewMember();
@@ -73,12 +83,8 @@ public class Battle_Enemy : Battle_Ship
     /** UTILS **/
     protected bool freeACrewMember()
     {
-        GameObject player = GameObject.Find("Enemy");
-
-        foreach (Transform child in player.transform)
+        foreach (ShipElement element in this.shipElements)
         {
-            ShipElement element = child.GetComponent<ShipElement>();
-
             if (element)
             {
                 if (!element.actionIsRunning())

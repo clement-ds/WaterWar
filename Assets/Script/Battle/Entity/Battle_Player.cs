@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 public class Battle_Player : Battle_Ship
 {
-    List<Battle_CrewMember> selectCrewMembers;
+    List<Battle_CrewMember> selectedCrewMembers;
 
     public Battle_Player() : base(200, true)
     {
-        this.selectCrewMembers = new List<Battle_CrewMember>();
+        this.selectedCrewMembers = new List<Battle_CrewMember>();
     }
 
     // Update is called once per frame
@@ -132,17 +132,17 @@ public class Battle_Player : Battle_Ship
             int isFocus = item.hasInputMouse(result);
             if (isFocus == 0)
             {
-                this.selectCrewMembers.Remove(item);
-                if (this.selectCrewMembers.Count > 0)
-                    this.selectCrewMembers[0].focus();
+                this.selectedCrewMembers.Remove(item);
+                if (this.selectedCrewMembers.Count > 0)
+                    this.selectedCrewMembers[0].focus();
             } else if (isFocus == 1)
             {
-                if (this.selectCrewMembers.Count > 0)
+                if (this.selectedCrewMembers.Count > 0)
                 {
-                    this.selectCrewMembers[0].unfocus();
-                    this.selectCrewMembers[0].select();
+                    this.selectedCrewMembers[0].unfocus();
+                    this.selectedCrewMembers[0].select();
                 }
-                this.selectCrewMembers.Insert(0, item);
+                this.selectedCrewMembers.Insert(0, item);
             }
         }
         return result;
@@ -261,5 +261,11 @@ public class Battle_Player : Battle_Ship
             }
         }
         return null;
+    }
+
+    /** GETTERS **/
+    public List<Battle_CrewMember> getSelectedCrewMembers()
+    {
+        return this.selectedCrewMembers;
     }
 }
