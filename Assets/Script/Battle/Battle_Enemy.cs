@@ -13,8 +13,8 @@ public class Battle_Enemy : Battle_Ship
     // Update is called once per frame
     void Update()
     {
-        if (!GameRulesManager.GetInstance().endOfTheGame)
-            this.doScriptAction();
+        //if (!GameRulesManager.GetInstance().endOfTheGame)
+            //this.doScriptAction();
     }
 
     /** ACTIONS **/

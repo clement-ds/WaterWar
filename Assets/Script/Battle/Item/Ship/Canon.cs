@@ -12,6 +12,7 @@ public class Canon : ShipElement
     private int viewFinder = 0;  // Random number
     private ShotCutscene shotCutscene;
     private SimpleObjectPool canonBallPool;
+    private bool selectingTarget;
 
 
     public Canon() : base(50, Ship_Item.CANON)
@@ -49,6 +50,8 @@ public class Canon : ShipElement
             this.actionList.Add(new ActionMenuItem("Repair", doRepair));
         if (this.getMember() && !ready && !this.reloading)
             this.actionList.Add(new ActionMenuItem("Load canon", doReload));
+        if (!this.getTarget())
+            this.actionList.Add(new ActionMenuItem("Select Target", selectTarget));
     }
 
     /** AVAILABLE POSITION CREATOR **/
@@ -100,6 +103,14 @@ public class Canon : ShipElement
     {
         this.canAttack = false;
         this.updateActionMenu();
+        return true;
+    }
+
+    protected bool selectTarget()
+    {
+        Debug.Log("SELECT TARGET");
+        MouseManager.getInstance().setCursor(ECursor.SEARCH_TARGET);
+        this.selectingTarget = true;
         return true;
     }
 
@@ -276,10 +287,16 @@ public class Canon : ShipElement
         return this.target;
     }
 
+    public bool isSelectingTarget()
+    {
+        return this.selectingTarget;
+    }
+
     /** SETTERS **/
     public void setTarget(ShipElement target)
     {
         this.target = target;
+        this.selectingTarget = false;
         this.updateActionMenu();
     }
 

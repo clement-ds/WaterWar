@@ -27,50 +27,53 @@ public abstract class GuiElement : MonoBehaviour
     public abstract void StartMyself();
 
     /** INPUT **/
-    public void hasInputMouse(Boolean clicked)
+    public int hasInputMouse(Boolean clicked)
     {
         if (clicked)
         {
             if (this.focused)
             {
                 this.unfocus();
+                return 0;
             }
             else
             {
-                print("FOCUS " + this);
                 this.focus();
+                return 1;
             }
         }
-        else
-        {
-            this.unselect();
-        }
+        return -1;
     }
 
     /** INTERACTION **/
     public void focus()
     {
-        this.selected = true;
         this.focused = true;
-        if (this.outline)
-            this.outline.enabled = true;
+        this.select();
         if (this.actionMenu)
             this.updateActionMenu();
     }
 
     public void unfocus()
     {
-        this.selected = false;
         this.focused = false;
-        if (this.outline)
-            this.outline.enabled = false;
+        this.unselect();
         if (this.actionMenu)
             this.actionMenu.SetActive(false);
+    }
+
+    public void select()
+    {
+        this.selected = true;
+        if (this.outline)
+            this.outline.enabled = true;
     }
 
     public void unselect()
     {
         this.selected = false;
+        if (this.outline)
+            this.outline.enabled = false;
     }
 
     /** GUI CREATOR **/
@@ -78,6 +81,7 @@ public abstract class GuiElement : MonoBehaviour
 
     private void createActionMenu()
     {
+        
         this.actionMenu = buttonObjectPool.GetObject();
         this.actionMenu.transform.SetParent(GameObject.Find("Battle_UI").gameObject.transform);
 

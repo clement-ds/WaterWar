@@ -6,8 +6,11 @@ using System.Collections.Generic;
 
 public class Battle_Player : Battle_Ship
 {
+    List<Battle_CrewMember> selectCrewMembers;
+
     public Battle_Player() : base(200, true)
     {
+        this.selectCrewMembers = new List<Battle_CrewMember>();
     }
 
     // Update is called once per frame
@@ -15,7 +18,7 @@ public class Battle_Player : Battle_Ship
     {
         if (!GameRulesManager.GetInstance().endOfTheGame)
         {
-            this.hasInputMouse();
+            this.hasMouseInteraction();
             if (!this.canEscapeAction && float.Parse(GameRulesManager.GetInstance().guiAccess.distanceToEnemy.text) > 20)
             {
                 this.canEscape(true);
@@ -60,95 +63,117 @@ public class Battle_Player : Battle_Ship
     }
 
     /** INPUT **/
-    void hasInputMouse()
+    private void hasMouseInteraction()
     {
         if (Camera.main)
         {
             Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 touchPos = new Vector2(wp.x, wp.y);
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (!this.checkSelfShip(touchPos))
-                {
-                    this.checkEnemyShip(touchPos);
-                }
-            }
-            else if (Input.GetMouseButtonDown(1))
+
+            bool leftMouseButtonOn = Input.GetMouseButtonDown(0);
+
+            if (Input.GetMouseButtonDown(1))
             {
                 checkTargetForCrewMember(touchPos);
+            }
+            else
+            {
+                if (!this.checkSelfShip(touchPos, leftMouseButtonOn))
+                {
+                    this.checkEnemyShip(touchPos, leftMouseButtonOn);
+                }
             }
         }
     }
 
     /** CHECK SELF SHIP **/
-    private bool checkShipElementInSelfShip(Vector2 touchPos, GameObject player, ShipElement target)
+    private bool checkShipElementInSelfShip(Vector2 touchPos, bool hasClick)
     {
         bool result = false;
-        if (target != null)
+        foreach (ShipElement item in this.shipElements)
         {
-            result = target.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos);
+            result = item.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos);
+
+            if (!hasClick)
+            {
+                /* do hover here */
+                return result;
+            }
+
             if (result)
             {
-                foreach (Transform child2 in player.transform)
+                foreach (ShipElement item2 in this.shipElements)
                 {
-                    ShipElement target2 = child2.GetComponent<ShipElement>();
-
-                    if (target2 != null && target.GetInstanceID() != target2.GetInstanceID())
+                    if (item2 != null && item.GetInstanceID() != item2.GetInstanceID())
                     {
-                        target2.unfocus();
+                        item2.unfocus();
                     }
                 }
             }
-            target.hasInputMouse(result);
+            item.hasInputMouse(result);
         }
         return result;
     }
 
-    private bool checkCrewMemberInSelfShip(Vector2 touchPos, Battle_CrewMember target)
+    private bool checkCrewMemberInSelfShip(Vector2 touchPos, bool hasClick)
     {
         bool result = false;
 
-        if (target != null)
+        foreach (Battle_CrewMember item in this.crewMembers)
         {
-            result = target.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos); ;
-            target.hasInputMouse(result);
-        }
-        return result;
-    }
+            result = item.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos);
 
-    private bool checkSelfShip(Vector2 touchPos)
-    {
-        GameObject player = GameObject.Find("Player");
-        bool result = false;
-
-        foreach (Transform child in player.transform)
-        {
-            result = checkShipElementInSelfShip(touchPos, player, child.GetComponent<ShipElement>());
-
-            if (!result)
+            if (!hasClick)
             {
-                result = checkCrewMemberInSelfShip(touchPos, child.GetComponentInChildren<Battle_CrewMember>());
+                /* do hover here */
+                return result;
+            }
+
+            int isFocus = item.hasInputMouse(result);
+            if (isFocus == 0)
+            {
+                this.selectCrewMembers.Remove(item);
+                if (this.selectCrewMembers.Count > 0)
+                    this.selectCrewMembers[0].focus();
+            } else if (isFocus == 1)
+            {
+                if (this.selectCrewMembers.Count > 0)
+                {
+                    this.selectCrewMembers[0].unfocus();
+                    this.selectCrewMembers[0].select();
+                }
+                this.selectCrewMembers.Insert(0, item);
             }
         }
+        return result;
+    }
+
+    private bool checkSelfShip(Vector2 touchPos, bool hasClick)
+    {
+        bool result = false;
+
+        Debug.Log("elements: " + this.shipElements.Count);
+
+        result = checkShipElementInSelfShip(touchPos, hasClick);
+        if (!result)
+            checkCrewMemberInSelfShip(touchPos, hasClick);
+
         return result;
     }
 
     private bool checkTargetForCrewMember(Vector2 touchPos)
     {
-        GameObject player = GameObject.Find("Player");
         ShipElement target = null;
         bool result = false;
 
-        foreach (Transform child in player.transform)
+        foreach (Battle_CrewMember crewMember in this.crewMembers)
         {
-            Battle_CrewMember crewMember = child.GetComponentInChildren<Battle_CrewMember>();
-
-            if (crewMember != null && crewMember.isFocused())
+            if (crewMember.isFocused())
             {
-                crewMember.freeCrewMemberFromParent(player);
-                foreach (Transform child2 in player.transform)
+                crewMember.freeCrewMemberFromParent(crewMember.transform.root.gameObject);
+                foreach (ShipElement tmp in this.shipElements)
                 {
-                    target = child2.GetComponent<ShipElement>();
+                    target = tmp;
                     if (target != null)
                     {
                         if (target.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
@@ -165,7 +190,7 @@ public class Battle_Player : Battle_Ship
                     {
                         if (target.hasAvailableCrewMemberPosition())
                         {
-                            crewMember.assignCrewMemberToShipElement(target, player);
+                            crewMember.assignCrewMemberToShipElement(target, crewMember.transform.root.gameObject);
                             result = true;
                         }
                     }
@@ -181,11 +206,12 @@ public class Battle_Player : Battle_Ship
     }
 
     /** CHECK ENEMY SHIP **/
-    private bool checkEnemyShip(Vector2 touchPos)
+    private bool checkEnemyShip(Vector2 touchPos, bool hasClick)
     {
         GameObject player = GameObject.Find("Player");
         GameObject enemy = GameObject.Find("Enemy");
-        bool result = false;
+        bool targetFocused = false;
+        bool targetClicked = false;
 
         foreach (Transform child in enemy.transform)
         {
@@ -195,33 +221,41 @@ public class Battle_Player : Battle_Ship
             {
                 if (target.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
                 {
+                    if (MouseManager.getInstance().getCursorTexture() == ECursor.SEARCH_TARGET)
+                    {
+                        targetFocused = true;
+                        MouseManager.getInstance().setCursor(ECursor.FOCUS_TARGET);
+                    }
+                    if (!hasClick)
+                        continue;
                     foreach (Transform child2 in player.transform)
                     {
                         Canon target2 = child2.GetComponent<Canon>();
 
                         if (target2)
-                            if (target2 != null && target2.isFocused())
+                            if (target2 != null && target2.isSelectingTarget())
                             {
                                 print("change target to : " + target);
                                 target2.setTarget(target);
-                                result = true;
+                                targetClicked = true;
                             }
                     }
                 }
             }
         }
-        return result;
+        if (!targetFocused && MouseManager.getInstance().getCursorTexture() == ECursor.FOCUS_TARGET)
+            MouseManager.getInstance().setCursor(ECursor.SEARCH_TARGET);
+        if (hasClick)
+            MouseManager.getInstance().setCursor(ECursor.BASIC);
+        return targetClicked;
     }
 
     /** CREW MANAGER **/
     private Battle_CrewMember getSelectedCrewMember()
     {
-        GameObject player = GameObject.Find("Player");
-        foreach (Transform child in player.transform)
+        foreach (Battle_CrewMember target in this.crewMembers)
         {
-            Battle_CrewMember target = child.GetComponent<Battle_CrewMember>();
-
-            if (target != null && target.isSelected())
+            if (target.isSelected())
             {
                 return target;
             }

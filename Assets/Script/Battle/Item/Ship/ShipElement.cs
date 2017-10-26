@@ -33,6 +33,7 @@ public abstract class ShipElement : GuiElement
     protected bool canAttack = true;
 
     public Slider slider = null;
+    public float sliderTimer;
     protected List<AvailablePosition> availablePosition = new List<AvailablePosition>();
 
     public override void StartMyself()
@@ -45,6 +46,7 @@ public abstract class ShipElement : GuiElement
         this.type = type;
         this.life = lifeValue;
         this.setCurrentLife(life);
+        this.sliderTimer = 0;
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -65,37 +67,74 @@ public abstract class ShipElement : GuiElement
 
     void Update()
     {
+        mouseIsHover();
+        updateHover();
         updateMyself();
     }
 
     protected virtual void updateMyself()
     {
+        // do nothing here
+    }
 
+    /** HOVER **/
+    private bool mouseIsHover()
+    {
+        Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 touchPos = new Vector2(wp.x, wp.y);
+
+        if (this.transform.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))
+        {
+            this.showSlider();
+            if (MouseManager.getInstance().getCursorTexture() == ECursor.SEARCH_TARGET)
+            {
+                MouseManager.getInstance().setCursor(ECursor.FOCUS_TARGET);
+            }
+            return true;
+        } else if (this.sliderTimer == 0)
+        {
+            this.hideSlider();
+        }
+        return false;
+    }
+
+    private void updateHover()
+    {
+        this.sliderTimer -= Time.deltaTime;
+        this.sliderTimer = (this.sliderTimer < 0 ? 0 : this.sliderTimer);
     }
 
     /** SLIDER HP **/
     public void updateSliderValue()
     {
-        if (slider)
+        if (this.slider)
         {
-            slider.value = (currentLife * 100) / life;
+            this.showSlider();
+            this.slider.value = (this.currentLife * 100) / this.life;
+            this.sliderTimer = 2;
         }
     }
 
     void OnMouseEnter()
     {
-        if (slider)
-        {
-            slider.enabled = true;
-        }
+        this.showSlider();
     }
 
     void OnMouseExit()
     {
-        if (slider)
-        {
-            slider.enabled = false;
-        }
+        this.hideSlider();
+    }
+
+    protected void showSlider()
+    {
+        if(this.slider)
+            slider.gameObject.SetActive(true);
+    }
+
+    protected void hideSlider()
+    {
+        if (this.slider)
+            slider.gameObject.SetActive(false);
     }
 
     /** AVAILABLE POSITION **/

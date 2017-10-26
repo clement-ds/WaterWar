@@ -21,6 +21,9 @@ public abstract class Battle_Ship : MonoBehaviour
 
     protected bool isPlayer;
 
+    protected List<ShipElement> shipElements;
+    protected List<Battle_CrewMember> crewMembers;
+
     protected Battle_Ship(float lifeValue, bool isPlayer)
     {
         this.direction = Ship_Direction.FRONT;
@@ -34,6 +37,9 @@ public abstract class Battle_Ship : MonoBehaviour
         this.speed = 50;
         life = lifeValue;
         this.setCurrentLife(life);
+
+        this.shipElements = new List<ShipElement>();
+        this.crewMembers = new List<Battle_CrewMember>();
     }
 
     // Use this for initialization
@@ -98,6 +104,7 @@ public abstract class Battle_Ship : MonoBehaviour
                     break;
                 }
             }
+            this.crewMembers.Add(battleCrewMember);
         }
     }
 
@@ -196,6 +203,11 @@ public abstract class Battle_Ship : MonoBehaviour
     public abstract void canAboarding(bool value);
 
     public abstract void die();
+
+    public void addShipElement(ShipElement shipElement)
+    {
+        this.shipElements.Add(shipElement);
+    }
 
     /** GETTERS **/
     public float getCurrentLife() {

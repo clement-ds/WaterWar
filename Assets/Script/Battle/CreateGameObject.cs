@@ -13,6 +13,7 @@ public class CreateGameObject : MonoBehaviour {
         GameObject playerShip = GameObject.Find(player.ship.type + "Pool").GetComponent<SimpleObjectPool>().GetObject();
         playerShip.name = "Player";
         playerShip.AddComponent<Battle_Player>();
+        playerShip.GetComponent<Battle_Player>().slider = playerShip.transform.FindChild("Canvas").transform.FindChild("HBar").GetComponent<Slider>();
         playerShip.transform.position = new Vector3((isLeft ? -3 : 3), 0, 100);
         this.addRoomToShip(playerShip, player.ship.shipDisposition.rooms);
 
@@ -20,6 +21,7 @@ public class CreateGameObject : MonoBehaviour {
         GameObject aiShip = GameObject.Find(ai.ship.type + "Pool").GetComponent<SimpleObjectPool>().GetObject();
         aiShip.name = "Enemy";
         aiShip.AddComponent<Battle_Enemy>();
+        aiShip.GetComponent<Battle_Enemy>().slider = aiShip.transform.FindChild("Canvas").transform.FindChild("HBar").GetComponent<Slider>();
         aiShip.transform.position = new Vector3((isLeft ? 3 : -3), 0, 100);
         this.addRoomToShip(aiShip, ai.ship.shipDisposition.rooms);
     }
@@ -33,6 +35,7 @@ public class CreateGameObject : MonoBehaviour {
             obj.transform.parent = ship.transform;
             obj.transform.localPosition = new Vector3(room.x, room.y, room.z);
             obj.transform.localRotation = Quaternion.Euler(0, 0, room.rotation);
+            ship.GetComponent<Battle_Ship>().addShipElement(obj.GetComponent<ShipElement>());
         }
     }
 }
