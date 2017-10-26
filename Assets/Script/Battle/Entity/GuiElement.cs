@@ -104,12 +104,9 @@ public abstract class GuiElement : MonoBehaviour
 
     public void updateActionMenu()
     {
-        Debug.Log("update1");
         if (!this.actionMenu || !this.focused)
             return;
-        Debug.Log("update2");
         this.updateActionMenuItem();
-        Debug.Log("update3");
         if (this.actionList.Count != 0)
             this.actionMenu.SetActive(true);
         else

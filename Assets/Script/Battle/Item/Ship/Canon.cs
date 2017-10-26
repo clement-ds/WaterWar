@@ -50,8 +50,7 @@ public class Canon : ShipElement
             this.actionList.Add(new ActionMenuItem("Repair", doRepair));
         if (this.getMember() && !ready && !this.reloading)
             this.actionList.Add(new ActionMenuItem("Load canon", doReload));
-        if (!this.getTarget())
-            this.actionList.Add(new ActionMenuItem("Select Target", selectTarget));
+        this.actionList.Add(new ActionMenuItem("Select Target", selectTarget));
     }
 
     /** AVAILABLE POSITION CREATOR **/
@@ -108,7 +107,6 @@ public class Canon : ShipElement
 
     protected bool selectTarget()
     {
-        Debug.Log("SELECT TARGET");
         MouseManager.getInstance().setCursor(ECursor.SEARCH_TARGET);
         this.selectingTarget = true;
         return true;
@@ -118,8 +116,7 @@ public class Canon : ShipElement
     protected bool isPossibleToReload()
     {
         Gunpowder powder = this.transform.parent.GetComponentInChildren<Gunpowder>();
-
-        print("Powder: " + powder);
+        
         return (powder != null && powder.isAvailable());
     }
 
@@ -295,9 +292,15 @@ public class Canon : ShipElement
     /** SETTERS **/
     public void setTarget(ShipElement target)
     {
-        this.target = target;
-        this.selectingTarget = false;
-        this.updateActionMenu();
+        bool canonIsRightPosition = this.transform.localPosition.y < 0;
+        bool shipIsRightPosition = this.transform.root.transform.localPosition.x < target.transform.root.transform.localPosition.x;
+
+        if (canonIsRightPosition && shipIsRightPosition || !canonIsRightPosition && !shipIsRightPosition)
+        {
+            this.target = target;
+            this.selectingTarget = false;
+            this.updateActionMenu();
+        }
     }
 
     protected void setCanonReady()
