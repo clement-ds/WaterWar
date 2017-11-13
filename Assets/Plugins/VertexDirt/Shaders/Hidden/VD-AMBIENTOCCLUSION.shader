@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 
 Shader "Hidden/VD-AMBIENTOCCLUSION" 
 {
@@ -24,7 +26,7 @@ Shader "Hidden/VD-AMBIENTOCCLUSION"
             v2f vert (appdata_base v)
 			{
                 v2f o;
-                o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+                o.pos = UnityObjectToClipPos (v.vertex);
 				o.dis = length(ObjSpaceViewDir(v.vertex));
                 return o;
             }
@@ -58,7 +60,7 @@ Shader "Hidden/VD-AMBIENTOCCLUSION"
             v2f vert (appdata_base v)
 			{
                 v2f o;
-                o.pos = mul (UNITY_MATRIX_MVP, v.vertex);
+                o.pos = UnityObjectToClipPos (v.vertex);
 				o.dis = length(ObjSpaceViewDir(v.vertex));
                 return o;
             }

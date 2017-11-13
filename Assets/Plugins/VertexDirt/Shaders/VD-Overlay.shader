@@ -1,4 +1,6 @@
-﻿Shader "VertexDirt shaders/Vertex color overlay (multiply)"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "VertexDirt shaders/Vertex color overlay (multiply)"
 {
 	Properties 
 	{
@@ -28,7 +30,7 @@
 			v2f vert (appdata_full v)
 			{
 				v2f o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.color = v.color;
 				UNITY_TRANSFER_FOG(o,o.vertex);
 				return o;

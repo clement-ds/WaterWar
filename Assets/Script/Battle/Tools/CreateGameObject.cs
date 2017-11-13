@@ -13,7 +13,7 @@ public class CreateGameObject : MonoBehaviour {
         GameObject playerShip = GameObject.Find(player.ship.type + "Pool").GetComponent<SimpleObjectPool>().GetObject();
         playerShip.name = "Player";
         playerShip.AddComponent<Battle_Player>();
-        playerShip.GetComponent<Battle_Player>().slider = playerShip.transform.FindChild("Canvas").transform.FindChild("HBar").GetComponent<Slider>();
+        playerShip.GetComponent<Battle_Player>().slider = playerShip.transform.Find("Canvas").transform.Find("HBar").GetComponent<Slider>();
         playerShip.transform.position = new Vector3((isLeft ? -3 : 3), 0, 100);
 
         GameObject shortcutManager = new GameObject("ShortcutManager");
@@ -25,7 +25,7 @@ public class CreateGameObject : MonoBehaviour {
         GameObject aiShip = GameObject.Find(ai.ship.type + "Pool").GetComponent<SimpleObjectPool>().GetObject();
         aiShip.name = "Enemy";
         aiShip.AddComponent<Battle_Enemy>();
-        aiShip.GetComponent<Battle_Enemy>().slider = aiShip.transform.FindChild("Canvas").transform.FindChild("HBar").GetComponent<Slider>();
+        aiShip.GetComponent<Battle_Enemy>().slider = aiShip.transform.Find("Canvas").transform.Find("HBar").GetComponent<Slider>();
         aiShip.transform.position = new Vector3((isLeft ? 3 : -3), 0, 100);
         this.addRoomToShip(aiShip, ai.ship.shipDisposition.rooms);
     }
