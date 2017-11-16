@@ -1579,6 +1579,7 @@ GameObject:
   - component: {fileID: 416426479}
   - component: {fileID: 416426481}
   - component: {fileID: 416426482}
+  - component: {fileID: 416426483}
   m_Layer: 0
   m_Name: CarpenterShop
   m_TagString: Untagged
@@ -1593,7 +1594,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 416426476}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.10159302, y: -0.0051574707, z: 0}
+  m_LocalPosition: {x: 0.10159302, y: -0.00516887, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 364215064}
@@ -1685,6 +1686,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TypeRoomCardPrefab: {fileID: 1008890061945262, guid: 4a95d495b87ab45cbbd1311b8cc25f32,
     type: 2}
+--- !u!114 &416426483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 416426476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1741964061, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 2
 --- !u!1 &470225498
 GameObject:
   m_ObjectHideFlags: 0
@@ -6223,7 +6237,7 @@ MonoBehaviour:
   m_Inertia: 1
   m_DecelerationRate: 0.135
   m_ScrollSensitivity: 1
-  m_Viewport: {fileID: 364215064}
+  m_Viewport: {fileID: 0}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 0}
   m_HorizontalScrollbarVisibility: 2
