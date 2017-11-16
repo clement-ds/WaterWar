@@ -14,10 +14,7 @@ public class ListItemController : MonoBehaviour
     private Button btn;
 
     // Use this for initialization
-    void Start()
-    {
-      //btn = this.GetComponent<Button>();
-      //btn.onClick.AddListener(delegate { lc.Buy(source); });
+    void Start() {
     }
 
   private void loadImage()

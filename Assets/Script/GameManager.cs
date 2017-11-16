@@ -12,16 +12,36 @@ public class GameManager : MonoBehaviour
     public Inventory inventory;
     public static GameManager Instance = null;
     public PlayerManager playerManager = PlayerManager.GetInstance();
+    private int inGame = 0;
 
     void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+            this.SetIsInGame(0);
+        }
 
         else if (Instance != this)
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    public void SetIsInGame(int inGame)
+    {
+        this.inGame = inGame;
+    }
+
+    void OnDestroy()
+    {
+        SetIsInGame(0);
+    }
+
+
+    public int IsInGame()
+    {
+        return inGame;
     }
 
     #region Navigation
