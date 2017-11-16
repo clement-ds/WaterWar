@@ -44,25 +44,16 @@ public class MapGenerator {
             island[xMaxRange].Add(new WaterTile());
         }
 
-        Debug.Log("START ISLAND");
-        foreach (List<MapTile> column in island)
-        {
-            Debug.Log("START COLUMN ISLAND");
-            foreach (MapTile tile in column)
-            {
-                Debug.Log(tile.tileType);
-            }
-        }
-
     }
 
     public void spawnMap()
     {
-        for (int x  = 0; x < island.Count; ++x)
+        for (int x  = 1; x < island.Count - 1; ++x)
         {
-            for (int y = 0; y < island[x].Count; ++y)
+            for (int y = 1; y < island[x].Count - 1; ++y)
             {
-                GameObject.Instantiate(island[x][y].graphicAsset, new Vector3(x * 50, y * 50, 10), new Quaternion());
+                //Debug.Log(island[x][y - 1].tileType + " " + island[x][y + 1].tileType + " " + island[x - 1][y].tileType + " " + island[x + 1][y].tileType);
+                GameObject.Instantiate(island[x][y].getGraphicAsset(island[x][y + 1].tileType, island[x][y - 1].tileType, island[x - 1][y].tileType, island[x + 1][y].tileType), new Vector3(x * 50, y * 50, 10), new Quaternion());
             }
         }
     }

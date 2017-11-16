@@ -10,11 +10,11 @@ public class testManager : MonoBehaviour {
     // Use this for initialization
     void Start() {
         //pm = PlayerManager.GetInstance();
-        im = IslandManager.GetInstance();
+        //im = IslandManager.GetInstance();
 
-        Vector2 goodPos = PlayerManager.GetInstance().player.mapPosition;
-        playerShip.transform.position = new Vector3(goodPos.x, goodPos.y, playerShip.transform.position.z);
-        print("SHIP PUT IN POS " + goodPos);
+        //Vector2 goodPos = PlayerManager.GetInstance().player.mapPosition;
+        //playerShip.transform.position = new Vector3(goodPos.x, goodPos.y, playerShip.transform.position.z);
+        //print("SHIP PUT IN POS " + goodPos);
 
         MapGenerator mg = new MapGenerator();
         mg.generateIsland();
