@@ -307,9 +307,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a9e4cd5cfe029046819cabfcdcb2fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Icon: {fileID: 0}
-  Title: {fileID: 0}
-  Description: {fileID: 0}
+  Icon: {fileID: 114153532168036036}
+  Title: {fileID: 114450504885221834}
+  Description: {fileID: 114593913146848638}
   source:
     type: 
     id: 0
