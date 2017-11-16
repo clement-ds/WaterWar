@@ -22,25 +22,16 @@ public class ListController : MonoBehaviour
     private List<GameObject> sellList = new List<GameObject>();
 
     // Use this for initialization
-    void Start()
-    {
+    void Start() {
+      PlayerManager managerP = PlayerManager.GetInstance();
+      inventoryP = managerP.player.inventory;
+      FillSellShop();
 
-        // For player shop
-        //if (name == "SellPanel") {
-        PlayerManager managerP = PlayerManager.GetInstance();
-        inventoryP = managerP.player.inventory;
-        FillSellShop();
-        //}
+      currentIsland = PlayerManager.GetInstance().player.currentIsland;
+      IslandManager managerI = IslandManager.GetInstance();
 
-        currentIsland = PlayerManager.GetInstance().player.currentIsland;
-
-        // For island shop
-        //if (name == "BuyPanel") {
-        IslandManager managerI = IslandManager.GetInstance();
-
-        inventoryI = managerI.islands[currentIsland].inventory;
-        FillBuyShop();
-        //}
+      inventoryI = managerI.islands[currentIsland].inventory;
+      FillBuyShop();
     }
 
     void FillBuyShop()
