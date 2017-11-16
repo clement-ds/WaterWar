@@ -28,3 +28,5 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+.vs/WaterWar/v15/Server/sqlite3/db.lock
+.vs/WaterWar/v15/Server/sqlite3/storage.ide
