@@ -15,6 +15,10 @@ public class testManager : MonoBehaviour {
         Vector2 goodPos = PlayerManager.GetInstance().player.mapPosition;
         playerShip.transform.position = new Vector3(goodPos.x, goodPos.y, playerShip.transform.position.z);
         print("SHIP PUT IN POS " + goodPos);
+
+        MapGenerator mg = new MapGenerator();
+        mg.generateIsland();
+        mg.spawnMap();
     }
 	
 	// Update is called once per frame
