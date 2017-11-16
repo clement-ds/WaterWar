@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MapTile {
-
-    public string top;
-    public string bottom;
-    public string left;
-    public string right;
+public abstract class MapTile {
 
     public string tileType;
     public GameObject graphicAsset;
+
+    public abstract GameObject getGraphicAsset(string top, string bottom, string left, string right);
+
 }
