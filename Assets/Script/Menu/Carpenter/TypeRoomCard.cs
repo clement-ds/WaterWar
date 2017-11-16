@@ -31,7 +31,7 @@ public class TypeRoomCard : MonoBehaviour {
   }
 
   public void initCard() {
-    Title.text = source.type.ToString();
+    Title.text = source.type;
     Description.text = source.type.ToString();
 
     btn = this.GetComponent<Button>();

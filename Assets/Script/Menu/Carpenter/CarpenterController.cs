@@ -6,7 +6,6 @@ public class CarpenterController : MonoBehaviour {
 
 	private PlayerShip ship;
 	private ShipDisposition shipD;
-	public GameObject carpenterShopPanel;
 	public GameObject TypeRoomCardPrefab;
 
 	private List<GameObject> typeRoomList = new List<GameObject>();
@@ -19,25 +18,25 @@ public class CarpenterController : MonoBehaviour {
 	}
 
 
-    void fillRoomList() {
-      for (int i = 0; i < typeRoomList.Count; ++i) {
-          Destroy(typeRoomList[i]);
-      }
-
-      for (int i = 0; i < ship.shipDisposition.rooms.Count; ++i) {
-          GameObject newCard = Instantiate(TypeRoomCardPrefab) as GameObject;
-          TypeRoomCard card = newCard.GetComponent<TypeRoomCard>();
-
-          card.source = ship.shipDisposition.rooms[i];
-
-          card.initCard();
-          newCard.transform.SetParent(carpenterShopPanel.transform);
-          newCard.transform.localScale = Vector3.one;
-          typeRoomList.Add(newCard);
-      }
+  void fillRoomList() {
+    for (int i = 0; i < typeRoomList.Count; ++i) {
+        Destroy(typeRoomList[i]);
     }
 
-	// Update is called once per frame
+    for (int i = 0; i < ship.shipDisposition.rooms.Count; ++i) {
+        GameObject newCard = Instantiate(TypeRoomCardPrefab) as GameObject;
+        TypeRoomCard card = newCard.GetComponent<TypeRoomCard>();
+				Debug.Log(ship.shipDisposition.rooms[i].type);
+
+				card.source = ship.shipDisposition.rooms[i];
+
+        card.initCard();
+        newCard.transform.SetParent(this.transform);
+        newCard.transform.localScale = Vector3.one;
+        typeRoomList.Add(newCard);
+    }
+  }
+
 	void Update () {
 	}
 
