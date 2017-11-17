@@ -56,7 +56,7 @@ public class Canon : ShipElement
     /** AVAILABLE POSITION CREATOR **/
     protected override void createAvailableCrewMemberPosition()
     {
-        this.availablePosition.Add(new AvailablePosition(new Vector3(0f, -0.6f, 0f)));
+        this.availablePosition.Add(new AvailablePosition(new Vector3(-0.55f, 0f, 0f)));
     }
 
     /** ON HIT EFFECT **/

@@ -156,6 +156,11 @@ public abstract class ShipElement : GuiElement
     {
         for (int i = 0; i < this.availablePosition.Count; ++i)
         {
+            Debug.Log("test : " + this.availablePosition[i]);
+            if (this.availablePosition[i].crewId == id)
+            {
+                return this.availablePosition[i].position;
+            }
             if (this.availablePosition[i].available)
             {
                 this.availablePosition[i].available = false;

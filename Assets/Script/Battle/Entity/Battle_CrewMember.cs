@@ -58,8 +58,9 @@ public class Battle_CrewMember : GuiElement
         this.haveToMove = false;
         if (this.targetFocus != null)
         {
+            Debug.Log("Arrive at pos : " + finalMovePos);
             this.directAssignCrewMemberInElement(this.targetFocus);
-            this.transform.localPosition = this.targetFocus.chooseAvailableCrewMemberPosition(this.GetInstanceID());
+            Debug.Log("final pos: " + this.transform.localPosition);
             this.targetFocus.focus();
             this.targetFocus.updateActionMenu();
             this.targetFocus = null;
