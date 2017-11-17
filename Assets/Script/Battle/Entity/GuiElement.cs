@@ -85,6 +85,7 @@ public abstract class GuiElement : MonoBehaviour
         this.actionMenu = buttonObjectPool.GetObject();
         this.actionMenu.transform.SetParent(GameObject.Find("Battle_UI").gameObject.transform);
 
+        this.actionMenu.transform.localPosition = new Vector3(0, 0, 99);
         this.actionMenu.GetComponent<RectTransform>().offsetMin = new Vector2(-100, -100);
         this.actionMenu.GetComponent<RectTransform>().offsetMax = new Vector2(100, 100);
         this.actionMenu.transform.localScale = new Vector3(1, 1, 1);
