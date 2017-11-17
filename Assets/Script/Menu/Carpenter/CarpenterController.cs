@@ -32,7 +32,8 @@ public class CarpenterController : MonoBehaviour {
 
         card.initCard(this);
         newCard.transform.SetParent(this.transform);
-        newCard.transform.localScale = Vector3.one;
+            newCard.transform.localScale = Vector3.one;
+            newCard.transform.localPosition = Vector3.one;
         this.typeRoomList.Add(newCard);
     }
   }
