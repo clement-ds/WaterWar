@@ -17,7 +17,6 @@ public class testManager : MonoBehaviour {
         //print("SHIP PUT IN POS " + goodPos);
 
         MapGenerator mg = new MapGenerator();
-        mg.generateIsland();
         mg.spawnMap();
     }
 	
