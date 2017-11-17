@@ -15,37 +15,40 @@ public class ShortCutManager : MonoBehaviour {
 	
 	}
 
+    void resetActionsGroupForInput(KeyCode code)
+    {
+        List<Battle_CrewMember> crewMembers = this.transform.GetComponentInParent<Battle_Player>().getSelectedCrewMembers();
+        groups[KeyCode.Alpha1].initActions();
+        foreach (Battle_CrewMember item in crewMembers)
+        {
+            groups[KeyCode.Alpha1].addActionList(item.getActionList());
+            groups[KeyCode.Alpha1].addActionList(item.getParentActionList());
+        }
+        groups[KeyCode.Alpha1].StartMyself();
+        groups[KeyCode.Alpha1].focus();
+    }
+
     void OnGUI()
     {
         Event e = Event.current;
         if (e.type == EventType.KeyDown && e.control && e.keyCode == KeyCode.Alpha1)
         {
-            List<Battle_CrewMember> crewMembers = this.transform.GetComponentInParent<Battle_Player>().getSelectedCrewMembers();
-            Debug.Log("yeaah");
             if (!groups.ContainsKey(KeyCode.Alpha1))
             {
-                Debug.Log("add new group: " + crewMembers.Count);
                 groups.Add(KeyCode.Alpha1, new GroupElement());
             }
-            groups[KeyCode.Alpha1].initActions();
-            foreach (Battle_CrewMember item in crewMembers)
-            {
-                groups[KeyCode.Alpha1].addActionList(item.getActionList());
-                groups[KeyCode.Alpha1].addActionList(item.getParentActionList());
-            }
-            groups[KeyCode.Alpha1].StartMyself();
+            resetActionsGroupForInput(KeyCode.Alpha1);
         }
         if (e.type == EventType.KeyDown && e.keyCode == KeyCode.Alpha1)
         {
             if (groups.ContainsKey(KeyCode.Alpha1))
             {
-                Debug.Log("focus all ");
                 if (groups[KeyCode.Alpha1].isFocused())
                 {
                     groups[KeyCode.Alpha1].unfocus();
                 } else
                 {
-                    groups[KeyCode.Alpha1].focus();
+                    resetActionsGroupForInput(KeyCode.Alpha1);
                 }
             }
         }
