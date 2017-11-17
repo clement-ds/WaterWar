@@ -24,19 +24,29 @@ public class ShortCutManager : MonoBehaviour {
             Debug.Log("yeaah");
             if (!groups.ContainsKey(KeyCode.Alpha1))
             {
+                Debug.Log("add new group: " + crewMembers.Count);
                 groups.Add(KeyCode.Alpha1, new GroupElement());
-                foreach (Battle_CrewMember item in crewMembers)
-                {
-                    groups[KeyCode.Alpha1].addActionList(item.getActionList());
-                }
             }
+            groups[KeyCode.Alpha1].initActions();
+            foreach (Battle_CrewMember item in crewMembers)
+            {
+                groups[KeyCode.Alpha1].addActionList(item.getActionList());
+                groups[KeyCode.Alpha1].addActionList(item.getParentActionList());
+            }
+            groups[KeyCode.Alpha1].StartMyself();
         }
         if (e.type == EventType.KeyDown && e.keyCode == KeyCode.Alpha1)
         {
             if (groups.ContainsKey(KeyCode.Alpha1))
             {
                 Debug.Log("focus all ");
-                groups[KeyCode.Alpha1].focus();
+                if (groups[KeyCode.Alpha1].isFocused())
+                {
+                    groups[KeyCode.Alpha1].unfocus();
+                } else
+                {
+                    groups[KeyCode.Alpha1].focus();
+                }
             }
         }
     }

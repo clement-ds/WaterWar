@@ -15,14 +15,17 @@ public abstract class GuiElement : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("create new GuiElement");
         this.buttonObjectPool = GameObject.Find("SimpleActionMenuPool").GetComponent<SimpleObjectPool>();
         this.outline = GetComponent<SpriteOutline>();
 
         if (!this.GetComponentInParent<Battle_Enemy>())
         {
+            Debug.Log("add action list to new Gui");
             this.createActionMenu();
         }
     }
+
 
     public abstract void StartMyself();
 
@@ -78,10 +81,12 @@ public abstract class GuiElement : MonoBehaviour
     }
 
     /** GUI CREATOR **/
+
     protected abstract void createActionList();
 
-    private void createActionMenu()
+    protected void createActionMenu()
     {
+        this.createActionList();
         this.actionMenu = buttonObjectPool.GetObject();
         this.actionMenu.transform.SetParent(GameObject.Find("Battle_UI").gameObject.transform);
 

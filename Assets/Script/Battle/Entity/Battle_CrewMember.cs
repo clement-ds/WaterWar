@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class Battle_CrewMember : GuiElement
 {
@@ -8,6 +9,7 @@ public class Battle_CrewMember : GuiElement
     ShipElement room = null;
     CrewMember member = null;
     ShipElement targetFocus = null;
+    ShipElement parent = null;
     Vector3 finalMovePos;
     Boolean haveToMove = false;
 
@@ -77,6 +79,7 @@ public class Battle_CrewMember : GuiElement
     public void assignCrewMemberToShipElement(ShipElement target, GameObject container)
     {
         this.targetFocus = target;
+        this.parent = target;
         this.moveTo(target.transform.position);
     }
 
@@ -86,6 +89,7 @@ public class Battle_CrewMember : GuiElement
         {
             target.unfocus();
             target.freeCrewMemberPosition(this.GetInstanceID());
+            this.parent = null;
             this.transform.SetParent(container.transform);
         }
     }
@@ -98,5 +102,17 @@ public class Battle_CrewMember : GuiElement
     public CrewMember getMember()
     {
         return this.member;
+    }
+
+    /** GETTERS **/
+
+    public List<ActionMenuItem> getParentActionList()
+    {
+        Debug.Log("Partent : " + (parent == null ? -1 : this.parent.getActionList().Count));
+        if (this.parent == null)
+        {
+            return new List<ActionMenuItem>();
+        }
+        return this.parent.getActionList();
     }
 }

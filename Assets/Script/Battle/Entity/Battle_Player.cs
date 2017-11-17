@@ -118,7 +118,7 @@ public class Battle_Player : Battle_Ship
     private bool checkCrewMemberInSelfShip(Vector2 touchPos, bool hasClick)
     {
         bool result = false;
-
+        
         foreach (Battle_CrewMember item in this.crewMembers)
         {
             result = item.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos);
@@ -130,6 +130,7 @@ public class Battle_Player : Battle_Ship
             }
 
             int isFocus = item.hasInputMouse(result);
+
             if (isFocus == 0)
             {
                 this.selectedCrewMembers.Remove(item);
@@ -137,6 +138,7 @@ public class Battle_Player : Battle_Ship
                     this.selectedCrewMembers[0].focus();
             } else if (isFocus == 1)
             {
+                this.selectedCrewMembers.Remove(item);
                 if (this.selectedCrewMembers.Count > 0)
                 {
                     this.selectedCrewMembers[0].unfocus();
