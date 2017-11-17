@@ -17,10 +17,10 @@ public class IAMapRoamer : MonoBehaviour {
 	void Update () {
         if (TimeSpan.FromTicks(DateTime.Now.Ticks - previousTime).TotalSeconds >= coolDown)
         {
-            Debug.Log("UPDATE IA");
+           // Debug.Log("UPDATE IA");
             int nextIsland = UnityEngine.Random.Range(0, 8);
             Island island = IslandManager.GetInstance().islands[nextIsland];
-            Debug.Log("Going to " + island.name + "(" + nextIsland + ")"  + " in " + island.x + " - " + island.y);
+           // Debug.Log("Going to " + island.name + "(" + nextIsland + ")"  + " in " + island.x + " - " + island.y);
             transform.position = new Vector3(island.x, island.y, 0);
             previousTime = DateTime.Now.Ticks;
         }

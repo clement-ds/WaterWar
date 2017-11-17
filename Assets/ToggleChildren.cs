@@ -11,4 +11,13 @@ public class ToggleChildren : MonoBehaviour {
         }
         this.gameObject.SetActive(activate);
     }
+
+
+    public GameObject obj, obj2;
+    public void ToggleVisibility()
+    {
+        obj.SetActive(!obj.activeSelf);
+        obj2.SetActive(!obj2.activeSelf);
+
+    }
 }
