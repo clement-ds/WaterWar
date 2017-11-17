@@ -8,7 +8,7 @@ public class TypeRoomCard : MonoBehaviour {
   public Text Description;
   public Room source;
 
-  private Button btn;
+  public Button btn;
 
   void Start () {
   }
@@ -30,13 +30,18 @@ public class TypeRoomCard : MonoBehaviour {
     }
   }
 
-  public void initCard() {
+  public void initCard(CarpenterController cl) {
     Title.text = source.type;
     Description.text = source.type.ToString();
 
     btn = this.GetComponent<Button>();
-//    btn.onClick.AddListener(delegate { lc.Buy(source); });
+    btn.onClick.AddListener(delegate { cl.printType(source); });
     setIcon(source.type);
+  }
+
+  public void setRoom(Room room) {
+    Title.text = source.type;
+    Description.text = source.type.ToString();
   }
 
   void Update() {

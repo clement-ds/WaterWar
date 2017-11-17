@@ -28,6 +28,9 @@ public class CreateGameObject : MonoBehaviour {
         aiShip.GetComponent<Battle_Enemy>().slider = aiShip.transform.Find("Canvas").transform.Find("HBar").GetComponent<Slider>();
         aiShip.transform.position = new Vector3((isLeft ? 3 : -3), 0, 100);
         this.addRoomToShip(aiShip, ai.ship.shipDisposition.rooms);
+
+        GameObject.Find("Distance").GetComponent<CheckDistanceBetweenObjects>().init(playerShip, aiShip);
+
     }
 
     private void addRoomToShip(GameObject ship, List<Room> rooms)

@@ -5,52 +5,48 @@ using UnityEngine;
 public class CarpenterController : MonoBehaviour {
 
 	private PlayerShip ship;
-	private ShipDisposition shipD;
 	public GameObject TypeRoomCardPrefab;
 
 	private List<GameObject> typeRoomList = new List<GameObject>();
 
+	private Room selectedRoom;
+
 	// Use this for initialization
 	void Start () {
 		PlayerManager manager = PlayerManager.GetInstance();
-		ship = manager.player.ship;
-		fillRoomList();
+		this.ship = manager.player.ship;
+		FillRoomList();
 	}
 
 
-  void fillRoomList() {
-    for (int i = 0; i < typeRoomList.Count; ++i) {
+  void FillRoomList() {
+    for (int i = 0; i < this.typeRoomList.Count; ++i) {
         Destroy(typeRoomList[i]);
     }
 
-    for (int i = 0; i < ship.shipDisposition.rooms.Count; ++i) {
+    for (int i = 0; i < this.ship.shipDisposition.rooms.Count; ++i) {
         GameObject newCard = Instantiate(TypeRoomCardPrefab) as GameObject;
         TypeRoomCard card = newCard.GetComponent<TypeRoomCard>();
-				Debug.Log(ship.shipDisposition.rooms[i].type);
 
-				card.source = ship.shipDisposition.rooms[i];
+		card.source = this.ship.shipDisposition.rooms[i];
 
-        card.initCard();
+        card.initCard(this);
         newCard.transform.SetParent(this.transform);
-        newCard.transform.localScale = Vector3.one;
-        typeRoomList.Add(newCard);
+            newCard.transform.localScale = Vector3.one;
+            newCard.transform.localPosition = Vector3.one;
+        this.typeRoomList.Add(newCard);
     }
   }
 
+	public void printType(Room room) {
+		Debug.Log(room.type);
+		this.selectedRoom = room;
+	}
+
+	public Room getSelectedRoom() {
+		return this.selectedRoom;
+	}
+
 	void Update () {
 	}
-
-/*	public void placeRoom(int index, string type) {
-		shipD.ChangeRoom(index, type);
-		setIcon(index, type);
-	}
-
-	// Index + 1 technically
-	public void placeRoomAsCurrent(int index) {
-		string current = GameObject.Find("CarpenterShop").GetComponent<CarpenterShop>().current;
-
-		if (current != "Untouched") {
-			placeRoom(index - 1, current);
-		}
-	}*/
 }

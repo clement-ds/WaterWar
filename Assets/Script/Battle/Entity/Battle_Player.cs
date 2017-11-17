@@ -19,11 +19,11 @@ public class Battle_Player : Battle_Ship
         if (!GameRulesManager.GetInstance().endOfTheGame)
         {
             this.hasMouseInteraction();
-            if (!this.canEscapeAction && GameRulesManager.GetInstance().guiAccess.distanceToEnemy.text != "" && float.Parse(GameRulesManager.GetInstance().guiAccess.distanceToEnemy.text) > 20)
+            if (!this.canEscapeAction && GameRulesManager.GetInstance().guiAccess.distanceToEnemy.text != "" && float.Parse(GameRulesManager.GetInstance().guiAccess.distanceToEnemy.text) > 15)
             {
                 this.canEscape(true);
             }
-            else if (this.canEscapeAction && float.Parse(GameRulesManager.GetInstance().guiAccess.distanceToEnemy.text) < 20)
+            else if (this.canEscapeAction && float.Parse(GameRulesManager.GetInstance().guiAccess.distanceToEnemy.text) < 15)
             {
                 this.canEscape(false);
             }
