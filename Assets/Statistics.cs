@@ -12,7 +12,7 @@ public class Statistics : MonoBehaviour {
         managerP = PlayerManager.GetInstance();
         gold.text = managerP.player.money.ToString() + "£";
     }
-	
+
 	// Update is called once per frame
 	void Update () {
         gold.text = managerP.player.money.ToString() + "£";
