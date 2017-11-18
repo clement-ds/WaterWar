@@ -31,9 +31,9 @@ MonoBehaviour:
   antialiasing:
     m_Enabled: 1
     m_Settings:
-      method: 1
+      method: 0
       fxaaSettings:
-        preset: 4
+        preset: 2
       taaSettings:
         jitterSpread: 0.473
         sharpen: 0.66
@@ -42,8 +42,8 @@ MonoBehaviour:
   ambientOcclusion:
     m_Enabled: 1
     m_Settings:
-      intensity: 1.87
-      radius: 0.3
+      intensity: 0.43
+      radius: 1.12
       sampleCount: 16
       downsampling: 0
       forceForwardCompatibility: 0
@@ -151,6 +151,12 @@ MonoBehaviour:
               value: 0
               inSlope: 1
               outSlope: 1
+              tangentMode: 0
+            - serializedVersion: 2
+              time: 0.16413374
+              value: 0.25974023
+              inSlope: 0.6875654
+              outSlope: 0.6875654
               tangentMode: 0
             - serializedVersion: 2
               time: 1
@@ -271,8 +277,8 @@ MonoBehaviour:
           m_ZeroValue: 0.5
           m_Range: 1
         e_CurrentEditingCurve: 0
-        e_CurveY: 0
-        e_CurveR: 1
+        e_CurveY: 1
+        e_CurveR: 0
         e_CurveG: 0
         e_CurveB: 0
   userLut:
