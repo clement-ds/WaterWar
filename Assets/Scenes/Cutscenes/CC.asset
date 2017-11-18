@@ -27,28 +27,28 @@ MonoBehaviour:
   fog:
     m_Enabled: 1
     m_Settings:
-      excludeSkybox: 1
+      excludeSkybox: 0
   antialiasing:
     m_Enabled: 1
     m_Settings:
-      method: 0
+      method: 1
       fxaaSettings:
         preset: 4
       taaSettings:
         jitterSpread: 0.473
-        sharpen: 0.68
+        sharpen: 0.66
         stationaryBlending: 0.564
         motionBlending: 0.934
   ambientOcclusion:
     m_Enabled: 1
     m_Settings:
-      intensity: 1.29
+      intensity: 1.87
       radius: 0.3
-      sampleCount: 10
-      downsampling: 1
+      sampleCount: 16
+      downsampling: 0
       forceForwardCompatibility: 0
       ambientOnly: 0
-      highPrecision: 0
+      highPrecision: 1
   screenSpaceReflection:
     m_Enabled: 1
     m_Settings:
@@ -97,13 +97,13 @@ MonoBehaviour:
       logMin: -8
       logMax: 4
   bloom:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       bloom:
-        intensity: 0.76
-        threshold: 0.48
-        softKnee: 0.35
-        radius: 2.4
+        intensity: 1.15
+        threshold: 1.16
+        softKnee: 0.31
+        radius: 3.33
         antiFlicker: 0
       lensDirt:
         texture: {fileID: 0}
