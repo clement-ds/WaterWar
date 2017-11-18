@@ -10,6 +10,8 @@ public class QuestUIController : UIController
 {
     private List<PlayerQuest> questList;
     public Button closeButton;
+    public int nbrQuestByPage = 10;
+    private int currentPage = 0;
 
 
     public override void Populate()
@@ -24,48 +26,38 @@ public class QuestUIController : UIController
         Debug.Log("Current island: " + PlayerManager.GetInstance().player.currentIsland);
         questList = IslandManager.GetInstance().islands[PlayerManager.GetInstance().player.currentIsland].questLog.quests;
 
-        foreach (PlayerQuest quest in questList)
-        {
-            GameObject questRow = (GameObject)Instantiate(rowPrefab);
+        int i = 0;
 
-            foreach (Transform child in questRow.transform)
-            {
-                if (child.name == "MemberObjectif")
-                {
-                    Text text = (Text)child.GetComponent<Text>();
-                    text.text = quest.objective;
-                }
-                else if (child.name == "MemberDescription")
-                {
-                    Text text = (Text)child.GetComponent<Text>();
-                    text.text = quest.description;
+        foreach (PlayerQuest quest in questList) {
+            i++;
+            if (i >= (nbrQuestByPage * currentPage) && i < (nbrQuestByPage * currentPage  + nbrQuestByPage)) {
+                GameObject questRow = (GameObject)Instantiate(rowPrefab);
 
-                }
-                else if (child.name == "MemberItemReward")
-                {
-                    Image img = (Image)child.GetComponent<Image>();
-                    img.sprite = Resources.Load<Sprite>("Sprites/quest");
-                }
-                else if (child.name == "MemberDescription")
-                {
-                    Text text = (Text)child.GetComponent<Text>();
-                    text.text = quest.description;
+                foreach (Transform child in questRow.transform) {
+                    if (child.name == "MemberObjectif") {
+                        Text text = (Text)child.GetComponent<Text>();
+                        text.text = quest.objective;
+                    } else if (child.name == "MemberDescription") {
+                        Text text = (Text)child.GetComponent<Text>();
+                        text.text = quest.description;
 
+                    } else if (child.name == "MemberItemReward") {
+                        Image img = (Image)child.GetComponent<Image>();
+                        img.sprite = Resources.Load<Sprite>("Sprites/quest");
+                    } else if (child.name == "MemberDescription") {
+                        Text text = (Text)child.GetComponent<Text>();
+                        text.text = quest.description;
+                    } else if (child.name == "MemberMoneyReward") {
+                        Text text = (Text)child.GetComponent<Text>();
+                        text.text = "+" + quest.moneyReward + "£";
+                    } else if (child.name == "AcceptButton") {
+                        Button AcceptButton = (Button)child.GetComponent<Button>();
+                        CreateClosureForAccept(quest, AcceptButton);
+                    }
                 }
-                else if (child.name == "MemberMoneyReward")
-                {
-                    Text text = (Text)child.GetComponent<Text>();
-                    text.text = "+" + quest.moneyReward + "£";
-                }
-                else if (child.name == "AcceptButton")
-                {
-                    Button AcceptButton = (Button)child.GetComponent<Button>();
-                    CreateClosureForAccept(quest, AcceptButton);
-                }
+                questRow.transform.SetParent(panel.transform, false);
+                questRow.SetActive(true);
             }
-            questRow.transform.SetParent(panel.transform, false);
-            questRow.SetActive(true);
-
         }
     }
 
@@ -88,6 +80,16 @@ public class QuestUIController : UIController
     {
         TogglePanel();
         closeButton.gameObject.SetActive(panel.gameObject.active);
+    }
+
+    public void NextPage() {
+        ++currentPage;
+        Populate();
+    }
+
+    public void PrevPage() {
+        --currentPage;
+        Populate();
     }
 
 }

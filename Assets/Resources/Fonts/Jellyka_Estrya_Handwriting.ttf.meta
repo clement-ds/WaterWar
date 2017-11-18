@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: bd82665c8744c49a4a9dd886ba81711b
+timeCreated: 1511034637
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Jellyka - Estrya's Handwriting
+  fontNames:
+  - Jellyka - Estrya's Handwriting
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
