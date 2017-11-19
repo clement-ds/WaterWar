@@ -12,12 +12,13 @@ public class GameManager : MonoBehaviour
     public Inventory inventory;
     public static GameManager Instance = null;
     public PlayerManager playerManager = PlayerManager.GetInstance();
-    private int inGame = 0;
+    private int inGame;
 
     void Awake()
     {
         if (Instance == null)
         {
+            Debug.Log("GameManager: Creating Instance");
             Instance = this;
             this.SetIsInGame(0);
         }
@@ -30,40 +31,35 @@ public class GameManager : MonoBehaviour
 
     public void SetIsInGame(int inGame)
     {
-        this.inGame = inGame;
-    }
+        Instance.inGame = inGame;
 
-    void OnDestroy()
-    {
-        SetIsInGame(0);
     }
-
 
     public int IsInGame()
     {
-        return inGame;
+        return Instance.inGame;
     }
 
     #region Navigation
     public void GoIntroMenu()
     {
-        ChangeScene(SceneIntroMenuName);
+        Instance.ChangeScene(SceneIntroMenuName);
     }
 
     public void GoWorldMap()
     {
-        ChangeScene(SceneWorldMapName);
+        Instance.ChangeScene(SceneWorldMapName);
     }
 
     public void GoInteraction()
     {
-        ChangeScene(SceneInteractionName);
+        Instance.ChangeScene(SceneInteractionName);
     }
 
     public void GoFight()
     {
         GameRulesManager.GetInstance().init();
-        ChangeScene(SceneFightName);
+        Instance.ChangeScene(SceneFightName);
     }
 
 

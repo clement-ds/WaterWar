@@ -27,7 +27,7 @@ public class Island1 : MonoBehaviour {
 	
 	}
 
-	public void OnMouseDown()
+	public void OnMouseDown(bool ntmCombat = false)
 	{
 		print("dockingtrigger : " + dockingTrigger.transform.localPosition);
 		//Vector2 dock;
@@ -40,13 +40,13 @@ public class Island1 : MonoBehaviour {
                                                                     dockingTrigger.transform.position.y);
 
         travelCutscene.StartCutscene();
-        StartCoroutine(MoveShip());
+        StartCoroutine(MoveShip(ntmCombat));
 	}
 
-    IEnumerator MoveShip()
+    IEnumerator MoveShip(bool ntmCombat)
     {
         yield return new WaitForSeconds(travelCutscene.duration);
-        if (Random.Range(0, 2) == 1)
+        if (!ntmCombat && Random.Range(0, 2) == 1)
             gm.GoFight();
         else
         {

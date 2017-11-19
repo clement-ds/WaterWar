@@ -5,15 +5,21 @@ using UnityEngine;
 
 public class IntroSceneManager : MonoBehaviour {
     public GameObject map, menu;
-    public GameManager gameManager;
+    private CameraAnimationManager cameraManager;
 
 	// Use this for initialization
 	void Start () {
-
+        GameObject o = GameObject.FindGameObjectWithTag("MainCamera");
+        cameraManager = o.GetComponent<CameraAnimationManager>();
+        Debug.Log("ISM: IsInGame: " + GameManager.Instance.IsInGame());
+        if (GameManager.Instance.IsInGame() != 45)
+        {
+            cameraManager.PlayAnimation("CameraStart", PlayType.PLAY);
+        }
     }
 
     void Update() {
-        if (gameManager.IsInGame() == 45) {
+        if (GameManager.Instance.IsInGame() == 45) {
             if (!map.activeSelf)
             {
                 map.SetActive(true);
