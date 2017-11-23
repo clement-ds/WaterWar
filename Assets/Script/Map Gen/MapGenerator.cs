@@ -91,6 +91,10 @@ public class MapGenerator {
             addIslandToMap(xSpawn, ySpawn, island);
         }
 
+    }
+
+    public void displayMap()
+    {
         for (int x = 0; x < worldMapXSize; ++x)
         {
             for (int y = 0; y < worldMapYSize; ++y)
@@ -98,23 +102,41 @@ public class MapGenerator {
                 if (x == 0 || y == 0 || x == worldMapXSize - 1 || y == worldMapYSize - 1)
                 {
                     GameObject.Instantiate(worldMap[x][y].getGraphicAsset("", "", "", ""), new Vector3(x * 50, y * 50, 10), new Quaternion());
-                } else
+                }
+                else
                 {
                     Debug.Log(worldMap[x][y - 1].tileType + " " + worldMap[x][y + 1].tileType + " " + worldMap[x - 1][y].tileType + " " + worldMap[x + 1][y].tileType);
                     GameObject.Instantiate(worldMap[x][y].getGraphicAsset(worldMap[x][y + 1].tileType, worldMap[x][y - 1].tileType, worldMap[x - 1][y].tileType, worldMap[x + 1][y].tileType), new Vector3(x * 50, y * 50, 10), new Quaternion());
                 }
             }
         }
-
-        //IslandGraphic island = generateIsland();
-        //for (int x = 1; x < island.Count - 1; ++x)
-        //{
-        //    for (int y = 1; y < island[x].Count - 1; ++y)
-        //    {
-        //        //Debug.Log(island[x][y - 1].tileType + " " + island[x][y + 1].tileType + " " + island[x - 1][y].tileType + " " + island[x + 1][y].tileType);
-        //        GameObject.Instantiate(island[x][y].getGraphicAsset(island[x][y + 1].tileType, island[x][y - 1].tileType, island[x - 1][y].tileType, island[x + 1][y].tileType), new Vector3(x * 50, y * 50, 10), new Quaternion());
-        //    }
-        //}
     }
 
+    int xCin = 0;
+    int yCin = 0;
+
+    public void displayMapCinematic()
+    {
+        if (xCin < worldMapXSize)
+        {
+            if (yCin < worldMapYSize)
+            {
+                if (xCin == 0 || yCin == 0 || xCin == worldMapXSize - 1 || yCin == worldMapYSize - 1)
+                {
+                    Debug.Log(xCin + " " + yCin);
+                    GameObject.Instantiate(worldMap[xCin][yCin].getGraphicAsset("", "", "", ""), new Vector3(xCin * 50, yCin * 50, 10), new Quaternion());
+                }
+                else
+                {
+                    Debug.Log(worldMap[xCin][yCin - 1].tileType + " " + worldMap[xCin][yCin + 1].tileType + " " + worldMap[xCin - 1][yCin].tileType + " " + worldMap[xCin + 1][yCin].tileType);
+                    GameObject.Instantiate(worldMap[xCin][yCin].getGraphicAsset(worldMap[xCin][yCin + 1].tileType, worldMap[xCin][yCin - 1].tileType, worldMap[xCin - 1][yCin].tileType, worldMap[xCin + 1][yCin].tileType), new Vector3(xCin * 50, yCin * 50, 10), new Quaternion());
+                }
+                ++yCin;
+            } else
+            {
+                yCin = 0;
+                ++xCin;
+            }  
+        }
+    }
 }

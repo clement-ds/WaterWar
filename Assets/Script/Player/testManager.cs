@@ -16,12 +16,14 @@ public class testManager : MonoBehaviour {
         //playerShip.transform.position = new Vector3(goodPos.x, goodPos.y, playerShip.transform.position.z);
         //print("SHIP PUT IN POS " + goodPos);
 
-        MapGenerator mg = new MapGenerator();
         mg.spawnMap();
+        //mg.displayMap();
+
+        
     }
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    MapGenerator mg = new MapGenerator();
+    // Update is called once per frame
+    void Update () {
+        mg.displayMapCinematic();
+    }
 }
