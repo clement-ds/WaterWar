@@ -15,13 +15,10 @@ public class SpriteOutline : MonoBehaviour {
     }
 
     void OnEnable() {
-        Debug.Log("Coucou ON ENABLE");
         UpdateOutline(true);
     }
 
     void OnDisable() {
-        Debug.Log("Coucou ON DISABLE");
-
         UpdateOutline(false);
     }
 
