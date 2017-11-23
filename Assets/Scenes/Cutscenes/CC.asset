@@ -42,13 +42,13 @@ MonoBehaviour:
   ambientOcclusion:
     m_Enabled: 1
     m_Settings:
-      intensity: 0.43
+      intensity: 0.46
       radius: 1.12
-      sampleCount: 16
+      sampleCount: 10
       downsampling: 0
       forceForwardCompatibility: 0
       ambientOnly: 0
-      highPrecision: 1
+      highPrecision: 0
   screenSpaceReflection:
     m_Enabled: 1
     m_Settings:
@@ -130,12 +130,12 @@ MonoBehaviour:
         red: {x: 1, y: 0, z: 0}
         green: {x: 0, y: 1, z: 0}
         blue: {x: 0, y: 0, z: 1}
-        currentEditingChannel: 2
+        currentEditingChannel: 0
       colorWheels:
         mode: 1
         log:
           slope: {r: 0.91926503, g: 0.86119676, b: 1, a: 0}
-          power: {r: 1, g: 1, b: 1, a: 0}
+          power: {r: 1, g: 1, b: 1, a: 0.13559322}
           offset: {r: 1, g: 1, b: 1, a: 0}
         linear:
           lift: {r: 0.97727245, g: 0.93178964, b: 1, a: 0}
@@ -290,7 +290,7 @@ MonoBehaviour:
     m_Enabled: 0
     m_Settings:
       spectralTexture: {fileID: 0}
-      intensity: 1
+      intensity: 0.086
   grain:
     m_Enabled: 0
     m_Settings:

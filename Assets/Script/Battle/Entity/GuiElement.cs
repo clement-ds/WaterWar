@@ -68,6 +68,7 @@ public abstract class GuiElement : MonoBehaviour
 
     public void select()
     {
+        Debug.Log("Click on " + gameObject);
         this.selected = true;
         if (this.outline)
             this.outline.enabled = true;

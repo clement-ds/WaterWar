@@ -154,8 +154,6 @@ public class Battle_Player : Battle_Ship
     {
         bool result = false;
 
-        Debug.Log("elements: " + this.shipElements.Count);
-
         result = checkShipElementInSelfShip(touchPos, hasClick);
         if (!result)
             checkCrewMemberInSelfShip(touchPos, hasClick);
