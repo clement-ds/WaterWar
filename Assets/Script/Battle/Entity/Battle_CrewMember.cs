@@ -24,7 +24,7 @@ public class Battle_CrewMember : GuiElement
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (this.haveToMove)
         {
@@ -36,7 +36,6 @@ public class Battle_CrewMember : GuiElement
             }
         }
     }
-
 
     protected override void createActionList()
     {
