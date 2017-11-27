@@ -1,0 +1,22 @@
+{
+    "format": {
+        "version": "1.0"
+    },
+    "shaders": {
+        "Main shader": {
+            "parameters": {
+                "alpha_threshold": 0.33000001311302185,
+                "ao_intensity": 0.75,
+                "emissive_intensity": 1,
+                "height_force": 1,
+                "nbSamples": 16
+            },
+            "shader": "pbr-metal-rough-with-alpha-test"
+        }
+    },
+    "texturesets": {
+        "MAT_Paper": {
+            "shader": "Main shader"
+        }
+    }
+}
