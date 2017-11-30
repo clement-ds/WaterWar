@@ -14,7 +14,7 @@ public class IntroSceneManager : MonoBehaviour {
         Debug.Log("ISM: IsInGame: " + GameManager.Instance.IsInGame());
         if (GameManager.Instance.IsInGame() != 45)
         {
-            cameraManager.PlayAnimation("CameraStart", PlayType.PLAY);
+            cameraManager.PlayAnimation("CameraStart");
         }
     }
 

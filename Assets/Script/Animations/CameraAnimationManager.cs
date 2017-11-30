@@ -2,53 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayType
-{
-    PLAY,
-    STOP,
-    CROSSFADE
-}
 
 public class CameraAnimationManager : MonoBehaviour {
 
-    public AnimationClip[] animations;
-    private Animation animationController;
+    private Animator animationController;
 
     private void Start()
     {
-        animationController = gameObject.GetComponent(typeof(Animation)) as Animation;
-
-        foreach (AnimationClip clip in animations)
-        {
-            Debug.Log("Added Clip: " + clip);
-            animationController.AddClip(clip, clip.name);
-        }
+        animationController = GetComponent<Animator>();
     }
 
-    public void PlayAnimation(string animName, PlayType type) {
-        Debug.Log("PlayAnimation: Requesting " + animName);
-        AnimationClip clip = GetAnimFromName(animName);
-        if (!clip)
-        {
-            Debug.LogWarning("Couldn't find animation clip with name '" + animName + "'");
-            return;
-        }
 
-        switch (type)
+    public void Test(string animName, string type)
+    {
+
+    }
+
+    public void PlayAnimation(string anim) {
+        Debug.Log("PlayAnimation: Requesting " + anim);
+        string mode = "crossfade";
+
+        switch (mode)
         {
-            case PlayType.PLAY:
+            case "play":
                 {
-                    animationController.Play(animName);
+                    animationController.Play(anim);
                     break;
                 }
-            case PlayType.STOP:
+            case "stop":
                 {
-                    animationController.Stop(animName);
+                    //animationController.Stop(animName);
                     break;
                 }
-            case PlayType.CROSSFADE:
+            case "crossfade":
                 {
-                    animationController.CrossFade(animName);
+                    animationController.CrossFade(anim, .2f);
                     break;
                 }
             default:
@@ -56,16 +44,5 @@ public class CameraAnimationManager : MonoBehaviour {
                     break;
                 }
         }
-    }
-
-    private AnimationClip GetAnimFromName(string name)
-    {
-        foreach (AnimationClip clip in animations) {
-            if (clip.name.Equals(name))
-            {
-                return clip;
-            }
-        }
-        return null;
     }
 }
