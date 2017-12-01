@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
+using TMPro;
 
 
 // works with ListPanelRoot/ListReceiverPanel/ListRowPanel
@@ -42,13 +43,13 @@ public class QuestController : UIController
                 {
                     if (child.name == "MemberObjectif")
                     {
-                        Text text = (Text)child.GetComponent<Text>();
-                        text.text = quest.objective;
+                        TextMeshProUGUI text = child.GetComponent<TextMeshProUGUI>();
+                        text.SetText(quest.objective);
                     }
                     else if (child.name == "MemberDescription")
                     {
-                        Text text = (Text)child.GetComponent<Text>();
-                        text.text = quest.description;
+                        TextMeshProUGUI text = child.GetComponent<TextMeshProUGUI>();
+                        text.SetText(quest.description);
 
                     }
                     else if (child.name == "MemberItemReward")
@@ -58,13 +59,13 @@ public class QuestController : UIController
                     }
                     else if (child.name == "MemberDescription")
                     {
-                        Text text = (Text)child.GetComponent<Text>();
-                        text.text = quest.description;
+                        TextMeshProUGUI text = child.GetComponent<TextMeshProUGUI>();
+                        text.SetText(quest.description);
                     }
                     else if (child.name == "MemberMoneyReward")
                     {
-                        Text text = (Text)child.GetComponent<Text>();
-                        text.text = "+" + quest.moneyReward + "£";
+                        TextMeshProUGUI text = child.GetComponent<TextMeshProUGUI>();
+                        text.SetText("+" + quest.moneyReward + "£");
                     }
                     else if (child.name == "AcceptButton")
                     {

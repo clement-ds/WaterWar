@@ -36,7 +36,7 @@ MonoBehaviour:
         preset: 4
       taaSettings:
         jitterSpread: 0.826
-        sharpen: 0.66
+        sharpen: 0.1
         stationaryBlending: 0.564
         motionBlending: 0.903
   ambientOcclusion:
@@ -101,10 +101,10 @@ MonoBehaviour:
     m_Settings:
       bloom:
         intensity: 1.15
-        threshold: 1.16
+        threshold: 1.29
         softKnee: 0.46
-        radius: 3.33
-        antiFlicker: 0
+        radius: 1.79
+        antiFlicker: 1
       lensDirt:
         texture: {fileID: 0}
         intensity: 3
