@@ -26,7 +26,6 @@ public class PlayerManager {
 
         LoadFile("PlayerJson/AISave.txt");
         ai = JsonUtility.FromJson<Player>(json[0]);
-        Debug.Log("ai : " + ai.name + "/" + ai.life);
     }
 
     public static PlayerManager GetInstance()
