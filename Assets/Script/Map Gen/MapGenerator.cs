@@ -86,6 +86,13 @@ public class MapGenerator {
         for (int i = 0; i < 8; ++i)
         {
             IslandGraphic island = generateIsland();
+            foreach (List<MapTile> column in island)
+            {
+                foreach (MapTile tile in column)
+                {
+                    tile.islandID = i;
+                }
+            }
             int xSpawn = UnityEngine.Random.Range(1, 75);
             int ySpawn = UnityEngine.Random.Range(1, 75);
             addIslandToMap(xSpawn, ySpawn, island);
@@ -106,7 +113,8 @@ public class MapGenerator {
                 else
                 {
                     Debug.Log(worldMap[x][y - 1].tileType + " " + worldMap[x][y + 1].tileType + " " + worldMap[x - 1][y].tileType + " " + worldMap[x + 1][y].tileType);
-                    GameObject.Instantiate(worldMap[x][y].getGraphicAsset(worldMap[x][y + 1].tileType, worldMap[x][y - 1].tileType, worldMap[x - 1][y].tileType, worldMap[x + 1][y].tileType), new Vector3(x * 50, y * 50, 10), new Quaternion());
+                    GameObject tile = GameObject.Instantiate(worldMap[x][y].getGraphicAsset(worldMap[x][y + 1].tileType, worldMap[x][y - 1].tileType, worldMap[x - 1][y].tileType, worldMap[x + 1][y].tileType), new Vector3(x * 50, y * 50, 10), new Quaternion());
+                    tile.GetComponent<TileClick>().islandID = worldMap[x][y].islandID;
                 }
             }
         }

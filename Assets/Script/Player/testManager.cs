@@ -17,13 +17,13 @@ public class testManager : MonoBehaviour {
         //print("SHIP PUT IN POS " + goodPos);
 
         mg.spawnMap();
-        //mg.displayMap();
+        mg.displayMap();
 
         
     }
     MapGenerator mg = new MapGenerator();
     // Update is called once per frame
     void Update () {
-        mg.displayMapCinematic();
+        //mg.displayMapCinematic();
     }
 }
