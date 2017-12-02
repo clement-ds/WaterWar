@@ -10,7 +10,7 @@ public class MapGenerator {
 
     public WorldMap worldMap = new WorldMap();
     int worldMapXSize = 100;
-    int worldMapYSize = 100;
+    int worldMapYSize = 50;
 
     public IslandGraphic generateIsland()
     {
@@ -83,7 +83,7 @@ public class MapGenerator {
     {
         generateWorldMap();
 
-        for (int i = 0; i < 8; ++i)
+        for (int i = 0; i < 4; ++i)
         {
             IslandGraphic island = generateIsland();
             foreach (List<MapTile> column in island)
@@ -93,14 +93,14 @@ public class MapGenerator {
                     tile.islandID = i;
                 }
             }
-            int xSpawn = UnityEngine.Random.Range(1, 75);
-            int ySpawn = UnityEngine.Random.Range(1, 75);
+            int xSpawn = UnityEngine.Random.Range(1, worldMapXSize - 25);
+            int ySpawn = UnityEngine.Random.Range(1, worldMapYSize - 25);
             addIslandToMap(xSpawn, ySpawn, island);
         }
 
     }
 
-    public void displayMap()
+    public void displayMap(GameObject parent)
     {
         for (int x = 0; x < worldMapXSize; ++x)
         {
@@ -108,13 +108,16 @@ public class MapGenerator {
             {
                 if (x == 0 || y == 0 || x == worldMapXSize - 1 || y == worldMapYSize - 1)
                 {
-                    GameObject.Instantiate(worldMap[x][y].getGraphicAsset("", "", "", ""), new Vector3(x * 50, y * 50, 10), new Quaternion());
+                    GameObject tile = GameObject.Instantiate(worldMap[x][y].getGraphicAsset("", "", "", ""), (new Vector3(x * 50, y * 50, 10)) + parent.transform.position, new Quaternion());
+                    tile.GetComponent<TileClick>().islandID = worldMap[x][y].islandID;
+                    tile.transform.parent = parent.transform;
                 }
                 else
                 {
                     Debug.Log(worldMap[x][y - 1].tileType + " " + worldMap[x][y + 1].tileType + " " + worldMap[x - 1][y].tileType + " " + worldMap[x + 1][y].tileType);
-                    GameObject tile = GameObject.Instantiate(worldMap[x][y].getGraphicAsset(worldMap[x][y + 1].tileType, worldMap[x][y - 1].tileType, worldMap[x - 1][y].tileType, worldMap[x + 1][y].tileType), new Vector3(x * 50, y * 50, 10), new Quaternion());
+                    GameObject tile = GameObject.Instantiate(worldMap[x][y].getGraphicAsset(worldMap[x][y + 1].tileType, worldMap[x][y - 1].tileType, worldMap[x - 1][y].tileType, worldMap[x + 1][y].tileType), (new Vector3(x * 50, y * 50, 10)) + parent.transform.position, new Quaternion());
                     tile.GetComponent<TileClick>().islandID = worldMap[x][y].islandID;
+                    tile.transform.parent = parent.transform;
                 }
             }
         }

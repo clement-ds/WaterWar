@@ -6,6 +6,7 @@ public class testManager : MonoBehaviour {
     PlayerManager pm = null;
     IslandManager im = null;
     public GameObject playerShip;
+    public GameObject MapParent;
 
     // Use this for initialization
     void Start() {
@@ -17,7 +18,7 @@ public class testManager : MonoBehaviour {
         //print("SHIP PUT IN POS " + goodPos);
 
         mg.spawnMap();
-        mg.displayMap();
+        mg.displayMap(MapParent);
 
         
     }

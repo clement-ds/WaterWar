@@ -38,6 +38,8 @@ public class IslandTile : MapTile {
 
         tiles.Add(new TileAsset("Water", "Water", "Sand", "Sand", Resources.Load("Tiles/StripHorizontal") as GameObject));
         tiles.Add(new TileAsset("Sand", "Sand", "Water", "Water", Resources.Load("Tiles/StripVertical") as GameObject));
+
+        tiles.Add(new TileAsset("Water", "Water", "Water", "Water", Resources.Load("Tiles/Center") as GameObject));
     }
 
     public override GameObject getGraphicAsset(string top, string bottom, string left, string right)
