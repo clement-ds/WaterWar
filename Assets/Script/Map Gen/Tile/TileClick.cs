@@ -19,7 +19,11 @@ public class TileClick : MonoBehaviour {
     private void OnMouseDown()
     {
         print(islandID);
-        //PlayerManager.GetInstance().player.currentIsland = int.Parse(tag);
-        //gm.GoInteraction();
+        if (islandID >= 0)
+        {
+            PlayerManager.GetInstance().player.currentIsland = int.Parse("" + islandID);
+            GameManager.Instance.GoInteraction();
+        }
+        
     }
 }
