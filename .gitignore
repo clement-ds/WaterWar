@@ -32,3 +32,6 @@ sysinfo.txt
 *.unitypackage
 .vs/WaterWar/v15/Server/sqlite3/db.lock
 .vs/WaterWar/v15/Server/sqlite3/storage.ide
+
+# Console
+/Assets/ConsoleE/Editor/ConsoleE.dll.meta
