@@ -116,7 +116,7 @@ public class MapGenerator {
                 }
                 else
                 {
-                    Debug.Log(worldMap[x][y - 1].tileType + " " + worldMap[x][y + 1].tileType + " " + worldMap[x - 1][y].tileType + " " + worldMap[x + 1][y].tileType);
+                    //Debug.Log(worldMap[x][y - 1].tileType + " " + worldMap[x][y + 1].tileType + " " + worldMap[x - 1][y].tileType + " " + worldMap[x + 1][y].tileType);
                     GameObject tile = GameObject.Instantiate(worldMap[x][y].getGraphicAsset(worldMap[x][y + 1].tileType, worldMap[x][y - 1].tileType, worldMap[x - 1][y].tileType, worldMap[x + 1][y].tileType), (new Vector3(x * 50, y * 50, 10)) /*+ parent.transform.position*/, new Quaternion());
                     tile.GetComponent<TileClick>().islandID = worldMap[x][y].islandID;
                     //tile.transform.localScale = parent.transform.localScale;
