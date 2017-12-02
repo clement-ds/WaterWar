@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public PlayerManager playerManager = PlayerManager.GetInstance();
     private int inGame;
 
+    public MapGenerator mapGenerator;
+
     void Awake()
     {
         if (Instance == null)
@@ -21,6 +23,8 @@ public class GameManager : MonoBehaviour
             Debug.Log("GameManager: Creating Instance");
             Instance = this;
             this.SetIsInGame(0);
+            mapGenerator = new MapGenerator();
+ 		    mapGenerator.spawnMap();
         }
 
         else if (Instance != this)
@@ -33,6 +37,10 @@ public class GameManager : MonoBehaviour
     {
         Instance.inGame = inGame;
 
+    }
+
+    public void displayMap(GameObject root) {
+        mapGenerator.displayMap(root);
     }
 
     public int IsInGame()
