@@ -11,6 +11,8 @@ public class MapGenerator {
     public WorldMap worldMap = new WorldMap();
     int worldMapXSize = 100;
     int worldMapYSize = 50;
+    bool isMapGenerated = false;
+    public int islandsAmount = 4;
 
     public IslandGraphic generateIsland()
     {
@@ -79,11 +81,11 @@ public class MapGenerator {
         }
     }
 
-    public void spawnMap()
-    {
+
+    private void spawnMapLoop() {
         generateWorldMap();
 
-        for (int i = 0; i < 4; ++i)
+        for (int i = 0; i < islandsAmount; ++i)
         {
             IslandGraphic island = generateIsland();
             foreach (List<MapTile> column in island)
@@ -97,33 +99,53 @@ public class MapGenerator {
             int ySpawn = UnityEngine.Random.Range(1, worldMapYSize - 25);
             addIslandToMap(xSpawn, ySpawn, island);
         }
+        isMapGenerated = true;
+    }
 
+    public void spawnMap()
+    {
+        spawnMapLoop();
+    }
+
+    public void spawnMap(int xSize, int ySize, int islandsAmount = 4)
+    {
+        worldMapXSize = xSize;
+        worldMapYSize = ySize;
+        this.islandsAmount = islandsAmount;
+        spawnMapLoop();
     }
 
     public void displayMap(GameObject parent)
     {
-        for (int x = 0; x < worldMapXSize; ++x)
-        {
-            for (int y = 0; y < worldMapYSize; ++y)
+        if (isMapGenerated) {
+
+            for (int x = 0; x < worldMapXSize; ++x)
             {
-                if (x == 0 || y == 0 || x == worldMapXSize - 1 || y == worldMapYSize - 1)
+                for (int y = 0; y < worldMapYSize; ++y)
                 {
-                    GameObject tile = GameObject.Instantiate(worldMap[x][y].getGraphicAsset("", "", "", ""), (new Vector3(x * 50, y * 50, 10)), new Quaternion());
-                    tile.GetComponent<TileClick>().islandID = worldMap[x][y].islandID;
-                    //tile.transform.localScale = parent.transform.localScale;
-                    //tile.transform.parent = parent.transform;
-                    tile.transform.SetParent(parent.transform, false);
-                }
-                else
-                {
-                    //Debug.Log(worldMap[x][y - 1].tileType + " " + worldMap[x][y + 1].tileType + " " + worldMap[x - 1][y].tileType + " " + worldMap[x + 1][y].tileType);
-                    GameObject tile = GameObject.Instantiate(worldMap[x][y].getGraphicAsset(worldMap[x][y + 1].tileType, worldMap[x][y - 1].tileType, worldMap[x - 1][y].tileType, worldMap[x + 1][y].tileType), (new Vector3(x * 50, y * 50, 10)), new Quaternion());
-                    tile.GetComponent<TileClick>().islandID = worldMap[x][y].islandID;
-                    tile.transform.SetParent(parent.transform, false);
+                    if (x == 0 || y == 0 || x == worldMapXSize - 1 || y == worldMapYSize - 1)
+                    {
+                        GameObject tile = GameObject.Instantiate(worldMap[x][y].getGraphicAsset("", "", "", ""), (new Vector3(x * 50, y * 50, 10)), new Quaternion());
+                        tile.GetComponent<TileClick>().islandID = worldMap[x][y].islandID;
+                        //tile.transform.localScale = parent.transform.localScale;
+                        //tile.transform.parent = parent.transform;
+                        tile.transform.SetParent(parent.transform, false);
+                    }
+                    else
+                    {
+                        //Debug.Log(worldMap[x][y - 1].tileType + " " + worldMap[x][y + 1].tileType + " " + worldMap[x - 1][y].tileType + " " + worldMap[x + 1][y].tileType);
+                        GameObject tile = GameObject.Instantiate(worldMap[x][y].getGraphicAsset(worldMap[x][y + 1].tileType, worldMap[x][y - 1].tileType, worldMap[x - 1][y].tileType, worldMap[x + 1][y].tileType), (new Vector3(x * 50, y * 50, 10)), new Quaternion());
+                        tile.GetComponent<TileClick>().islandID = worldMap[x][y].islandID;
+                        tile.transform.SetParent(parent.transform, false);
+                    }
                 }
             }
+        } else {
+            Debug.LogWarning("Map not generated yet /!\\");
         }
+        
     }
+
 
     int xCin = 0;
     int yCin = 0;

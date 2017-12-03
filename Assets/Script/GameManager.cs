@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance = null;
     public PlayerManager playerManager = PlayerManager.GetInstance();
     private int inGame;
+    public int xMapSize, yMapSize, islandsAmount;
 
     public MapGenerator mapGenerator;
 
@@ -24,7 +25,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
             this.SetIsInGame(0);
             mapGenerator = new MapGenerator();
- 		    mapGenerator.spawnMap();
+ 		    mapGenerator.spawnMap(xMapSize, yMapSize, islandsAmount);
         }
 
         else if (Instance != this)

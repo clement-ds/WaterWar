@@ -33,7 +33,7 @@ MonoBehaviour:
     m_Settings:
       method: 0
       fxaaSettings:
-        preset: 2
+        preset: 4
       taaSettings:
         jitterSpread: 0.75
         sharpen: 0.3
@@ -307,14 +307,14 @@ MonoBehaviour:
   dithering:
     m_Enabled: 0
   monitors:
-    currentMonitorID: 0
+    currentMonitorID: 1
     refreshOnPlay: 0
     histogramMode: 3
-    waveformExposure: 0.12
-    waveformY: 0
-    waveformR: 1
-    waveformG: 1
-    waveformB: 1
+    waveformExposure: 0.15333334
+    waveformY: 1
+    waveformR: 0
+    waveformG: 0
+    waveformB: 0
     paradeExposure: 0.12
     vectorscopeExposure: 0.12
     vectorscopeShowBackground: 1

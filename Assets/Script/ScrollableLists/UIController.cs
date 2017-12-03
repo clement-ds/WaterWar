@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using System;
 
 // BASECLASS, works with ListPanelRoot/ListReceiverPanel/ListRowPanel kind of items
-public abstract class UIController : MonoBehaviour
+public class UIController : MonoBehaviour
 {
 
     public RectTransform panel;
@@ -20,9 +20,9 @@ public abstract class UIController : MonoBehaviour
 
     public void TogglePanel()
     {
-        rootPanel.SetActive(!rootPanel.active);
-        panel.gameObject.SetActive(rootPanel.active);
-        if (panel.gameObject.active)
+        rootPanel.SetActive(!rootPanel.activeSelf);
+        panel.gameObject.SetActive(rootPanel.activeSelf);
+        if (panel.gameObject.activeSelf)
             Populate();
     }
 

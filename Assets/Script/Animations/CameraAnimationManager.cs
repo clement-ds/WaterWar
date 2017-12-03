@@ -6,17 +6,12 @@ using UnityEngine;
 public class CameraAnimationManager : MonoBehaviour {
 
     private Animator animationController;
-
+    public float ySpeed;
     private void Start()
     {
         animationController = GetComponent<Animator>();
     }
 
-
-    public void Test(string animName, string type)
-    {
-
-    }
 
     public void PlayAnimation(string anim) {
         Debug.Log("PlayAnimation: Requesting " + anim);
