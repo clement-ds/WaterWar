@@ -13,13 +13,15 @@ public class MapGenerator {
     int worldMapYSize = 50;
     bool isMapGenerated = false;
     public int islandsAmount = 4;
+    int islandXMaxRange = 15;
+    int islandYMaxRange = 15;
 
     public IslandGraphic generateIsland()
     {
         IslandGraphic island = new IslandGraphic();
 
-        int xMaxRange = UnityEngine.Random.Range(5, 15);
-        int yMaxRange = 15;
+        int xMaxRange = UnityEngine.Random.Range(5, islandXMaxRange);
+        int yMaxRange = islandYMaxRange;
 
         island.Add(new List<MapTile>());
         for (int y = 0; y < yMaxRange; ++y)
@@ -81,6 +83,20 @@ public class MapGenerator {
         }
     }
 
+    bool checkLocationForIsland(int x, int y)
+    {
+        for (int xIndex = x; xIndex < x + islandXMaxRange; xIndex++)
+        {
+            for (int yIndex = y; yIndex < y + islandYMaxRange; yIndex++)
+            {
+                if (worldMap[xIndex][yIndex].tileType == "Sand")
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     private void spawnMapLoop() {
         generateWorldMap();
@@ -97,6 +113,13 @@ public class MapGenerator {
             }
             int xSpawn = UnityEngine.Random.Range(1, worldMapXSize - 25);
             int ySpawn = UnityEngine.Random.Range(1, worldMapYSize - 25);
+            int repeat = 0;
+            while (checkLocationForIsland(xSpawn, ySpawn) && repeat < 10) {
+                xSpawn = UnityEngine.Random.Range(1, worldMapXSize - 25);
+                ySpawn = UnityEngine.Random.Range(1, worldMapYSize - 25);
+                Debug.Log(xSpawn + " " + ySpawn);
+                repeat++;
+            }
             addIslandToMap(xSpawn, ySpawn, island);
         }
         isMapGenerated = true;
