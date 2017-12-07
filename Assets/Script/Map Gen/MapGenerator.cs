@@ -28,11 +28,30 @@ public class MapGenerator {
         {
             island[0].Add(new WaterTile());
         }
-
+        int previousStartCell = 0;
         for (int x = 1; x < xMaxRange; ++x)
         {
-            int yRange = UnityEngine.Random.Range(7, 11);
-            int startCell = UnityEngine.Random.Range(1, 4);
+            int minY;
+            if (x <= xMaxRange / 2)
+            {
+                minY = x + 1;
+            } else
+            {
+                minY = (xMaxRange - x) + 1;
+            }
+            
+            int yRange = UnityEngine.Random.Range(minY, minY + 4);
+            int startCell;
+            if (x == 1)
+            {
+                startCell = UnityEngine.Random.Range(1, 4);
+                previousStartCell = startCell;
+            }else
+            {
+                startCell = UnityEngine.Random.Range(previousStartCell - 1, previousStartCell - 1);
+                previousStartCell = startCell;
+            }
+            
 
             island.Add(new List<MapTile>());
 
