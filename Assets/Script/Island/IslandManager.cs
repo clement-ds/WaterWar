@@ -37,9 +37,11 @@ public class IslandManager {
         islands.Add(new Island());
 
         IslandGenerator iGen = new IslandGenerator();
+        Economy eco = new Economy();
         for (int i = 0; i < islands.Count; ++i)
         {
             islands[i] = iGen.GenerateIsland(islands[i]);
+            eco.setInventoryPrices(islands[i]);
         }
 
         Debug.Log("island : " + islands[0].name);
