@@ -20,7 +20,7 @@ public class testManager : MonoBehaviour {
         mg.spawnMap();
         mg.displayMap(MapParent);
 
-        
+        Economy eco;
     }
     MapGenerator mg = new MapGenerator();
     // Update is called once per frame

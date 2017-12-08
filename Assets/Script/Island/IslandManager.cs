@@ -145,6 +145,3 @@ public class IslandInventory
     public List<InventoryObject> food = new List<InventoryObject>();
     public List<InventoryObject> weapons = new List<InventoryObject>();
 }
-
-
-
