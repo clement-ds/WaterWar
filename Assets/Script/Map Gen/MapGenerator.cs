@@ -9,82 +9,126 @@ public class MapGenerator {
 
 
     public WorldMap worldMap = new WorldMap();
-    int worldMapXSize = 100;
-    int worldMapYSize = 50;
+    int worldMapXSize = 200;
+    int worldMapYSize = 100;
     bool isMapGenerated = false;
-    public int islandsAmount = 4;
-    int islandXMaxRange = 15;
-    int islandYMaxRange = 15;
+    public int islandsAmount = 8;
+    int islandXMaxRange = 25;
+    int islandYMaxRange = 25;
 
     public IslandGraphic generateIsland()
     {
         IslandGraphic island = new IslandGraphic();
 
-        int xMaxRange = UnityEngine.Random.Range(5, islandXMaxRange);
+        int xMaxRange = UnityEngine.Random.Range(5, islandXMaxRange - 10);
         int yMaxRange = islandYMaxRange;
 
         island.Add(new List<MapTile>());
-        for (int y = 0; y < yMaxRange; ++y)
+        for (int y = 0; y < yMaxRange; y++)
         {
             island[0].Add(new WaterTile());
         }
         int previousStartCell = 0;
-        for (int x = 1; x < xMaxRange; ++x)
+        for (int x = 1; x < xMaxRange; x++)
         {
             int minY;
             if (x <= xMaxRange / 2)
             {
                 minY = x + 1;
-            } else
+            }
+            else
             {
                 minY = (xMaxRange - x) + 1;
             }
-            
+
             int yRange = UnityEngine.Random.Range(minY, minY + 4);
+
             int startCell;
             if (x == 1)
             {
                 startCell = UnityEngine.Random.Range(1, 4);
-                previousStartCell = startCell;
-            }else
-            {
-                startCell = UnityEngine.Random.Range(previousStartCell - 1, previousStartCell - 1);
-                previousStartCell = startCell;
             }
-            
+            else
+            {
+                if (previousStartCell == 1)
+                {
+                    startCell = UnityEngine.Random.Range(previousStartCell, previousStartCell + 2);
+                } else
+                {
+                    startCell = UnityEngine.Random.Range(previousStartCell - 1, previousStartCell + 2);
+                }
+            }
+
+            while (startCell + yRange >= xMaxRange - 1)
+            {
+                if (startCell >= previousStartCell)
+                {
+                    startCell--;
+                } else
+                {
+                    yRange--;
+                }
+            }
+            previousStartCell = startCell;
 
             island.Add(new List<MapTile>());
-
-            for (int y = 0; y < startCell; ++y)
+            for (int y = 0; y < startCell; y++)
             {
                 island[x].Add(new WaterTile());
             }
-            for (int y = startCell; y < yRange; ++y)
+            for (int y = 0; y < yRange; y++)
             {
                 island[x].Add(new IslandTile());
             }
-            for (int y = yRange; y < yMaxRange; ++y)
+            for (int y = island[x].Count; y < yMaxRange; y++)
             {
                 island[x].Add(new WaterTile());
             }
         }
 
-        island.Add(new List<MapTile>());
-        for (int y = 0; y < yMaxRange; ++y)
+        for (int x = xMaxRange; x < islandXMaxRange; x++)
         {
-            island[xMaxRange].Add(new WaterTile());
+            island.Add(new List<MapTile>());
+            for (int y = 0; y < yMaxRange; y++)
+            {
+                island[x].Add(new WaterTile());
+            }
         }
-
+        
+        if (UnityEngine.Random.Range(0, 2) == 0)
+        {
+            return generateAlternateIsland(island);
+        }
         return island;
+    }
 
+    IslandGraphic generateAlternateIsland(IslandGraphic island)
+    {
+        IslandGraphic islandAlt = new IslandGraphic();
+        for (int x = 0; x < island.Count; x++)
+        {
+            islandAlt.Add(new List<MapTile>());
+            for (int y = 0; y < island[x].Count; y++)
+            {
+                islandAlt[x].Add(null);
+            }
+        }
+        for (int x = 0; x < island.Count; x++)
+        {
+            for (int y = 0; y < island[x].Count; y++)
+            {
+                islandAlt[y][x] = island[x][y];
+            }
+        }
+        return islandAlt;
     }
 
     public void generateWorldMap()
     {
-        for (int x = 0; x < worldMapXSize; ++x)
+        for (int x = 0; x < worldMapXSize; x++)
         {
             worldMap.Add(new List<MapTile>());
-            for (int y = 0; y < worldMapYSize; ++y)
+            for (int y = 0; y < worldMapYSize; y++)
             {
                 worldMap[x].Add(new WaterTile());
             }
@@ -93,9 +137,9 @@ public class MapGenerator {
 
     public void addIslandToMap(int x, int y, IslandGraphic island)
     {
-        for (int xIndex = 0; xIndex < island.Count; ++xIndex)
+        for (int xIndex = 0; xIndex < island.Count; xIndex++)
         {
-            for (int yIndex = 0; yIndex < island[xIndex].Count; ++yIndex)
+            for (int yIndex = 0; yIndex < island[xIndex].Count; yIndex++)
             {
                 worldMap[xIndex + x][yIndex + y] = island[xIndex][yIndex];
             }
@@ -120,7 +164,7 @@ public class MapGenerator {
     private void spawnMapLoop() {
         generateWorldMap();
 
-        for (int i = 0; i < islandsAmount; ++i)
+        for (int i = 0; i < islandsAmount; i++)
         {
             IslandGraphic island = generateIsland();
             foreach (List<MapTile> column in island)
@@ -161,9 +205,9 @@ public class MapGenerator {
     {
         if (isMapGenerated) {
 
-            for (int x = 0; x < worldMapXSize; ++x)
+            for (int x = 0; x < worldMapXSize; x++)
             {
-                for (int y = 0; y < worldMapYSize; ++y)
+                for (int y = 0; y < worldMapYSize; y++)
                 {
                     if (x == 0 || y == 0 || x == worldMapXSize - 1 || y == worldMapYSize - 1)
                     {
@@ -208,11 +252,11 @@ public class MapGenerator {
                     Debug.Log(worldMap[xCin][yCin - 1].tileType + " " + worldMap[xCin][yCin + 1].tileType + " " + worldMap[xCin - 1][yCin].tileType + " " + worldMap[xCin + 1][yCin].tileType);
                     GameObject.Instantiate(worldMap[xCin][yCin].getGraphicAsset(worldMap[xCin][yCin + 1].tileType, worldMap[xCin][yCin - 1].tileType, worldMap[xCin - 1][yCin].tileType, worldMap[xCin + 1][yCin].tileType), new Vector3(xCin * 50, yCin * 50, 10), new Quaternion());
                 }
-                ++yCin;
+                yCin++;
             } else
             {
                 yCin = 0;
-                ++xCin;
+                xCin++;
             }  
         }
     }
