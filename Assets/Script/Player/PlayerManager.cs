@@ -211,6 +211,7 @@ public class InventoryObject
     public string type;
     public int quantity;
     public int price;
+    public bool isRareItem;
 }
 
 [Serializable]

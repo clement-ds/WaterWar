@@ -1,14 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Economy
 {
-
-    public void generateRareItems()
-    {
-
-    }
-
     public void setInventoryPrices(Island island)
     {
         foreach (InventoryObject food in island.inventory.food)
