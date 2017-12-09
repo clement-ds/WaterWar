@@ -26,21 +26,10 @@ public class QuestGenerator {
     }
   }
 
-/*
-  public string title;
-  public string description;
-  public int type;
-  public string objective;
-  public InventoryObject reward;
-  public EndQuest end;
-  public int moneyReward;
- */
-
   public PlayerQuest GenerateQuest() {
     PlayerQuest quest = new PlayerQuest();
     List<string> objects = new List<string>();
 
-    LoadFile("PlayerJson/Objects.txt", objects);
     quest.type = (PlayerQuest.QUEST)UnityEngine.Random.Range(0, 2);
 
     if (quest.type == PlayerQuest.QUEST.KILL) {
@@ -60,6 +49,43 @@ public class QuestGenerator {
       // MoneyReward outdated (just in case)
       quest.moneyReward = UnityEngine.Random.Range(100, 300);
     } else if (quest.type == PlayerQuest.QUEST.GET) {
+      int amount = 0;
+      int id = 0;
+      string objectName = "";
+      
+      if (UnityEngine.Random.Range(0, 20) > 18) {
+        // rare stuff
+        LoadFile("PlayerJson/Rare.txt", objects);
+        id = UnityEngine.Random.Range(0, 1);
+        amount = UnityEngine.Random.Range(1, 7);
+        objectName = JsonUtility.FromJson<InventoryObject>(objects[id]).name;
+
+        // Reward
+        quest.reward.type = Reward.REWARD.MONEY;
+      } else {
+        LoadFile("PlayerJson/Objects.txt", objects);
+        id = UnityEngine.Random.Range(0, 11);
+        amount = UnityEngine.Random.Range(5, 15);
+        objectName = JsonUtility.FromJson<InventoryObject>(objects[id]).name;
+
+        // Reward
+        quest.reward.type = (Reward.REWARD)UnityEngine.Random.Range(0, 2);
+      }
+
+      // Title
+      quest.title = "Avoir" + " " + amount.ToString()+ " " + objectName;
+
+      // Description
+      quest.description = "Apporte " + amount.ToString()+ " " + objectName + " " + "sur" + " " + "<l'île des pommes>";
+
+
+      // End
+      quest.end.name = objectName;
+      quest.end.quantity = amount;
+
+      // MoneyReward outdated (just in case)
+      quest.moneyReward = UnityEngine.Random.Range(5, 50);
+    } else if (quest.type == PlayerQuest.QUEST.FIND) {
       int amount = 0;
       int id = 0;
       string objectName = "";
@@ -90,41 +116,6 @@ public class QuestGenerator {
 
       // End
       quest.end.name = objectName;
-      quest.end.quantity = amount;
-
-      // MoneyReward outdated (just in case)
-      quest.moneyReward = UnityEngine.Random.Range(5, 50);
-    } else if (quest.type == PlayerQuest.QUEST.FIND) {
-      int amount = 0;
-      int objectId = 0;
-      //string title = "";
-
-      if (UnityEngine.Random.Range(0, 20) > 18) {
-        // rare quest
-        amount = UnityEngine.Random.Range(1, 5);
-        objectId = UnityEngine.Random.Range(0, 5);
-        //title = json[objectId]
-
-        // Reward
-        quest.reward.type = Reward.REWARD.MONEY;
-      } else {
-        amount = UnityEngine.Random.Range(4, 15);
-        objectId = UnityEngine.Random.Range(0, 10);
-        //title = json[objectId]
-
-        // Reward
-        quest.reward.type = (Reward.REWARD)UnityEngine.Random.Range(0, 2);
-      }
-
-      // Title
-      quest.title = "Avoir" + " " + amount.ToString()+ " " + "<Apple>";
-
-      // Description
-      quest.description = "Apporte " + amount.ToString()+ " " + "<Apple>" + " " + "sur" + " " + "<l'île des pommes>";
-
-
-      // End
-      quest.end.name = "<Apple>";
       quest.end.quantity = amount;
 
       // MoneyReward outdated (just in case)
