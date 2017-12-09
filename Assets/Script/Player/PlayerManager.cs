@@ -221,15 +221,30 @@ public class QuestLog
 }
 
 [Serializable]
+public class EndQuest {
+    public int type;
+    public int enemyType;
+    public int enemyId;
+}
+
+[Serializable]
+public class Reward {
+    public int type;
+    public int amount;
+}
+
+[Serializable]
 public class PlayerQuest
 {
     public string description;
+    public string title;
+    public int type;
     public string objective;
     public InventoryObject reward;
+    public EndQuest end;
     public int moneyReward;
     public bool taken = false;
 }
-
 
 [Serializable]
 public class PlayerShip
