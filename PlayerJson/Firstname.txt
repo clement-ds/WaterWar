@@ -1,0 +1,5 @@
+{ "name": "Alex", "sex": "male", "race": "human" } 
+{ "name": "Clément", "sex": "male", "race": "human" } 
+{ "name": "Kevin", "sex": "male", "race": "bego" } 
+{ "name": "Garance", "sex": "female", "race": "human" } 
+{ "name": "Joseph", "sex": "male", "race": "human" } 

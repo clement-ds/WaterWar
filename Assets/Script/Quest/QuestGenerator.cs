@@ -38,7 +38,9 @@ public class QuestGenerator {
 
   public PlayerQuest GenerateQuest() {
     PlayerQuest quest = new PlayerQuest();
-    
+    List<string> objects = new List<string>();
+
+    LoadFile("PlayerJson/Objects.txt", objects);
     quest.type = (PlayerQuest.QUEST)UnityEngine.Random.Range(0, 2);
 
     if (quest.type == PlayerQuest.QUEST.KILL) {
@@ -59,29 +61,35 @@ public class QuestGenerator {
       quest.moneyReward = UnityEngine.Random.Range(100, 300);
     } else if (quest.type == PlayerQuest.QUEST.GET) {
       int amount = 0;
+      int id = 0;
+      string objectName = "";
       
       if (UnityEngine.Random.Range(0, 20) > 18) {
-        // rare quest
-        amount = UnityEngine.Random.Range(1, 5);
+        // rare stuff
+        id = UnityEngine.Random.Range(0, 1);
+        amount = UnityEngine.Random.Range(1, 7);
+        objectName = objects[id];
 
         // Reward
         quest.reward.type = Reward.REWARD.MONEY;
       } else {
-        amount = UnityEngine.Random.Range(4, 15);
+        id = UnityEngine.Random.Range(0, 11);
+        amount = UnityEngine.Random.Range(5, 15);
+        objectName = objects[id];
 
         // Reward
         quest.reward.type = (Reward.REWARD)UnityEngine.Random.Range(0, 2);
       }
 
       // Title
-      quest.title = "Avoir" + " " + amount.ToString()+ " " + "<Apple>";
+      quest.title = "Avoir" + " " + amount.ToString()+ " " + objectName;
 
       // Description
-      quest.description = "Apporte " + amount.ToString()+ " " + "<Apple>" + " " + "sur" + " " + "<l'île des pommes>";
+      quest.description = "Apporte " + amount.ToString()+ " " + objectName + " " + "sur" + " " + "<l'île des pommes>";
 
 
       // End
-      quest.end.name = "<Apple>";
+      quest.end.name = objectName;
       quest.end.quantity = amount;
 
       // MoneyReward outdated (just in case)
@@ -128,8 +136,8 @@ public class QuestGenerator {
     } else if (quest.reward.type == Reward.REWARD.MONEY) {
       quest.reward.amount = UnityEngine.Random.Range(100, 300);
     } else if (quest.reward.type == Reward.REWARD.OBJECT) {
-      quest.reward.id = 10; // For example coconut we need to give an id to each object
-      quest.reward.amount = UnityEngine.Random.Range(1, 10);      
+      quest.reward.id = UnityEngine.Random.Range(0, objects.Count);
+      quest.reward.amount = UnityEngine.Random.Range(1, 10);
     }
     return quest;
   }
