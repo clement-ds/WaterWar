@@ -132,14 +132,11 @@ public class IslandGenerator {
 
     private void GenerateQuests(Island island)
     {
+        int a = UnityEngine.Random.Range(0, 10);
         QuestGenerator questGen = new QuestGenerator();
-        island.questLog.quests.Add(questGen.GenerateQuest());
-        island.questLog.quests.Add(questGen.GenerateQuest());
-        island.questLog.quests.Add(questGen.GenerateQuest());
-        island.questLog.quests.Add(questGen.GenerateQuest());
-        island.questLog.quests.Add(questGen.GenerateQuest());
-        island.questLog.quests.Add(questGen.GenerateQuest());
-        island.questLog.quests.Add(questGen.GenerateQuest());
+        for (int i = 0; i < a; ++i) {
+            island.questLog.quests.Add(questGen.GenerateQuest());
+        }
     }
 
     private void GenerateCrew(Island island)
