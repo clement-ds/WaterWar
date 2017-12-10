@@ -171,7 +171,10 @@ public class MapGenerator {
             {
                 foreach (MapTile tile in column)
                 {
-                    tile.islandID = i;
+                    if (tile.tileType == "Sand")
+                    {
+                        tile.islandID = i;
+                    }
                 }
             }
             int xSpawn = UnityEngine.Random.Range(1, worldMapXSize - 25);
@@ -180,7 +183,6 @@ public class MapGenerator {
             while (checkLocationForIsland(xSpawn, ySpawn) && repeat < 10) {
                 xSpawn = UnityEngine.Random.Range(1, worldMapXSize - 25);
                 ySpawn = UnityEngine.Random.Range(1, worldMapYSize - 25);
-                Debug.Log(xSpawn + " " + ySpawn);
                 repeat++;
             }
             addIslandToMap(xSpawn, ySpawn, island);
@@ -213,8 +215,6 @@ public class MapGenerator {
                     {
                         GameObject tile = GameObject.Instantiate(worldMap[x][y].getGraphicAsset("", "", "", ""), (new Vector3(x * 50, y * 50, 10)), new Quaternion());
                         tile.GetComponent<TileClick>().islandID = worldMap[x][y].islandID;
-                        //tile.transform.localScale = parent.transform.localScale;
-                        //tile.transform.parent = parent.transform;
                         tile.transform.SetParent(parent.transform, false);
                     }
                     else

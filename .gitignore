@@ -34,4 +34,11 @@ sysinfo.txt
 .vs/WaterWar/v15/Server/sqlite3/storage.ide
 
 # Console
-/Assets/ConsoleE/Editor/ConsoleE.dll.meta
+Assets/ConsoleE/
+Assets/ConsoleE.meta
+Assets/Plugins/ConsoleE.meta
+Assets/Plugins/ConsoleE/
+/Assets/Plugins
+
+# Mini profiler
+Assets/Mini\ Profiler/
