@@ -8,8 +8,10 @@ public class TileClick : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        string tmp = name.Replace("(Clone)", "");
+        Sprite sprite = Resources.Load("Tiles/Sprite/" + tmp, typeof(Sprite)) as Sprite;
+        GetComponent<SpriteRenderer>().sprite = sprite;
+    }
 	
 	// Update is called once per frame
 	void Update () {
