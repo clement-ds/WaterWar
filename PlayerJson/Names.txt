@@ -1,0 +1,5 @@
+{ "firstname": "Alex", "name": "Dana", "race": "human" } 
+{ "firstname": "Clément", "name": "Da Silva", "race": "human" } 
+{ "firstname": "Kevin", "name": "Bego", "race": "bego" } 
+{ "firstname": "Joseph", "name": "Barbosa", "race": "human" } 
+{ "firstname": "Roger", "name": "Barbosa", "race": "human" } 

@@ -230,7 +230,7 @@ public class EndQuest {
 
 [Serializable]
 public class Reward {
-    public enum REWARD {MONEY = 0, OBJECT, INFLUENCE};  
+    public enum REWARD {MONEY = 0, OBJECT = 1, INFLUENCE = 2};  
     public REWARD type;
     public int id;
     public int amount;
@@ -247,7 +247,6 @@ public class PlayerQuest
     public string objective;
     public Reward reward;
     public InventoryObject end;
-//    public EndQuest end;
     public int moneyReward;
     public bool taken = false;
 }
