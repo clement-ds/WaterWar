@@ -4,6 +4,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
+public class Adjectif {
+  public string name;
+}
+
+public class Name {
+    public string firstname;
+    public string name;
+    public string race;
+}
 public class QuestGenerator {  
 	private bool LoadFile(string fileName, List<string> json) {
     try {
@@ -30,14 +39,26 @@ public class QuestGenerator {
     PlayerQuest quest = new PlayerQuest();
     List<string> objects = new List<string>();
 
+    quest.reward = new Reward();
+    quest.end = new InventoryObject("", "", 1, 10);
+
     quest.type = (PlayerQuest.QUEST)UnityEngine.Random.Range(0, 2);
 
     if (quest.type == PlayerQuest.QUEST.KILL) {
+      List<string> names = new List<string>();
+      List<string> adjectifs = new List<string>();
+
+      LoadFile("PlayerJson/Names.txt", names);
+      LoadFile("PlayerJson/Adjectif.txt", adjectifs);
+
       // Title
-      quest.title = "Tuer le" + " " + "<Capitaine Barbosa>";
+      string name = JsonUtility.FromJson<Name>(names[UnityEngine.Random.Range(0, 4)]).name;
+      string adjectif = JsonUtility.FromJson<Adjectif>(adjectifs[UnityEngine.Random.Range(0, 4)]).name;
+
+      quest.title = "Tuer le" + " " + "Capitaine " + name;
 
       // Description
-      quest.description = "Tuer " + "<l'infâme>" + " " + "<Capitaine Barbosa>" + " " + "<qui térorise>" + " " + "<l'île des pommes>";
+      quest.description = "Tuer " + adjectif + " " + "Capitaine " + name + " " + "<qui térorise>" + " " + "<l'île des pommes>";
 
       // Reward
       quest.reward.type = (Reward.REWARD)UnityEngine.Random.Range(0, 2);
@@ -92,16 +113,18 @@ public class QuestGenerator {
       
       if (UnityEngine.Random.Range(0, 20) > 18) {
         // rare stuff
+        LoadFile("PlayerJson/Rare.txt", objects);
         id = UnityEngine.Random.Range(0, 1);
         amount = UnityEngine.Random.Range(1, 7);
-        objectName = objects[id];
+        objectName = JsonUtility.FromJson<InventoryObject>(objects[id]).name;
 
         // Reward
         quest.reward.type = Reward.REWARD.MONEY;
       } else {
+        LoadFile("PlayerJson/Objects.txt", objects);
         id = UnityEngine.Random.Range(0, 11);
         amount = UnityEngine.Random.Range(5, 15);
-        objectName = objects[id];
+        objectName = JsonUtility.FromJson<InventoryObject>(objects[id]).name;
 
         // Reward
         quest.reward.type = (Reward.REWARD)UnityEngine.Random.Range(0, 2);

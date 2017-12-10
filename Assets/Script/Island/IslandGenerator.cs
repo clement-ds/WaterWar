@@ -80,6 +80,7 @@ public class IslandGenerator {
 
     public Island GenerateIsland(Island island)
     {
+        Debug.Log("TEST-------------: " + island.name);
         island = new Island();
         //island.questLog = new QuestLog();
         //island.inventory = new IslandInventory();
@@ -131,12 +132,14 @@ public class IslandGenerator {
 
     private void GenerateQuests(Island island)
     {
-        LoadFile("PlayerJson/Quests.txt");
-        int i = UnityEngine.Random.Range(0, 5);
-        Debug.Log("rng for quest is " + i);
-        PlayerQuest quest = JsonUtility.FromJson<PlayerQuest>(json[i]);
-        Debug.Log("GENERATE --- quest " + quest.description);
-        island.questLog.quests.Add(quest);
+        QuestGenerator questGen = new QuestGenerator();
+        island.questLog.quests.Add(questGen.GenerateQuest());
+        island.questLog.quests.Add(questGen.GenerateQuest());
+        island.questLog.quests.Add(questGen.GenerateQuest());
+        island.questLog.quests.Add(questGen.GenerateQuest());
+        island.questLog.quests.Add(questGen.GenerateQuest());
+        island.questLog.quests.Add(questGen.GenerateQuest());
+        island.questLog.quests.Add(questGen.GenerateQuest());
     }
 
     private void GenerateCrew(Island island)
