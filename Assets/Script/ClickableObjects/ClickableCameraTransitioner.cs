@@ -7,7 +7,7 @@ public class ClickableCameraTransitioner : MonoBehaviour {
     private bool opened = false;
     private CameraAnimationManager cameraAnim;
     public List<string> objectAnimations;
-    public string cameraAnimations;
+    public string stateChange;
 
     void Start()
     {
@@ -19,9 +19,19 @@ public class ClickableCameraTransitioner : MonoBehaviour {
     {
         //TODO: Glow
         if (Input.GetMouseButtonDown(0)) {
-            opened = !opened;
-            anim.Play(opened ? objectAnimations[0] : objectAnimations[1]);
-            cameraAnim.PlayAnimation(opened? cameraAnimations : cameraAnimations + "ToDefault");
+            LaunchAnimations();
         }
+    }
+
+    void LaunchAnimations() {
+        opened = !opened;
+        if (objectAnimations.Count == 2) {
+            anim.Play(opened ? objectAnimations[0] : objectAnimations[1]);
+        }
+        cameraAnim.StateChange(stateChange);
+    }
+
+    public void SimulateClick() {
+        LaunchAnimations();
     }
 }
