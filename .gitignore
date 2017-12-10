@@ -35,4 +35,6 @@ sysinfo.txt
 
 # Console
 Assets/ConsoleE
-Assets/ConsoleE.meta
+Assets/ConsoleE.meta/
+Assets/Plugins/ConsoleE.meta
+Assets/Plugins/ConsoleE/
