@@ -211,6 +211,7 @@ public class InventoryObject
     public string type;
     public int quantity;
     public int price;
+    public int id;
     public bool isRareItem;
 }
 
@@ -229,19 +230,24 @@ public class EndQuest {
 
 [Serializable]
 public class Reward {
-    public int type;
+    public enum REWARD {MONEY = 0, OBJECT, INFLUENCE};  
+    public REWARD type;
+    public int id;
     public int amount;
 }
 
 [Serializable]
 public class PlayerQuest
 {
+    public enum QUEST {KILL = 0, FIND, GET, RECRUIT, SACK, MORAL, PRINCIPAL, INFLUENCE, DESTROY};  
+
     public string description;
     public string title;
-    public int type;
+    public QUEST type;
     public string objective;
-    public InventoryObject reward;
-    public EndQuest end;
+    public Reward reward;
+    public InventoryObject end;
+//    public EndQuest end;
     public int moneyReward;
     public bool taken = false;
 }
