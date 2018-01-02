@@ -163,7 +163,6 @@ public class RoomElement : GuiElement
 
     public void repairRoom()
     {
-        Debug.Log("room members: " + this.members.Count);
         if (this.equipment != null && this.equipment.getPercentLife() < 100)
         {
             foreach (Battle_CrewMember member in this.members)

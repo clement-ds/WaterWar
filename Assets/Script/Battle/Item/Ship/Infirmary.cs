@@ -22,6 +22,9 @@ public class Infirmary : ShipElement
     {
         this.task = new TimerTask(HealCrew, this.cooldown);
     }
+    public override void reInitValues()
+    {
+    }
 
     /** SPECIFIC ACTION **/
     private void HealCrew()
@@ -107,4 +110,11 @@ public class Infirmary : ShipElement
         ParticleSystem targetExplosion = transform.Find("BoatExplosion/PS_BoatExplosion").gameObject.GetComponent<ParticleSystem>();
         targetExplosion.Play();
     }
+
+    /** GETTERS **/
+    public override bool isWorking()
+    {
+        return this.isAvailable() && this.getPercentLife() > 70;
+    }
+
 }

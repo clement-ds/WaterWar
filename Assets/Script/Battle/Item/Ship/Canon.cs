@@ -30,6 +30,12 @@ public class Canon : ShipElement
         canonBallPool = GameObject.Find("CanonBallPool").GetComponent<SimpleObjectPool>();
     }
 
+    public override void reInitValues()
+    {
+        this.reloading = false;
+        this.attacking = false;
+    }
+
     public void destroyCanon()
     {
         // Destroy all Components
@@ -44,15 +50,18 @@ public class Canon : ShipElement
     public override List<ActionMenuItem> createActionList()
     {
         List<ActionMenuItem> actions = new List<ActionMenuItem>();
-        if (this.isAvailable() && this.getMember() && this.getTarget() && !this.attacking && !this.reloading)
-            actions.Add(new ActionMenuItem("Attack", doDamage));
-        if (this.attacking && this.canAttack)
-            actions.Add(new ActionMenuItem("Stop Attack", stopAttack));
-        if (this.reloading)
-            actions.Add(new ActionMenuItem("Reloading..", none));
-        if (this.getMember() && !ready && !this.reloading)
-            actions.Add(new ActionMenuItem("Load canon", doReload));
-        actions.Add(new ActionMenuItem("Select Target", selectTarget));
+        if (this.isWorking())
+        {
+            if (this.isAvailable() && this.getMember() && this.getTarget() && !this.attacking && !this.reloading)
+                actions.Add(new ActionMenuItem("Attack", doDamage));
+            if (this.attacking && this.canAttack)
+                actions.Add(new ActionMenuItem("Stop Attack", stopAttack));
+            if (this.reloading)
+                actions.Add(new ActionMenuItem("Reloading..", none));
+            if (this.getMember() && !ready && !this.reloading)
+                actions.Add(new ActionMenuItem("Load canon", doReload));
+            actions.Add(new ActionMenuItem("Select Target", selectTarget));
+        }
         return actions;
     }
 
@@ -109,6 +118,7 @@ public class Canon : ShipElement
     protected bool stopAttack()
     {
         this.canAttack = false;
+        this.cancelEveryTask();
         this.updateParentActionMenu();
         return true;
     }
@@ -124,7 +134,7 @@ public class Canon : ShipElement
     protected bool isPossibleToReload()
     {
         Gunpowder powder = this.transform.root.GetComponentInChildren<Gunpowder>();
-        return (powder != null && powder.isAvailable());
+        return (powder != null && powder.isAvailable() && powder.isWorking());
     }
 
     protected bool doReload()
@@ -148,7 +158,10 @@ public class Canon : ShipElement
     protected void reloadEnd()
     {
         this.setCanonReady();
-        this.doDamage();
+        if (this.isWorking())
+        {
+            this.doDamage();
+        }
     }
 
     /** DO DAMAGE **/
@@ -251,6 +264,11 @@ public class Canon : ShipElement
     }
 
     /** GETTERS **/
+    public override bool isWorking()
+    {
+        return this.isAvailable() && this.getPercentLife() > 20;
+    }
+
     public string getName()
     {
         return this.name;

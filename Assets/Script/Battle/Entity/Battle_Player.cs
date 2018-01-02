@@ -98,7 +98,7 @@ public class Battle_Player : Battle_Ship
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            result = /*item.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos);*/item.transform.GetComponent<BoxCollider>().Raycast(ray, out hit, 100.0F);
+            result = item.transform.GetComponent<BoxCollider>().Raycast(ray, out hit, 100.0F);
 
             if (!hasClick && result)
             {
@@ -175,7 +175,7 @@ public class Battle_Player : Battle_Ship
 
         foreach (Battle_CrewMember crewMember in this.crewMembers)
         {
-            if (crewMember.isFocused())
+            if (crewMember.isFocused() && !crewMember.isMoving())
             {
                 foreach (RoomElement tmp in this.rooms)
                 {
@@ -184,7 +184,7 @@ public class Battle_Player : Battle_Ship
                     {
                         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                         RaycastHit hit;
-                        if (/*tmp.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))*/tmp.transform.GetComponent<BoxCollider>().Raycast(ray, out hit, 100.0F))
+                        if (tmp.transform.GetComponent<BoxCollider>().Raycast(ray, out hit, 100.0F))
                         {
                             break;
                         }
@@ -219,7 +219,7 @@ public class Battle_Player : Battle_Ship
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (/*target.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos))*/target.transform.GetComponent<BoxCollider>().Raycast(ray, out hit, 100.0F))
+            if (target.transform.GetComponent<BoxCollider>().Raycast(ray, out hit, 100.0F))
             {
                 if (MouseManager.getInstance().getCursorTexture() == ECursor.SEARCH_TARGET)
                 {

@@ -14,7 +14,7 @@ public class Battle_CrewMember : GuiElement
 
     List<Vector3> finalMovePos;
     int indexMove;
-    Boolean haveToMove = false;
+    Boolean moving = false;
 
     // Use this for initialization
     public override void StartMyself()
@@ -29,7 +29,7 @@ public class Battle_CrewMember : GuiElement
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (this.haveToMove)
+        if (this.moving)
         {
             float step = profile.getValueByCrewSkill(SkillAttribute.WalkValue, profile.walkSpeed) * Time.deltaTime;
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, this.finalMovePos[indexMove], step);
@@ -59,12 +59,12 @@ public class Battle_CrewMember : GuiElement
         this.targetFocus = target;
         this.finalMovePos = pos;
         this.indexMove = 0;
-        this.haveToMove = true;
+        this.moving = true;
     }
 
     private void crewMemberArrivedAtFinalPos()
     {
-        this.haveToMove = false;
+        this.moving = false;
         Debug.Log("arrived at final pos : " + this.targetFocus);
         if (this.targetFocus != null)
         {
@@ -89,14 +89,14 @@ public class Battle_CrewMember : GuiElement
             this.changeParents(((ShipElement)this.targetFocus).getParentRoom(), (ShipElement)this.targetFocus);
             this.room.directAddMember(this);
         }
-        this.transform.SetParent(this.targetFocus.transform);
+        this.transform.parent = this.targetFocus.transform;
     }
 
     public bool directAssignCrewMemberInRoom(RoomElement element, Vector3 pos)
     {
         this.changeParents(element, element.getEquipment());
         this.room.directAddMember(this);
-        this.transform.SetParent(element.transform);
+        this.transform.parent = element.transform;
         this.transform.localPosition = pos;
         //Debug.Log("create member with " + this.room + ", " + this.equipment);
         return true;
@@ -105,7 +105,7 @@ public class Battle_CrewMember : GuiElement
     public bool directAssignCrewMemberInElement(ShipElement element, Vector3 pos)
     {
         this.changeParents(element.getParentRoom(), element);
-        this.transform.SetParent(element.transform);
+        this.transform.parent = element.transform;
         this.transform.localPosition = pos;
         //Debug.Log("create member with " + this.room + ", " + this.equipment);
         return true;
@@ -186,6 +186,11 @@ public class Battle_CrewMember : GuiElement
     public ShipElement getEquipment()
     {
         return this.equipment;
+    }
+
+    public bool isMoving()
+    {
+        return this.moving;
     }
 
     /** SETTERS **/

@@ -47,6 +47,8 @@ public abstract class ShipElement : MonoBehaviour
     /** INIT **/
     public abstract void init();
 
+    public abstract void reInitValues();
+
     public void changeParentRoom(RoomElement room)
     {
         this.parentRoom = room;
@@ -243,6 +245,10 @@ public abstract class ShipElement : MonoBehaviour
             }
             this.dealDamageAsRepercution(canonBall);
             this.applyMalusOnHit(canonBall);
+            if (!this.isWorking())
+            {
+                this.cancelEveryTask();
+            }
             return true;
         }
         return false;
@@ -252,6 +258,12 @@ public abstract class ShipElement : MonoBehaviour
 
     protected abstract void receiveDamageAnimation();
 
+    public void cancelEveryTask()
+    {
+        CancelInvoke();
+        this.reInitValues();
+        this.updateParentActionMenu();
+    }
 
     /** GETTERS **/
     public Battle_CrewMember getMember()
@@ -283,6 +295,8 @@ public abstract class ShipElement : MonoBehaviour
     {
         return this.available;
     }
+
+    public abstract bool isWorking();
 
     public Ship_Item getType()
     {

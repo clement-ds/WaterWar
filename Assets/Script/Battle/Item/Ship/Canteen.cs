@@ -14,6 +14,10 @@ public class Canteen : ShipElement {
     {
     }
 
+    public override void reInitValues()
+    {
+    }
+
     /** GUI CREATOR **/
     public override List<ActionMenuItem> createActionList()
     {
@@ -81,4 +85,11 @@ public class Canteen : ShipElement {
         ParticleSystem targetExplosion = transform.Find("BoatExplosion/PS_BoatExplosion").gameObject.GetComponent<ParticleSystem>();
         targetExplosion.Play();
     }
+
+    /** GETTERS **/
+    public override bool isWorking()
+    {
+        return this.isAvailable() && this.getPercentLife() > 50;
+    }
+
 }

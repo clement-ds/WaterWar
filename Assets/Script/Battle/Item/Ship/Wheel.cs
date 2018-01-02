@@ -15,14 +15,16 @@ public class Wheel : ShipElement
     public override void init()
     {
     }
+    public override void reInitValues()
+    {
+    }
 
     /** GUI CREATOR **/
     public override List<ActionMenuItem> createActionList()
     {
         List<ActionMenuItem> actions = new List<ActionMenuItem>();
-        if (this.getMember())
+        if (this.getMember() && this.isWorking())
         {
-
             if (this.direction != Ship_Direction.FRONT)
                 actions.Add(new ActionMenuItem("Front", directionFront));
             if (this.direction != Ship_Direction.RIGHT)
@@ -117,4 +119,11 @@ public class Wheel : ShipElement
         ParticleSystem targetExplosion = transform.Find("BoatExplosion/PS_BoatExplosion").gameObject.GetComponent<ParticleSystem>();
         targetExplosion.Play();
     }
+    
+    /** GETTERS **/
+    public override bool isWorking()
+    {
+        return this.isAvailable() && this.getPercentLife() > 80;
+    }
+
 }
