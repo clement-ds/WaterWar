@@ -39,7 +39,7 @@ public class CarpenterController : MonoBehaviour {
   }
 
 	public void printType(Room room) {
-		Debug.Log(room.type);
+		Debug.Log(room.component);
 		this.selectedRoom = room;
 	}
 

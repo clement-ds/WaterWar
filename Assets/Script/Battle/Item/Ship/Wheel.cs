@@ -1,53 +1,36 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 using System.Collections.Generic;
 
-public class Infirmary : ShipElement
+public class Wheel : ShipElement
 {
 
-    protected TimerTask task;
-    protected float cooldown;
-    private float healRatio;
-
-
+    public Ship_Direction direction;
     // Use this for initialization
-    public Infirmary() : base(100, Ship_Item.INFIRMARY)
+    public Wheel() : base(200, Ship_Item.WHEEL)
     {
-        this.cooldown = 3.0f;
-        this.healRatio = 10f;
+        this.direction = Ship_Direction.FRONT;
     }
 
     public override void init()
     {
-        this.task = new TimerTask(HealCrew, this.cooldown);
-    }
-
-    /** SPECIFIC ACTION **/
-    private void HealCrew()
-    {
-        Battle_CrewMember[] members = this.transform.GetComponentsInParent<Battle_CrewMember>();
-
-        foreach (Battle_CrewMember member in members)
-        {
-            if (member.getProfile().job == CrewMember_Job.Medic)
-            {
-                this.task.cooldown = (this.task.cooldown > 1 ? this.task.cooldown - 1f : this.task.cooldown);
-                this.healRatio += 10f;
-            }
-        }
-
-        foreach (Battle_CrewMember member in members)
-        {
-            member.getProfile().healDamage(this.healRatio);
-        }
     }
 
     /** GUI CREATOR **/
     public override List<ActionMenuItem> createActionList()
     {
-        List<ActionMenuItem> actionList = new List<ActionMenuItem>();
-        return actionList;
+        List<ActionMenuItem> actions = new List<ActionMenuItem>();
+        if (this.getMember())
+        {
+
+            if (this.direction != Ship_Direction.FRONT)
+                actions.Add(new ActionMenuItem("Front", directionFront));
+            if (this.direction != Ship_Direction.RIGHT)
+                actions.Add(new ActionMenuItem("Right", directionRight));
+            if (this.direction != Ship_Direction.LEFT)
+                actions.Add(new ActionMenuItem("Left", directionLeft));
+        }
+        return actions;
     }
 
     /** AVAILABLE POSITION CREATOR **/
@@ -59,7 +42,7 @@ public class Infirmary : ShipElement
     /** ON HIT EFFECT **/
     protected override void dealDamageAsRepercution(Battle_CanonBall canonBall)
     {
-        this.GetComponentInParent<Battle_Ship>().receiveDamage(canonBall.getAmmunition().getDamage() / 2);
+        this.GetComponentInParent<Battle_Ship>().receiveDamage(canonBall.getAmmunition().getDamage() / 3);
     }
 
     protected override void dealDamageOnDestroy()
@@ -68,10 +51,12 @@ public class Infirmary : ShipElement
 
     protected override void applyMalusOnHit(Battle_CanonBall canonBall)
     {
+
     }
 
     protected override void applyMalusOnDestroy()
     {
+
     }
 
     /** ACTIONS **/
@@ -83,6 +68,31 @@ public class Infirmary : ShipElement
     public override bool actionStopRunning()
     {
         return false;
+    }
+
+    /** DIRECTION **/
+    public bool directionFront()
+    {
+        this.direction = Ship_Direction.FRONT;
+        this.getParentShip().changeDirection(this.direction);
+        this.updateParentActionMenu();
+        return true;
+    }
+
+    public bool directionRight()
+    {
+        this.direction = Ship_Direction.RIGHT;
+        this.getParentShip().changeDirection(this.direction);
+        this.updateParentActionMenu();
+        return true;
+    }
+
+    public bool directionLeft()
+    {
+        this.direction = Ship_Direction.LEFT;
+        this.getParentShip().changeDirection(this.direction);
+        this.updateParentActionMenu();
+        return true;
     }
 
     /** DO DAMAGE **/

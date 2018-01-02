@@ -19,27 +19,22 @@ public class AvailablePosition
 
 public enum Ship_Direction { FRONT, RIGHT, LEFT, NONE };
 
-public enum Ship_Item { CANON, CANTEEN, HELM, INFIRMARY, WAREHOUSE, PLAYGROUND }
+public enum Ship_Item { CANON, CANTEEN, WHEEL, INFIRMARY, WAREHOUSE, PLAYGROUND }
 
-public abstract class ShipElement : GuiElement
+public abstract class ShipElement : MonoBehaviour
 {
     protected readonly float life;
     protected float currentLife;
+    protected RoomElement parentRoom;
 
     protected Ship_Item type;
     protected bool available = true;
-    protected bool repairing = false;
     protected bool attacking = false;
     protected bool canAttack = true;
 
     public Slider slider = null;
     public float sliderTimer;
-    protected List<AvailablePosition> availablePosition = new List<AvailablePosition>();
-
-    public override void StartMyself()
-    {
-        createAvailableCrewMemberPosition();
-    }
+    protected AvailablePosition availablePosition = null;
 
     protected ShipElement(float lifeValue, Ship_Item type)
     {
@@ -49,27 +44,25 @@ public abstract class ShipElement : GuiElement
         this.sliderTimer = 0;
     }
 
-    void OnTriggerEnter2D(Collider2D col)
+    /** INIT **/
+    public abstract void init();
+
+    public void changeParentRoom(RoomElement room)
     {
-        Battle_CanonBall canonBall = col.gameObject.GetComponent<Battle_CanonBall>();
-        if (canonBall)
-        {
-            float value = UnityEngine.Random.value;
-            print(this + " (" + this.GetInstanceID() + ")  :   " + canonBall.getTarget().GetInstanceID() + "  --> " + canonBall.getHitStatus());
-            if ((canonBall.getHitStatus() == HitStatus.HIT && canonBall.getTarget().GetInstanceID() == this.GetInstanceID())
-                || (canonBall.getHitStatus() == HitStatus.FAIL && canonBall.getTarget().GetInstanceID() != this.GetInstanceID()))
-            {
-                this.receiveDamage(canonBall);
-                Destroy(col.gameObject);
-            }
-        }
+        this.parentRoom = room;
     }
 
+    public abstract List<ActionMenuItem> createActionList();
+
+    /** UPDATE **/
     void Update()
     {
-        mouseIsHover();
-        updateHover();
         updateMyself();
+    }
+
+    protected void updateParentActionMenu()
+    {
+        this.getParentShip().updateActionMenu();
     }
 
     protected virtual void updateMyself()
@@ -78,7 +71,7 @@ public abstract class ShipElement : GuiElement
     }
 
     /** HOVER **/
-    private bool mouseIsHover()
+    public bool mouseIsHover()
     {
         Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 touchPos = new Vector2(wp.x, wp.y);
@@ -91,18 +84,20 @@ public abstract class ShipElement : GuiElement
                 MouseManager.getInstance().setCursor(ECursor.FOCUS_TARGET);
             }
             return true;
-        } else if (this.sliderTimer == 0)
+        }
+        else if (this.sliderTimer == 0)
         {
             this.hideSlider();
         }
         return false;
     }
 
-    private void updateHover()
+    public void updateHover()
     {
         this.sliderTimer -= Time.deltaTime;
         this.sliderTimer = (this.sliderTimer < 0 ? 0 : this.sliderTimer);
     }
+
 
     /** SLIDER HP **/
     public void updateSliderValue()
@@ -125,60 +120,56 @@ public abstract class ShipElement : GuiElement
         this.hideSlider();
     }
 
-    protected void showSlider()
+    public void showSlider()
     {
-        if(this.slider)
+        if (this.slider)
             slider.gameObject.SetActive(true);
     }
 
-    protected void hideSlider()
+    public void hideSlider()
     {
         if (this.slider)
             slider.gameObject.SetActive(false);
     }
 
     /** AVAILABLE POSITION **/
-    protected abstract void createAvailableCrewMemberPosition();
+    public abstract void createAvailableCrewMemberPosition();
 
     public bool hasAvailableCrewMemberPosition()
     {
-        for (int i = 0; i < this.availablePosition.Count; ++i)
+        if (availablePosition != null)
         {
-            if (this.availablePosition[i].available)
-            {
-                return true;
-            }
+            return this.availablePosition.available;
         }
         return false;
     }
 
     public Vector3 chooseAvailableCrewMemberPosition(int id)
     {
-        for (int i = 0; i < this.availablePosition.Count; ++i)
+        if (availablePosition != null)
         {
-            Debug.Log("test : " + this.availablePosition[i]);
-            if (this.availablePosition[i].crewId == id)
+            if (this.availablePosition.crewId == id)
             {
-                return this.availablePosition[i].position;
+                return this.availablePosition.position;
             }
-            if (this.availablePosition[i].available)
+            if (this.availablePosition.available)
             {
-                this.availablePosition[i].available = false;
-                this.availablePosition[i].crewId = id;
-                return this.availablePosition[i].position;
+                this.availablePosition.available = false;
+                this.availablePosition.crewId = id;
+                return this.availablePosition.position;
             }
         }
-        return new Vector3(0f, 0f, 0f);
+        throw new System.Exception("no position available");
     }
 
     public void freeCrewMemberPosition(int id)
     {
-        for (int i = 0; i < this.availablePosition.Count; ++i)
+        if (availablePosition != null)
         {
-            if (this.availablePosition[i].crewId == id)
+            if (this.availablePosition.crewId == id)
             {
-                this.availablePosition[i].available = true;
-                break;
+                this.availablePosition.available = true;
+                this.updateParentActionMenu();
             }
         }
     }
@@ -198,28 +189,12 @@ public abstract class ShipElement : GuiElement
     public abstract bool actionStopRunning();
 
     /** REPAIR **/
-    protected abstract void doRepairActionEnd();
-
-    private void doRepairEnd()
+    public void repair(float value)
     {
-        this.repairing = false;
-        this.doRepairActionEnd();
-        this.updateActionMenu();
+        this.currentLife += value;
+        if (this.currentLife > this.life)
+            this.currentLife = this.life;
     }
-    
-    public bool doRepair()
-    {
-        if (getMember() != null && !this.isRepairing())
-        {
-            this.repairing = true;
-            this.doRepairAction();
-            this.updateActionMenu();
-            return true;
-        }
-        return false;
-    }
-
-    protected abstract bool doRepairAction();
 
     /** DO DAMAGE **/
     public bool doDamage()
@@ -230,13 +205,14 @@ public abstract class ShipElement : GuiElement
             {
                 this.doDamageAnimation();
             }
-            this.updateActionMenu();
+            this.updateParentActionMenu();
             return true;
         }
         else
         {
             this.setAttacking(false);
         }
+        this.updateParentActionMenu();
         return false;
     }
 
@@ -247,16 +223,18 @@ public abstract class ShipElement : GuiElement
     /** RECEIVE DAMAGE **/
     protected void die()
     {
+        this.getParentShip().updateActionMenu();
         this.dealDamageOnDestroy();
         this.applyMalusOnDestroy();
         Battle_CrewMember member = this.GetComponent<Battle_CrewMember>();
         if (member)
         {
-            member.freeCrewMemberFromShipElement(this, this.transform.parent.gameObject);
+            member.freeCrewMemberFromShipElement();
         }
     }
     public bool receiveDamage(Battle_CanonBall canonBall)
     {
+        this.getParentShip().updateActionMenu();
         if (this.available)
         {
             if (this.receiveDamageAction(canonBall))
@@ -265,7 +243,6 @@ public abstract class ShipElement : GuiElement
             }
             this.dealDamageAsRepercution(canonBall);
             this.applyMalusOnHit(canonBall);
-            this.updateActionMenu();
             return true;
         }
         return false;
@@ -279,7 +256,12 @@ public abstract class ShipElement : GuiElement
     /** GETTERS **/
     public Battle_CrewMember getMember()
     {
-        return transform.GetComponentInChildren<Battle_CrewMember>();
+        return this.transform.GetComponentInChildren<Battle_CrewMember>();
+    }
+
+    public Battle_Ship getParentShip()
+    {
+        return this.parentRoom.transform.GetComponentInParent<Battle_Ship>();
     }
 
     public float getLife()
@@ -302,14 +284,19 @@ public abstract class ShipElement : GuiElement
         return this.available;
     }
 
-    public bool isRepairing()
-    {
-        return this.repairing;
-    }
-
     public Ship_Item getType()
     {
         return this.type;
+    }
+
+    public Vector3 transformToParentPos(Vector3 pos)
+    {
+        return new Vector3(this.transform.localPosition.x + pos.x, this.transform.localPosition.y + pos.y, this.transform.localPosition.z + pos.z);
+    }
+
+    public RoomElement getParentRoom()
+    {
+        return this.parentRoom;
     }
 
     /** SETTERS **/
@@ -335,6 +322,5 @@ public abstract class ShipElement : GuiElement
         this.attacking = value;
         if (!this.attacking)
             canAttack = true;
-        this.updateActionMenu();
     }
 }

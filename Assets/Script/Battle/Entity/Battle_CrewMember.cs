@@ -6,11 +6,14 @@ using System.Collections.Generic;
 public class Battle_CrewMember : GuiElement
 {
 
-    ShipElement room = null;
-    CrewMember member = null;
-    ShipElement targetFocus = null;
-    ShipElement parent = null;
-    Vector3 finalMovePos;
+    CrewMember profile = null;
+
+    RoomElement room = null;
+    ShipElement equipment = null;
+    MonoBehaviour targetFocus = null;
+
+    List<Vector3> finalMovePos;
+    int indexMove;
     Boolean haveToMove = false;
 
     // Use this for initialization
@@ -20,7 +23,7 @@ public class Battle_CrewMember : GuiElement
 
     public void initialize(CrewMember crewMember)
     {
-        this.member = crewMember;
+        this.profile = crewMember;
     }
 
     // Update is called once per frame
@@ -28,11 +31,19 @@ public class Battle_CrewMember : GuiElement
     {
         if (this.haveToMove)
         {
-            float step = member.getValueByCrewSkill(SkillAttribute.WalkValue, member.walkSpeed) * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, this.finalMovePos, step);
-            if (transform.position == this.finalMovePos)
+            float step = profile.getValueByCrewSkill(SkillAttribute.WalkValue, profile.walkSpeed) * Time.deltaTime;
+            transform.localPosition = Vector3.MoveTowards(transform.localPosition, this.finalMovePos[indexMove], step);
+            if (transform.localPosition == this.finalMovePos[indexMove])
             {
-                this.arriveAtFinalPos();
+                if (indexMove == this.finalMovePos.Count - 2)
+                {
+                    this.crewMemberArrivedAtContainer();
+                }
+                else if (indexMove == this.finalMovePos.Count - 1)
+                {
+                    this.crewMemberArrivedAtFinalPos();
+                }
+                ++indexMove;
             }
         }
     }
@@ -43,75 +54,144 @@ public class Battle_CrewMember : GuiElement
 
     /** ACTIONS **/
 
-    public void moveTo(Vector3 touchPos)
+    public void moveTo(MonoBehaviour target, List<Vector3> pos)
     {
-        this.finalMovePos = touchPos;
+        this.targetFocus = target;
+        this.finalMovePos = pos;
+        this.indexMove = 0;
         this.haveToMove = true;
     }
 
-    public void stopMove()
-    {
-        this.arriveAtFinalPos();
-    }
-
-    private void arriveAtFinalPos()
+    private void crewMemberArrivedAtFinalPos()
     {
         this.haveToMove = false;
+        Debug.Log("arrived at final pos : " + this.targetFocus);
         if (this.targetFocus != null)
         {
             Debug.Log("Arrive at pos : " + finalMovePos);
-            this.directAssignCrewMemberInElement(this.targetFocus);
+            this.transform.localPosition = finalMovePos[finalMovePos.Count - 1];
             Debug.Log("final pos: " + this.transform.localPosition);
-            this.targetFocus.focus();
-            this.targetFocus.updateActionMenu();
             this.targetFocus = null;
         }
     }
 
-    public void directAssignCrewMemberInElement(ShipElement element)
+    protected void crewMemberArrivedAtContainer()
     {
-        this.transform.SetParent(element.transform);
-        this.transform.localPosition = element.chooseAvailableCrewMemberPosition(this.GetInstanceID());
-    }
-
-    /** PARENT MANAGER **/
-    public void assignCrewMemberToShipElement(ShipElement target, GameObject container)
-    {
-        this.targetFocus = target;
-        this.parent = target;
-        this.moveTo(target.transform.position);
-    }
-
-    public void freeCrewMemberFromShipElement(ShipElement target, GameObject container)
-    {
-        if (target != null)
+        if (this.targetFocus.GetType() == typeof(RoomElement))
         {
-            target.unfocus();
-            target.freeCrewMemberPosition(this.GetInstanceID());
-            this.parent = null;
-            this.transform.SetParent(container.transform);
+            //Debug.Log("its a room");
+            this.changeParents((RoomElement)this.targetFocus, ((RoomElement)this.targetFocus).getEquipment());
+            this.room.directAddMember(this);
+        }
+        else if (this.targetFocus.GetType() == typeof(ShipElement) || this.targetFocus.GetType().IsSubclassOf(typeof(ShipElement)))
+        {
+            //Debug.Log("its a equipment");
+            this.changeParents(((ShipElement)this.targetFocus).getParentRoom(), (ShipElement)this.targetFocus);
+            this.room.directAddMember(this);
+        }
+        this.transform.SetParent(this.targetFocus.transform);
+    }
+
+    public bool directAssignCrewMemberInRoom(RoomElement element, Vector3 pos)
+    {
+        this.changeParents(element, element.getEquipment());
+        this.room.directAddMember(this);
+        this.transform.SetParent(element.transform);
+        this.transform.localPosition = pos;
+        //Debug.Log("create member with " + this.room + ", " + this.equipment);
+        return true;
+    }
+
+    public bool directAssignCrewMemberInElement(ShipElement element, Vector3 pos)
+    {
+        this.changeParents(element.getParentRoom(), element);
+        this.transform.SetParent(element.transform);
+        this.transform.localPosition = pos;
+        //Debug.Log("create member with " + this.room + ", " + this.equipment);
+        return true;
+    }
+
+    public void repair()
+    {
+        if (this.equipment != null)
+        {
+            this.equipment.repair(this.profile.getValueByCrewSkill(SkillAttribute.RepairValue, 40));
+            //Invoke("repair", this.profile.getValueByCrewSkill(SkillAttribute.RepairTime, 1));
         }
     }
 
-    public void freeCrewMemberFromParent(GameObject container)
+    /** PARENT MANAGER **/
+    public void assignCrewMemberToRoom(RoomElement target)
     {
-        this.freeCrewMemberFromShipElement(this.transform.parent.GetComponent<ShipElement>(), container);
+        this.transform.parent = target.transform.parent;
+
+        target.moveMemberToRoom(this);
+
+        if (this.equipment != null)
+        {
+            this.equipment.freeCrewMemberPosition(this.GetInstanceID());
+            this.equipment = null;
+        }
+        if (this.room != null)
+        {
+            this.room.freeCrewMemberPosition(this.GetInstanceID());
+            this.room = null;
+        }
     }
 
-    public CrewMember getMember()
+    public bool freeCrewMemberFromShipElement()
     {
-        return this.member;
+        if (this.equipment == null)
+            return true;
+        if (this.equipment.getParentRoom().hasAvailableCrewMemberPosition())
+        {
+            this.equipment.freeCrewMemberPosition(this.GetInstanceID());
+            this.equipment = null;
+
+            this.transform.parent = this.room.transform;
+
+            this.room.moveFromEquipmentToRoom(this);
+            this.targetFocus = this.room;
+            return true;
+        }
+        return false;
+    }
+
+    public void freeCrewMemberFromParent()
+    {
+        this.freeCrewMemberFromShipElement();
+    }
+
+    public CrewMember getProfile()
+    {
+        return this.profile;
     }
 
     /** GETTERS **/
 
     public List<ActionMenuItem> getParentActionList()
     {
-        Debug.Log("Partent : " + (parent == null ? -1 : this.parent.getActionList().Count));
-        if (this.parent == null)
+        if (this.room == null)
         {
             return new List<ActionMenuItem>();
         }
-        return this.parent.getActionList();
+        return this.room.getActionList();
+    }
+
+    public RoomElement getRoom()
+    {
+        return this.room;
+    }
+
+    public ShipElement getEquipment()
+    {
+        return this.equipment;
+    }
+
+    /** SETTERS **/
+    public void changeParents(RoomElement room, ShipElement equipment)
+    {
+        this.room = room;
+        this.equipment = equipment;
     }
 }

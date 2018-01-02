@@ -18,8 +18,8 @@ public class ShipManager : MonoBehaviour {
            newRoom.transform.localScale = Vector3.one;
 
            newRoom.transform.localEulerAngles = new Vector3(0, 0, shipD.rooms[i].rotation);
-           newRoom.transform.localPosition = new Vector3(shipD.rooms[i].x * 100, shipD.rooms[i].y * 100, shipD.rooms[i].z);
-           newRoom.name = shipD.rooms[i].type;
+           newRoom.transform.localPosition = new Vector3(shipD.rooms[i].x * 100, shipD.rooms[i].y * 100, -1);
+           newRoom.name = shipD.rooms[i].component;
            Debug.Log("Spawn at position: " + shipD.rooms[i].x + " " + shipD.rooms[i].y);
            setIconFromRoom(newRoom); 
            }

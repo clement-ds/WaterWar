@@ -14,7 +14,7 @@ public class PlayerManager {
 
     protected PlayerManager()
     {
-        LoadFile("PlayerJson/Save.txt");
+        LoadFile("PlayerJson/Save.json");
         player = JsonUtility.FromJson<Player>(json[0]);
         Debug.Log("player : " + player.name + "/" + player.life);
         //Debug.Log("CHECK INVENTORY : " + player.inventory.food.Count + " / " + player.inventory.weapons.Count);
@@ -24,7 +24,7 @@ public class PlayerManager {
         //Debug.Log("CHECK QUEST : " + player.questLog.quests.Count);
         //Save();
 
-        LoadFile("PlayerJson/AISave.txt");
+        LoadFile("PlayerJson/AISave.json");
         ai = JsonUtility.FromJson<Player>(json[0]);
     }
 
@@ -41,7 +41,7 @@ public class PlayerManager {
     {
         try
         {
-            StreamWriter writer = new StreamWriter("PlayerJson/Save.txt", false);
+            StreamWriter writer = new StreamWriter("PlayerJson/Save.json", false);
             writer.Write(JsonUtility.ToJson(player));
             writer.Close();
         } catch (Exception e)
@@ -56,7 +56,7 @@ public class PlayerManager {
     {
         try
         {
-            StreamWriter writer = new StreamWriter("PlayerJson/AISave.txt", false);
+            StreamWriter writer = new StreamWriter("PlayerJson/AISave.json", false);
             writer.Write(JsonUtility.ToJson(ai));
             writer.Close();
         }
@@ -265,18 +265,20 @@ public class ShipDisposition
 
     public void ChangeRoom(int index, string newtype)
     {
-        rooms[index].type = newtype;
+        rooms[index].component = newtype;
     }
 }
 
 [Serializable]
 public class Room
 {
-    public String type; // name
-    public int id; // numero
-    public int status; // type de salle autorisé
+    public String id;
+    public String type;
+    public String component;
+    public List<String> links;
     public float x;
     public float y;
-    public float z;
+    public float width;
+    public float height;
     public float rotation;
 }

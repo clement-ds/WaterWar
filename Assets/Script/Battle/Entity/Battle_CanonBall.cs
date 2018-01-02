@@ -6,7 +6,7 @@ public enum HitStatus { HIT, FAIL, MISS };
 public class Battle_CanonBall : MonoBehaviour {
 
     protected Ammunition ammunition;
-    protected ShipElement target;
+    protected MonoBehaviour target;
     private Vector3 pathSuccess;
     private HitStatus hitStatus;
 	// Use this for initialization
@@ -18,7 +18,7 @@ public class Battle_CanonBall : MonoBehaviour {
 	void Update () {
     }
 
-    public void initialize(Ammunition ammunition, ShipElement target, Vector3 pathSuccess)
+    public void initialize(Ammunition ammunition, MonoBehaviour target, Vector3 pathSuccess)
     {
         this.ammunition = ammunition;
         this.pathSuccess = pathSuccess;
@@ -43,7 +43,7 @@ public class Battle_CanonBall : MonoBehaviour {
         return this.ammunition;
     }
 
-    public ShipElement getTarget()
+    public MonoBehaviour getTarget()
     {
         return this.target;
     }

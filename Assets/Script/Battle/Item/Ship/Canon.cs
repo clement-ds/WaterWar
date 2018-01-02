@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class Canon : ShipElement
 {
-    private ShipElement target = null;
+    private RoomElement target = null;
     private bool ready = false;
     private bool reloading = false;
     private int power = 150;       // Random number
@@ -19,9 +20,12 @@ public class Canon : ShipElement
     {
     }
 
-    public override void StartMyself()
+    public override void init()
     {
-        base.StartMyself();
+        Vector3 parentPos = this.transform.parent.transform.localPosition;
+        this.transform.localRotation = Quaternion.Euler(0, 0, (parentPos.y < 0 ? -90 : 90));
+        this.transform.localPosition = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y + (parentPos.y > 0 ? 0.6f : -0.6f), this.transform.localPosition.z);
+
         shotCutscene = GameObject.Find("CutsceneManager").GetComponent<ShotCutscene>();
         canonBallPool = GameObject.Find("CanonBallPool").GetComponent<SimpleObjectPool>();
     }
@@ -37,26 +41,25 @@ public class Canon : ShipElement
 
 
     /** GUI CREATOR **/
-    protected override void createActionList()
+    public override List<ActionMenuItem> createActionList()
     {
-        this.actionList.RemoveRange(0, this.actionList.Count);
+        List<ActionMenuItem> actions = new List<ActionMenuItem>();
         if (this.isAvailable() && this.getMember() && this.getTarget() && !this.attacking && !this.reloading)
-            this.actionList.Add(new ActionMenuItem("Attack", doDamage));
+            actions.Add(new ActionMenuItem("Attack", doDamage));
         if (this.attacking && this.canAttack)
-            this.actionList.Add(new ActionMenuItem("Stop Attack", stopAttack));
+            actions.Add(new ActionMenuItem("Stop Attack", stopAttack));
         if (this.reloading)
-            this.actionList.Add(new ActionMenuItem("Reloading..", none));
-        if (this.getMember() && !this.isRepairing() && this.currentLife != this.life)
-            this.actionList.Add(new ActionMenuItem("Repair", doRepair));
+            actions.Add(new ActionMenuItem("Reloading..", none));
         if (this.getMember() && !ready && !this.reloading)
-            this.actionList.Add(new ActionMenuItem("Load canon", doReload));
-        this.actionList.Add(new ActionMenuItem("Select Target", selectTarget));
+            actions.Add(new ActionMenuItem("Load canon", doReload));
+        actions.Add(new ActionMenuItem("Select Target", selectTarget));
+        return actions;
     }
 
     /** AVAILABLE POSITION CREATOR **/
-    protected override void createAvailableCrewMemberPosition()
+    public override void createAvailableCrewMemberPosition()
     {
-        this.availablePosition.Add(new AvailablePosition(new Vector3(-0.55f, 0f, 0f)));
+        this.availablePosition = new AvailablePosition(new Vector3(-0.55f, 0f, 0f));
     }
 
     /** ON HIT EFFECT **/
@@ -80,9 +83,14 @@ public class Canon : ShipElement
     }
 
     /** ACTIONS **/
+    public bool none()
+    {
+        return false;
+    }
+
     public override bool actionIsRunning()
     {
-        if (this.reloading || this.repairing)
+        if (this.reloading)
         {
             return true;
         }
@@ -101,7 +109,7 @@ public class Canon : ShipElement
     protected bool stopAttack()
     {
         this.canAttack = false;
-        this.updateActionMenu();
+        this.updateParentActionMenu();
         return true;
     }
 
@@ -115,8 +123,7 @@ public class Canon : ShipElement
     /** REALOAD **/
     protected bool isPossibleToReload()
     {
-        Gunpowder powder = this.transform.parent.GetComponentInChildren<Gunpowder>();
-        
+        Gunpowder powder = this.transform.root.GetComponentInChildren<Gunpowder>();
         return (powder != null && powder.isAvailable());
     }
 
@@ -125,8 +132,8 @@ public class Canon : ShipElement
         if (!this.isPossibleToReload())
             return false;
         this.reloading = true;
-        this.updateActionMenu();
-        Invoke("setCanonReady", this.GetComponentInChildren<Battle_CrewMember>().getMember().getValueByCrewSkill(SkillAttribute.RCanonTime, 3));
+        this.updateParentActionMenu();
+        Invoke("setCanonReady", this.getMember().getProfile().getValueByCrewSkill(SkillAttribute.RCanonTime, 3));
         return true;
     }
 
@@ -135,25 +142,13 @@ public class Canon : ShipElement
         if (!this.isPossibleToReload())
             return;
         this.reloading = true;
-        Invoke("reloadEnd", this.GetComponentInChildren<Battle_CrewMember>().getMember().getValueByCrewSkill(SkillAttribute.RCanonTime, 3));
+        Invoke("reloadEnd", this.getMember().getProfile().getValueByCrewSkill(SkillAttribute.RCanonTime, 3));
     }
 
     protected void reloadEnd()
     {
         this.setCanonReady();
         this.doDamage();
-    }
-
-    /** REPAIR **/
-    protected override void doRepairActionEnd()
-    {
-        this.setCurrentLife(this.currentLife + this.GetComponentInChildren<Battle_CrewMember>().getMember().getValueByCrewSkill(SkillAttribute.RepairValue, 10));
-    }
-
-    protected override bool doRepairAction()
-    {
-        Invoke("doRepairEnd", this.GetComponentInChildren<Battle_CrewMember>().getMember().getValueByCrewSkill(SkillAttribute.RepairTime, 1));
-        return true;
     }
 
     /** DO DAMAGE **/
@@ -165,37 +160,44 @@ public class Canon : ShipElement
         {
             if (ready)
             {
-                if (!target.isAvailable())
+                MonoBehaviour finalTarget;
+                Battle_Ship enemy = target.GetComponentInParent<Battle_Ship>();
+
+                if (target.getEquipment() != null && target.getEquipment().isAvailable())
+                {
+                    finalTarget = target.getEquipment();
+                }
+                else
+                {
+                    finalTarget = enemy;
+                }
+                if (enemy.isDied())
                 {
                     this.stopAttack();
                     this.target = null;
                     result = false;
                 }
-                else
-                {
                     /*if (UnityEngine.Random.value > 0.80)
                     {
                         shotCutscene.StartCutscene();
                         WaitForX(shotCutscene.duration);
                     }*/
-                    Battle_Ship enemy = target.GetComponentInParent<Battle_Ship>();
 
-                    GameObject canonBall = canonBallPool.GetObject();
+                GameObject canonBall = canonBallPool.GetObject();
 
-                    Battle_CanonBall battleCanonBall = canonBall.GetComponent<Battle_CanonBall>();
-                    battleCanonBall.initialize(new CanonBall(1, this.GetComponentInChildren<Battle_CrewMember>().getMember().getValueByCrewSkill(SkillAttribute.ShootCanonValue, 1)), target, this.getBulletAccuracy(this.GetComponentInChildren<Battle_CrewMember>()));
-                    canonBall.transform.position = this.transform.position;
-                    canonBall.transform.SetParent(this.transform);
-                    canonBall.GetComponent<Rigidbody2D>().AddRelativeForce((target.transform.position - canonBall.transform.position).normalized * this.getBulletSpeed(battleCanonBall.getAmmunition()));
+                Battle_CanonBall battleCanonBall = canonBall.GetComponent<Battle_CanonBall>();
+                battleCanonBall.initialize(new CanonBall(1, this.GetComponentInChildren<Battle_CrewMember>().getProfile().getValueByCrewSkill(SkillAttribute.ShootCanonValue, 1)), finalTarget, this.getBulletAccuracy(this.GetComponentInChildren<Battle_CrewMember>()));
+                canonBall.transform.position = this.transform.position;
+                canonBall.transform.SetParent(this.transform);
+                canonBall.GetComponent<Rigidbody2D>().AddRelativeForce((target.transform.position - canonBall.transform.position).normalized * this.getBulletSpeed(battleCanonBall.getAmmunition()));
 
-                    Physics2D.IgnoreCollision(canonBall.transform.GetComponent<Collider2D>(), this.transform.GetComponent<Collider2D>(), true);
-                    if (enemy != null && canAttack)
-                    {
-                        this.setAttacking(true);
-                        this.ready = false;
-                        result = true;
-                    }
-
+                Physics2D.IgnoreCollision(canonBall.transform.GetComponent<Collider2D>(), this.transform.GetComponent<Collider2D>(), true);
+                Physics2D.IgnoreCollision(canonBall.transform.GetComponent<Collider2D>(), this.getParentShip().transform.GetComponent<Collider2D>(), true);
+                if (enemy != null && canAttack)
+                {
+                    this.setAttacking(true);
+                    this.ready = false;
+                    result = true;
                 }
             }
             if (canAttack)
@@ -279,7 +281,7 @@ public class Canon : ShipElement
         return this.attacking;
     }
 
-    public ShipElement getTarget()
+    public RoomElement getTarget()
     {
         return this.target;
     }
@@ -289,17 +291,21 @@ public class Canon : ShipElement
         return this.selectingTarget;
     }
 
-    /** SETTERS **/
-    public void setTarget(ShipElement target)
+    public bool isInGoodPositionToShoot(RoomElement target)
     {
         bool canonIsRightPosition = this.transform.localPosition.y < 0;
         bool shipIsRightPosition = this.transform.root.transform.localPosition.x < target.transform.root.transform.localPosition.x;
+        return (canonIsRightPosition && shipIsRightPosition || !canonIsRightPosition && !shipIsRightPosition);
+    }
 
-        if (canonIsRightPosition && shipIsRightPosition || !canonIsRightPosition && !shipIsRightPosition)
+    /** SETTERS **/
+    public void setTarget(RoomElement target)
+    {
+        if (this.isInGoodPositionToShoot(target))
         {
             this.target = target;
             this.selectingTarget = false;
-            this.updateActionMenu();
+            this.updateParentActionMenu();
         }
     }
 
@@ -307,6 +313,6 @@ public class Canon : ShipElement
     {
         this.reloading = false;
         this.ready = true;
-        this.updateActionMenu();
+        this.updateParentActionMenu();
     }
 }

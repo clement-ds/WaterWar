@@ -31,17 +31,17 @@ public class TypeRoomCard : MonoBehaviour {
   }
 
   public void initCard(CarpenterController cl) {
-    Title.text = source.type;
-    Description.text = source.type.ToString();
+    Title.text = source.component;
+    Description.text = source.component.ToString();
 
     btn = this.GetComponent<Button>();
     btn.onClick.AddListener(delegate { cl.printType(source); });
-    setIcon(source.type);
+    setIcon(source.component);
   }
 
   public void setRoom(Room room) {
-    Title.text = source.type;
-    Description.text = source.type.ToString();
+    Title.text = source.component;
+    Description.text = source.component.ToString();
   }
 
   void Update() {

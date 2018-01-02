@@ -48,7 +48,7 @@ public class Battle_Enemy : Battle_Ship
     /** SCRIPT **/
     public void stopAllAction()
     {
-        foreach (ShipElement element in this.shipElements)
+        foreach (RoomElement element in this.rooms)
         {
             element.actionStopRunning();
         }
@@ -58,16 +58,9 @@ public class Battle_Enemy : Battle_Ship
     {
         Battle_CrewMember member = getFreeCrewMember();
 
-        if (!this.repairCanteen(member))
+        if (member != null)
         {
-            if (!this.repairCanon(member))
-            {
-                this.attackMode(member);
-            }
-            else
-            {
-                this.needAFreeCrewMember = false;
-            }
+            this.attackMode(member);
         }
         else
         {
@@ -83,7 +76,7 @@ public class Battle_Enemy : Battle_Ship
     /** UTILS **/
     protected bool freeACrewMember()
     {
-        foreach (ShipElement element in this.shipElements)
+        foreach (RoomElement element in this.rooms)
         {
             if (element)
             {
@@ -95,7 +88,7 @@ public class Battle_Enemy : Battle_Ship
 
                         if (member)
                         {
-                            member.freeCrewMemberFromShipElement(element, element.transform.parent.gameObject);
+                            //member.freeCrewMemberFromShipElement(element, element.transform.parent.gameObject);
                             print("MEMBER CREW FREE");
                             return true;
                         }
@@ -132,7 +125,7 @@ public class Battle_Enemy : Battle_Ship
     /** ATTACK **/
     public bool attackMode(Battle_CrewMember member)
     {
-        ShipElement target = this.findTargetElement();
+        RoomElement target = this.findTargetElement();
 
         if (target)
         {
@@ -153,7 +146,7 @@ public class Battle_Enemy : Battle_Ship
                             this.needAFreeCrewMember = true;
                             return false;
                         }
-                        member.assignCrewMemberToShipElement(canon, this.gameObject);
+                        //member.assignCrewMemberToShipElement(canon, this.gameObject);
                     }
                     canon.doDamage();
                     return true;
@@ -164,61 +157,17 @@ public class Battle_Enemy : Battle_Ship
     }
 
     /** RESEARCH **/
-    ShipElement findTargetElement()
+    RoomElement findTargetElement()
     {
-        GameObject player = GameObject.Find("Player");
+        Battle_Ship player = GameObject.Find("Player").GetComponent<Battle_Ship>();
 
-        foreach (Transform child in player.transform)
+        foreach (RoomElement room in player.getRooms())
         {
-            ShipElement target = child.GetComponent<ShipElement>();
-
-            if (target != null && target.isAvailable())
+            if (room.getEquipment() != null && room.getEquipment().isAvailable())
             {
-                return target;
+                return room;
             }
         }
         return null;
-    }
-
-    /** REPAIR **/
-    bool repairCanon(Battle_CrewMember member)
-    {
-        foreach (Transform child in this.transform)
-        {
-            Canon canon = child.GetComponent<Canon>();
-
-            if (canon != null && !canon.isAvailable())
-            {
-                if (member == null)
-                {
-                    this.needAFreeCrewMember = true;
-                    return false;
-                }
-                member.assignCrewMemberToShipElement(canon, this.gameObject);
-                canon.doRepair();
-                return true;
-            }
-        }
-        return false;
-    }
-
-    bool repairCanteen(Battle_CrewMember member)
-    {
-        Canteen canteen = this.GetComponent<Canteen>();
-
-        if (canteen)
-            print("canteeLife: " + canteen.getPercentLife());
-        if (canteen && canteen.getPercentLife() < 90)
-        {
-            if (member == null)
-            {
-                this.needAFreeCrewMember = true;
-                return false;
-            }
-            member.assignCrewMemberToShipElement(canteen, this.gameObject);
-            canteen.doRepair();
-            return true; ;
-        }
-        return false;
     }
 }

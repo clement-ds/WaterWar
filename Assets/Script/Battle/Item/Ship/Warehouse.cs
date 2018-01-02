@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public abstract class Warehouse : ShipElement {
     
@@ -8,23 +9,20 @@ public abstract class Warehouse : ShipElement {
     {
     }
 
-    /** GUI CREATOR **/
-    protected override void createActionList()
+    public override void init()
     {
-        this.actionList.RemoveRange(0, this.actionList.Count);
-        if (this.getMember())
-        {
-            if (!this.isRepairing() && this.currentLife != this.life)
-            {
-                this.actionList.Add(new ActionMenuItem("Repair", doRepair));
-            }
-        }
+    }
+
+    /** GUI CREATOR **/
+    public override List<ActionMenuItem> createActionList()
+    {
+        List<ActionMenuItem> actionList = new List<ActionMenuItem>();
+        return actionList;
     }
 
     /** AVAILABLE POSITION CREATOR **/
-    protected override void createAvailableCrewMemberPosition()
+    public override void createAvailableCrewMemberPosition()
     {
-        this.availablePosition.Add(new AvailablePosition(new Vector3(-0.1f, -0.1f, 0f)));
     }
 
     /** ON HIT EFFECT **/
@@ -45,28 +43,12 @@ public abstract class Warehouse : ShipElement {
     /** ACTIONS **/
     public override bool actionIsRunning()
     {
-        if (this.repairing)
-        {
-            return true;
-        }
         return false;
     }
 
     public override bool actionStopRunning()
     {
         return false;
-    }
-
-    /** REPAIR **/
-    protected override void doRepairActionEnd()
-    {
-        this.setCurrentLife(this.currentLife + this.GetComponentInChildren<Battle_CrewMember>().getMember().getValueByCrewSkill(SkillAttribute.RepairValue, 20));
-    }
-
-    protected override bool doRepairAction()
-    {
-        Invoke("doRepairEnd", this.GetComponentInChildren<Battle_CrewMember>().getMember().getValueByCrewSkill(SkillAttribute.RepairTime, 1));
-        return true;
     }
 
     /** DO DAMAGE **/

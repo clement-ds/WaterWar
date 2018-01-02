@@ -13,7 +13,7 @@ public class CrewMember_Captain : CrewMember {
         satiety = 1.5f;
         maxLife = 300f;
         life = 300f;
-        this.assignedRoom = Ship_Item.HELM;
+        this.assignedRoom = Ship_Item.WHEEL;
         memberImage = "Sprites/capt";
 
         this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RCanonTime, 100f));

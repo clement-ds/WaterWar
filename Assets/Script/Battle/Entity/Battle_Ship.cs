@@ -21,7 +21,7 @@ public abstract class Battle_Ship : MonoBehaviour
 
     protected bool isPlayer;
 
-    protected List<ShipElement> shipElements;
+    protected List<RoomElement> rooms;
     protected List<Battle_CrewMember> crewMembers;
 
     protected Battle_Ship(float lifeValue, bool isPlayer)
@@ -38,27 +38,25 @@ public abstract class Battle_Ship : MonoBehaviour
         life = lifeValue;
         this.setCurrentLife(life);
 
-        this.shipElements = new List<ShipElement>();
+        this.rooms = new List<RoomElement>();
         this.crewMembers = new List<Battle_CrewMember>();
     }
 
     // Use this for initialization
     void Start()
     {
-        Debug.Log("create crew");
         this.createRoom();
         this.createCrew();
     }
 
     /** CREATOR **/
-
     protected void createRoom()
     {
         ShipElement[] items = this.GetComponentsInChildren<ShipElement>();
 
         foreach (ShipElement it in items)
         {
-            it.StartMyself();
+            it.init();
         }
     }
 
@@ -75,41 +73,70 @@ public abstract class Battle_Ship : MonoBehaviour
             battleCrewMember.initialize(member);
             crewMember.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(member.memberImage);
 
-            ShipElement[] items;
-
-            if (member.assignedRoom == Ship_Item.CANON)
+            List<RoomElement> items = this.parseShipElement(member.assignedRoom);
+            
+            if (this.assignateCrewMemberToRoom(battleCrewMember, items, true))
             {
-                items = this.GetComponentsInChildren<Canon>();
+                this.crewMembers.Add(battleCrewMember);
             }
-            else if (member.assignedRoom == Ship_Item.CANTEEN)
-            {
-                items = this.GetComponentsInChildren<Canteen>();
-            }
-            else if (member.assignedRoom == Ship_Item.HELM)
-            {
-                items = this.GetComponentsInChildren<Helm>();
-            }
-            else
-            {
-                crewMember.transform.position = this.transform.position;
-                crewMember.transform.SetParent(this.transform);
-                break;
-            }
-
-            foreach (ShipElement it in items)
-            {
-                if (it.hasAvailableCrewMemberPosition())
-                {
-                    battleCrewMember.directAssignCrewMemberInElement(it);
-                    break;
-                }
-            }
-            this.crewMembers.Add(battleCrewMember);
         }
     }
 
+    protected bool assignateCrewMemberToRoom(Battle_CrewMember crewMember, List<RoomElement> items, bool priority)
+    {
+        bool result = false;
+        foreach (RoomElement room in items)
+        {
+            try
+            {
+                if (priority)
+                {
+                    if (room.getEquipment() && room.getEquipment().hasAvailableCrewMemberPosition())
+                    {
+                        if (crewMember.directAssignCrewMemberInElement(room.getEquipment(), room.getEquipment().chooseAvailableCrewMemberPosition(crewMember.GetInstanceID())))
+                        {
+                            result = true;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    if (room.hasAvailableCrewMemberPosition())
+                    {
+                        if (crewMember.directAssignCrewMemberInRoom(room, room.chooseAvailableCrewMemberPosition(crewMember.GetInstanceID())))
+                        {
+                            result = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            catch (System.Exception m)
+            {
+                Debug.LogError(m.Message);
+            }
+        }
+        if (result)
+        {
+            return true;
+        }
+        else if (priority && !result)
+        {
+            priority = false;
+            return this.assignateCrewMemberToRoom(crewMember, items, priority);
+        }
+        else if (!result && items.Count != this.rooms.Count)
+        {
+            items = this.rooms;
+            return this.assignateCrewMemberToRoom(crewMember, items, priority);
+        }
+        return false;
+    }
+
     /** DAMAGE **/
-    public void receiveDamage(float damage) {
+    public void receiveDamage(float damage)
+    {
         this.setCurrentLife(this.currentLife - damage);
         if (this.currentLife <= 0)
         {
@@ -171,6 +198,7 @@ public abstract class Battle_Ship : MonoBehaviour
         }
     }
 
+    /** UPDATE **/
     public void FixedUpdate()
     {
         if (!this.body)
@@ -193,6 +221,14 @@ public abstract class Battle_Ship : MonoBehaviour
         }
     }
 
+    public void updateActionMenu()
+    {
+        foreach (RoomElement room in this.rooms)
+        {
+            room.updateActionMenu();
+        }
+    }
+
     /** ACTIONS **/
     public abstract void aboardingEnemy();
 
@@ -204,18 +240,62 @@ public abstract class Battle_Ship : MonoBehaviour
 
     public abstract void die();
 
-    public void addShipElement(ShipElement shipElement)
+    public void addShipElement(RoomElement shipElement)
     {
-        this.shipElements.Add(shipElement);
+        this.rooms.Add(shipElement);
     }
 
     /** GETTERS **/
-    public float getCurrentLife() {
+    public bool isDied()
+    {
+        return this.getCurrentLife() <= 0;
+    }
+
+    public List<RoomElement> parseShipElement(Ship_Item type)
+    {
+        List<RoomElement> result = new List<RoomElement>();
+
+        foreach (RoomElement item in this.rooms)
+        {
+            try
+            {
+                if (item.getEquipment().getType() == type)
+                {
+                    result.Add(item);
+                }
+            }
+            catch
+            {
+            }
+        }
+        return result;
+    }
+    public float getCurrentLife()
+    {
         return this.currentLife;
     }
 
+    public List<RoomElement> getRooms()
+    {
+        return this.rooms;
+    }
+
+    public RoomElement getFreeElement(Ship_Item type)
+    {
+        RoomElement result = null;
+        foreach (RoomElement item in this.rooms)
+        {
+            if (item.getEquipment().getType() == type && item.getEquipment().getMember() == null)
+            {
+                return item;
+            }
+        }
+        return result;
+    }
+
     /** SETTERS **/
-    public void setCurrentLife(float value) {
+    protected void setCurrentLife(float value)
+    {
         this.currentLife = value;
         this.currentLife = (value < 0 ? 0 : value);
         this.currentLife = (this.currentLife > this.life ? this.life : this.currentLife);

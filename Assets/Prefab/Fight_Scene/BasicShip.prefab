@@ -93,8 +93,8 @@ GameObject:
   - component: {fileID: 461050}
   - component: {fileID: 21221452}
   - component: {fileID: 6022890}
-  - component: {fileID: 11461774}
   - component: {fileID: 5033362}
+  - component: {fileID: 114337848406640980}
   m_Layer: 0
   m_Name: BasicShip
   m_TagString: Untagged
@@ -152,7 +152,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.16, y: 1.52}
+    oldSize: {x: 4.9, y: 1.4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -287,17 +287,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &11461774
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 176282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9942500d9705b74418f314ae1cb601e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &11470954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -402,7 +391,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4c9c831632c507f4f9366e846eec46de, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a46179dd045d33b49b7cb72b75a4ba0f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -549,3 +538,14 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 176282}
   m_IsPrefabParent: 1
+--- !u!114 &114337848406640980
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 176282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3b5ebe434fea9e46a4ee1192d3bba1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
