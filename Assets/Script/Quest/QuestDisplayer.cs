@@ -30,7 +30,7 @@ public class QuestDisplayer : MonoBehaviour {
 		List<int> alreadyUsedIndexes = new List<int>();
 
 		if (quests.Count > spawnPoints.Count) {
-			quests.RemoveRange(quests.Count -1, quests.Count - spawnPoints.Count - 1);
+			quests.RemoveRange(spawnPoints.Count - 1, quests.Count - spawnPoints.Count - 1);
 		}
 
 		foreach (PlayerQuest quest in quests) {
