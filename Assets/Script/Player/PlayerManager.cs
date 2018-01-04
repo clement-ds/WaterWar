@@ -9,6 +9,7 @@ public class PlayerManager {
     private static PlayerManager instance = null;
 
     private List<String> json = new List<string>();
+    private List<String> objectDictionary = new List<string>();
     public Player player;
     public Player ai;
 
@@ -26,6 +27,8 @@ public class PlayerManager {
 
         LoadFile("PlayerJson/AISave.json");
         ai = JsonUtility.FromJson<Player>(json[0]);
+
+        LoadFile("PlayerJson/Objects.txt", objectDictionary);
     }
 
     public static PlayerManager GetInstance()
@@ -37,6 +40,16 @@ public class PlayerManager {
         return instance;
     }
 
+    public string getNameForObjectId(int id) {
+        return JsonUtility.FromJson<InventoryObject>(objectDictionary[id]).name;
+    }
+
+    public void AcceptQuest(PlayerQuest quest) {
+        quest.taken = true;
+        player.questLog.quests.Add(quest);
+        IslandManager.GetInstance().islands[player.currentIsland].questLog.quests.Remove(quest);
+    }
+    
     public bool Save()
     {
         try
@@ -68,6 +81,26 @@ public class PlayerManager {
         return true;
     }
 
+    private bool LoadFile(string fileName, List<string> json) {
+        try {
+        string line;
+        StreamReader theReader = new StreamReader(fileName, Encoding.Default);
+        using (theReader) {
+            do {
+            line = theReader.ReadLine();
+            if (line != null) {
+                json.Add(line);
+            }
+            } while (line != null);
+            theReader.Close();
+            return true;
+        }
+        }
+        catch (Exception e) {
+        Debug.Log(e.Message);
+        return false;
+        }
+    }
     private bool LoadFile(string fileName)
     {
         json = new List<string>();
@@ -249,6 +282,10 @@ public class PlayerQuest
     public InventoryObject end;
     public int moneyReward;
     public bool taken = false;
+
+    public String Describe() {
+        return ("TITLE: " + title + "\tDESCRIPTION: " + description + "\tTYPE: " + type + "\tOBJECTIVE: " + objective + "\tREWARD: " + reward.id + ':' + reward.amount + ':' + reward.type);
+    }
 }
 
 [Serializable]
