@@ -55,16 +55,16 @@ public class QuestGenerator {
       string name = JsonUtility.FromJson<Name>(names[UnityEngine.Random.Range(0, 4)]).name;
       string adjectif = JsonUtility.FromJson<Adjectif>(adjectifs[UnityEngine.Random.Range(0, 4)]).name;
 
-      quest.title = "Tuer le" + " " + "Capitaine " + name;
+      quest.title = "Kill" + " " + "Captain " + name;
 
       // Description
-      quest.description = "Tuer " + adjectif + " " + "Capitaine " + name + " " + "<qui térorise>" + " " + "<l'île des pommes>";
+      quest.description = "Kill " + adjectif + " " + "Captain " + name + " " + "<terrorizing>" + " " + "<Apple Island>";
 
       // Reward
       quest.reward.type = (Reward.REWARD)UnityEngine.Random.Range(0, 2);
 
       // End
-      quest.end.name = "Flag " + "<Capitaine Barbosa>";
+      quest.end.name = "Flag " + "<Captain Barbosa>";
       quest.end.quantity = 1;
 
       // MoneyReward outdated (just in case)
@@ -94,10 +94,10 @@ public class QuestGenerator {
       }
 
       // Title
-      quest.title = "Avoir" + " " + amount.ToString()+ " " + objectName;
+      quest.title = "Collect" + " " + amount.ToString()+ " " + objectName;
 
       // Description
-      quest.description = "Apporte " + amount.ToString()+ " " + objectName + " " + "sur" + " " + "<l'île des pommes>";
+      quest.description = "Bring " + amount.ToString()+ " " + objectName + " " + "to" + " " + "<Apple Island>";
 
 
       // End
@@ -131,10 +131,10 @@ public class QuestGenerator {
       }
 
       // Title
-      quest.title = "Avoir" + " " + amount.ToString()+ " " + objectName;
+      quest.title = "Collect" + " " + amount.ToString()+ " " + objectName;
 
       // Description
-      quest.description = "Apporte " + amount.ToString()+ " " + objectName + " " + "sur" + " " + "<l'île des pommes>";
+      quest.description = "Bring " + amount.ToString()+ " " + objectName + " " + "to" + " " + "<Apple Island>";
 
 
       // End
