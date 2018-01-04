@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using IslandGraphic = System.Collections.Generic.List<System.Collections.Generic.List<MapTile>>;
 using SeaGraphic = System.Collections.Generic.List<System.Collections.Generic.List<MapTile>>;
 using WorldMap = System.Collections.Generic.List<System.Collections.Generic.List<MapTile>>;
@@ -185,6 +186,8 @@ public class MapGenerator {
                 ySpawn = UnityEngine.Random.Range(1, worldMapYSize - 25);
                 repeat++;
             }
+            IslandManager.GetInstance().islands[i].x = xSpawn;
+            IslandManager.GetInstance().islands[i].y = ySpawn;
             addIslandToMap(xSpawn, ySpawn, island);
         }
         isMapGenerated = true;
@@ -225,6 +228,14 @@ public class MapGenerator {
                         tile.transform.SetParent(parent.transform, false);
                     }
                 }
+            }
+            for (int i = 0; i < islandsAmount; i++)
+            {
+                Island island = IslandManager.GetInstance().islands[i];
+                GameObject islandName = GameObject.Instantiate(Resources.Load("Tiles/IslandName") as GameObject, (new Vector3(island.x * 50, island.y * 50, 10)), new Quaternion());
+                TextMeshProUGUI textMeshProUGUI = islandName.GetComponentInChildren<TextMeshProUGUI>();
+                textMeshProUGUI.SetText(island.name);
+                islandName.transform.SetParent(parent.transform, false);
             }
         } else {
             Debug.LogWarning("Map not generated yet /!\\");
