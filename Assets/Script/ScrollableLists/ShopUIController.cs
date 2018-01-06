@@ -123,7 +123,10 @@ public class ShopUIController : UIController
         }
     }
 
+    Economy eco = new Economy();
+
     private void SendToList(List<InventoryObject> previousList, List<InventoryObject> newList, InventoryObject item, bool shouldDelete = true) {
+        eco.setInventoryPrices(inventoryI, inventoryP);
         bool isFound = false;
         for (int i = 0; i < newList.Count; i++) {
             if (newList[i].name == item.name) {

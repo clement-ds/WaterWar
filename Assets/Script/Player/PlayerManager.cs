@@ -224,12 +224,13 @@ public class PlayerCrew
 [Serializable]
 public class InventoryObject
 {
-    public InventoryObject(string name, string type, int number, int price)
+    public InventoryObject(string name, string type, int number, int price, int basePrice)
     {
         this.name = name;
         this.type = type;
         this.quantity = number;
         this.price = price;
+        this.basePrice = basePrice;
     }
 
     public InventoryObject(InventoryObject invObj)
@@ -238,6 +239,7 @@ public class InventoryObject
         this.type = invObj.type;
         this.quantity = invObj.quantity;
         this.price = invObj.price;
+        this.basePrice = invObj.basePrice;
     }
 
     public string name;
@@ -246,6 +248,7 @@ public class InventoryObject
     public int price;
     public int id;
     public bool isRareItem;
+    public int basePrice;
 }
 
 [Serializable]

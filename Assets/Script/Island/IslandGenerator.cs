@@ -111,23 +111,23 @@ public class IslandGenerator {
     private void GenerateWeapons(Island island)
     {
         int a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Black powder", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Black powder", "Weapon", a, 10, 10));
         a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Canon ball", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Canon ball", "Weapon", a, 10, 10));
         a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Shrapnel", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Shrapnel", "Weapon", a, 10, 10));
         a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Sabre", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Sabre", "Weapon", a, 10, 10));
         a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Musket", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Musket", "Weapon", a, 10, 10));
         a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Rifle", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Rifle", "Weapon", a, 10, 10));
         a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Canon", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Canon", "Weapon", a, 10, 10));
         a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Bullet", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Bullet", "Weapon", a, 10, 10));
         a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Graplin hooks", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Graplin hooks", "Weapon", a, 10, 10));
     }
 
     private void GenerateQuests(Island island)

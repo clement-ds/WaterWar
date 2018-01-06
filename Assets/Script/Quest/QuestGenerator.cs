@@ -40,7 +40,7 @@ public class QuestGenerator {
     List<string> objects = new List<string>();
 
     quest.reward = new Reward();
-    quest.end = new InventoryObject("", "", 1, 10);
+    quest.end = new InventoryObject("", "", 1, 10, 10);
 
     quest.type = (PlayerQuest.QUEST)UnityEngine.Random.Range(0, 2);
 
