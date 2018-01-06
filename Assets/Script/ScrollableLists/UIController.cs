@@ -7,7 +7,7 @@ using System;
 // BASECLASS, works with ListPanelRoot/ListReceiverPanel/ListRowPanel kind of items
 public class UIController : MonoBehaviour
 {
-
+    [Header("Panel items")]
     public RectTransform panel;
     public GameObject rootPanel;
     public GameObject rowPrefab;
@@ -18,7 +18,7 @@ public class UIController : MonoBehaviour
         ClearPanel();
     }
 
-    public void TogglePanel()
+    public virtual void TogglePanel()
     {
         rootPanel.SetActive(!rootPanel.activeSelf);
         panel.gameObject.SetActive(rootPanel.activeSelf);
@@ -26,7 +26,7 @@ public class UIController : MonoBehaviour
             Populate();
     }
 
-    private void ClearPanel()
+    protected virtual void ClearPanel()
     {
         foreach (Transform child in panel)
         {

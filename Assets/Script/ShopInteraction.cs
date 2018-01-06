@@ -6,17 +6,17 @@ public class ShopInteraction : MonoBehaviour {
     GameObject shopMenu;
 
     void Start () {
-        shopMenu = GameObject.Find("ShopCanvas");
-        shopMenu.SetActive(false);
+        // shopMenu = GameObject.Find("ShopCanvas");
+        // shopMenu.SetActive(false);
     }
 
     public void TriggerButton()
     {
-        shopMenu.SetActive(!shopMenu.active);
+        // shopMenu.SetActive(!shopMenu.active);
     }
 
     void Update () {
-      if (Input.GetKeyDown(KeyCode.Escape) && shopMenu)
-        shopMenu.SetActive(false);
+    //   if (Input.GetKeyDown(KeyCode.Escape) && shopMenu)
+    //     shopMenu.SetActive(false);
     }
 }
