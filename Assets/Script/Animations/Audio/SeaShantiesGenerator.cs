@@ -28,7 +28,6 @@ public class SeaShantiesGenerator : MonoBehaviour {
                 goodSong = true;
         }
         source.clip = clips[song];
-        print("SONG " + song);
         source.Play();
     }
 }

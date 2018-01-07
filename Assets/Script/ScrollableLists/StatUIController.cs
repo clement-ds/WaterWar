@@ -24,7 +24,7 @@ public class StatUIController : UIController
 
         foreach (CrewMember member in crewList)
         {
-            GameObject crewRow = (GameObject)Instantiate(rowPrefab);
+            GameObject crewRow = (GameObject)GameObject.Instantiate(rowPrefab);
 
             foreach (Transform child in crewRow.transform)
             {

@@ -31,7 +31,7 @@ public class QuestUIController : UIController
         foreach (PlayerQuest quest in questList) {
             i++;
             if (i >= (nbrQuestByPage * currentPage) && i < (nbrQuestByPage * currentPage  + nbrQuestByPage)) {
-                GameObject questRow = (GameObject)Instantiate(rowPrefab);
+                GameObject questRow = (GameObject)GameObject.Instantiate(rowPrefab);
 
                 foreach (Transform child in questRow.transform) {
                     if (child.name == "MemberObjectif") {

@@ -37,7 +37,7 @@ public class QuestController : UIController
             i++;
             if (i >= (nbrQuestByPage * currentPage) && i < (nbrQuestByPage * currentPage + nbrQuestByPage))
             {
-                GameObject questRow = (GameObject)Instantiate(rowPrefab);
+                GameObject questRow = (GameObject)GameObject.Instantiate(rowPrefab);
 
                 foreach (Transform child in questRow.transform)
                 {
@@ -97,7 +97,7 @@ public class QuestController : UIController
     public void OnClick()
     {
         TogglePanel();
-        closeButton.gameObject.SetActive(panel.gameObject.active);
+        closeButton.gameObject.SetActive(panel.gameObject.activeSelf);
     }
 
     public void NextPage()
