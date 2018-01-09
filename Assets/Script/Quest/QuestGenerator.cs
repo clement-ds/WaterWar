@@ -155,4 +155,21 @@ public class QuestGenerator {
     }
     return quest;
   }
+
+  public bool CheckQuest(PlayerQuest quest, Player player) {
+    if (quest == null || player == null) {
+      return false;
+    }
+    InventoryObject obj =  player.inventory.food.Find((item) => {
+      if (item.name.Equals(quest.end.name)) {
+        return true;
+      }
+      return false;
+    });
+
+    if (obj != null && obj.quantity >= quest.end.quantity)
+      return true;
+
+    return false;
+  }
 }

@@ -50,6 +50,10 @@ public class PlayerManager {
         IslandManager.GetInstance().islands[player.currentIsland].questLog.quests.Remove(quest);
     }
     
+    public List<PlayerQuest> GetQuest() {
+        return player.questLog.quests;
+    }
+
     public bool Save()
     {
         try

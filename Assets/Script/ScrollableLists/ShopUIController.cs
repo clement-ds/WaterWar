@@ -67,17 +67,17 @@ public class ShopUIController : UIController
         foreach (Transform child in ReceiverSelf)
         {
             if (child != panel.transform)
-                Destroy(child.gameObject);
+                GameObject.Destroy(child.gameObject);
         }
         foreach (Transform child in ReceiverSelfTrade)
         {
             if (child != panel.transform)
-                Destroy(child.gameObject);
+                GameObject.Destroy(child.gameObject);
         }
         foreach (Transform child in ReceiverShopTrade)
         {
             if (child != panel.transform)
-                Destroy(child.gameObject);
+                GameObject.Destroy(child.gameObject);
         }
     }
 
@@ -90,11 +90,9 @@ public class ShopUIController : UIController
     }
 
     private void FillList(GameObject row, Transform panel, List<InventoryObject> objects, Action<InventoryObject> callback) {
-        PlayerManager PMInstance = PlayerManager.GetInstance();
-
         foreach (InventoryObject item in objects)
         {
-            GameObject itemRow = (GameObject)Instantiate(row);
+            GameObject itemRow = (GameObject)GameObject.Instantiate(row);
 
             foreach (Transform child in itemRow.transform)
             {

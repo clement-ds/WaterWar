@@ -129,7 +129,7 @@ public class Island
     public string name;
     public float x;
     public float y;
-
+    public int influence;
     public IslandInventory inventory = new IslandInventory();
     public List<CrewMember> crew = new List<CrewMember>();
     public QuestLog questLog = new QuestLog();

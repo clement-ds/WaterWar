@@ -31,7 +31,7 @@ public class UIController : MonoBehaviour
         foreach (Transform child in panel)
         {
             if (child != panel.transform)
-                Destroy(child.gameObject);
+                GameObject.Destroy(child.gameObject);
         }
     }
 
