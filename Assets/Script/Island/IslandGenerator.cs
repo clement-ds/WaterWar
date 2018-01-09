@@ -90,6 +90,7 @@ public class IslandGenerator {
         GenerateQuests(island);
         GenerateCrew(island);
         GenerateName(island);
+        island.influence = 50;
         Debug.Log("GENERATE: " + island.name);
         return island;
     }
