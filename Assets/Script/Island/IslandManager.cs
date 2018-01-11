@@ -142,8 +142,88 @@ public class Island
 }
 
 [Serializable]
-public class IslandInventory
+public class IslandInventory: Inventory
+{
+}
+
+public class Inventory
 {
     public List<InventoryObject> food = new List<InventoryObject>();
     public List<InventoryObject> weapons = new List<InventoryObject>();
+
+    public InventoryObject containsObject(InventoryObject obj)
+    {
+        if (obj.type == "Food")
+        {
+            foreach (InventoryObject food in this.food)
+            {
+                if (obj.name == food.name)
+                {
+                    return food;
+                }
+            }
+        }
+        else
+        {
+            foreach (InventoryObject weapon in this.weapons)
+            {
+                if (obj.name == weapon.name)
+                {
+                    return weapon;
+                }
+            }
+        }
+        return null;
+    }
+
+    public bool addObject(InventoryObject obj)
+    {
+        if (obj.quantity <= 0)
+        {
+            return false;
+        }
+        InventoryObject tmp = this.containsObject(obj);
+        if (tmp != null)
+        {
+            tmp.quantity += 1;
+        }
+        else
+        {
+            if (obj.type == "Food")
+            {
+                this.food.Add(new InventoryObject(obj, 1));
+            }
+        }
+        return true;
+    }
+
+    public void removeObject(InventoryObject obj)
+    {
+        obj.quantity -= 1;
+        if (obj.type == "Food")
+        {
+            TrimList(this.food);
+        } else
+        {
+            TrimList(this.weapons);
+        }
+    }
+
+    private void TrimList(List<InventoryObject> list)
+    {
+        List<InventoryObject> toDelete = new List<InventoryObject>();
+
+        foreach (InventoryObject item in list)
+        {
+            if (item.quantity <= 0)
+            {
+                toDelete.Add(item);
+            }
+        }
+        foreach (InventoryObject item in toDelete)
+        {
+            list.Remove(item);
+        }
+        toDelete.Clear();
+    }
 }
