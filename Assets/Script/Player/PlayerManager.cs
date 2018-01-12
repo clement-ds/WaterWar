@@ -286,6 +286,7 @@ public class PlayerQuest
     public Reward reward;
     public InventoryObject end;
     public int moneyReward;
+    public string localisation;
     public bool taken = false;
 
     public String Describe() {

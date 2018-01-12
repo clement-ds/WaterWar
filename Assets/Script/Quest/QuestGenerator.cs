@@ -38,9 +38,10 @@ public class QuestGenerator {
   public PlayerQuest GenerateQuest(Island currentIsland) {
     PlayerQuest quest = new PlayerQuest();
     List<string> objects = new List<string>();
-    String islandName = currentIsland.name.ToString();
+    String islandName = currentIsland.name;
 
     quest.reward = new Reward();
+    quest.localisation = islandName;
     quest.end = new InventoryObject("", "", 1, 10, 10);
 
     quest.type = (PlayerQuest.QUEST)UnityEngine.Random.Range(0, 2);
@@ -160,12 +161,12 @@ public class QuestGenerator {
   public bool CheckQuest(PlayerQuest quest, Player player, Island island) {
     List<string> objects = new List<string>();
 
-    // Check if parameters exist
-    if (quest == null || player == null || island == null) {
+    if (quest == null || player == null || island == null)
       return false;
-    }
 
-    // Check & get the correct object
+    if (quest.localisation != island.name)
+      return false;
+
    InventoryObject ret = player.inventory.containsObject(quest.end.id);
 
     if (ret != null && ret.quantity >= quest.end.quantity) {
