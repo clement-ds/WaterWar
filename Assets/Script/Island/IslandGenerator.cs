@@ -86,10 +86,10 @@ public class IslandGenerator {
         //island.inventory = new IslandInventory();
         //island.crew = new IslandCrew();
         GenerateFood(island);
-        GenerateWeapons(island);
-        GenerateQuests(island);
-        GenerateCrew(island);
         GenerateName(island);
+        GenerateWeapons(island);
+        GenerateCrew(island);
+        GenerateQuests(island);
         island.influence = 50;
         Debug.Log("GENERATE: " + island.name);
         return island;

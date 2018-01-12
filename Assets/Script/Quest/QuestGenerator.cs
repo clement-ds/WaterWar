@@ -38,13 +38,13 @@ public class QuestGenerator {
   public PlayerQuest GenerateQuest(Island currentIsland) {
     PlayerQuest quest = new PlayerQuest();
     List<string> objects = new List<string>();
-    String islandName = currentIsland.name;
+    string islandName = currentIsland.name;
 
     quest.reward = new Reward();
-    quest.localisation = islandName;
     quest.end = new InventoryObject("", "", 1, 10, 10);
 
     quest.type = (PlayerQuest.QUEST)UnityEngine.Random.Range(0, 2);
+    quest.localisation = islandName;
 
     if (quest.type == PlayerQuest.QUEST.KILL) {
       List<string> names = new List<string>();
@@ -101,7 +101,6 @@ public class QuestGenerator {
       // Description
       quest.description = "Bring " + amount.ToString()+ " " + objectName + " " + "to" + " " + islandName;
 
-
       // End
       quest.end.name = objectName;
       quest.end.quantity = amount;
@@ -138,7 +137,6 @@ public class QuestGenerator {
       // Description
       quest.description = "Bring " + amount.ToString()+ " " + objectName + " " + "to" + " " + islandName;
 
-
       // End
       quest.end.name = objectName;
       quest.end.quantity = amount;
@@ -155,6 +153,7 @@ public class QuestGenerator {
       quest.reward.id = UnityEngine.Random.Range(0, objects.Count);
       quest.reward.amount = UnityEngine.Random.Range(1, 10);
     }
+
     return quest;
   }
 
@@ -164,9 +163,8 @@ public class QuestGenerator {
     if (quest == null || player == null || island == null)
       return false;
 
-    if (quest.localisation != island.name)
+    if (quest.localisation == null || !quest.localisation.Equals(island.name))
       return false;
-
    InventoryObject ret = player.inventory.containsObject(quest.end.id);
 
     if (ret != null && ret.quantity >= quest.end.quantity) {
