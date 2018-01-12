@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-public class PlayerManager {
+public class PlayerManager
+{
 
     private static PlayerManager instance = null;
 
@@ -28,12 +29,11 @@ public class PlayerManager {
         player = JsonUtility.FromJson<Player>(json[0]);
         Debug.Log("player : " + player.name + "/" + player.life);
 
-        enemies = enemiesSave.enemies;
         LoadFile("PlayerJson/AISave.json");
         for (int i = 0; i < maxEnemies / 2; i += 1)
         {
-            Player ai = JsonUtility.FromJson<Player>(json[0]);
-            enemies.Add(ai);
+            enemiesSave = JsonUtility.FromJson<EnemiesSave>(json[0]);
+            enemies = enemiesSave.enemies;
         }
         SaveAI();
 
@@ -49,17 +49,20 @@ public class PlayerManager {
         return instance;
     }
 
-    public string getNameForObjectId(int id) {
+    public string getNameForObjectId(int id)
+    {
         return JsonUtility.FromJson<InventoryObject>(objectDictionary[id]).name;
     }
 
-    public void AcceptQuest(PlayerQuest quest) {
+    public void AcceptQuest(PlayerQuest quest)
+    {
         quest.taken = true;
         player.questLog.quests.Add(quest);
         IslandManager.GetInstance().islands[player.currentIsland].questLog.quests.Remove(quest);
     }
-    
-    public List<PlayerQuest> GetQuest() {
+
+    public List<PlayerQuest> GetQuest()
+    {
         return player.questLog.quests;
     }
 
@@ -70,7 +73,8 @@ public class PlayerManager {
             StreamWriter writer = new StreamWriter("PlayerJson/Save.json", false);
             writer.Write(JsonUtility.ToJson(player));
             writer.Close();
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             Debug.Log(e.Message);
             return false;
@@ -94,24 +98,30 @@ public class PlayerManager {
         return true;
     }
 
-    private bool LoadFile(string fileName, List<string> json) {
-        try {
-        string line;
-        StreamReader theReader = new StreamReader(fileName, Encoding.Default);
-        using (theReader) {
-            do {
-            line = theReader.ReadLine();
-            if (line != null) {
-                json.Add(line);
+    private bool LoadFile(string fileName, List<string> json)
+    {
+        try
+        {
+            string line;
+            StreamReader theReader = new StreamReader(fileName, Encoding.Default);
+            using (theReader)
+            {
+                do
+                {
+                    line = theReader.ReadLine();
+                    if (line != null)
+                    {
+                        json.Add(line);
+                    }
+                } while (line != null);
+                theReader.Close();
+                return true;
             }
-            } while (line != null);
-            theReader.Close();
-            return true;
         }
-        }
-        catch (Exception e) {
-        Debug.Log(e.Message);
-        return false;
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            return false;
         }
     }
     private bool LoadFile(string fileName)
@@ -176,7 +186,7 @@ public class Player
 }
 
 [Serializable]
-public class PlayerInventory: Inventory
+public class PlayerInventory : Inventory
 {
 }
 
@@ -269,15 +279,17 @@ public class QuestLog
 }
 
 [Serializable]
-public class EndQuest {
+public class EndQuest
+{
     public int type;
     public int enemyType;
     public int enemyId;
 }
 
 [Serializable]
-public class Reward {
-    public enum REWARD {MONEY = 0, OBJECT = 1, INFLUENCE = 2};  
+public class Reward
+{
+    public enum REWARD { MONEY = 0, OBJECT = 1, INFLUENCE = 2 };
     public REWARD type;
     public int id;
     public int amount;
@@ -286,7 +298,7 @@ public class Reward {
 [Serializable]
 public class PlayerQuest
 {
-    public enum QUEST {KILL = 0, FIND, GET, RECRUIT, SACK, MORAL, PRINCIPAL, INFLUENCE, DESTROY};  
+    public enum QUEST { KILL = 0, FIND, GET, RECRUIT, SACK, MORAL, PRINCIPAL, INFLUENCE, DESTROY };
 
     public string description;
     public string title;
@@ -298,7 +310,8 @@ public class PlayerQuest
     public int moneyReward;
     public bool taken = false;
 
-    public String Describe() {
+    public String Describe()
+    {
         return ("TITLE: " + title + "\tDESCRIPTION: " + description + "\tTYPE: " + type + "\tOBJECTIVE: " + objective + "\tREWARD: " + reward.id + ':' + reward.amount + ':' + reward.type);
     }
 }
