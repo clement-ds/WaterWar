@@ -6,8 +6,12 @@ public class CarpenterController : MonoBehaviour {
 
 	private PlayerShip ship;
 	public GameObject TypeRoomCardPrefab;
+	public GameObject ShipRoomPrefab;
+	public GameObject CarpenterShip;
+
 
 	private List<GameObject> typeRoomList = new List<GameObject>();
+	private List<GameObject> ShipRoomList = new List<GameObject>();
 
 	private Room selectedRoom;
 
@@ -15,11 +19,37 @@ public class CarpenterController : MonoBehaviour {
 	void Start () {
 		PlayerManager manager = PlayerManager.GetInstance();
 		this.ship = manager.player.ship;
-		FillRoomList();
+		FillShopRoomList();
+		FillShipRoomList();
 	}
 
+	void FillShipRoomList() {
+		for (int i = 0; i < this.ShipRoomList.Count; ++i) {
+			Destroy(ShipRoomList[i]);
+		}
 
-  void FillRoomList() {
+		for (int i = 0; i < this.ship.shipDisposition.rooms.Count; ++i) {
+			if (this.ship.shipDisposition.rooms[i].type != "blockBody") {
+			GameObject newRoom = Instantiate(ShipRoomPrefab) as GameObject;
+			ShipRoom card = newRoom.GetComponent<ShipRoom>();
+
+			card.source = 
+					this.ship.shipDisposition.rooms[i];
+
+			card.initCard(this);
+			newRoom.transform.SetParent(this.CarpenterShip.transform);
+			newRoom.transform.localScale = Vector3.one;
+			newRoom.transform.localPosition = new Vector3((int)((card.source.x - 250) * 1.7), (int)((card.source.y - 55) * 1.5), 0);
+			
+			RectTransform rt = (RectTransform)newRoom.transform;
+			rt.sizeDelta = new Vector2(card.source.width, card.source.height);
+
+			this.ShipRoomList.Add(newRoom);
+			}
+		}
+	}
+
+  void FillShopRoomList() {
     for (int i = 0; i < this.typeRoomList.Count; ++i) {
         Destroy(typeRoomList[i]);
     }
