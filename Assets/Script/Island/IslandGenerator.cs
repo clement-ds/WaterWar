@@ -136,7 +136,7 @@ public class IslandGenerator {
         int a = UnityEngine.Random.Range(0, 10);
         QuestGenerator questGen = new QuestGenerator();
         for (int i = 0; i < a; ++i) {
-            island.questLog.quests.Add(questGen.GenerateQuest());
+            island.questLog.quests.Add(questGen.GenerateQuest(island));
         }
     }
 
