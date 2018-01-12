@@ -35,9 +35,10 @@ public class QuestGenerator {
     }
   }
 
-  public PlayerQuest GenerateQuest() {
+  public PlayerQuest GenerateQuest(Island currentIsland) {
     PlayerQuest quest = new PlayerQuest();
     List<string> objects = new List<string>();
+    String islandName = currentIsland.name.ToString();
 
     quest.reward = new Reward();
     quest.end = new InventoryObject("", "", 1, 10, 10);
@@ -58,7 +59,7 @@ public class QuestGenerator {
       quest.title = "Kill" + " " + "Captain " + name;
 
       // Description
-      quest.description = "Kill " + adjectif + " " + "Captain " + name + " " + "<terrorizing>" + " " + "<Apple Island>";
+      quest.description = "Kill " + adjectif + " " + "Captain " + name + " " + "<terrorizing>" + " " + islandName;
 
       // Reward
       quest.reward.type = (Reward.REWARD)UnityEngine.Random.Range(0, 2);
@@ -97,7 +98,7 @@ public class QuestGenerator {
       quest.title = "Collect" + " " + amount.ToString()+ " " + objectName;
 
       // Description
-      quest.description = "Bring " + amount.ToString()+ " " + objectName + " " + "to" + " " + "<Apple Island>";
+      quest.description = "Bring " + amount.ToString()+ " " + objectName + " " + "to" + " " + islandName;
 
 
       // End
@@ -134,7 +135,7 @@ public class QuestGenerator {
       quest.title = "Collect" + " " + amount.ToString()+ " " + objectName;
 
       // Description
-      quest.description = "Bring " + amount.ToString()+ " " + objectName + " " + "to" + " " + "<Apple Island>";
+      quest.description = "Bring " + amount.ToString()+ " " + objectName + " " + "to" + " " + islandName;
 
 
       // End
@@ -168,24 +169,16 @@ public class QuestGenerator {
    InventoryObject ret = player.inventory.containsObject(quest.end.id);
 
     if (ret != null && ret.quantity >= quest.end.quantity) {
-      Debug.Log("Yes");
       if (quest.reward.type == Reward.REWARD.INFLUENCE) {
-        Debug.Log("1");
         island.influence += quest.reward.amount;
       } else if (quest.reward.type == Reward.REWARD.MONEY) {
-        Debug.Log("2");
         player.money += quest.reward.amount;
       } else if (quest.reward.type == Reward.REWARD.OBJECT) {
-        Debug.Log("3");
         LoadFile("PlayerJson/Objects.txt", objects);
         InventoryObject objectReward = JsonUtility.FromJson<InventoryObject>(objects[quest.reward.id]);
-        Debug.Log("3.1");
         player.inventory.addQuantityOfObject(objectReward, quest.reward.amount);
-        Debug.Log("3.2");
       }
-      Debug.Log("4");
       player.inventory.removeQuantityOfObject(ret, quest.end.quantity);
-      Debug.Log("Ok");
       return true;
     }
     return false;
