@@ -169,8 +169,11 @@ public class Player
 [Serializable]
 public class PlayerInventory
 {
+    public List<InventoryObject> objects = new List<InventoryObject>();
     public List<InventoryObject> food = new List<InventoryObject>();
     public List<InventoryObject> weapons = new List<InventoryObject>();
+    // TODO: Create function to add/remove item from inventory
+    // TODO: Unify both inventory
 }
 
 [Serializable]

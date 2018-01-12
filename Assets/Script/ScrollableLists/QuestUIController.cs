@@ -85,16 +85,8 @@ public class QuestUIController : UIController
         QuestGenerator gen = new QuestGenerator();
         foreach (PlayerQuest quest in questList) {
             Player player = PlayerManager.GetInstance().player;
-            if (gen.CheckQuest(quest, player)) {
-                if (quest.reward.type == Reward.REWARD.INFLUENCE) {
-                    IslandManager.GetInstance().islands[PlayerManager.GetInstance().player.currentIsland].influence = quest.reward.amount;
-                } else if (quest.reward.type == Reward.REWARD.MONEY) {
-                    player.money = quest.reward.amount;
-                } else if (quest.reward.type == Reward.REWARD.OBJECT) {
-                    player.money = quest.reward.amount;
-//                    player.inventory.food. quest.reward.id = UnityEngine.Random.Range(0, objects.Count);
-//                    quest.reward.amount = UnityEngine.Random.Range(1, 10);
-                }
+            if (gen.CheckQuest(quest, player, IslandManager.GetInstance().islands[PlayerManager.GetInstance().player.currentIsland])) {
+                Debug.Log("gg");
             }          
         }
     }
