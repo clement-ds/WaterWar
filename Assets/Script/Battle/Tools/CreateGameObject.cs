@@ -26,7 +26,7 @@ public class CreateGameObject : MonoBehaviour {
         this.addRoomToShip(playerShip, player.ship.shipDisposition.rooms, playerShip.GetComponent<SpriteRenderer>().sprite.rect.width, playerShip.GetComponent<SpriteRenderer>().sprite.rect.height);
 
         // create enemy
-        Player ai = PlayerManager.GetInstance().ai;
+        Player ai = PlayerManager.GetInstance().enemies[0];
         GameObject aiShip = GameObject.Find(ai.ship.type + "Pool").GetComponent<SimpleObjectPool>().GetObject();
         aiShip.name = "Enemy";
         aiShip.AddComponent<Battle_Enemy>();

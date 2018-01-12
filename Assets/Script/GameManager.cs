@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,10 +13,15 @@ public class GameManager : MonoBehaviour
     public Inventory inventory;
     public static GameManager Instance = null;
     public PlayerManager playerManager = PlayerManager.GetInstance();
+    public IslandManager islandManager;
     private int inGame;
     public int xMapSize, yMapSize, islandsAmount;
+    EnemyAI enemyAI;
+    IslandGenerator islandGenerator;
 
     public MapGenerator mapGenerator;
+
+    
 
     void Awake()
     {
@@ -24,8 +30,13 @@ public class GameManager : MonoBehaviour
             Debug.Log("GameManager: Creating Instance");
             Instance = this;
             this.SetIsInGame(0);
+
+            islandManager = IslandManager.GetInstance();
+            enemyAI = new EnemyAI();
+            islandGenerator = new IslandGenerator();
+
             mapGenerator = new MapGenerator();
- 		    mapGenerator.spawnMap(xMapSize, yMapSize, islandsAmount);
+            mapGenerator.spawnMap(xMapSize, yMapSize, islandsAmount);
         }
 
         else if (Instance != this)
@@ -40,7 +51,8 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void displayMap(GameObject root) {
+    public void displayMap(GameObject root)
+    {
         mapGenerator.displayMap(root);
     }
 
@@ -75,6 +87,36 @@ public class GameManager : MonoBehaviour
     void ChangeScene(string scene)
     {
         SceneManager.LoadScene(scene);
+    }
+    #endregion
+
+    #region Turn
+    int turnCount = 0;
+
+    public void nextTurn()
+    {
+        turnCount += 1;
+
+        //Enemies turn
+        if (turnCount % 2 == 0)
+        {
+            foreach (Player enemy in playerManager.enemies)
+            {
+                enemyAI.enemyTurn(enemy);
+            }
+        }
+
+        //Gen new enemies
+
+        //Island iventory refresh
+        if (turnCount % 5 == 0)
+        {
+            foreach (Island island in islandManager.islands)
+            {
+                islandGenerator.GenerateFood(island, 3);
+            }
+        }
+
     }
     #endregion
 

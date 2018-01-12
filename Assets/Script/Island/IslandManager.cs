@@ -9,23 +9,26 @@ public class IslandManager {
     private static IslandManager instance = null;
 
     private List<String> json = new List<string>();
-    public List<Island> islands = new List<Island>();
-    public Island island;
-    public Island island2;
-    public Island island3;
-    public Island island4;
-    public Island island5;
-    public Island island6;
-    public Island island7;
-    public Island island8;
-    public Island island9;
+
+   
+
+    
+
+    [Serializable]
+    public class IslandsSave
+    {
+        public List<Island> islands = new List<Island>();
+    }
+
+    public IslandsSave islandsSave = new IslandsSave();
+    public List<Island> islands;
 
     protected IslandManager()
     {
         //LoadFile("PlayerJson/IslandSave.txt");
         //island = JsonUtility.FromJson<Island>(json[0]);
-        //island.x = 5;
-        //island.y = 9;
+
+        islands = islandsSave.islands;
         islands.Add(new Island());
         islands.Add(new Island());
         islands.Add(new Island());
@@ -67,11 +70,11 @@ public class IslandManager {
         try
         {
             StreamWriter writer = new StreamWriter("PlayerJson/IslandSave.txt", false);
-            writer.Write(JsonUtility.ToJson(island));
+            writer.Write(JsonUtility.ToJson(islandsSave));
             writer.Close();
         } catch (Exception e)
         {
-            Debug.Log(e.Message);
+            Debug.Log("SAVE ISLAND : " + e.Message);
             return false;
         }
         return true;
