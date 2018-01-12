@@ -83,11 +83,11 @@ public class QuestUIController : UIController
     public void checkQuest() {
         List<PlayerQuest> questList = PlayerManager.GetInstance().GetQuest();
         QuestGenerator gen = new QuestGenerator();
-        foreach (PlayerQuest quest in questList) {
-            Player player = PlayerManager.GetInstance().player;
-            if (gen.CheckQuest(quest, player, IslandManager.GetInstance().islands[PlayerManager.GetInstance().player.currentIsland])) {
-                Debug.Log("gg");
-            }          
+        Player player = PlayerManager.GetInstance().player;
+        for (int i = 0; i < questList.Count; i++) {
+            if (gen.CheckQuest(questList[i], player, IslandManager.GetInstance().islands[PlayerManager.GetInstance().player.currentIsland])) {
+                player.questLog.quests.RemoveAt(i);
+            }
         }
     }
 

@@ -142,8 +142,7 @@ public class Island
 }
 
 [Serializable]
-public class IslandInventory
+public class IslandInventory: Inventory
 {
-    public List<InventoryObject> food = new List<InventoryObject>();
-    public List<InventoryObject> weapons = new List<InventoryObject>();
 }
+

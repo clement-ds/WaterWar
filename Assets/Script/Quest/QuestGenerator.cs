@@ -158,8 +158,6 @@ public class QuestGenerator {
 
   public bool CheckQuest(PlayerQuest quest, Player player, Island island) {
     List<string> objects = new List<string>();
-    LoadFile("PlayerJson/Objects.txt", objects);
-    InventoryObject objectName = JsonUtility.FromJson<InventoryObject>(objects[quest.reward.id]);
 
     // Check if parameters exist
     if (quest == null || player == null || island == null) {
@@ -167,19 +165,27 @@ public class QuestGenerator {
     }
 
     // Check & get the correct object
-   bool ret = player.inventory.removeQuantityOfItem(quest.end.id, quest.end.quantity);
+   InventoryObject ret = player.inventory.containsObject(quest.end.id);
 
-    if (ret) {
+    if (ret != null && ret.quantity >= quest.end.quantity) {
+      Debug.Log("Yes");
       if (quest.reward.type == Reward.REWARD.INFLUENCE) {
-        island.influence = quest.reward.amount;
+        Debug.Log("1");
+        island.influence += quest.reward.amount;
       } else if (quest.reward.type == Reward.REWARD.MONEY) {
-        player.money = quest.reward.amount;
+        Debug.Log("2");
+        player.money += quest.reward.amount;
       } else if (quest.reward.type == Reward.REWARD.OBJECT) {
-        player.money = quest.reward.amount;
-//        player.inventory.objects.Add(quest.reward.id, quest.reward.amount); //TODO: create function to remove X obj
-//        player.inventory.food. quest.reward.id = UnityEngine.Random.Range(0, objects.Count);
-//        quest.reward.amount = UnityEngine.Random.Range(1, 10);
+        Debug.Log("3");
+        LoadFile("PlayerJson/Objects.txt", objects);
+        InventoryObject objectReward = JsonUtility.FromJson<InventoryObject>(objects[quest.reward.id]);
+        Debug.Log("3.1");
+        player.inventory.addQuantityOfObject(objectReward, quest.reward.amount);
+        Debug.Log("3.2");
       }
+      Debug.Log("4");
+      player.inventory.removeQuantityOfObject(ret, quest.end.quantity);
+      Debug.Log("Ok");
       return true;
     }
     return false;

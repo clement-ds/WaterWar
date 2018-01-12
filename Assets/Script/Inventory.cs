@@ -2,46 +2,117 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+public class Inventory
+{
+    public List<InventoryObject> food = new List<InventoryObject>();
+    public List<InventoryObject> weapons = new List<InventoryObject>();
 
-public class Inventory : MonoBehaviour {
-    GameObject inventoryPanel;
-    GameObject slotPanel;
-    InventoryDatabase database;
-    public GameObject inventorySlot;
-    public GameObject inventoryItem;
-    int slotAmount = 28;
-
-    public List<Item> items = new List<Item>();
-    public List<GameObject> slots = new List<GameObject>();
-
-    void Start()
+    public InventoryObject containsObject(InventoryObject obj)
     {
-        inventoryPanel = GameObject.Find("Inventory Panel");
-        slotPanel = inventoryPanel.transform.Find("Slots Panel").gameObject;
-        database = GetComponent<InventoryDatabase>();
+        InventoryObject ret = null;
+        ret = food.Find((item) => item.id == obj.id);
+        if (ret != null) return ret;
+        ret = weapons.Find((item) => item.id == obj.id);
+        return ret;
+    }
 
-        for (int i = 0; i < slotAmount; i++)
+    public InventoryObject containsObject(int id)
+    {
+        InventoryObject ret = null;
+        ret = food.Find((item) => item.id == id);
+        if (ret != null) return ret;
+        ret = weapons.Find((item) => item.id == id);
+        return ret;
+    }
+    public bool addObject(InventoryObject obj)
+    {
+        if (obj.quantity <= 0)
         {
-            items.Add(new Item());
-            slots.Add(Instantiate(inventorySlot));
-            slots[i].transform.SetParent(slotPanel.transform);
+            return false;
+        }
+        InventoryObject tmp = this.containsObject(obj);
+        if (tmp != null)
+        {
+            tmp.quantity += 1;
+        }
+        else
+        {
+            if (obj.type == "Food")
+            {
+                this.food.Add(new InventoryObject(obj, 1));
+            }
+            if (obj.type == "Weapon")
+            {
+                this.weapons.Add(new InventoryObject(obj, 1));
+            }
+        }
+        return true;
+    }
+
+    public bool addQuantityOfObject(InventoryObject obj, int quantity)
+    {
+        if (obj.quantity <= 0)
+        {
+            return false;
+        }
+        InventoryObject tmp = this.containsObject(obj);
+        if (tmp != null)
+        {
+            tmp.quantity += quantity;
+        }
+        else
+        {
+            if (obj.type == "Food")
+            {
+                this.food.Add(new InventoryObject(obj, quantity));
+            }
+            if (obj.type == "Weapon")
+            {
+                this.weapons.Add(new InventoryObject(obj, quantity));
+            }
+        }
+        return true;
+    }
+
+    public void removeObject(InventoryObject obj)
+    {
+        obj.quantity -= 1;
+        if (obj.type == "Food")
+        {
+            TrimList(this.food);
+        } else
+        {
+            TrimList(this.weapons);
         }
     }
 
-    public void AddItem(int id)
+    public void removeQuantityOfObject(InventoryObject obj, int quantity)
     {
-        Item itemToAdd = database.fetchItemByNbr(id);
-        for (int i = 0; i < slotAmount; i++)
+        obj.quantity -= quantity;
+        if (obj.type == "Food")
         {
-            if (items[i].Type == "None")
+            TrimList(this.food);
+        } else
+        {
+            TrimList(this.weapons);
+        }
+    }
+
+    private void TrimList(List<InventoryObject> list)
+    {
+        List<InventoryObject> toDelete = new List<InventoryObject>();
+
+        foreach (InventoryObject item in list)
+        {
+            if (item.quantity <= 0)
             {
-                items[i] = itemToAdd;
-                GameObject itemObj = Instantiate(inventoryItem);
-                itemObj.transform.SetParent(slots[i].transform);
-                itemObj.transform.localPosition = Vector2.zero;
-                itemObj.GetComponent<Image>().sprite = itemToAdd.Sprite;
-                break;
+                toDelete.Add(item);
             }
         }
+        foreach (InventoryObject item in toDelete)
+        {
+            list.Remove(item);
+        }
+        toDelete.Clear();
     }
 }

@@ -167,13 +167,8 @@ public class Player
 }
 
 [Serializable]
-public class PlayerInventory
+public class PlayerInventory: Inventory
 {
-    public List<InventoryObject> objects = new List<InventoryObject>();
-    public List<InventoryObject> food = new List<InventoryObject>();
-    public List<InventoryObject> weapons = new List<InventoryObject>();
-    // TODO: Create function to add/remove item from inventory
-    // TODO: Unify both inventory
 }
 
 [Serializable]
@@ -240,11 +235,11 @@ public class InventoryObject
         this.basePrice = basePrice;
     }
 
-    public InventoryObject(InventoryObject invObj)
+    public InventoryObject(InventoryObject invObj, int quantity = -1)
     {
         this.name = invObj.name;
         this.type = invObj.type;
-        this.quantity = invObj.quantity;
+        this.quantity = quantity == -1 ? invObj.quantity : quantity;
         this.price = invObj.price;
         this.basePrice = invObj.basePrice;
     }
