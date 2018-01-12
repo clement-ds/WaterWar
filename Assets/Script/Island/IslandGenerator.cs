@@ -100,12 +100,24 @@ public class IslandGenerator {
         LoadFile("PlayerJson/Food.txt");
         for (int i = 0; i < 5; ++i)
         {
-            InventoryObject obj = JsonUtility.FromJson<InventoryObject>(json[UnityEngine.Random.Range(0, 12)]);
+            int tmp = UnityEngine.Random.Range(0, 12);
+            InventoryObject obj = JsonUtility.FromJson<InventoryObject>(json[tmp]);
             obj.quantity = UnityEngine.Random.Range(10, 101);
             if (CheckingDouble(obj, island))
             {
                 island.inventory.food.Add(obj);
             }
+        }
+    }
+
+    public void GenerateFood(Island island, int amount)
+    {
+        LoadFile("PlayerJson/Food.txt");
+        for (int i = 0; i < amount; i += 1)
+        {
+            int tmp = UnityEngine.Random.Range(0, 12);
+            InventoryObject obj = JsonUtility.FromJson<InventoryObject>(json[tmp]);
+            island.inventory.addQuantityOfObject(obj, UnityEngine.Random.Range(10, 31));
         }
     }
 
@@ -129,6 +141,11 @@ public class IslandGenerator {
         island.inventory.weapons.Add(new InventoryObject("Bullet", "Weapon", a, 10, 10));
         a = UnityEngine.Random.Range(20, 101);
         island.inventory.weapons.Add(new InventoryObject("Graplin hooks", "Weapon", a, 10, 10));
+    }
+
+    public void GenerateWeapons(Island island, int amount)
+    {
+
     }
 
     private void GenerateQuests(Island island)

@@ -11,22 +11,31 @@ public class PlayerManager {
     private List<String> json = new List<string>();
     private List<String> objectDictionary = new List<string>();
     public Player player;
-    public Player ai;
+
+    [Serializable]
+    public class EnemiesSave
+    {
+        public List<Player> enemies = new List<Player>();
+    }
+    public EnemiesSave enemiesSave = new EnemiesSave();
+    public List<Player> enemies;
+
+    int maxEnemies = 10;
 
     protected PlayerManager()
     {
         LoadFile("PlayerJson/Save.json");
         player = JsonUtility.FromJson<Player>(json[0]);
         Debug.Log("player : " + player.name + "/" + player.life);
-        //Debug.Log("CHECK INVENTORY : " + player.inventory.food.Count + " / " + player.inventory.weapons.Count);
-        //Debug.Log("CREW : ");
-        //foreach (CrewMember member in player.crew.crewMembers)
-        //    Debug.Log("--- " + member.type + " = " + member.id);
-        //Debug.Log("CHECK QUEST : " + player.questLog.quests.Count);
-        //Save();
 
+        enemies = enemiesSave.enemies;
         LoadFile("PlayerJson/AISave.json");
-        ai = JsonUtility.FromJson<Player>(json[0]);
+        for (int i = 0; i < maxEnemies / 2; i += 1)
+        {
+            Player ai = JsonUtility.FromJson<Player>(json[0]);
+            enemies.Add(ai);
+        }
+        SaveAI();
 
         LoadFile("PlayerJson/Objects.txt", objectDictionary);
     }
@@ -74,7 +83,7 @@ public class PlayerManager {
         try
         {
             StreamWriter writer = new StreamWriter("PlayerJson/AISave.json", false);
-            writer.Write(JsonUtility.ToJson(ai));
+            writer.Write(JsonUtility.ToJson(enemiesSave));
             writer.Close();
         }
         catch (Exception e)
