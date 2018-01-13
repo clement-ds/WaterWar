@@ -10,7 +10,16 @@ public class TileClick : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         string tmp = name.Replace("(Clone)", "");
-        Sprite sprite = Resources.Load("Tiles/Sprite/" + tmp, typeof(Sprite)) as Sprite;
+        int variation;
+        if (tmp == "Center" || tmp == "WaterTile")
+        {
+            variation = UnityEngine.Random.Range(1, 6);
+        } else
+        {
+            variation = UnityEngine.Random.Range(1, 4);
+        }
+        
+        Sprite sprite = Resources.Load("Tiles/Sprite/" + tmp + variation, typeof(Sprite)) as Sprite;
         GetComponent<SpriteRenderer>().sprite = sprite;
         introSceneManager = GameObject.Find("SceneManager").GetComponent<IntroSceneManager>();
     }
