@@ -93,6 +93,8 @@ GameObject:
   - component: {fileID: 23110086683547626}
   - component: {fileID: 114101308708163706}
   - component: {fileID: 65725771490512804}
+  - component: {fileID: 122704054428973330}
+  - component: {fileID: 114002929158388534}
   m_Layer: 0
   m_Name: QuestPaper
   m_TagString: Untagged
@@ -107,7 +109,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1779176299012522}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 2694.1292, y: 769.97485, z: 144.81}
+  m_LocalPosition: {x: 2700.9153, y: 769.6259, z: 136.007}
   m_LocalScale: {x: 0.24805826, y: 0.24805824, z: 0.205589}
   m_Children:
   - {fileID: 224017066840025932}
@@ -181,6 +183,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10.000002, y: 0.6781141, z: 10.000001}
   m_Center: {x: -2.6873814e-17, y: 0.06538817, z: 0}
+--- !u!114 &114002929158388534
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1779176299012522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ddae41b3aeb3ba46b55eaf2f7cd44ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114101308708163706
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -570,6 +583,17 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!122 &122704054428973330
+Halo:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1779176299012522}
+  m_Enabled: 0
+  m_Color:
+    serializedVersion: 2
+    rgba: 3895866934
+  m_Size: 1.77
 --- !u!222 &222539696679280908
 CanvasRenderer:
   m_ObjectHideFlags: 1

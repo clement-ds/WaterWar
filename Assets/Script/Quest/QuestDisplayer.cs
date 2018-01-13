@@ -8,10 +8,12 @@ public class QuestDisplayer : MonoBehaviour {
 	private PlayerManager PMInstance;
 	private int currentIslandID;
 	public List<GameObject> spawnPoints;
+	public GameObject Halo;
 	public GameObject questPaperPrefab;
 	public IntroSceneManager sceneManager;
 	private BoxCollider ownCollider;
 	private GameObject backCanvas;
+
 	
 	
 	void Start() {
@@ -31,7 +33,20 @@ public class QuestDisplayer : MonoBehaviour {
 
 	void OnMouseDown() {
 		sceneManager.CameraStateChange("QuestBoard", true, true);
+		Halo.SetActive(false);
 		SetColliderState(false);
+	}
+
+	void OnMouseEnter() {
+		if (ownCollider.enabled) {
+			Halo.SetActive(true);
+		}
+	}
+
+	void OnMouseExit() {
+		if (ownCollider.enabled) {
+			Halo.SetActive(false);
+		}
 	}
 
 	void ClearQuests() {
