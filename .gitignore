@@ -25,6 +25,7 @@ ExportedObj/
 PlayerJson/IslandSave.txt
 .PlayerJson/IslandSave.txt
 ./PlayerJson/IslandSave.txt
+/PlayerJson/
 
 # Unity3D generated meta files
 *.pidb.meta
