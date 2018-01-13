@@ -19,6 +19,11 @@ public class AvailablePosition
 
 public enum Ship_Direction { FRONT, RIGHT, LEFT, NONE };
 
+public class Direction_Value
+{
+    public static readonly Dictionary<Ship_Direction, int> values = new Dictionary<Ship_Direction, int>() { { Ship_Direction.FRONT, 90 }, { Ship_Direction.LEFT, 100 }, { Ship_Direction.RIGHT, 80 }, { Ship_Direction.NONE, 90 } };
+}
+
 public enum Ship_Item { CANON, CANTEEN, WHEEL, INFIRMARY, WAREHOUSE, PLAYGROUND }
 
 public abstract class ShipElement : MonoBehaviour
@@ -193,9 +198,12 @@ public abstract class ShipElement : MonoBehaviour
     /** REPAIR **/
     public void repair(float value)
     {
+        bool isWorking = this.isWorking();
         this.currentLife += value;
         if (this.currentLife > this.life)
             this.currentLife = this.life;
+        if (!isWorking && this.isWorking())
+            this.updateParentActionMenu();
     }
 
     /** DO DAMAGE **/

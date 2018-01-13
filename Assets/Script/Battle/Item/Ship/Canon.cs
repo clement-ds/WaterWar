@@ -15,6 +15,10 @@ public class Canon : ShipElement
     private SimpleObjectPool canonBallPool;
     private bool selectingTarget;
 
+    protected float baseDamage = 20;
+    protected float baseCooldown = 3;
+    protected float basePowerShootSpeed = 8;
+
 
     public Canon() : base(50, Ship_Item.CANON)
     {
@@ -143,7 +147,7 @@ public class Canon : ShipElement
             return false;
         this.reloading = true;
         this.updateParentActionMenu();
-        Invoke("setCanonReady", this.getMember().getProfile().getValueByCrewSkill(SkillAttribute.RCanonTime, 3));
+        Invoke("setCanonReady", this.getMember().getProfile().getValueByCrewSkill(SkillAttribute.RCanonTime, this.baseCooldown));
         return true;
     }
 
@@ -152,7 +156,7 @@ public class Canon : ShipElement
         if (!this.isPossibleToReload())
             return;
         this.reloading = true;
-        Invoke("reloadEnd", this.getMember().getProfile().getValueByCrewSkill(SkillAttribute.RCanonTime, 3));
+        Invoke("reloadEnd", this.getMember().getProfile().getValueByCrewSkill(SkillAttribute.RCanonTime, this.baseCooldown));
     }
 
     protected void reloadEnd()
@@ -199,7 +203,7 @@ public class Canon : ShipElement
                 GameObject canonBall = canonBallPool.GetObject();
 
                 Battle_CanonBall battleCanonBall = canonBall.GetComponent<Battle_CanonBall>();
-                battleCanonBall.initialize(new CanonBall(1, this.GetComponentInChildren<Battle_CrewMember>().getProfile().getValueByCrewSkill(SkillAttribute.ShootCanonValue, 1)), finalTarget, this.getBulletAccuracy(this.GetComponentInChildren<Battle_CrewMember>()));
+                battleCanonBall.initialize(new CanonBall(this.baseDamage, this.GetComponentInChildren<Battle_CrewMember>().getProfile().getValueByCrewSkill(SkillAttribute.ShootCanonValue, 1)), finalTarget, this.getBulletAccuracy(this.GetComponentInChildren<Battle_CrewMember>()));
                 canonBall.transform.position = this.transform.position;
                 canonBall.transform.SetParent(this.transform);
                 canonBall.GetComponent<Rigidbody2D>().AddRelativeForce((target.transform.position - canonBall.transform.position).normalized * this.getBulletSpeed(battleCanonBall.getAmmunition()));
@@ -235,9 +239,9 @@ public class Canon : ShipElement
         canonShotExplosion.Play();
     }
 
-    private int getBulletSpeed(Ammunition ammunition)
+    private float getBulletSpeed(Ammunition ammunition)
     {
-        return (this.power / ammunition.getWeight()) * 8;
+        return (this.power / ammunition.getWeight()) * this.basePowerShootSpeed;
     }
 
     private Vector3 getBulletAccuracy(Battle_CrewMember crew)
@@ -312,7 +316,14 @@ public class Canon : ShipElement
     public bool isInGoodPositionToShoot(RoomElement target)
     {
         bool canonIsRightPosition = this.transform.localPosition.y < 0;
-        bool shipIsRightPosition = this.transform.root.transform.localPosition.x < target.transform.root.transform.localPosition.x;
+        bool shipIsRightPosition = this.transform.root.transform.position.x < target.transform.root.transform.position.x;
+        return (canonIsRightPosition && shipIsRightPosition || !canonIsRightPosition && !shipIsRightPosition);
+    }
+
+    public bool isInGoodPositionToShoot(Battle_Ship target)
+    {
+        bool canonIsRightPosition = this.transform.localPosition.y < 0;
+        bool shipIsRightPosition = this.transform.root.transform.position.x < target.transform.position.x;
         return (canonIsRightPosition && shipIsRightPosition || !canonIsRightPosition && !shipIsRightPosition);
     }
 

@@ -28,11 +28,6 @@ public class Battle_Enemy : Battle_Ship
     {
     }
 
-    public override void canAboarding(bool value)
-    {
-        this.canAboardingAction = value;
-    }
-
     public override void canEscape(bool value)
     {
         this.canEscapeAction = value;

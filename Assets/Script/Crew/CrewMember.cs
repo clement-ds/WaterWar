@@ -13,8 +13,12 @@ public class SkillAttribute
     public static readonly SkillAttribute RCanonTime = new SkillAttribute(Effect.ENERGY, "RCanonTime");
     public static readonly SkillAttribute ShootCanonValue = new SkillAttribute(Effect.MORAL, "ShootCanonValue");
     public static readonly SkillAttribute RepairTime = new SkillAttribute(Effect.ENERGY, "RepairTime");
-    public static readonly SkillAttribute RepairValue = new SkillAttribute(Effect.MORAL, "ReapirValue");
+    public static readonly SkillAttribute RepairValue = new SkillAttribute(Effect.MORAL, "RepairValue");
     public static readonly SkillAttribute WalkValue = new SkillAttribute(Effect.SPEED, "WalkValue");
+    public static readonly SkillAttribute AttackValue = new SkillAttribute(Effect.ENERGY, "AttackValue");
+    public static readonly SkillAttribute AttackTime = new SkillAttribute(Effect.MORAL, "AttackTime");
+    public static readonly SkillAttribute HealValue = new SkillAttribute(Effect.ENERGY, "HealValue");
+    public static readonly SkillAttribute HealTime = new SkillAttribute(Effect.MORAL, "HealTime");
 
     public static IEnumerable<SkillAttribute> Values
     {
@@ -25,6 +29,10 @@ public class SkillAttribute
             yield return RepairTime;
             yield return RepairValue;
             yield return WalkValue;
+            yield return AttackValue;
+            yield return AttackTime;
+            yield return HealValue;
+            yield return HealTime;
         }
     }
 
@@ -80,13 +88,13 @@ public abstract class CrewMember
     public string id;
     public string type;
     public string memberName;
-    public float attackStrength = 1f;
+    public float attackStrength = 10f;
     public bool useRangedWeapon = false;
     public float wage = 1f;
     public float maxHunger = 1f;
     public float walkSpeed = 1f;
     public float maxLife = 100f;
-    public float life = 10f;
+    public float life = 100f;
     public float satiety = 1f;
 
     public bool available = true;
@@ -120,21 +128,56 @@ public abstract class CrewMember
     }
 
     /** STATUS **/
-    public void getDamage(float damage)
+    public bool getDamage(float damage)
     {
         this.life -= damage;
         if (this.life <= 0)
         {
-            this.life = 0;
-            this.available = false;
+            this.die();
+            return true;
         }
+        return false;
+    }
+
+    protected void die()
+    {
+        this.life = 0;
+        this.available = false;
     }
 
     public void healDamage(float heal)
     {
-        this.life += heal;
-        this.life = (this.life > this.maxLife ? this.maxLife : this.life);
-        this.available = true;
+        if (this.available)
+        {
+            this.life += heal;
+            this.life = (this.life > this.maxLife ? this.maxLife : this.life);
+            this.available = true;
+        }
+    }
+
+    public void doDamage(Battle_CrewMember container, Battle_CrewMember target)
+    {
+        this.doDamage(container, target, false);
+    }
+
+    public void doDamage(Battle_CrewMember container, Battle_CrewMember target, bool itsAttackBack)
+    {
+        if (this.available)
+        {
+            Debug.Log("do " + this.getValueByCrewSkill(SkillAttribute.AttackValue, this.attackStrength) + '(' + this.attackStrength + ')' + " dmg");
+            if (target.getProfile().getDamage(this.getValueByCrewSkill(SkillAttribute.AttackValue, this.attackStrength) * (itsAttackBack ? 0.5f : 1f)))
+            {
+                target.die();
+            }
+            else
+            {
+                Debug.Log(target + " get damage " + target.getProfile().life);
+                if (!itsAttackBack && !this.useRangedWeapon)
+                {
+                    target.getProfile().doDamage(target, container, true);
+                }
+            }
+        }
     }
 
     /** ACTION **/
@@ -161,7 +204,26 @@ public abstract class CrewMember
     }
 
     /** Attributes **/
+    public void changePower(float powerValue)
+    {
+        if (powerValue < 1)
+        {
+            this.attackStrength *= powerValue;
+        }
+        else
+        {
+            this.attackStrength += powerValue;
+        }
+        if (this.attackStrength <= 0)
+        {
+            this.attackStrength = 20;
+        }
+    }
 
+    /*
+     *  timer in seconds
+     *  value in % between 0 -> 100 which represent the % lost in the effect
+     * */
     public void addEffect(Effect effect, float timer, float value)
     {
         this.removeEffect(effect);
@@ -181,5 +243,11 @@ public abstract class CrewMember
     public CrewMember_Effect getEffect(Effect effect)
     {
         return this.attributes.Find(x => x.effect == effect);
+    }
+
+    /** GETTERS **/
+    public bool isAvailable()
+    {
+        return this.available;
     }
 }

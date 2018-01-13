@@ -3,9 +3,9 @@ using System.Collections;
 
 public class CanonBall : Ammunition {
 
-    public CanonBall(float ratioCanon, float ratioCrew)
+    public CanonBall(float baseCanonDamage, float ratioCrew)
     {
-        this.damage = 20 * ratioCanon * ratioCrew;
+        this.damage = baseCanonDamage * ratioCrew;
         this.weight = 2;
     }
 }

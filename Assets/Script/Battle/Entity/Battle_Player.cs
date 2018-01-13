@@ -47,12 +47,6 @@ public class Battle_Player : Battle_Ship
         GameRulesManager.GetInstance().endOfTheGame = true;
     }
 
-    public override void canAboarding(bool value)
-    {
-        this.canAboardingAction = value;
-        GameRulesManager.GetInstance().guiAccess.boardingButton.gameObject.SetActive(value);
-    }
-
     public override void canEscape(bool value)
     {
         this.canEscapeAction = value;
@@ -177,7 +171,7 @@ public class Battle_Player : Battle_Ship
         {
             if (crewMember.isFocused() && !crewMember.isMoving())
             {
-                foreach (RoomElement tmp in this.rooms)
+                foreach (RoomElement tmp in RoomUtils.Rooms)
                 {
                     target = tmp;
                     if (target != null)
@@ -197,8 +191,7 @@ public class Battle_Player : Battle_Ship
                     {
                         if (target.hasAvailableCrewMemberPosition())
                         {
-                            crewMember.assignCrewMemberToRoom(target);
-                            result = true;
+                            result = crewMember.assignCrewMemberToRoom(target);
                         }
                     }
                 }

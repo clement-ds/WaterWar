@@ -2,10 +2,12 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class CreateGameObject : MonoBehaviour {
+public class CreateGameObject : MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
 
         bool isLeft = Random.Range(1, 3) == 1;
 
@@ -35,6 +37,20 @@ public class CreateGameObject : MonoBehaviour {
         this.addRoomToShip(aiShip, ai.ship.shipDisposition.rooms, aiShip.GetComponent<SpriteRenderer>().sprite.rect.width, aiShip.GetComponent<SpriteRenderer>().sprite.rect.height);
 
         GameObject.Find("Distance").GetComponent<CheckDistanceBetweenObjects>().init(playerShip, aiShip);
+        GameObject.Find("Main Camera").GetComponent<FollowObjectInSpace>().init(playerShip);
+
+        //TODO escape
+        //GameObject.Find("Escape").GetComponent<Button>().onClick.AddListener(playerShip.GetComponent<Battle_Ship>().escape);
+
+        // add stuff to ships
+        Battle_Ship p = playerShip.GetComponent<Battle_Ship>();
+        Battle_Ship e = aiShip.GetComponent<Battle_Ship>();
+
+        p.setWeaponForCrew(player.inventory.getCrewWeapon());
+        e.setWeaponForCrew(ai.inventory.getCrewWeapon());
+
+        GameRulesManager.GetInstance().ships.Add(p);
+        GameRulesManager.GetInstance().ships.Add(e);
 
     }
 
@@ -53,7 +69,7 @@ public class CreateGameObject : MonoBehaviour {
             room.AddComponent<BoxCollider>();
 
             RoomElement roomElem = room.AddComponent<RoomElement>() as RoomElement;
-            roomElem.init(item.id, item.links);
+            roomElem.init(ship.GetComponent<Battle_Ship>().getId(), item.id, item.links);
 
             if (item.component != "")
             {
@@ -67,10 +83,7 @@ public class CreateGameObject : MonoBehaviour {
             roomElem.StartMyself();
             ship.GetComponent<Battle_Ship>().addShipElement(roomElem);
 
-            if (ship.GetComponent<Battle_Player>() != null)
-            {
-                RoomUtils.Rooms.Add(roomElem);
-            }
+            RoomUtils.Rooms.Add(roomElem);
         }
     }
 }

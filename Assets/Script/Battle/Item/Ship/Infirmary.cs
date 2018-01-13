@@ -5,44 +5,47 @@ using System.Collections.Generic;
 
 public class Infirmary : ShipElement
 {
-
-    protected TimerTask task;
-    protected float cooldown;
-    private float healRatio;
-
+    protected float baseCooldown = 3.0f;
+    private float baseHeal = 10f;
 
     // Use this for initialization
     public Infirmary() : base(100, Ship_Item.INFIRMARY)
     {
-        this.cooldown = 3.0f;
-        this.healRatio = 10f;
+        this.baseCooldown = 3.0f;
+        this.baseHeal = 10f;
     }
 
     public override void init()
     {
-        this.task = new TimerTask(HealCrew, this.cooldown);
     }
     public override void reInitValues()
     {
     }
 
     /** SPECIFIC ACTION **/
-    private void HealCrew()
+    private void healCrew()
     {
-        Battle_CrewMember[] members = this.transform.GetComponentsInParent<Battle_CrewMember>();
+        Battle_CrewMember doctor = this.GetComponentInChildren<Battle_CrewMember>();
 
-        foreach (Battle_CrewMember member in members)
+        if (doctor != null)
         {
-            if (member.getProfile().job == CrewMember_Job.Medic)
+            Battle_CrewMember[] members = this.transform.GetComponentsInParent<Battle_CrewMember>();
+
+            foreach (Battle_CrewMember member in members)
             {
-                this.task.cooldown = (this.task.cooldown > 1 ? this.task.cooldown - 1f : this.task.cooldown);
-                this.healRatio += 10f;
+                member.getProfile().healDamage(doctor.getProfile().getValueByCrewSkill(SkillAttribute.HealValue, this.baseHeal));
             }
+            launchHealCrew();
         }
+    }
 
-        foreach (Battle_CrewMember member in members)
+    public void launchHealCrew()
+    {
+        Battle_CrewMember doctor = this.GetComponentInChildren<Battle_CrewMember>();
+        
+        if (doctor != null)
         {
-            member.getProfile().healDamage(this.healRatio);
+            Invoke("healCrew", doctor.getProfile().getValueByCrewSkill(SkillAttribute.HealTime, this.baseCooldown));
         }
     }
 

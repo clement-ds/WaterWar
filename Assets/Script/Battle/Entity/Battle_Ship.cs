@@ -9,8 +9,9 @@ public abstract class Battle_Ship : MonoBehaviour
     protected readonly float life;
     protected float currentLife;
     protected float speed;
+    protected string id;
 
-    protected bool canAboardingAction;
+    protected bool aboarding;
     protected bool canEscapeAction;
 
     protected Vector3 movement;
@@ -24,19 +25,26 @@ public abstract class Battle_Ship : MonoBehaviour
     protected List<RoomElement> rooms;
     protected List<Battle_CrewMember> crewMembers;
 
+    protected int weaponForCrew;
+    protected int countDiedMember;
+
     protected Battle_Ship(float lifeValue, bool isPlayer)
     {
         this.direction = Ship_Direction.FRONT;
         this.saveCollisionDirection = Ship_Direction.NONE;
         this.moveRotation = 0;
 
-        this.canAboardingAction = false;
+        this.aboarding = false;
         this.canEscapeAction = false;
         this.isPlayer = isPlayer;
+        this.id = (isPlayer ? "p" : "e");
 
         this.speed = 50;
-        life = lifeValue;
-        this.setCurrentLife(life);
+        this.life = lifeValue;
+
+        this.setCurrentLife(this.life);
+        this.weaponForCrew = 0;
+        this.countDiedMember = 0;
 
         this.rooms = new List<RoomElement>();
         this.crewMembers = new List<Battle_CrewMember>();
@@ -65,16 +73,19 @@ public abstract class Battle_Ship : MonoBehaviour
         List<CrewMember> members = (this.isPlayer ? PlayerManager.GetInstance().player.crew.crewMembers : PlayerManager.GetInstance().ai.crew.crewMembers);
         SimpleObjectPool crewPool = GameObject.Find("CrewPool").GetComponent<SimpleObjectPool>();
 
+        float powerWeaponValue = this.weaponForCrew / members.Count;
+
         foreach (CrewMember member in members)
         {
             GameObject crewMember = crewPool.GetObject();
 
             Battle_CrewMember battleCrewMember = crewMember.GetComponent<Battle_CrewMember>();
-            battleCrewMember.initialize(member);
+            battleCrewMember.initialize(member, this.id);
+            battleCrewMember.getProfile().changePower(powerWeaponValue);
             crewMember.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(member.memberImage);
 
             List<RoomElement> items = this.parseShipElement(member.assignedRoom);
-            
+
             if (this.assignateCrewMemberToRoom(battleCrewMember, items, true))
             {
                 this.crewMembers.Add(battleCrewMember);
@@ -152,26 +163,59 @@ public abstract class Battle_Ship : MonoBehaviour
         }
     }
 
-    /** COLLISION **/
-    void OnTriggerEnter2D(Collider2D col)
+    public void crewMemberDied(int id)
     {
-        Battle_Ship enemy = col.gameObject.GetComponent<Battle_Ship>();
-        if (enemy)
+        for (var i = 0; i < this.crewMembers.Count; ++i)
         {
-            this.movement = new Vector3(0, 0, 0);
-            enemy.moveRotation = this.moveRotation;
-            this.saveCollisionDirection = this.direction;
-            this.canAboarding(true);
+            if (this.crewMembers[i].GetInstanceID() == id)
+            {
+                this.crewMembers.RemoveAt(i);
+                ++this.countDiedMember;
+                --i;
+            }
+        }
+        if (this.countDiedMember >= 1)
+        {
+            foreach (var member in this.crewMembers)
+            {
+                member.getProfile().addEffect(Effect.MORAL, 60, 80);
+            }
+            this.countDiedMember = 0;
+        }
+    }
+    
+    /** COLLISION **/
+
+   public void distanceWith(Battle_Ship target, float distance)
+    {
+        if (distance < 2.5 && !this.aboarding)
+        {
+            this.onAboardTarget(target);
+        }
+        else if (distance >= 2.5 && this.aboarding)
+        {
+            this.leaveAboardTarget(target);
         }
     }
 
-    void OnTriggerExit2D(Collider2D col)
+    void onAboardTarget(Battle_Ship enemy)
     {
-        Battle_Ship enemy = col.gameObject.GetComponent<Battle_Ship>();
         if (enemy)
         {
+            this.movement = new Vector3(0, 0, 0);
+            //enemy.moveRotation = this.moveRotation;// (this.moveRotation > 90 ? this.moveRotation - 2 : this.moveRotation + 2);
+            this.saveCollisionDirection = this.direction;
+            this.doAboarding(enemy, true);
+        }
+    }
+
+    void leaveAboardTarget(Battle_Ship enemy)
+    {
+        if (enemy)
+        {
+            this.moveRotation = Direction_Value.values[this.saveCollisionDirection];
             this.saveCollisionDirection = Ship_Direction.NONE;
-            this.canAboarding(false);
+            this.doAboarding(enemy, false);
         }
     }
 
@@ -181,20 +225,21 @@ public abstract class Battle_Ship : MonoBehaviour
         this.direction = direction;
         if (this.direction == this.saveCollisionDirection)
             return;
+        this.saveCollisionDirection = Ship_Direction.NONE;
         if (direction == Ship_Direction.FRONT)
         {
             this.movement = new Vector3(0, 0, 0);
-            this.moveRotation = 90;
+            this.moveRotation = Direction_Value.values[direction];
         }
         else if (direction == Ship_Direction.RIGHT)
         {
             this.movement = new Vector3(this.speed / 100, 0, 0);
-            this.moveRotation = 80;
+            this.moveRotation = Direction_Value.values[direction];
         }
         else if (direction == Ship_Direction.LEFT)
         {
             this.movement = new Vector3(-1 * (this.speed / 100), 0, 0);
-            this.moveRotation = 100;
+            this.moveRotation = Direction_Value.values[direction];
         }
     }
 
@@ -236,7 +281,41 @@ public abstract class Battle_Ship : MonoBehaviour
 
     public abstract void canEscape(bool value);
 
-    public abstract void canAboarding(bool value);
+    public void doAboarding(Battle_Ship target, bool aboarding)
+    {
+        Debug.LogError(this + " can[" + aboarding + "] aboard " + target);
+        this.aboarding = aboarding;
+        if (aboarding)
+        {
+            var i2 = 0;
+            for (var i = 0; i < this.rooms.Count; ++i)
+            {
+                if (this.rooms[i].getEquipment() != null && this.rooms[i].getEquipment().getType() == Ship_Item.CANON && ((Canon)this.rooms[i].getEquipment()).isInGoodPositionToShoot(target))
+                {
+                    while (i2 < target.getRooms().Count)
+                    {
+                        if (target.getRooms()[i2].getEquipment() != null && target.getRooms()[i2].getEquipment().getType() == Ship_Item.CANON && ((Canon)target.getRooms()[i2].getEquipment()).isInGoodPositionToShoot(this))
+                        {
+                            Debug.LogError("LINK : " + this.rooms[i].getId() + " + " + target.getRooms()[i2].getId());
+                            this.rooms[i].addLink(target.getRooms()[i2].getId());
+                            ++i2;
+                            break;
+                        }
+                        ++i2;
+                    }
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("UNLINK");
+            foreach (var room in this.rooms)
+            {
+                room.purgeExternLinks(this.getId());
+            }
+        }
+        GameRulesManager.GetInstance().guiAccess.boardingButton.gameObject.SetActive(aboarding);
+    }
 
     public abstract void die();
 
@@ -293,6 +372,11 @@ public abstract class Battle_Ship : MonoBehaviour
         return result;
     }
 
+    public string getId()
+    {
+        return this.id;
+    }
+
     /** SETTERS **/
     protected void setCurrentLife(float value)
     {
@@ -302,7 +386,17 @@ public abstract class Battle_Ship : MonoBehaviour
         this.updateSliderValue();
     }
 
+    public void setId(string id)
+    {
+        this.id = id;
+    }
+
     public void applyCrewAttributes(Effect effect, float time, float value)
     {
+    }
+
+    public void setWeaponForCrew(int value)
+    {
+        this.weaponForCrew = value;
     }
 }

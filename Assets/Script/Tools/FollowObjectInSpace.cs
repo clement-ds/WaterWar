@@ -3,11 +3,16 @@ using System.Collections;
 
 public class FollowObjectInSpace : MonoBehaviour {
 
-    public GameObject target;
+    private GameObject target;
     public Vector3 offset;
 
 	// Use this for initialization
 	void Start () {
+    }
+
+    public void init(GameObject target)
+    {
+        this.target = target;
         this.offset = this.transform.position - this.target.transform.position;
     }
 	
