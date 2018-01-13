@@ -9,6 +9,7 @@ public class IntroSceneManager : MonoBehaviour {
     public GameObject wealthSpawnPoint;
 
     private int wealth;
+    private List<GameObject> spawnedMoney;
 
 	// Use this for initialization
 	void Start () {
@@ -20,19 +21,20 @@ public class IntroSceneManager : MonoBehaviour {
             cameraManager.PlayAnimation("CameraStart");
         }
 
+        spawnedMoney = new List<GameObject>();
         InvokeRepeating("UpdateWealth", 0f, 1f);
         InvokeRepeating("SpawnMoney", .5f, .2f);
     }
 
     private int moneyCurrentlySpawned = 0;
     private const float positionOffset = .5f;
-    private List<GameObject> spawnedMoney;
     private void SpawnMoney() {
         if (moneyCurrentlySpawned < wealth) {
             GameObject obj = GameObject.Instantiate(CoinPrefab);
             obj.transform.SetParent(wealthSpawnPoint.transform, false);
             obj.transform.eulerAngles = new Vector3(Random.Range(0, 180), Random.Range(0, 180), Random.Range(0, 180));
             obj.transform.position += new Vector3(Random.Range(-positionOffset, positionOffset), Random.Range(-positionOffset, positionOffset), Random.Range(-positionOffset, positionOffset));
+            spawnedMoney.Add(obj);
             moneyCurrentlySpawned += 10;
         }
         if (moneyCurrentlySpawned > wealth + 10) {
