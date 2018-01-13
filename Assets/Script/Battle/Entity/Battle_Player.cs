@@ -16,7 +16,7 @@ public class Battle_Player : Battle_Ship
     // Update is called once per frame
     void Update()
     {
-        if (!GameRulesManager.GetInstance().endOfTheGame)
+        if (!GameRulesManager.GetInstance().isEndOfTheGame())
         {
             this.hasMouseInteraction();
             try
@@ -42,9 +42,7 @@ public class Battle_Player : Battle_Ship
 
     public override void escape()
     {
-        GameRulesManager.GetInstance().guiAccess.endMessage.text = "You escape the fight";
-        GameRulesManager.GetInstance().guiAccess.endPanel.gameObject.SetActive(true);
-        GameRulesManager.GetInstance().endOfTheGame = true;
+        GameRulesManager.GetInstance().playerEscaped(this.id);
     }
 
     public override void canEscape(bool value)
@@ -53,11 +51,9 @@ public class Battle_Player : Battle_Ship
         GameRulesManager.GetInstance().guiAccess.escapeButton.gameObject.SetActive(value);
     }
 
-    public override void die()
+    public override void die(DestroyedStatus status)
     {
-        GameRulesManager.GetInstance().guiAccess.endMessage.text = "Your opponent killed you";
-        GameRulesManager.GetInstance().guiAccess.endPanel.gameObject.SetActive(true);
-        GameRulesManager.GetInstance().endOfTheGame = true;
+        GameRulesManager.GetInstance().playerDestroyed(this.id, status);
     }
 
     /** INPUT **/
@@ -120,7 +116,9 @@ public class Battle_Player : Battle_Ship
         bool result = false;
 
         foreach (Battle_CrewMember item in this.crewMembers)
-        {
+        {/*
+            if (item == null)
+                break;*/
             result = item.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos);
 
             if (!hasClick)

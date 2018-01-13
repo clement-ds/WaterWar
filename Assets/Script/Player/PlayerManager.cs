@@ -273,6 +273,9 @@ public class PlayerCrew
 }
 
 [Serializable]
+public enum Rarity { LEGENDARY, EPIC, RARE, COMMON}
+
+[Serializable]
 public class InventoryObject
 {
     public InventoryObject(string name, string type, int number, int price, int basePrice)

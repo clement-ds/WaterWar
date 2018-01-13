@@ -17,6 +17,6 @@ public class Exit : MonoBehaviour {
 
     void OnMouseDown()
     {
-        gm.GoWorldMap();
+        gm.GoIntroMenu();
     }
 }
