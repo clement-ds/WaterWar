@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 public class IntroSceneManager : MonoBehaviour {
-    public GameObject map, menu, CoinPrefab;
+    public GameObject map, menu, coinPrefab;
     private CameraAnimationManager cameraManager;
     public GameObject wealthSpawnPoint;
 
@@ -30,7 +30,7 @@ public class IntroSceneManager : MonoBehaviour {
     private const float positionOffset = .5f;
     private void SpawnMoney() {
         if (moneyCurrentlySpawned < wealth) {
-            GameObject obj = GameObject.Instantiate(CoinPrefab);
+            GameObject obj = GameObject.Instantiate(coinPrefab);
             obj.transform.SetParent(wealthSpawnPoint.transform, false);
             obj.transform.eulerAngles = new Vector3(Random.Range(0, 180), Random.Range(0, 180), Random.Range(0, 180));
             obj.transform.position += new Vector3(Random.Range(-positionOffset, positionOffset), Random.Range(-positionOffset, positionOffset), Random.Range(-positionOffset, positionOffset));
