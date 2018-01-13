@@ -20,6 +20,8 @@ ExportedObj/
 *.booproj
 *.svd
 
+# Truc chiants
+/PlayerJson/IslandSave.txt
 
 # Unity3D generated meta files
 *.pidb.meta
