@@ -199,6 +199,25 @@ public class Player
 [Serializable]
 public class PlayerInventory : Inventory
 {
+    public List<InventoryObject> food = new List<InventoryObject>();
+    public List<InventoryObject> weapons = new List<InventoryObject>();
+
+    private static List<string> crewWeapon = new List<string>() { "Sabre", "Musket", "Riffle"};
+
+    public int getCrewWeapon()
+    {
+        int number = 0;
+
+
+        foreach (var weapon in weapons)
+        {
+            if (crewWeapon.Contains(weapon.name))
+            {
+                ++number;
+            }
+        }
+        return number;
+    }
 }
 
 [Serializable]

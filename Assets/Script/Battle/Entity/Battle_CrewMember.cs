@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 using System.Collections.Generic;
 
 public class Battle_CrewMember : GuiElement
 {
 
     CrewMember profile = null;
+    string teamId;
 
     RoomElement room = null;
     ShipElement equipment = null;
@@ -14,16 +14,18 @@ public class Battle_CrewMember : GuiElement
 
     List<Vector3> finalMovePos;
     int indexMove;
-    Boolean moving = false;
+    bool moving = false;
+    bool alive = true;
 
     // Use this for initialization
     public override void StartMyself()
     {
     }
 
-    public void initialize(CrewMember crewMember)
+    public void initialize(CrewMember crewMember, string teamId)
     {
         this.profile = crewMember;
+        this.teamId = teamId;
     }
 
     // Update is called once per frame
@@ -52,8 +54,82 @@ public class Battle_CrewMember : GuiElement
     {
     }
 
-    /** ACTIONS **/
+    /** STATUS **/
 
+    public void die()
+    {
+        this.alive = false;
+        if (this.room)
+        {
+            this.room.freeCrewMemberPosition(this.GetInstanceID());
+        }
+        if (this.equipment)
+        {
+            this.equipment.freeCrewMemberPosition(this.GetInstanceID());
+        }
+        GameRulesManager.GetInstance().getShip(this.getTeamId()).crewMemberDied(this.GetInstanceID());
+        this.stopPendingActions();
+        Destroy(gameObject);
+    }
+
+    /** ACTIONS **/
+    protected void checkAttackInRoom()
+    {
+        if (this.room)
+        {
+            List<Battle_CrewMember> enemies = new List<Battle_CrewMember>();
+
+            foreach (Battle_CrewMember member in this.room.getMembers())
+            {
+                if (member.getTeamId() != this.getTeamId())
+                {
+                    enemies.Add(member);
+                }
+            }
+
+            if (enemies.Count != 0)
+            {
+                int target = Random.Range(0, enemies.Count - 1);
+
+                this.attackOtherCrewMember(enemies[target]);
+            }
+            this.launchAttackInRoom();
+        }
+    }
+
+    public void launchAttackInRoom()
+    {
+        if (this.profile.isAvailable() && this.room)
+            Invoke("checkAttackInRoom", this.profile.getValueByCrewSkill(SkillAttribute.AttackTime, 2f));
+    }
+
+    protected void attackOtherCrewMember(Battle_CrewMember target)
+    {
+        Debug.Log("Attack another crew : ", target);
+        this.profile.doDamage(this, target);
+
+    }
+    public void repairEquipment()
+    {
+        if (this.equipment != null)
+        {
+            this.equipment.repair(this.profile.getValueByCrewSkill(SkillAttribute.RepairValue, 40));
+            this.launchRepairEquipment();
+        }
+    }
+
+    public void launchRepairEquipment()
+    {
+        if (this.equipment)
+            Invoke("repairEquipment", this.profile.getValueByCrewSkill(SkillAttribute.RepairTime, 1));
+    }
+
+    public void stopPendingActions()
+    {
+        CancelInvoke();
+    }
+
+    /** MOVING **/
     public void moveTo(MonoBehaviour target, List<Vector3> pos)
     {
         this.targetFocus = target;
@@ -77,19 +153,25 @@ public class Battle_CrewMember : GuiElement
 
     protected void crewMemberArrivedAtContainer()
     {
+        this.transform.parent = this.targetFocus.transform;
         if (this.targetFocus.GetType() == typeof(RoomElement))
         {
             //Debug.Log("its a room");
             this.changeParents((RoomElement)this.targetFocus, ((RoomElement)this.targetFocus).getEquipment());
             this.room.directAddMember(this);
+            this.launchRepairEquipment();
         }
         else if (this.targetFocus.GetType() == typeof(ShipElement) || this.targetFocus.GetType().IsSubclassOf(typeof(ShipElement)))
         {
             //Debug.Log("its a equipment");
             this.changeParents(((ShipElement)this.targetFocus).getParentRoom(), (ShipElement)this.targetFocus);
             this.room.directAddMember(this);
+            if (this.equipment.getType() == Ship_Item.INFIRMARY)
+            {
+                ((Infirmary)this.equipment).launchHealCrew();
+            }
         }
-        this.transform.parent = this.targetFocus.transform;
+        this.launchAttackInRoom();
     }
 
     public bool directAssignCrewMemberInRoom(RoomElement element, Vector3 pos)
@@ -105,24 +187,20 @@ public class Battle_CrewMember : GuiElement
     public bool directAssignCrewMemberInElement(ShipElement element, Vector3 pos)
     {
         this.changeParents(element.getParentRoom(), element);
+        this.room.directAddMember(this);
         this.transform.parent = element.transform;
         this.transform.localPosition = pos;
         //Debug.Log("create member with " + this.room + ", " + this.equipment);
         return true;
     }
 
-    public void repair()
-    {
-        if (this.equipment != null)
-        {
-            this.equipment.repair(this.profile.getValueByCrewSkill(SkillAttribute.RepairValue, 40));
-            //Invoke("repair", this.profile.getValueByCrewSkill(SkillAttribute.RepairTime, 1));
-        }
-    }
-
     /** PARENT MANAGER **/
-    public void assignCrewMemberToRoom(RoomElement target)
+    public bool assignCrewMemberToRoom(RoomElement target)
     {
+        if (!RoomUtils.hasRoute(this.room, target))
+        {
+            return false;
+        }
         this.transform.parent = target.transform.parent;
 
         target.moveMemberToRoom(this);
@@ -137,6 +215,7 @@ public class Battle_CrewMember : GuiElement
             this.room.freeCrewMemberPosition(this.GetInstanceID());
             this.room = null;
         }
+        return true;
     }
 
     public bool freeCrewMemberFromShipElement()
@@ -191,6 +270,11 @@ public class Battle_CrewMember : GuiElement
     public bool isMoving()
     {
         return this.moving;
+    }
+
+    public string getTeamId()
+    {
+        return this.teamId;
     }
 
     /** SETTERS **/

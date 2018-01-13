@@ -10,9 +10,12 @@ public class GameRulesManager
     public bool endOfTheGame;
     public GuiAccess guiAccess;
 
+    public List<Battle_Ship> ships;
+
     protected GameRulesManager()
     {
         this.endOfTheGame = false;
+        this.ships = new List<Battle_Ship>();
     }
 
     public void init()
@@ -32,5 +35,18 @@ public class GameRulesManager
             instance = new GameRulesManager();
         }
         return instance;
+    }
+    
+    public Battle_Ship getShip(string id)
+    {
+
+        foreach (var ship in this.ships)
+        {
+            if (ship.getId() == id)
+            {
+                return ship;
+            }
+        }
+        return null;
     }
 }

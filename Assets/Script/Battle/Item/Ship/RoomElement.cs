@@ -17,10 +17,15 @@ public class RoomElement : GuiElement
         this.members = new List<Battle_CrewMember>();
     }
 
-    public void init(string id, List<string> links)
+    public void init(string shipId, string roomId, List<string> links)
     {
-        this.id = id;
+        this.id = shipId + roomId;
         this.links = links;
+
+        for (var i = 0; i < this.links.Count; ++i)
+        {
+            this.links[i] = shipId + this.links[i];
+        }
     }
 
     /** INIT **/
@@ -28,7 +33,6 @@ public class RoomElement : GuiElement
     {
         this.equipment = this.transform.GetComponentInChildren<ShipElement>();
         createAvailableCrewMemberPosition();
-        InvokeRepeating("repairRoom", 2.0f, 1.0f);
     }
 
     protected override void createActionList()
@@ -161,18 +165,6 @@ public class RoomElement : GuiElement
         return false;
     }
 
-    public void repairRoom()
-    {
-        if (this.equipment != null && this.equipment.getPercentLife() < 100)
-        {
-            foreach (Battle_CrewMember member in this.members)
-            {
-                Debug.Log(member.name + " is repairing");
-                member.repair();
-            }
-        }
-    }
-
     /** HOVER **/
     private bool mouseIsHover()
     {
@@ -200,7 +192,6 @@ public class RoomElement : GuiElement
     }
 
     /** MEMBERSHIP **/
-
     public bool moveFromEquipmentToRoom(Battle_CrewMember member)
     {
         try
@@ -267,6 +258,11 @@ public class RoomElement : GuiElement
         return null;
     }
 
+    public List<Battle_CrewMember> getMembers()
+    {
+        return this.members;
+    }
+
     public ShipElement getEquipment()
     {
         return this.equipment;
@@ -280,5 +276,28 @@ public class RoomElement : GuiElement
     public string getId()
     {
         return this.id;
+    }
+
+    /** MODIFIER **/
+    public void addLink(string id)
+    {
+        this.links.Add(id);
+    }
+
+    public void purgeExternLinks(string id)
+    {
+        for (var i = 0; i < this.links.Count; ++i)
+        {
+            if (!this.links[i].Contains(id))
+            {
+                this.links.RemoveAt(i);
+                --i;
+            }
+        }
+    }
+
+    public override string getIdentifier()
+    {
+        return this.getId() + "";
     }
 }

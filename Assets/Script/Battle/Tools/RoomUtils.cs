@@ -25,6 +25,11 @@ public class RoomUtils
         return null;
     }
 
+    public static bool hasRoute(RoomElement start, RoomElement end)
+    {
+        return findRoute(start, end, new List<string>());
+    }
+
     public static List<Vector3> getRoute(RoomElement start, RoomElement end)
     {
         List<string> path = new List<string>();

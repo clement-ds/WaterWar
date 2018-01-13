@@ -51,7 +51,6 @@ public abstract class GuiElement : MonoBehaviour
     /** INTERACTION **/
     public void focus()
     {
-        Debug.Log("focus1 : " + (this.actionMenu? true : false));
         this.focused = true;
         this.select();
         if (this.actionMenu)
@@ -68,7 +67,7 @@ public abstract class GuiElement : MonoBehaviour
 
     public void select()
     {
-        Debug.Log("Click on " + gameObject);
+        Debug.Log("Click on " + this.getIdentifier());
         this.selected = true;
         if (this.outline)
             this.outline.enabled = true;
@@ -127,6 +126,10 @@ public abstract class GuiElement : MonoBehaviour
     }
 
     /** GETTERS **/
+    public virtual string getIdentifier()
+    {
+        return this.GetInstanceID() + "";
+    }
 
     public bool isSelected()
     {
