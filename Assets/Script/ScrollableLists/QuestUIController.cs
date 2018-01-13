@@ -18,7 +18,7 @@ public class QuestUIController : UIController
     {
         base.Populate();
         FillItems();
-        checkButton.gameObject.SetActive(checkButton.gameObject.active);
+        checkButton.gameObject.SetActive(checkButton.gameObject.activeSelf);
     }
 
 
@@ -77,7 +77,7 @@ public class QuestUIController : UIController
     public void OnClick()
     {
         TogglePanel();
-        closeButton.gameObject.SetActive(panel.gameObject.active);
+        closeButton.gameObject.SetActive(panel.gameObject.activeSelf);
     }
 
     public void checkQuest() {

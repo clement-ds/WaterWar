@@ -19,7 +19,7 @@ public class MenuScript : MonoBehaviour {
 	}
 
     public void OpenMenu() {
-        menu.SetActive(!menu.active);
+        menu.SetActive(!menu.activeSelf);
         inventory.enabled = false;
         crew.enabled = false;
     }
