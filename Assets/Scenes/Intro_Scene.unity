@@ -43856,7 +43856,7 @@ Transform:
   m_PrefabParentObject: {fileID: 422462, guid: f4f93e1005a78cd479ff973b3bac2ad4, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1558156833}
-  m_LocalRotation: {x: -0.29571888, y: 0.6393968, z: -0.30194694, w: 0.6423008}
+  m_LocalRotation: {x: -0.29571885, y: 0.6393967, z: -0.3019469, w: 0.6423007}
   m_LocalPosition: {x: -0.35332972, y: 3.0784645, z: 6.1485515}
   m_LocalScale: {x: 0.024725012, y: 0.024725003, z: 0.024725003}
   m_Children: []
@@ -60185,7 +60185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: {fileID: 196398406}
   menu: {fileID: 737140645}
-  CoinPrefab: {fileID: 168932, guid: 4074b4b051c5d7d4d8f1502ce3203ee0, type: 2}
+  coinPrefab: {fileID: 168932, guid: 4074b4b051c5d7d4d8f1502ce3203ee0, type: 2}
   wealthSpawnPoint: {fileID: 659257189}
 --- !u!4 &2075485065
 Transform:
