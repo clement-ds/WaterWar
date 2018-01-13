@@ -66,7 +66,7 @@ public class QuestGenerator {
       quest.reward.type = (Reward.REWARD)UnityEngine.Random.Range(0, 2);
 
       // End
-      quest.end.name = "Flag " + "<Captain Barbosa>";
+      quest.end.name = "Flag " + "Captain " + name;
       quest.end.quantity = 1;
 
       // MoneyReward outdated (just in case)
