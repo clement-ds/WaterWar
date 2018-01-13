@@ -8,10 +8,17 @@ public class QuestDisplayer : MonoBehaviour {
 	private PlayerManager PMInstance;
 	private int currentIslandID;
 	public List<GameObject> spawnPoints;
+	public GameObject Halo;
 	public GameObject questPaperPrefab;
+	public IntroSceneManager sceneManager;
+	private BoxCollider ownCollider;
+	private GameObject backCanvas;
+
 	
 	
 	void Start() {
+		ownCollider = GetComponent<BoxCollider>();
+		backCanvas = transform.GetChild(0).gameObject;
 		IMInstance = IslandManager.GetInstance();
 		PMInstance = PlayerManager.GetInstance();
 		SwapCurrentQuests(PMInstance.player.currentIsland);
@@ -19,10 +26,41 @@ public class QuestDisplayer : MonoBehaviour {
 
 	void Update() {
 		if (currentIslandID != PMInstance.player.currentIsland) {
+			ClearQuests();
 			SwapCurrentQuests(PMInstance.player.currentIsland);
 		}
 	}
 
+	void OnMouseDown() {
+		sceneManager.CameraStateChange("QuestBoard", true, true);
+		Halo.SetActive(false);
+		SetColliderState(false);
+	}
+
+	void OnMouseEnter() {
+		if (ownCollider.enabled) {
+			Halo.SetActive(true);
+		}
+	}
+
+	void OnMouseExit() {
+		if (ownCollider.enabled) {
+			Halo.SetActive(false);
+		}
+	}
+
+	void ClearQuests() {
+		foreach(GameObject spawnPoint in spawnPoints) {
+			foreach (Transform child in spawnPoint.transform) {
+				GameObject.Destroy(child.gameObject);
+			}
+		}
+	}
+
+	public void SetColliderState(bool state) {
+		ownCollider.enabled = state;
+		backCanvas.SetActive(!state);
+	}
 	private void SwapCurrentQuests(int newIslandId) {
 		this.currentIslandID = newIslandId;
 		Island island = IMInstance.islands[this.currentIslandID];

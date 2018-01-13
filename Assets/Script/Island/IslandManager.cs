@@ -9,23 +9,26 @@ public class IslandManager {
     private static IslandManager instance = null;
 
     private List<String> json = new List<string>();
-    public List<Island> islands = new List<Island>();
-    public Island island;
-    public Island island2;
-    public Island island3;
-    public Island island4;
-    public Island island5;
-    public Island island6;
-    public Island island7;
-    public Island island8;
-    public Island island9;
+
+   
+
+    
+
+    [Serializable]
+    public class IslandsSave
+    {
+        public List<Island> islands = new List<Island>();
+    }
+
+    public IslandsSave islandsSave = new IslandsSave();
+    public List<Island> islands;
 
     protected IslandManager()
     {
         //LoadFile("PlayerJson/IslandSave.txt");
         //island = JsonUtility.FromJson<Island>(json[0]);
-        //island.x = 5;
-        //island.y = 9;
+
+        islands = islandsSave.islands;
         islands.Add(new Island());
         islands.Add(new Island());
         islands.Add(new Island());
@@ -41,7 +44,7 @@ public class IslandManager {
         for (int i = 0; i < islands.Count; ++i)
         {
             islands[i] = iGen.GenerateIsland(islands[i]);
-            eco.setInventoryPrices(islands[i]);
+            eco.initInventoryPrices(islands[i].inventory);
         }
 
         Debug.Log("island : " + islands[0].name);
@@ -49,8 +52,6 @@ public class IslandManager {
 //        Debug.Log("CHECK CREW : " + islands[0].crew.begos.Count + " / " + islands[0].crew.captains.Count + " / " + islands[0].crew.engineers.Count
 //            + " / " + islands[0].crew.fastUnits.Count + " / " + islands[0].crew.fighters.Count);
         Debug.Log("CHECK QUEST : " + islands[0].questLog.quests.Count);
-
-        Save();
     }
 
     public static IslandManager GetInstance()
@@ -67,11 +68,11 @@ public class IslandManager {
         try
         {
             StreamWriter writer = new StreamWriter("PlayerJson/IslandSave.txt", false);
-            writer.Write(JsonUtility.ToJson(island));
+            writer.Write(JsonUtility.ToJson(islandsSave));
             writer.Close();
         } catch (Exception e)
         {
-            Debug.Log(e.Message);
+            Debug.Log("SAVE ISLAND : " + e.Message);
             return false;
         }
         return true;
@@ -129,7 +130,7 @@ public class Island
     public string name;
     public float x;
     public float y;
-
+    public int influence;
     public IslandInventory inventory = new IslandInventory();
     public List<CrewMember> crew = new List<CrewMember>();
     public QuestLog questLog = new QuestLog();
@@ -142,8 +143,7 @@ public class Island
 }
 
 [Serializable]
-public class IslandInventory
+public class IslandInventory: Inventory
 {
-    public List<InventoryObject> food = new List<InventoryObject>();
-    public List<InventoryObject> weapons = new List<InventoryObject>();
 }
+

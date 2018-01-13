@@ -27,7 +27,7 @@ public class RecruitUIController : UIController
 
         foreach (CrewMember member in crewList)
         {
-            GameObject crewRow = (GameObject)Instantiate(rowPrefab);
+            GameObject crewRow = (GameObject)GameObject.Instantiate(rowPrefab);
 
             foreach (Transform child in crewRow.transform)
             {
@@ -92,7 +92,7 @@ public class RecruitUIController : UIController
     public void OnClick()
     {
         TogglePanel();
-        closeButton.gameObject.SetActive(panel.gameObject.active);
+        closeButton.gameObject.SetActive(panel.gameObject.activeSelf);
     }
 
 }

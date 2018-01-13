@@ -26,7 +26,7 @@ public class QuestManager : MonoBehaviour
      **/
     public void StartQuest(string questName)
     {
-      displayUI.SetActive(!displayUI.active);
+      displayUI.SetActive(!displayUI.activeSelf);
     //displayUI.GetComponent<QuestDisplay>().Initialize(Quest.LoadQuest(questName));      //Uses the Dialog UI and initializes the quest onto the display
   }
 

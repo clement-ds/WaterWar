@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 
+/**
+    UNUSED?
+ */
 public class ListController : MonoBehaviour
 {
     private IslandInventory inventoryI;
@@ -219,9 +222,4 @@ public class ListController : MonoBehaviour
         FillSellShop();
     }
 
-// Update is called once per frame
-void Update()
-{
-
-}
 }

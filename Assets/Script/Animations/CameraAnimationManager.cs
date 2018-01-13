@@ -6,7 +6,6 @@ using UnityEngine;
 public class CameraAnimationManager : MonoBehaviour {
 
     private Animator animationController;
-    public float ySpeed;
     private void Start()
     {
         animationController = GetComponent<Animator>();

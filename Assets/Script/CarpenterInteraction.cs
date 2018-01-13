@@ -16,7 +16,8 @@ public class CarpenterInteraction : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && carpenterMenu)
-            carpenterMenu.SetActive(false);
+		if (Input.GetKeyDown (KeyCode.Escape) && carpenterMenu) {
+			carpenterMenu.SetActive (false);
+		}
     }
 }

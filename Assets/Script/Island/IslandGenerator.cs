@@ -86,10 +86,11 @@ public class IslandGenerator {
         //island.inventory = new IslandInventory();
         //island.crew = new IslandCrew();
         GenerateFood(island);
-        GenerateWeapons(island);
-        GenerateQuests(island);
-        GenerateCrew(island);
         GenerateName(island);
+        GenerateWeapons(island);
+        GenerateCrew(island);
+        GenerateQuests(island);
+        island.influence = 50;
         Debug.Log("GENERATE: " + island.name);
         return island;
     }
@@ -99,7 +100,8 @@ public class IslandGenerator {
         LoadFile("PlayerJson/Food.txt");
         for (int i = 0; i < 5; ++i)
         {
-            InventoryObject obj = JsonUtility.FromJson<InventoryObject>(json[UnityEngine.Random.Range(0, 12)]);
+            int tmp = UnityEngine.Random.Range(0, 12);
+            InventoryObject obj = JsonUtility.FromJson<InventoryObject>(json[tmp]);
             obj.quantity = UnityEngine.Random.Range(10, 101);
             if (CheckingDouble(obj, island))
             {
@@ -108,26 +110,42 @@ public class IslandGenerator {
         }
     }
 
+    public void GenerateFood(Island island, int amount)
+    {
+        LoadFile("PlayerJson/Food.txt");
+        for (int i = 0; i < amount; i += 1)
+        {
+            int tmp = UnityEngine.Random.Range(0, 12);
+            InventoryObject obj = JsonUtility.FromJson<InventoryObject>(json[tmp]);
+            island.inventory.addQuantityOfObject(obj, UnityEngine.Random.Range(10, 31));
+        }
+    }
+
     private void GenerateWeapons(Island island)
     {
         int a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Black powder", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Black powder", "Weapon", a, 10, 10));
         a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Canon ball", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Canon ball", "Weapon", a, 10, 10));
         a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Shrapnel", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Shrapnel", "Weapon", a, 10, 10));
         a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Sabre", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Sabre", "Weapon", a, 10, 10));
         a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Musket", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Musket", "Weapon", a, 10, 10));
         a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Rifle", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Rifle", "Weapon", a, 10, 10));
         a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Canon", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Canon", "Weapon", a, 10, 10));
         a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Bullet", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Bullet", "Weapon", a, 10, 10));
         a = UnityEngine.Random.Range(20, 101);
-        island.inventory.weapons.Add(new InventoryObject("Graplin hooks", "Weapon", a, 10));
+        island.inventory.weapons.Add(new InventoryObject("Graplin hooks", "Weapon", a, 10, 10));
+    }
+
+    public void GenerateWeapons(Island island, int amount)
+    {
+
     }
 
     private void GenerateQuests(Island island)
@@ -135,7 +153,7 @@ public class IslandGenerator {
         int a = UnityEngine.Random.Range(0, 10);
         QuestGenerator questGen = new QuestGenerator();
         for (int i = 0; i < a; ++i) {
-            island.questLog.quests.Add(questGen.GenerateQuest());
+            island.questLog.quests.Add(questGen.GenerateQuest(island));
         }
     }
 

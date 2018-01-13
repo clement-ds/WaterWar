@@ -4,29 +4,38 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 
-public class PlayerManager {
+public class PlayerManager
+{
 
     private static PlayerManager instance = null;
 
     private List<String> json = new List<string>();
     private List<String> objectDictionary = new List<string>();
     public Player player;
-    public Player ai;
+
+    [Serializable]
+    public class EnemiesSave
+    {
+        public List<Player> enemies = new List<Player>();
+    }
+    public EnemiesSave enemiesSave = new EnemiesSave();
+    public List<Player> enemies;
+
+    int maxEnemies = 10;
 
     protected PlayerManager()
     {
         LoadFile("PlayerJson/Save.json");
         player = JsonUtility.FromJson<Player>(json[0]);
         Debug.Log("player : " + player.name + "/" + player.life);
-        //Debug.Log("CHECK INVENTORY : " + player.inventory.food.Count + " / " + player.inventory.weapons.Count);
-        //Debug.Log("CREW : ");
-        //foreach (CrewMember member in player.crew.crewMembers)
-        //    Debug.Log("--- " + member.type + " = " + member.id);
-        //Debug.Log("CHECK QUEST : " + player.questLog.quests.Count);
-        //Save();
 
         LoadFile("PlayerJson/AISave.json");
-        ai = JsonUtility.FromJson<Player>(json[0]);
+        for (int i = 0; i < maxEnemies / 2; i += 1)
+        {
+            enemiesSave = JsonUtility.FromJson<EnemiesSave>(json[0]);
+            enemies = enemiesSave.enemies;
+        }
+        SaveAI();
 
         LoadFile("PlayerJson/Objects.txt", objectDictionary);
     }
@@ -40,16 +49,34 @@ public class PlayerManager {
         return instance;
     }
 
-    public string getNameForObjectId(int id) {
+    public string getNameForObjectId(int id)
+    {
         return JsonUtility.FromJson<InventoryObject>(objectDictionary[id]).name;
     }
 
-    public void AcceptQuest(PlayerQuest quest) {
+    public void AcceptQuest(PlayerQuest quest)
+    {
         quest.taken = true;
+        if (quest.type == PlayerQuest.QUEST.KILL) {
+            Player enemie = new Player();
+            int lvlOfIA = 0;
+            enemie = JsonUtility.FromJson<EnemiesSave>(json[0]).enemies[lvlOfIA];
+            Debug.Log(quest.end.name);
+            enemie.name = quest.end.name.Substring(13);
+            Debug.Log(enemie.name);
+            enemie.inventory.addObject(new InventoryObject("Flag " + enemie.name, "Quest", 1, 100, 10));
+            enemies.Add(enemie);
+        }
+
         player.questLog.quests.Add(quest);
         IslandManager.GetInstance().islands[player.currentIsland].questLog.quests.Remove(quest);
     }
-    
+
+    public List<PlayerQuest> GetQuest()
+    {
+        return player.questLog.quests;
+    }
+
     public bool Save()
     {
         try
@@ -57,7 +84,8 @@ public class PlayerManager {
             StreamWriter writer = new StreamWriter("PlayerJson/Save.json", false);
             writer.Write(JsonUtility.ToJson(player));
             writer.Close();
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             Debug.Log(e.Message);
             return false;
@@ -70,7 +98,7 @@ public class PlayerManager {
         try
         {
             StreamWriter writer = new StreamWriter("PlayerJson/AISave.json", false);
-            writer.Write(JsonUtility.ToJson(ai));
+            writer.Write(JsonUtility.ToJson(enemiesSave));
             writer.Close();
         }
         catch (Exception e)
@@ -81,24 +109,30 @@ public class PlayerManager {
         return true;
     }
 
-    private bool LoadFile(string fileName, List<string> json) {
-        try {
-        string line;
-        StreamReader theReader = new StreamReader(fileName, Encoding.Default);
-        using (theReader) {
-            do {
-            line = theReader.ReadLine();
-            if (line != null) {
-                json.Add(line);
+    private bool LoadFile(string fileName, List<string> json)
+    {
+        try
+        {
+            string line;
+            StreamReader theReader = new StreamReader(fileName, Encoding.Default);
+            using (theReader)
+            {
+                do
+                {
+                    line = theReader.ReadLine();
+                    if (line != null)
+                    {
+                        json.Add(line);
+                    }
+                } while (line != null);
+                theReader.Close();
+                return true;
             }
-            } while (line != null);
-            theReader.Close();
-            return true;
         }
-        }
-        catch (Exception e) {
-        Debug.Log(e.Message);
-        return false;
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            return false;
         }
     }
     private bool LoadFile(string fileName)
@@ -163,7 +197,7 @@ public class Player
 }
 
 [Serializable]
-public class PlayerInventory
+public class PlayerInventory : Inventory
 {
     public List<InventoryObject> food = new List<InventoryObject>();
     public List<InventoryObject> weapons = new List<InventoryObject>();
@@ -241,20 +275,22 @@ public class PlayerCrew
 [Serializable]
 public class InventoryObject
 {
-    public InventoryObject(string name, string type, int number, int price)
+    public InventoryObject(string name, string type, int number, int price, int basePrice)
     {
         this.name = name;
         this.type = type;
         this.quantity = number;
         this.price = price;
+        this.basePrice = basePrice;
     }
 
-    public InventoryObject(InventoryObject invObj)
+    public InventoryObject(InventoryObject invObj, int quantity = -1)
     {
         this.name = invObj.name;
         this.type = invObj.type;
-        this.quantity = invObj.quantity;
+        this.quantity = quantity == -1 ? invObj.quantity : quantity;
         this.price = invObj.price;
+        this.basePrice = invObj.basePrice;
     }
 
     public string name;
@@ -263,6 +299,7 @@ public class InventoryObject
     public int price;
     public int id;
     public bool isRareItem;
+    public int basePrice;
 }
 
 [Serializable]
@@ -272,15 +309,17 @@ public class QuestLog
 }
 
 [Serializable]
-public class EndQuest {
+public class EndQuest
+{
     public int type;
     public int enemyType;
     public int enemyId;
 }
 
 [Serializable]
-public class Reward {
-    public enum REWARD {MONEY = 0, OBJECT = 1, INFLUENCE = 2};  
+public class Reward
+{
+    public enum REWARD { MONEY = 0, OBJECT = 1, INFLUENCE = 2 };
     public REWARD type;
     public int id;
     public int amount;
@@ -289,10 +328,11 @@ public class Reward {
 [Serializable]
 public class PlayerQuest
 {
-    public enum QUEST {KILL = 0, FIND, GET, RECRUIT, SACK, MORAL, PRINCIPAL, INFLUENCE, DESTROY};  
+    public enum QUEST { KILL = 0, FIND, GET, RECRUIT, SACK, MORAL, PRINCIPAL, INFLUENCE, DESTROY };
 
     public string description;
     public string title;
+    public string localisation;
     public QUEST type;
     public string objective;
     public Reward reward;
@@ -300,7 +340,8 @@ public class PlayerQuest
     public int moneyReward;
     public bool taken = false;
 
-    public String Describe() {
+    public String Describe()
+    {
         return ("TITLE: " + title + "\tDESCRIPTION: " + description + "\tTYPE: " + type + "\tOBJECTIVE: " + objective + "\tREWARD: " + reward.id + ':' + reward.amount + ':' + reward.type);
     }
 }
