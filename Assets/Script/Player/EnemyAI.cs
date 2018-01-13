@@ -19,7 +19,7 @@ public class EnemyAI
         int islandIndex;
         do
         {
-            islandIndex = UnityEngine.Random.Range(0, im.islands.Count + 1);
+            islandIndex = UnityEngine.Random.Range(0, im.islands.Count);
         } while (islandIndex == enemy.currentIsland);
         enemy.currentIsland = islandIndex;
     }
