@@ -46,6 +46,10 @@ public class IntroSceneManager : MonoBehaviour {
         wealth = PlayerManager.GetInstance().player.money;
     }
 
+    public void CameraStateChange(string state, bool hasForcedState = false, bool forcedState = false) {
+        cameraManager.StateChange(state, hasForcedState, forcedState);
+    }
+
     void Update() {
         if (GameManager.Instance.IsInGame() == 45) { // TODO: remplacer ca par mouvement de la camera render / display/not display
             if (!map.activeSelf)

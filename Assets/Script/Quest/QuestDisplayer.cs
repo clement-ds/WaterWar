@@ -9,9 +9,14 @@ public class QuestDisplayer : MonoBehaviour {
 	private int currentIslandID;
 	public List<GameObject> spawnPoints;
 	public GameObject questPaperPrefab;
+	public IntroSceneManager sceneManager;
+	private BoxCollider ownCollider;
+	private GameObject backCanvas;
 	
 	
 	void Start() {
+		ownCollider = GetComponent<BoxCollider>();
+		backCanvas = transform.GetChild(0).gameObject;
 		IMInstance = IslandManager.GetInstance();
 		PMInstance = PlayerManager.GetInstance();
 		SwapCurrentQuests(PMInstance.player.currentIsland);
@@ -23,6 +28,15 @@ public class QuestDisplayer : MonoBehaviour {
 		}
 	}
 
+	void OnMouseDown() {
+		sceneManager.CameraStateChange("QuestBoard", true, true);
+		SetColliderState(false);
+	}
+
+	public void SetColliderState(bool state) {
+		ownCollider.enabled = state;
+		backCanvas.SetActive(!state);
+	}
 	private void SwapCurrentQuests(int newIslandId) {
 		this.currentIslandID = newIslandId;
 		Island island = IMInstance.islands[this.currentIslandID];

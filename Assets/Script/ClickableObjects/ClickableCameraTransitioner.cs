@@ -5,14 +5,13 @@ using UnityEngine;
 public class ClickableCameraTransitioner : MonoBehaviour {
     private Animator anim;
     private bool opened = false;
-    private CameraAnimationManager cameraAnim;
+    public IntroSceneManager sceneManager;
     public List<string> objectAnimations;
     public string stateChange;
 
     void Start()
     {
         anim = GetComponent<Animator>();
-        cameraAnim = GameObject.Find("MainCamera").GetComponent<CameraAnimationManager>();
     }
 
     void OnMouseOver()
@@ -28,7 +27,7 @@ public class ClickableCameraTransitioner : MonoBehaviour {
         if (objectAnimations.Count == 2) {
             anim.Play(opened ? objectAnimations[0] : objectAnimations[1]);
         }
-        cameraAnim.StateChange(stateChange);
+        sceneManager.CameraStateChange(stateChange);
     }
 
     public void SimulateClick() {
