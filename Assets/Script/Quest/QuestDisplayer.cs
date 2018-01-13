@@ -24,6 +24,7 @@ public class QuestDisplayer : MonoBehaviour {
 
 	void Update() {
 		if (currentIslandID != PMInstance.player.currentIsland) {
+			ClearQuests();
 			SwapCurrentQuests(PMInstance.player.currentIsland);
 		}
 	}
@@ -31,6 +32,14 @@ public class QuestDisplayer : MonoBehaviour {
 	void OnMouseDown() {
 		sceneManager.CameraStateChange("QuestBoard", true, true);
 		SetColliderState(false);
+	}
+
+	void ClearQuests() {
+		foreach(GameObject spawnPoint in spawnPoints) {
+			foreach (Transform child in spawnPoint.transform) {
+				GameObject.Destroy(child.gameObject);
+			}
+		}
 	}
 
 	public void SetColliderState(bool state) {
