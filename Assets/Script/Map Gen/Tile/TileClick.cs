@@ -5,12 +5,14 @@ using UnityEngine;
 public class TileClick : MonoBehaviour {
 
     public int islandID;
+    IntroSceneManager introSceneManager;
 
 	// Use this for initialization
 	void Start () {
         string tmp = name.Replace("(Clone)", "");
         Sprite sprite = Resources.Load("Tiles/Sprite/" + tmp, typeof(Sprite)) as Sprite;
         GetComponent<SpriteRenderer>().sprite = sprite;
+        introSceneManager = GameObject.Find("SceneManager").GetComponent<IntroSceneManager>();
     }
 	
 	// Update is called once per frame
@@ -25,7 +27,8 @@ public class TileClick : MonoBehaviour {
         {
             GameManager.Instance.nextTurn();
             PlayerManager.GetInstance().player.currentIsland = int.Parse("" + islandID);
-            GameManager.Instance.GoInteraction();
+            //GameManager.Instance.GoInteraction();
+            introSceneManager.CameraStateChange("Interaction");
         }
         
     }

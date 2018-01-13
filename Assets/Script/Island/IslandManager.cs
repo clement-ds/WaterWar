@@ -52,8 +52,6 @@ public class IslandManager {
 //        Debug.Log("CHECK CREW : " + islands[0].crew.begos.Count + " / " + islands[0].crew.captains.Count + " / " + islands[0].crew.engineers.Count
 //            + " / " + islands[0].crew.fastUnits.Count + " / " + islands[0].crew.fighters.Count);
         Debug.Log("CHECK QUEST : " + islands[0].questLog.quests.Count);
-
-        Save();
     }
 
     public static IslandManager GetInstance()
