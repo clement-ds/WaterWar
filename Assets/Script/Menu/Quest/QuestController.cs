@@ -14,10 +14,15 @@ public class QuestController : UIController
     public int nbrQuestByPage = 10;
     private int currentPage = 0;
 
-    void Start() {
-        FillItems();
+    [Header("Info UI elements")]
+	public GameObject UICanvas;
+	public TextMeshProUGUI title;
+	public TextMeshProUGUI description;
+	public TextMeshProUGUI rewards;
 
-        InvokeRepeating("Populate", 0, 2f);
+
+    void Start() {
+        Populate();
     }
 
     public override void Populate()
@@ -29,7 +34,6 @@ public class QuestController : UIController
 
     private void FillItems()
     {
-        Debug.Log("----------------Nbr of quests: " + PlayerManager.GetInstance().player.questLog.quests.Count);
         questList = PlayerManager.GetInstance().player.questLog.quests;
 
         int i = 0;
@@ -43,10 +47,10 @@ public class QuestController : UIController
 
                 foreach (Transform child in questRow.transform)
                 {
-                    if (child.name == "MemberObjectif")
+                    if (child.name == "MemberTitle")
                     {
                         TextMeshProUGUI text = child.GetComponent<TextMeshProUGUI>();
-                        text.SetText(quest.objective);
+                        text.SetText(quest.title);
                     }
                     else if (child.name == "MemberDescription")
                     {
@@ -75,6 +79,9 @@ public class QuestController : UIController
                         CreateClosureForAccept(quest, AcceptButton);
                     }
                 }
+                QuestInfosUIDisplayer UIDisplayer = questRow.GetComponent<QuestInfosUIDisplayer>();
+                UIDisplayer.SetQuest(quest);
+                UIDisplayer.SetObjectsReferences(UICanvas, title, description, rewards);
                 questRow.transform.SetParent(panel.transform, false);
                 questRow.SetActive(true);
             }

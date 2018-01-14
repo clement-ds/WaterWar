@@ -26,6 +26,10 @@ public class IntroSceneManager : MonoBehaviour {
         InvokeRepeating("SpawnMoney", .5f, .2f);
     }
 
+    public bool GetStateForBool(string boolName) {
+        return cameraManager.GetStateForBool(boolName);
+    }
+
     private int moneyCurrentlySpawned = 0;
     private const float positionOffset = .5f;
     private void SpawnMoney() {

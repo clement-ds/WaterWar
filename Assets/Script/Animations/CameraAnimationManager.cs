@@ -17,6 +17,10 @@ public class CameraAnimationManager : MonoBehaviour {
         animationController.SetBool(state, hasForcedState ? forcedState : !animationController.GetBool(state));
     }
 
+    public bool GetStateForBool(string boolName) {
+        return animationController.GetBool(boolName);
+    }
+
     public void PlayAnimation(string anim) {
         Debug.Log("PlayAnimation: Requesting " + anim);
         string mode = "crossfade";
