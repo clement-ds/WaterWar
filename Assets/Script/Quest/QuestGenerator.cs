@@ -148,11 +148,11 @@ public class QuestGenerator {
       int amount = UnityEngine.Random.Range(1, 3);
 
       // Title
-      quest.title = "Recruit" + " " + amount.ToString() + " sailor";
+      quest.title = "Recruit" + " " + amount.ToString() + " sailors";
 
       // Description
-      quest.description = "Get " + amount.ToString()+ " " + "sailor";
-      
+      quest.description = "Recruit " + amount.ToString()+ " " + "sailors on your shit !";
+      quest.end.quantity = amount + PlayerManager.GetInstance().player.crew.crewMembers.Count;
     }
 
     if (quest.reward.type == Reward.REWARD.INFLUENCE) {
@@ -184,6 +184,10 @@ public class QuestGenerator {
         (ret == null || ret.quantity < quest.end.quantity))
       return false;
 
+    if (quest.type == PlayerQuest.QUEST.RECRUIT && player.crew.crewMembers.Count < quest.end.quantity) {
+      return false;
+    }
+    
     if (quest.reward.type == Reward.REWARD.INFLUENCE) {
       island.influence += quest.reward.amount;
     } else if (quest.reward.type == Reward.REWARD.MONEY) {
@@ -197,7 +201,7 @@ public class QuestGenerator {
     if (quest.type == PlayerQuest.QUEST.FIND || quest.type == PlayerQuest.QUEST.KILL) {
       player.inventory.removeQuantityOfObject(ret, quest.end.quantity);
     }
-    
+
     return true;
   }
 }
