@@ -323,6 +323,7 @@ public class Reward
     public enum REWARD { MONEY = 0, OBJECT = 1, INFLUENCE = 2 };
     public REWARD type;
     public int id;
+    public string name;
     public int amount;
 }
 
@@ -337,6 +338,7 @@ public class PlayerQuest
     public QUEST type;
     public string objective;
     public Reward reward;
+    public List<Reward> rewards;
     public InventoryObject end;
     public int moneyReward;
     public bool taken = false;
@@ -344,6 +346,21 @@ public class PlayerQuest
     public String Describe()
     {
         return ("TITLE: " + title + "\tDESCRIPTION: " + description + "\tTYPE: " + type + "\tOBJECTIVE: " + objective + "\tREWARD: " + reward.id + ':' + reward.amount + ':' + reward.type);
+    }
+
+    public List<string> GetRewardString() {
+        List<string> rewardString = new List<string>();
+
+        rewards.ForEach((reward) => {
+            if (reward.type == Reward.REWARD.MONEY) {
+                rewardString.Add(reward.amount.ToString() + "$");
+            } else if (reward.type == Reward.REWARD.INFLUENCE) {
+                rewardString.Add(reward.amount.ToString() + " influence on " + localisation);
+            } else if (reward.type == Reward.REWARD.OBJECT) {
+                rewardString.Add(reward.amount.ToString() + " " + reward.name);
+            }
+        });
+        return null;
     }
 }
 
