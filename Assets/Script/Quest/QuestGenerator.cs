@@ -43,7 +43,7 @@ public class QuestGenerator {
     quest.reward = new Reward();
     quest.end = new InventoryObject("", "", 1, 10, 10);
 
-    quest.type = (PlayerQuest.QUEST)UnityEngine.Random.Range(0, 2);
+    quest.type = (PlayerQuest.QUEST)UnityEngine.Random.Range(0, 3);
     quest.localisation = islandName;
 
     if (quest.type == PlayerQuest.QUEST.KILL) {
