@@ -66,7 +66,8 @@ public class QuestGenerator {
       quest.reward.type = (Reward.REWARD)UnityEngine.Random.Range(0, 2);
 
       // End
-      quest.end.name = "Flag " + "Captain " + name;
+      quest.end.name = "Flag " + name;
+      quest.end.id = UnityEngine.Random.Range(100, 1000);
       quest.end.quantity = 1;
 
       // MoneyReward outdated (just in case)
@@ -132,10 +133,10 @@ public class QuestGenerator {
       }
 
       // Title
-      quest.title = "Collect" + " " + amount.ToString()+ " " + objectName;
+      quest.title = "Collect" + " " + amount.ToString() + " " + objectName;
 
       // Description
-      quest.description = "Bring " + amount.ToString()+ " " + objectName + " " + "to" + " " + islandName;
+      quest.description = "Get " + amount.ToString() + " " + objectName + " " + "to" + " " + islandName;
 
       // End
       quest.end.name = objectName;
@@ -143,6 +144,15 @@ public class QuestGenerator {
 
       // MoneyReward outdated (just in case)
       quest.moneyReward = UnityEngine.Random.Range(5, 50);
+    } else if (quest.type == PlayerQuest.QUEST.RECRUIT) {
+      int amount = UnityEngine.Random.Range(1, 3);
+
+      // Title
+      quest.title = "Recruit" + " " + amount.ToString() + " sailor";
+
+      // Description
+      quest.description = "Get " + amount.ToString()+ " " + "sailor";
+      
     }
 
     if (quest.reward.type == Reward.REWARD.INFLUENCE) {
@@ -165,21 +175,29 @@ public class QuestGenerator {
 
     if (quest.localisation == null || !quest.localisation.Equals(island.name))
       return false;
-   InventoryObject ret = player.inventory.containsObject(quest.end.id);
+    
+    InventoryObject ret = player.inventory.containsObject(quest.end.id);
 
-    if (ret != null && ret.quantity >= quest.end.quantity) {
-      if (quest.reward.type == Reward.REWARD.INFLUENCE) {
-        island.influence += quest.reward.amount;
-      } else if (quest.reward.type == Reward.REWARD.MONEY) {
-        player.money += quest.reward.amount;
-      } else if (quest.reward.type == Reward.REWARD.OBJECT) {
-        LoadFile("PlayerJson/Objects.txt", objects);
-        InventoryObject objectReward = JsonUtility.FromJson<InventoryObject>(objects[quest.reward.id]);
-        player.inventory.addQuantityOfObject(objectReward, quest.reward.amount);
-      }
-      player.inventory.removeQuantityOfObject(ret, quest.end.quantity);
-      return true;
+    if ((quest.type == PlayerQuest.QUEST.FIND ||
+        quest.type == PlayerQuest.QUEST.GET ||
+        quest.type == PlayerQuest.QUEST.KILL ) &&
+        (ret == null || ret.quantity < quest.end.quantity))
+      return false;
+
+    if (quest.reward.type == Reward.REWARD.INFLUENCE) {
+      island.influence += quest.reward.amount;
+    } else if (quest.reward.type == Reward.REWARD.MONEY) {
+      player.money += quest.reward.amount;
+    } else if (quest.reward.type == Reward.REWARD.OBJECT) {
+      LoadFile("PlayerJson/Objects.txt", objects);
+      InventoryObject objectReward = JsonUtility.FromJson<InventoryObject>(objects[quest.reward.id]);
+      player.inventory.addQuantityOfObject(objectReward, quest.reward.amount);
     }
-    return false;
+
+    if (quest.type == PlayerQuest.QUEST.FIND || quest.type == PlayerQuest.QUEST.KILL) {
+      player.inventory.removeQuantityOfObject(ret, quest.end.quantity);
+    }
+    
+    return true;
   }
 }

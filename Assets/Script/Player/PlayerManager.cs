@@ -63,7 +63,6 @@ public class PlayerManager
             enemie = JsonUtility.FromJson<EnemiesSave>(json[0]).enemies[lvlOfIA];
             Debug.Log(quest.end.name);
             enemie.name = quest.end.name.Substring(13);
-            Debug.Log(enemie.name);
             enemie.inventory.addObject(new InventoryObject("Flag " + enemie.name, "Quest", 1, 100, 10));
             enemies.Add(enemie);
         }
