@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private int inGame;
     public int xMapSize, yMapSize, islandsAmount;
     EnemyAI enemyAI;
+    QuestGenerator qgen;
     IslandGenerator islandGenerator;
 
     public MapGenerator mapGenerator;
@@ -34,6 +35,7 @@ public class GameManager : MonoBehaviour
             islandManager = IslandManager.GetInstance();
             enemyAI = new EnemyAI();
             islandGenerator = new IslandGenerator();
+            qgen = new QuestGenerator();
 
             mapGenerator = new MapGenerator();
             mapGenerator.spawnMap(xMapSize, yMapSize, islandsAmount);
@@ -114,6 +116,15 @@ public class GameManager : MonoBehaviour
             foreach (Island island in islandManager.islands)
             {
                 islandGenerator.GenerateFood(island, 3);
+            }
+        }
+
+        //Island quests refresh
+        if (turnCount % 5 == 0)
+        {
+            foreach (Island island in islandManager.islands)
+            {
+                qgen.GenerateQuest(island);
             }
         }
 
