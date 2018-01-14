@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 
 public class IntroSceneManager : MonoBehaviour {
     public GameObject map, menu, coinPrefab;
@@ -10,6 +10,8 @@ public class IntroSceneManager : MonoBehaviour {
 
     private int wealth;
     private List<GameObject> spawnedMoney;
+
+    [SerializeField] private TextMeshProUGUI moneyText;
 
 	// Use this for initialization
 	void Start () {
@@ -50,6 +52,7 @@ public class IntroSceneManager : MonoBehaviour {
     }
     private void UpdateWealth() {
         wealth = PlayerManager.GetInstance().player.money;
+        moneyText.SetText(wealth + "£");
     }
 
     public void CameraStateChange(string state, bool hasForcedState = false, bool forcedState = false) {
