@@ -360,7 +360,7 @@ public class PlayerQuest
                 rewardString.Add(reward.amount.ToString() + " " + reward.name);
             }
         });
-        return null;
+        return rewardString;
     }
 }
 
