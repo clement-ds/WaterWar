@@ -16,6 +16,8 @@ public class QuestController : UIController
 
     void Start() {
         FillItems();
+
+        InvokeRepeating("Populate", 0, 2f);
     }
 
     public override void Populate()
