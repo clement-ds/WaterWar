@@ -260,15 +260,16 @@ public class Canon : ShipElement
         else if (distance > 13)
             x = 0.5f;
         else if (distance > 10)
-            x = 0.7f;
+            x = 0.6f;
         else if (distance > 7)
+            x = 0.7f;
+        else if (distance > 3)
             x = 0.8f;
         else if (distance <= 3)
             x = 1f;
+
         y = ((1f - x) / 3) * 2;
         z = 1f - y - x;
-
-        Debug.Log("Accuracy: " + new Vector3(x, y, z));
         return new Vector3(x, y, z);
     }
 
