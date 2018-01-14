@@ -151,7 +151,7 @@ public abstract class Battle_Ship : MonoBehaviour
         this.setCurrentLife(this.currentLife - damage);
         if (this.currentLife <= 0)
         {
-            this.die();
+            this.die(DestroyedStatus.DESTROY_SHIP);
         }
     }
 
@@ -182,6 +182,10 @@ public abstract class Battle_Ship : MonoBehaviour
             }
             this.countDiedMember = 0;
         }
+        if (this.crewMembers.Count == 0)
+        {
+            this.die(DestroyedStatus.KILL_MEMBERS);
+        }
     }
     
     /** COLLISION **/
@@ -196,14 +200,16 @@ public abstract class Battle_Ship : MonoBehaviour
         {
             this.leaveAboardTarget(target);
         }
+        if (distance <= 1.5)
+        {
+            this.movement = new Vector3(0, 0, 0);
+        }
     }
 
     void onAboardTarget(Battle_Ship enemy)
     {
         if (enemy)
         {
-            this.movement = new Vector3(0, 0, 0);
-            //enemy.moveRotation = this.moveRotation;// (this.moveRotation > 90 ? this.moveRotation - 2 : this.moveRotation + 2);
             this.saveCollisionDirection = this.direction;
             this.doAboarding(enemy, true);
         }
@@ -317,7 +323,7 @@ public abstract class Battle_Ship : MonoBehaviour
         GameRulesManager.GetInstance().guiAccess.boardingButton.gameObject.SetActive(aboarding);
     }
 
-    public abstract void die();
+    public abstract void die(DestroyedStatus status);
 
     public void addShipElement(RoomElement shipElement)
     {

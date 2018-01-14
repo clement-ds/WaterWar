@@ -52,6 +52,9 @@ public class CreateGameObject : MonoBehaviour
         GameRulesManager.GetInstance().ships.Add(p);
         GameRulesManager.GetInstance().ships.Add(e);
 
+        GameRulesManager.GetInstance().characters.Add(p.getId(), new Pair<Player, DestroyedStatus>(player, DestroyedStatus.ALIVE));
+        GameRulesManager.GetInstance().characters.Add(e.getId(), new Pair<Player, DestroyedStatus>(ai, DestroyedStatus.ALIVE));
+
     }
 
     private void addRoomToShip(GameObject ship, List<Room> rooms, float shipWidth, float shipHeight)

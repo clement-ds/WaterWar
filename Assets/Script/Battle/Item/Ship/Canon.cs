@@ -194,11 +194,11 @@ public class Canon : ShipElement
                     this.target = null;
                     result = false;
                 }
-                    /*if (UnityEngine.Random.value > 0.80)
-                    {
-                        shotCutscene.StartCutscene();
-                        WaitForX(shotCutscene.duration);
-                    }*/
+                /*if (UnityEngine.Random.value > 0.80)
+                {
+                    shotCutscene.StartCutscene();
+                    WaitForX(shotCutscene.duration);
+                }*/
 
                 GameObject canonBall = canonBallPool.GetObject();
 
@@ -246,11 +246,30 @@ public class Canon : ShipElement
 
     private Vector3 getBulletAccuracy(Battle_CrewMember crew)
     {
-        float x = 0.7f;
-        float y = 0.1f;
-        float z = 0.2f;
+        float x = 0; // SUCCESS
+        float y; // MISS
+        float z; // FAIL
 
-        //GameRulesManager.GetInstance().guiAccess.distanceToEnemy;
+        float distance = float.Parse(GameRulesManager.GetInstance().guiAccess.distanceToEnemy.text);
+        if (distance > 20)
+            x = 0.1f;
+        else if (distance > 20)
+            x = 0.1f;
+        else if (distance > 15)
+            x = 0.3f;
+        else if (distance > 13)
+            x = 0.5f;
+        else if (distance > 10)
+            x = 0.6f;
+        else if (distance > 7)
+            x = 0.7f;
+        else if (distance > 3)
+            x = 0.8f;
+        else if (distance <= 3)
+            x = 1f;
+
+        y = ((1f - x) / 3) * 2;
+        z = 1f - y - x;
         return new Vector3(x, y, z);
     }
 

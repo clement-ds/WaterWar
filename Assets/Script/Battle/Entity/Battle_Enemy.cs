@@ -33,11 +33,9 @@ public class Battle_Enemy : Battle_Ship
         this.canEscapeAction = value;
     }
 
-    public override void die()
+    public override void die(DestroyedStatus status)
     {
-        GameRulesManager.GetInstance().guiAccess.endMessage.text = "You killed your ennemy";
-        GameRulesManager.GetInstance().guiAccess.endPanel.gameObject.SetActive(true);
-        GameRulesManager.GetInstance().endOfTheGame = true;
+        GameRulesManager.GetInstance().enemyDestroyed(this.id, status);
     }
 
     /** SCRIPT **/
