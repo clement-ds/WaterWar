@@ -9640,12 +9640,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 330435862}
-  m_LocalRotation: {x: -0.0004408415, y: 0.97644854, z: 0.000097405624, w: 0.21575017}
-  m_LocalPosition: {x: -0.036390457, y: 5.689004, z: 0.122379266}
-  m_LocalScale: {x: 0.04374028, y: 3.837903, z: 0.034701265}
+  m_LocalRotation: {x: 0.020712415, y: 0.97622895, z: -0.0045764907, w: 0.21570165}
+  m_LocalPosition: {x: 5.47, y: 0.78, z: -1}
+  m_LocalScale: {x: 1.0120718, y: 0.76605123, z: 0.8203493}
   m_Children: []
-  m_Father: {fileID: 1326248738}
-  m_RootOrder: 0
+  m_Father: {fileID: 2050676619}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!215 &330435864
 ReflectionProbe:
@@ -9661,8 +9661,8 @@ ReflectionProbe:
   m_TimeSlicingMode: 0
   m_Resolution: 256
   m_UpdateFrequency: 0
-  m_BoxSize: {x: 86.131836, y: 19.659668, z: 122.17928}
-  m_BoxOffset: {x: 3.6728516, y: 4.829834, z: -15.414303}
+  m_BoxSize: {x: 86.131836, y: 31.212952, z: 122.17928}
+  m_BoxOffset: {x: 0, y: 5.776642, z: 0}
   m_NearClip: 3.8
   m_FarClip: 20
   m_ShadowDistance: 100
@@ -37233,8 +37233,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0.021663357, w: 0.99976534}
   m_LocalPosition: {x: 7.64, y: -0.77, z: 0}
   m_LocalScale: {x: 23, y: 0.1995829, z: 23.778519}
-  m_Children:
-  - {fileID: 330435863}
+  m_Children: []
   m_Father: {fileID: 2050676619}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -2.483}
@@ -59988,6 +59987,7 @@ Transform:
   - {fileID: 2109486942}
   - {fileID: 1429628945}
   - {fileID: 1080906250}
+  - {fileID: 330435863}
   m_Father: {fileID: 1713852540}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
