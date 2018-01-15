@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class GuiAccess : MonoBehaviour {
@@ -8,7 +8,9 @@ public class GuiAccess : MonoBehaviour {
     public Button escapeButton;
     public Button boardingButton;
     public Image endPanel;
-    public Text endMessage;
+    public Image endPanelLoot;
+    public List<Text> endMessages;
+    public List<Text> endMessagesLoot;
 
     void Start()
     {

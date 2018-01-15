@@ -73,7 +73,7 @@ public class GameRulesManager
             message = "Your opponent" + (this.characters.Count > 2 ? "s" : "") + " killed you";
         else if (status == GameStatus.ESCAPE)
             message = "You escape the fight";
-        GameRulesManager.GetInstance().guiAccess.endMessage.text = message;
+        GameRulesManager.GetInstance().guiAccess.endMessages[1].text = message;
         GameRulesManager.GetInstance().guiAccess.endPanel.gameObject.SetActive(true);
 
         shareLoot();
