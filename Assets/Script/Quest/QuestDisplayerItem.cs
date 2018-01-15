@@ -7,16 +7,15 @@ public class QuestDisplayerItem : MonoBehaviour {
 
 	public TextMeshProUGUI Q_Title;
 	public TextMeshProUGUI Q_Description;
-	public TextMeshProUGUI Q_Objective;
+	public TextMeshProUGUI Q_Rewards;
 
 	private PlayerQuest quest;
 
 	public void SetPlayerQuest(PlayerQuest quest) {
-		Debug.Log("QuestDisplayerItem Quest: " + quest.Describe());
 		this.quest = quest;
 		Q_Title.SetText(quest.title);
 		Q_Description.SetText(quest.description);
-		Q_Objective.SetText(quest.objective);
+		Q_Rewards.SetText(string.Join("\n", quest.GetRewardString().ToArray()));
 	}
 
 	void OnMouseDown() {

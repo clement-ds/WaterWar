@@ -43,8 +43,8 @@ public class TileClick : MonoBehaviour
         print(islandID);
         if (islandID >= 0)
         {
-            GameManager.Instance.nextTurn();
             PlayerManager.GetInstance().player.currentIsland = int.Parse("" + islandID);
+            GameManager.Instance.nextTurn();
             //GameManager.Instance.GoInteraction();
             introSceneManager.CameraStateChange("Interaction");
         }
