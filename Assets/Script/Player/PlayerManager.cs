@@ -285,6 +285,16 @@ public class InventoryObject
         this.basePrice = basePrice;
     }
 
+    public InventoryObject(InventoryObject obj)
+    {
+        this.name = obj.name;
+        this.type = obj.type;
+        this.quantity = obj.quantity;
+        this.price = obj.price;
+        this.id = obj.id;
+        this.basePrice = obj.basePrice;
+    }    
+
     public InventoryObject(InventoryObject invObj, int quantity = -1)
     {
         this.name = invObj.name;
