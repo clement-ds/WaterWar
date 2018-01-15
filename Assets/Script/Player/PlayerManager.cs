@@ -27,15 +27,21 @@ public class PlayerManager
     {
         LoadFile("PlayerJson/Save.json");
         player = JsonUtility.FromJson<Player>(json[0]);
+        player.graphicAsset = Resources.Load("Ship/PlayerShip") as GameObject;
         Debug.Log("player : " + player.name + "/" + player.life);
 
         LoadFile("PlayerJson/AISave.json");
-        for (int i = 0; i < maxEnemies / 2; i += 1)
-        {
+        //for (int i = 0; i < maxEnemies / 2; i += 1)
+        //{
             enemiesSave = JsonUtility.FromJson<EnemiesSave>(json[0]);
             enemies = enemiesSave.enemies;
+        //}
+
+        foreach (Player enemy in enemies)
+        {
+            enemy.graphicAsset = Resources.Load("Ship/AiShip") as GameObject;
         }
-        SaveAI();
+        //Save();
 
         LoadFile("PlayerJson/Objects.txt", objectDictionary);
     }
@@ -187,11 +193,18 @@ public class Player
     public int money;
     public int currentIsland;
     public Vector2 mapPosition;
+    public GameObject graphicAsset;
+    public GameObject mapShip;
 
     public PlayerInventory inventory = new PlayerInventory();
     public PlayerCrew crew = new PlayerCrew();
     public QuestLog questLog = new QuestLog();
     public PlayerShip ship = new PlayerShip();
+
+    public Player(String assetName = "AiShip")
+    {
+        graphicAsset = Resources.Load("Ship/" + assetName) as GameObject;
+    }
 }
 
 [Serializable]
@@ -284,6 +297,16 @@ public class InventoryObject
         this.price = price;
         this.basePrice = basePrice;
     }
+
+    public InventoryObject(InventoryObject obj)
+    {
+        this.name = obj.name;
+        this.type = obj.type;
+        this.quantity = obj.quantity;
+        this.price = obj.price;
+        this.id = obj.id;
+        this.basePrice = obj.basePrice;
+    }    
 
     public InventoryObject(InventoryObject invObj, int quantity = -1)
     {

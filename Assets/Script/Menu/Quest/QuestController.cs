@@ -19,6 +19,7 @@ public class QuestController : UIController
 	public TextMeshProUGUI title;
 	public TextMeshProUGUI description;
 	public TextMeshProUGUI rewards;
+    private QuestInfosUIDisplayer UIDisplayer;
 
 
     void Start() {
@@ -76,10 +77,11 @@ public class QuestController : UIController
                     else if (child.name == "AcceptButton")
                     {
                         Button AcceptButton = (Button)child.GetComponent<Button>();
+                        AcceptButton.gameObject.SetActive(true);
                         CreateClosureForAccept(quest, AcceptButton);
                     }
                 }
-                QuestInfosUIDisplayer UIDisplayer = questRow.GetComponent<QuestInfosUIDisplayer>();
+                UIDisplayer = questRow.GetComponent<QuestInfosUIDisplayer>();
                 UIDisplayer.SetQuest(quest);
                 UIDisplayer.SetObjectsReferences(UICanvas, title, description, rewards);
                 questRow.transform.SetParent(panel.transform, false);
@@ -94,10 +96,12 @@ public class QuestController : UIController
         button.onClick.AddListener(() =>
         {
             Player player = PlayerManager.GetInstance().player;
-
-            quest.taken = true;
-            player.questLog.quests.Add(quest);
-            IslandManager.GetInstance().islands[player.currentIsland].questLog.quests.Remove(quest);
+            Island island = IslandManager.GetInstance().islands[player.currentIsland];
+            QuestGenerator qgen = new QuestGenerator();
+            if (qgen.CheckQuest(quest, player, island)) {
+                player.questLog.quests.Remove(quest);
+                UIDisplayer.hideHud();
+            }
             Populate();
         });
     }
