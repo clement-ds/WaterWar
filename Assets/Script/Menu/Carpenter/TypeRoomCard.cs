@@ -46,17 +46,14 @@ public class TypeRoomCard : MonoBehaviour {
   public void initCard(CarpenterController cl) {
     Title.text = source.component;
     Description.text = source.type.ToString();
+	setIcon(source.component);
 
-    btn = this.GetComponent<Button>();
-    btn.onClick.AddListener(delegate { cl.printType(source); });
-    setIcon(source.component);
+    btn = this.GetComponentInChildren<Button>();
+    btn.onClick.AddListener(delegate { cl.selectRoom(this.source); });
   }
 
   public void setRoom(Room room) {
     Title.text = source.type;
     Description.text = source.component.ToString();
-  }
-
-  void Update() {
   }
 }
