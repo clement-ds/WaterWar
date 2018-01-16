@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     public MapGenerator mapGenerator;
 
-    
+
 
     void Awake()
     {
@@ -95,36 +95,34 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Turn
+
+
+    public void spawnShips()
+    {
+        Island island = islandManager.islands[playerManager.player.currentIsland];
+        playerManager.player.mapShip = GameObject.Instantiate(playerManager.player.graphicAsset, (new Vector3(island.x * 50, island.y * 50, 8)), new Quaternion());
+        playerManager.player.mapShip.transform.SetParent(mapPivot.transform, false);
+
+        int playerX = 0;
+        int playerY = 0;
+        foreach (Player enemy in playerManager.enemies)
+        {
+            playerX += 150;
+            enemy.mapShip = GameObject.Instantiate(enemy.graphicAsset, (new Vector3(island.x * 50 + playerX, island.y * 50 + playerY, 8)), new Quaternion());
+            enemy.mapShip.transform.SetParent(mapPivot.transform, false);
+        }
+    }
+
     int turnCount = 0;
 
     public void nextTurn()
     {
         turnCount += 1;
 
-        //Init ship dislpay
-        if (turnCount == 1)
-        {
-            Island island = islandManager.islands[playerManager.player.currentIsland];
-            playerManager.player.mapShip = GameObject.Instantiate(playerManager.player.graphicAsset, (new Vector3(island.x * 50, island.y * 50, 8)), new Quaternion());
-            playerManager.player.mapShip.transform.SetParent(mapPivot.transform, false);
-
-            int playerX = 0;
-            int playerY = 0;
-            foreach (Player enemy in playerManager.enemies)
-            {
-                playerX += 150;
-                enemy.mapShip = GameObject.Instantiate(enemy.graphicAsset, (new Vector3(island.x * 50 + playerX, island.y * 50 + playerY, 8)), new Quaternion());
-                enemy.mapShip.transform.SetParent(mapPivot.transform, false);
-            }
-        }
-
         //Player position
-        if (turnCount > 1)
-        {
-            Island island = islandManager.islands[playerManager.player.currentIsland];
-            Vector3 pos1 = new Vector3(island.x * 50, island.y * 50, 8);     
-            playerManager.player.mapShip.transform.localPosition = pos1;
-        }
+        Island islandP = islandManager.islands[playerManager.player.currentIsland];
+        Vector3 pos = new Vector3(islandP.x * 50, islandP.y * 50, 8);
+        playerManager.player.mapShip.transform.localPosition = pos;
 
         //Enemies turn
         if (turnCount % 2 == 0)
@@ -139,7 +137,7 @@ public class GameManager : MonoBehaviour
                 int playerX = 0;
                 int playerY = 0;
                 foreach (Player enemy in playerManager.enemies)
-                {  
+                {
                     if (enemy.currentIsland == i)
                     {
                         playerX += 150;
@@ -153,14 +151,14 @@ public class GameManager : MonoBehaviour
 
         //Gen new enemies
 
-            //Island iventory refresh
-            if (turnCount % 5 == 0)
+        //Island iventory refresh
+        if (turnCount % 5 == 0)
+        {
+            foreach (Island island in islandManager.islands)
             {
-                foreach (Island island in islandManager.islands)
-                {
-                    islandGenerator.GenerateFood(island, 3);
-                }
+                islandGenerator.GenerateFood(island, 3);
             }
+        }
 
         //Island quests refresh
         if (turnCount % 5 == 0)

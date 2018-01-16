@@ -210,9 +210,6 @@ public class Player
 [Serializable]
 public class PlayerInventory : Inventory
 {
-    public List<InventoryObject> food = new List<InventoryObject>();
-    public List<InventoryObject> weapons = new List<InventoryObject>();
-
     private static List<string> crewWeapon = new List<string>() { "Sabre", "Musket", "Riffle"};
 
     public int getCrewWeapon()

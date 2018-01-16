@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
+
+[Serializable]
 public class Inventory
 {
     public List<InventoryObject> food = new List<InventoryObject>();
