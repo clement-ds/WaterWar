@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarpenterController : MonoBehaviour {
+public class CarpenterController : UIController {
 
 	private PlayerShip ship;
 	public GameObject TypeRoomCardPrefab;
 	public GameObject ShipRoomPrefab;
 	public GameObject CarpenterShip;
+	public GameObject CarpenterShop;
+
 
 
 	private List<GameObject> typeRoomList = new List<GameObject>();
@@ -21,6 +23,12 @@ public class CarpenterController : MonoBehaviour {
 		this.ship = manager.player.ship;
 		FillShopRoomList();
 		FillShipRoomList();
+	}
+
+	public override void Populate ()
+	{
+		FillShopRoomList();
+		FillShipRoomList();	
 	}
 
 	void FillShipRoomList() {
@@ -61,7 +69,7 @@ public class CarpenterController : MonoBehaviour {
 		card.source = this.ship.shipDisposition.rooms[i];
 
         card.initCard(this);
-        newCard.transform.SetParent(this.transform);
+        newCard.transform.SetParent(this.CarpenterShop.transform);
             newCard.transform.localScale = Vector3.one;
             newCard.transform.localPosition = Vector3.one;
         this.typeRoomList.Add(newCard);
