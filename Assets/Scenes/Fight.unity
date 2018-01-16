@@ -1302,7 +1302,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11427236, guid: 3430114ad69551f4e90210e38a64730c, type: 2}
-        m_MethodName: GoInteraction
+        m_MethodName: GoIntroMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3874,7 +3874,7 @@ RectTransform:
   m_GameObject: {fileID: 1183946326}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 100}
-  m_LocalScale: {x: 0.020864148, y: 0.020864148, z: 0.020864148}
+  m_LocalScale: {x: 0.021069635, y: 0.021069635, z: 0.021069635}
   m_Children:
   - {fileID: 2079206137}
   - {fileID: 369699188}
