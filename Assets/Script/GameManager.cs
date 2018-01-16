@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     public string SceneWorldMapName = "World_Map_Scene";
     public string SceneInteractionName = "Interaction_Scene";
     public string SceneFightName = "Fight";
-    public GameObject mapPivot;
     public Inventory inventory;
     public static GameManager Instance = null;
     public PlayerManager playerManager;
@@ -41,6 +40,7 @@ public class GameManager : MonoBehaviour
 
             mapGenerator = new MapGenerator();
             mapGenerator.spawnMap(xMapSize, yMapSize, islandsAmount);
+
         }
 
         else if (Instance != this)
@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
     #region Turn
 
 
-    public void spawnShips()
+    public void spawnShips(GameObject mapPivot)
     {
         Island island = islandManager.islands[playerManager.player.currentIsland];
         playerManager.player.mapShip = GameObject.Instantiate(playerManager.player.graphicAsset, (new Vector3(island.x * 50, island.y * 50, 8)), new Quaternion());
@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviour
         foreach (Player enemy in playerManager.enemies)
         {
             playerX += 150;
+            island = islandManager.islands[enemy.currentIsland];
             enemy.mapShip = GameObject.Instantiate(enemy.graphicAsset, (new Vector3(island.x * 50 + playerX, island.y * 50 + playerY, 8)), new Quaternion());
             enemy.mapShip.transform.SetParent(mapPivot.transform, false);
         }
@@ -119,10 +120,12 @@ public class GameManager : MonoBehaviour
     {
         turnCount += 1;
 
+        Player player = playerManager.player;
+
         //Player position
-        Island islandP = islandManager.islands[playerManager.player.currentIsland];
+        Island islandP = islandManager.islands[player.currentIsland];
         Vector3 pos = new Vector3(islandP.x * 50, islandP.y * 50, 8);
-        playerManager.player.mapShip.transform.localPosition = pos;
+        player.mapShip.transform.localPosition = pos;
 
         //Enemies turn
         if (turnCount % 2 == 0)
@@ -146,6 +149,25 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 i += 1;
+            }
+        }
+
+        //Meals and wages
+        foreach (CrewMember crew in playerManager.player.crew.crewMembers)
+        {
+            if (player.inventory.food.Count >= 1)
+            {
+                player.inventory.removeObject(player.inventory.food[0]);
+            } else
+            {
+                crew.morale = false;
+            }
+            if (player.money >= (int) crew.wage)
+            {
+                player.money -= (int)crew.wage;
+            } else
+            {
+                crew.morale = false;
             }
         }
 

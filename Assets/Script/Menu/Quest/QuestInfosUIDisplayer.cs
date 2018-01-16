@@ -30,6 +30,7 @@ public class QuestInfosUIDisplayer : MonoBehaviour, IPointerEnterHandler, IPoint
 	}
     public void OnPointerEnter(PointerEventData eventData)
     {
+		sceneManager.PlaySound("page");
 		if (sceneManager.GetStateForBool("Quest")) {
 			UICanvas.SetActive(true);
 			title.SetText(playerQuest.title);
@@ -47,6 +48,7 @@ public class QuestInfosUIDisplayer : MonoBehaviour, IPointerEnterHandler, IPoint
 	public void hideHud() {
 		UICanvas.SetActive(false);
 	}
+
     public void OnPointerExit(PointerEventData eventData)
     {
 		if (sceneManager.GetStateForBool("Quest")) {

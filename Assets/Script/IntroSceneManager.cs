@@ -10,6 +10,7 @@ public class IntroSceneManager : MonoBehaviour {
 
     private int wealth;
     private List<GameObject> spawnedMoney;
+    [SerializeField] private SoundManager soundManager;
 
     [SerializeField] private TextMeshProUGUI moneyText;
 
@@ -55,6 +56,10 @@ public class IntroSceneManager : MonoBehaviour {
         moneyText.SetText(wealth + "£");
     }
 
+    public void PlaySound(string name) {
+        soundManager.PlaySingle(name);
+    }
+    
     public void CameraStateChange(string state, bool hasForcedState = false, bool forcedState = false) {
         cameraManager.StateChange(state, hasForcedState, forcedState);
     }
