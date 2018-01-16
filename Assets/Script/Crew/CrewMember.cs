@@ -96,6 +96,7 @@ public abstract class CrewMember
     public float maxLife = 100f;
     public float life = 100f;
     public float satiety = 1f;
+    public bool morale = true;
 
     public bool available = true;
     public CrewMember_Job job;

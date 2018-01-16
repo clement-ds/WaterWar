@@ -120,10 +120,12 @@ public class GameManager : MonoBehaviour
     {
         turnCount += 1;
 
+        Player player = playerManager.player;
+
         //Player position
-        Island islandP = islandManager.islands[playerManager.player.currentIsland];
+        Island islandP = islandManager.islands[player.currentIsland];
         Vector3 pos = new Vector3(islandP.x * 50, islandP.y * 50, 8);
-        playerManager.player.mapShip.transform.localPosition = pos;
+        player.mapShip.transform.localPosition = pos;
 
         //Enemies turn
         if (turnCount % 2 == 0)
@@ -147,6 +149,25 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 i += 1;
+            }
+        }
+
+        //Meals and wages
+        foreach (CrewMember crew in playerManager.player.crew.crewMembers)
+        {
+            if (player.inventory.food.Count >= 1)
+            {
+                player.inventory.removeObject(player.inventory.food[0]);
+            } else
+            {
+                crew.morale = false;
+            }
+            if (player.money >= (int) crew.wage)
+            {
+                player.money -= (int)crew.wage;
+            } else
+            {
+                crew.morale = false;
             }
         }
 
