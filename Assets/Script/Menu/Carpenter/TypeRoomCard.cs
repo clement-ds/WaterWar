@@ -15,14 +15,14 @@ public class TypeRoomCard : MonoBehaviour {
 
   void setIcon(string type) {
     switch (type) {
-      case "Food":
-		Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Apple");
+		case "defenseBody":
+		Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Images/Rhum");
         break;
-      case "Fish":
-        Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Images/Fish");
+      case "blockBody":
+        Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Fish");
         break;
       case "attackBody":
-        Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Images/BlackPowder");
+        Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Images/Black powder");
         break;
       default:
         Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Images/Spider Web");
@@ -36,11 +36,11 @@ public class TypeRoomCard : MonoBehaviour {
 
     btn = this.GetComponent<Button>();
     btn.onClick.AddListener(delegate { cl.printType(source); });
-    setIcon(source.component);
+    setIcon(source.type);
   }
 
   public void setRoom(Room room) {
-    Title.text = source.component;
+    Title.text = source.type;
     Description.text = source.component.ToString();
   }
 
