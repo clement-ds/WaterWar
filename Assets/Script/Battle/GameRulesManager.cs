@@ -87,10 +87,10 @@ public class GameRulesManager
         GameRulesManager.GetInstance().guiAccess.endMessagesLoot[0].text = (status == GameStatus.VICTORY ? "After the battle, you successly loot: " : "Your enemies stole:");
         foreach (var loot in playerLoot)
         {
-            Text lootGuiItem = new Text();
+//            Text lootGuiItem = new Text();
 
-            lootGuiItem.text = loot.Key;
-            lootGuiItem.transform.parent = GameRulesManager.GetInstance().guiAccess.contentLootList.transform;
+            // lootGuiItem.text = loot.Key;
+            // lootGuiItem.transform.parent = GameRulesManager.GetInstance().guiAccess.contentLootList.transform;
         }
     }
 

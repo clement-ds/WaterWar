@@ -164,26 +164,25 @@ public class QuestGenerator {
   }
 
   public bool CheckQuest(PlayerQuest quest, Player player, Island island) {
-    List<string> objects = new List<string>();
-
     if (quest == null || player == null || island == null)
       return false;
 
-    if (quest.localisation == null || !quest.localisation.Equals(island.name))
+    if (quest.localisation == null || quest.localisation.Equals(island.name) == false)
       return false;
 
-    InventoryObject ret = player.inventory.food.Find((item) => item.id == quest.end.id);
-
-    if ((quest.type == PlayerQuest.QUEST.FIND ||
-        quest.type == PlayerQuest.QUEST.GET ||
-        quest.type == PlayerQuest.QUEST.KILL) &&
-        (ret == null || ret.quantity < quest.end.quantity))
-      return false;
-
-    if (quest.type == PlayerQuest.QUEST.RECRUIT && player.crew.crewMembers.Count < quest.end.quantity) {
-      return false;
+    if (quest.type == PlayerQuest.QUEST.GET || quest.type == PlayerQuest.QUEST.FIND || quest.type == PlayerQuest.QUEST.KILL) {
+        InventoryObject objects = player.inventory.food.Find((item) => item.name == quest.end.name);
+        if (objects != null && objects.quantity >= quest.end.quantity)
+          return true;
     }
-    
+    return false;
+  }
+  public bool ValidateQuest(PlayerQuest quest, Player player, Island island) {
+    if (!CheckQuest(quest, player, island))
+      return false;
+
+    List<string> objects = new List<string>();
+
     quest.rewards.ForEach((reward) => {
       if (reward.type == Reward.REWARD.INFLUENCE) {
         island.influence += reward.amount;
@@ -196,10 +195,11 @@ public class QuestGenerator {
       }
     });
 
-    if (quest.type == PlayerQuest.QUEST.FIND || quest.type == PlayerQuest.QUEST.KILL) {
+    if (quest.type == PlayerQuest.QUEST.GET || quest.type == PlayerQuest.QUEST.KILL) {
+      InventoryObject ret = player.inventory.food.Find((item) => item.name == quest.end.name);
       player.inventory.removeQuantityOfObject(ret, quest.end.quantity);
     }
-
+    player.questLog.quests.Remove(quest);
     return true;
   }
 }

@@ -77,7 +77,10 @@ public class QuestController : UIController
                     else if (child.name == "AcceptButton")
                     {
                         Button AcceptButton = (Button)child.GetComponent<Button>();
-                        AcceptButton.gameObject.SetActive(true);
+                        QuestGenerator qgen = new QuestGenerator();
+                        Player player = PlayerManager.GetInstance().player;
+                        Island island = IslandManager.GetInstance().islands[player.currentIsland];
+                        AcceptButton.gameObject.SetActive(qgen.CheckQuest(quest, player, island));
                         CreateClosureForAccept(quest, AcceptButton);
                     }
                 }
@@ -98,8 +101,7 @@ public class QuestController : UIController
             Player player = PlayerManager.GetInstance().player;
             Island island = IslandManager.GetInstance().islands[player.currentIsland];
             QuestGenerator qgen = new QuestGenerator();
-            if (qgen.CheckQuest(quest, player, island)) {
-                player.questLog.quests.Remove(quest);
+            if (qgen.ValidateQuest(quest, player, island)) {
                 UIDisplayer.hideHud();
             }
             Populate();
