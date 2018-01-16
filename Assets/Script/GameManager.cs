@@ -169,6 +169,15 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        foreach (Player enemy in playerManager.enemies)
+        {
+            if (enemy.currentIsland == playerManager.player.currentIsland)
+            {
+                GoFight();
+                //Je sais pas si il y a besoin mais au cas ou
+                break;
+            }
+        }
     }
     #endregion
 
