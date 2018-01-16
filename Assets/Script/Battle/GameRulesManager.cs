@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum GameStatus { VICTORY, DEFEAT, ESCAPE }
 
@@ -76,10 +77,24 @@ public class GameRulesManager
         GameRulesManager.GetInstance().guiAccess.endMessages[1].text = message;
         GameRulesManager.GetInstance().guiAccess.endPanel.gameObject.SetActive(true);
 
-        shareLoot();
+        Dictionary<string, int> playerLoot = new Dictionary<string, int>();
+        shareLoot(playerLoot);
+        printPlayerGUILoot(status, playerLoot);
     }
 
-    private void shareLoot()
+    private void printPlayerGUILoot(GameStatus status, Dictionary<string, int> playerLoot)
+    {
+        GameRulesManager.GetInstance().guiAccess.endMessagesLoot[0].text = (status == GameStatus.VICTORY ? "After the battle, you successly loot: " : "Your enemies stole:");
+        foreach (var loot in playerLoot)
+        {
+            Text lootGuiItem = new Text();
+
+            lootGuiItem.text = loot.Key;
+            lootGuiItem.transform.parent = GameRulesManager.GetInstance().guiAccess.contentLootList.transform;
+        }
+    }
+
+    private void shareLoot(Dictionary<string, int> playerLoot)
     {
         List<InventoryObject> lootFood = new List<InventoryObject>();
         List<InventoryObject> lootWeapon = new List<InventoryObject>();
@@ -90,8 +105,14 @@ public class GameRulesManager
         {
             if (character.Value.V2 != DestroyedStatus.ALIVE)
             {
-                this.collectSpecificLoot(lootFood, character.Value.V1.inventory.food, character.Value.V2, 1f);
-                this.collectSpecificLoot(lootWeapon, character.Value.V1.inventory.weapons, character.Value.V2, 0.5f);
+                this.collectSpecificLoot(lootFood, character.Value.V1.inventory.food, character.Value.V2);
+                this.collectSpecificLoot(lootWeapon, character.Value.V1.inventory.weapons, character.Value.V2);
+
+                if (character.Key == "p")
+                {
+                    this.combineLoot(playerLoot, lootFood);
+                    this.combineLoot(playerLoot, lootWeapon);
+                }
             }
             else
             {
@@ -99,11 +120,11 @@ public class GameRulesManager
                 Debug.Log("winner: " + character.Key);
             }
         }
-        this.shareLoot(lootFood, winners);
-        this.shareLoot(lootWeapon, winners);
+        this.shareLootBetweenWinners(lootFood, winners, playerLoot);
+        this.shareLootBetweenWinners(lootWeapon, winners, playerLoot);
     }
 
-    private void shareLoot(List<InventoryObject> loot, List<string> winners)
+    private void shareLootBetweenWinners(List<InventoryObject> loot, List<string> winners, Dictionary<string, int> playerLoot)
     {
         foreach (var item in loot)
         {
@@ -113,11 +134,31 @@ public class GameRulesManager
             {
                 Debug.Log("win Loot: " + item.name);
                 this.characters[winners[winnerId]].V1.inventory.food.Add(item);
+
+                if (winners[winnerId] == "p")
+                {
+                    this.combineLoot(playerLoot, loot);
+                }
             }
         }
     }
 
-    private void collectSpecificLoot(List<InventoryObject> loot, List<InventoryObject> items, DestroyedStatus status, float ratio)
+    private void combineLoot(Dictionary<string, int> playerLoot, List<InventoryObject> loot)
+    {
+        foreach (var item in loot)
+        {
+            if (playerLoot.ContainsKey(item.name))
+            {
+                playerLoot[item.name] += 1;
+            }
+            else
+            {
+                playerLoot.Add(item.name, 1);
+            }
+        }
+    }
+
+    private void collectSpecificLoot(List<InventoryObject> loot, List<InventoryObject> items, DestroyedStatus status)
     {
         int looted = 0;
 
@@ -127,17 +168,17 @@ public class GameRulesManager
             {
                 loot.Add(item);
             }
-            else if (status == DestroyedStatus.DESTROY_SHIP && Random.value <= (0.2f * ratio))
+            else if (status == DestroyedStatus.DESTROY_SHIP && Random.value <= 0.2f)
             {
                 loot.Add(item);
                 ++looted;
             }
-            else if (status == DestroyedStatus.KILL_MEMBERS && Random.value <= (0.5f * ratio))
+            else if (status == DestroyedStatus.KILL_MEMBERS && Random.value <= 0.5f)
             {
                 loot.Add(item);
                 ++looted;
             }
-            else if (status == DestroyedStatus.NONE && Random.value <= (0.1f * ratio))
+            else if (status == DestroyedStatus.NONE && Random.value <= 0.1f)
             {
                 loot.Add(item);
                 ++looted;
