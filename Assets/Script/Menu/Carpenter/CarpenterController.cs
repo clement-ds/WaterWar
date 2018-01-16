@@ -19,8 +19,6 @@ public class CarpenterController : UIController {
 	void Start () {
 		PlayerManager manager = PlayerManager.GetInstance();
 		this.ship = manager.player.ship;
-		FillShopRoomList();
-		FillShipRoomList();
 	}
 
 	public override void Populate ()
@@ -66,7 +64,7 @@ public class CarpenterController : UIController {
 				GameObject newCard = Instantiate (TypeRoomCardPrefab) as GameObject;
 				TypeRoomCard card = newCard.GetComponent<TypeRoomCard> ();
 
-				card.source = this.ship.shipDisposition.rooms [i];
+				card.source = this.ship.shipDisposition.rooms[i];
 
 				card.initCard (this);
 				newCard.transform.SetParent (this.CarpenterShop.transform);
@@ -82,10 +80,32 @@ public class CarpenterController : UIController {
 		this.selectedRoom = room;
 	}
 
-	public Room getSelectedRoom() {
-		return this.selectedRoom;
+	public void selectRoom(Room room) {
+		this.selectedRoom = room;
+		print ("Selected room is now " + this.selectedRoom.component);
 	}
 
-	void Update () {
-	}
+	public void setRoom (GameObject sr) {
+		print ("Setting room to " + this.selectedRoom.component);
+
+			if (selectedRoom.type != "blockBody") {
+				GameObject newRoom = Instantiate(ShipRoomPrefab) as GameObject;
+				ShipRoom card = newRoom.GetComponent<ShipRoom>();
+
+			card.source = sr.GetComponent<ShipRoom>().source;
+			card.source.type = selectedRoom.type;
+			card.source.component = selectedRoom.component;
+
+				card.initCard(this);
+				newRoom.transform.SetParent(this.CarpenterShip.transform);
+				newRoom.transform.localScale = Vector3.one;
+				newRoom.transform.localPosition = new Vector3((int)((card.source.x - 250) * 1.7), (int)((card.source.y - 55) * 1.5), 0);
+
+				RectTransform rt = (RectTransform)newRoom.transform;
+				rt.sizeDelta = new Vector2(card.source.width, card.source.height);
+
+				this.ShipRoomList.Add(newRoom);
+				Destroy(sr);
+			}
+		}
 }

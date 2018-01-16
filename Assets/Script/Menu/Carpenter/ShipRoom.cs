@@ -5,6 +5,7 @@ using System.Collections;
 public class ShipRoom : MonoBehaviour {
 	public Image Icon;
 	public Room source;
+	public CarpenterController cl;
 
 	public Button btn;
 
@@ -23,7 +24,6 @@ public class ShipRoom : MonoBehaviour {
 			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Alcohol");
 			break;
 		case "PetitCanon":
-			btn.GetComponent<Image>().color = Color.red;
 			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/PetitCanon");
 			break;
 		case "GunPowder":
@@ -43,11 +43,10 @@ public class ShipRoom : MonoBehaviour {
 	}
 
 	public void initCard(CarpenterController cl) {
+		this.cl = cl;
 		btn = this.GetComponentInChildren<Button>();
-		Icon = this.btn.GetComponentsInChildren<Image>()[1];
-		btn.onClick.AddListener(delegate { cl.printType(source); });
-
-
+	 	btn.onClick.AddListener(setRoom);
+		
 		switch (source.type) {
 		case "defenseBody":
 			btn.GetComponent<Image> ().color = Color.green;
@@ -62,13 +61,12 @@ public class ShipRoom : MonoBehaviour {
 			btn.GetComponent<Image> ().color = Color.white;
 			break;
 		}
+
+		Icon = this.btn.GetComponentsInChildren<Image>()[1];
 		setIcon(source.component);
-		print (source.component);
 	}
 
-	public void setRoom(Room room) {
-	}
-
-	void Update() {
+	public void setRoom() {
+		this.cl.setRoom(this.gameObject);
 	}
 }
