@@ -6,8 +6,11 @@ using System;
 public class SoundManager : MonoBehaviour 
 {
     private AudioSource audioSource;
-    public List<AudioClip> clips = null;
+    public List<AudioClip> clips;
 
+    void Start() {
+      audioSource = GetComponent<AudioSource>();
+    }
     public void PlaySingle(string soundName)
     {
       AudioClip clip = clips.Find((c) => c.name == soundName);
