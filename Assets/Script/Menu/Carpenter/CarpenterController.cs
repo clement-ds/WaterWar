@@ -10,8 +10,6 @@ public class CarpenterController : UIController {
 	public GameObject CarpenterShip;
 	public GameObject CarpenterShop;
 
-
-
 	private List<GameObject> typeRoomList = new List<GameObject>();
 	private List<GameObject> ShipRoomList = new List<GameObject>();
 
@@ -63,16 +61,19 @@ public class CarpenterController : UIController {
     }
 
     for (int i = 0; i < this.ship.shipDisposition.rooms.Count; ++i) {
-        GameObject newCard = Instantiate(TypeRoomCardPrefab) as GameObject;
-        TypeRoomCard card = newCard.GetComponent<TypeRoomCard>();
+			if (this.ship.shipDisposition.rooms [i].component != "") {
+				
+				GameObject newCard = Instantiate (TypeRoomCardPrefab) as GameObject;
+				TypeRoomCard card = newCard.GetComponent<TypeRoomCard> ();
 
-		card.source = this.ship.shipDisposition.rooms[i];
+				card.source = this.ship.shipDisposition.rooms [i];
 
-        card.initCard(this);
-        newCard.transform.SetParent(this.CarpenterShop.transform);
-            newCard.transform.localScale = Vector3.one;
-            newCard.transform.localPosition = Vector3.one;
-        this.typeRoomList.Add(newCard);
+				card.initCard (this);
+				newCard.transform.SetParent (this.CarpenterShop.transform);
+				newCard.transform.localScale = Vector3.one;
+				newCard.transform.localPosition = Vector3.one;
+				this.typeRoomList.Add (newCard);
+			}
     }
   }
 

@@ -13,16 +13,29 @@ public class ShipRoom : MonoBehaviour {
 
 	void setIcon(string type) {
 		switch (type) {
-		case "defenseBody":
-			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Images/Rhum");
+		case "Infirmary":
+			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Infirmary");
 			break;
-		case "blockBody":
-			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite> ("Sprites/Star");
+		case "CanonBall":
+			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/CanonBall");
 			break;
-		case "attackBody":
+		case "Alcohol":
+			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Alcohol");
+			break;
+		case "PetitCanon":
 			btn.GetComponent<Image>().color = Color.red;
-			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Images/Black powder");
+			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/PetitCanon");
 			break;
+		case "GunPowder":
+			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/GunPowder");
+			break;
+		case "Canteen":
+			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/poulet");
+			break;
+		case "Wheel":
+			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Wheel");
+			break;
+
 		default:
 			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Images/Spider Web");
 			break;
@@ -33,8 +46,24 @@ public class ShipRoom : MonoBehaviour {
 		btn = this.GetComponentInChildren<Button>();
 		Icon = this.btn.GetComponentsInChildren<Image>()[1];
 		btn.onClick.AddListener(delegate { cl.printType(source); });
-		setIcon(source.type);
-		print (source.type);
+
+
+		switch (source.type) {
+		case "defenseBody":
+			btn.GetComponent<Image> ().color = Color.green;
+			break;
+		case "blockBody":
+			btn.GetComponent<Image> ().color = Color.white;
+			break;
+		case "attackBody":
+			btn.GetComponent<Image> ().color = Color.red;
+			break;
+		default:
+			btn.GetComponent<Image> ().color = Color.white;
+			break;
+		}
+		setIcon(source.component);
+		print (source.component);
 	}
 
 	public void setRoom(Room room) {

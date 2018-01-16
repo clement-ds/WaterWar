@@ -15,15 +15,28 @@ public class TypeRoomCard : MonoBehaviour {
 
   void setIcon(string type) {
     switch (type) {
-		case "defenseBody":
-		Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Images/Rhum");
-        break;
-      case "blockBody":
-        Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Fish");
-        break;
-      case "attackBody":
-        Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Images/Black powder");
-        break;
+		case "Infirmary":
+			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Infirmary");
+			break;
+		case "CanonBall":
+			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/CanonBall");
+			break;
+		case "Alcohol":
+			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Alcohol");
+			break;
+		case "PetitCanon":
+			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/PetitCanon");
+			break;
+		case "GunPowder":
+			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/GunPowder");
+			break;
+		case "Canteen":
+			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/poulet");
+			break;
+		case "Wheel":
+			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Wheel");
+			break;
+
       default:
         Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Images/Spider Web");
         break;
@@ -36,7 +49,7 @@ public class TypeRoomCard : MonoBehaviour {
 
     btn = this.GetComponent<Button>();
     btn.onClick.AddListener(delegate { cl.printType(source); });
-    setIcon(source.type);
+    setIcon(source.component);
   }
 
   public void setRoom(Room room) {
