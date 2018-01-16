@@ -1302,7 +1302,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11427236, guid: 3430114ad69551f4e90210e38a64730c, type: 2}
-        m_MethodName: GoInteraction
+        m_MethodName: GoIntroMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

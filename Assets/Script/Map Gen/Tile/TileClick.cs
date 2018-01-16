@@ -45,7 +45,6 @@ public class TileClick : MonoBehaviour
         {
             PlayerManager.GetInstance().player.currentIsland = int.Parse("" + islandID);
             GameManager.Instance.nextTurn();
-            //GameManager.Instance.GoInteraction();
             introSceneManager.CameraStateChange("Interaction");
         }
 
