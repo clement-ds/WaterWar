@@ -85,12 +85,13 @@ public class GameRulesManager
     private void printPlayerGUILoot(GameStatus status, Dictionary<string, int> playerLoot)
     {
         GameRulesManager.GetInstance().guiAccess.endMessagesLoot[0].text = (status == GameStatus.VICTORY ? "After the battle, you successly loot: " : "Your enemies stole:");
+        SimpleObjectPool generator = GameObject.Find("LootItemPool").GetComponent<SimpleObjectPool>();
         foreach (var loot in playerLoot)
         {
-//            Text lootGuiItem = new Text();
+            GameObject item = generator.GetObject();
 
-            // lootGuiItem.text = loot.Key;
-            // lootGuiItem.transform.parent = GameRulesManager.GetInstance().guiAccess.contentLootList.transform;
+            item.GetComponent<ManageLootLine>().initLootLine(loot.Key, loot.Value);
+            item.transform.parent = GameRulesManager.GetInstance().guiAccess.contentLootList.transform;
         }
     }
 
