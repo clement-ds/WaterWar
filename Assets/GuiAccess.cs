@@ -11,7 +11,8 @@ public class GuiAccess : MonoBehaviour {
     public Image endPanelLoot;
     public List<Text> endMessages;
     public List<Text> endMessagesLoot;
-    public GameObject contentLootList;
+    //public GameObject contentLootList;
+    public Transform contentLootListTransform;
 
 
     void Start()

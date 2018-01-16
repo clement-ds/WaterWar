@@ -84,15 +84,16 @@ public class GameRulesManager
 
     private void printPlayerGUILoot(GameStatus status, Dictionary<string, int> playerLoot)
     {
-        GameRulesManager.GetInstance().guiAccess.endMessagesLoot[0].text = (status == GameStatus.VICTORY ? "After the battle, you successly loot: " : "Your enemies stole:");
+        GameRulesManager.GetInstance().guiAccess.endMessagesLoot[0].text = (status == GameStatus.VICTORY ? "You successly loot: " : "Your enemies stole:");
         SimpleObjectPool generator = GameObject.Find("LootItemPool").GetComponent<SimpleObjectPool>();
         foreach (var loot in playerLoot)
         {
             GameObject item = generator.GetObject();
 
             item.GetComponent<ManageLootLine>().initLootLine(loot.Key, loot.Value);
-            item.transform.parent = GameRulesManager.GetInstance().guiAccess.contentLootList.transform;
+            item.transform.SetParent(GameRulesManager.GetInstance().guiAccess.contentLootListTransform, false);
         }
+     //   GameRulesManager.GetInstance().guiAccess.contentLootList.GetComponent<VerticalLayoutGroup>().SetLayoutVertical();
     }
 
     private void shareLoot(Dictionary<string, int> playerLoot)
