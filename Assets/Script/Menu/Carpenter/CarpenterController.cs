@@ -13,7 +13,10 @@ public class CarpenterController : UIController {
 	private List<GameObject> typeRoomList = new List<GameObject>();
 	private List<GameObject> ShipRoomList = new List<GameObject>();
 
-	private Room selectedRoom;
+	string[] possibleTitles = { "Infirmary", "Canonball", "Alcohol", "PetitCanon", "GunPowder", "Canteen", "Wheel" };
+	string[] possibleDesc = { "defenseBody", "attackBody", "defenseBody", "attackBody", "defenseBody", "defenseBody", "blockBody" };
+	private string selectedTitle;
+	private string selectedDesc;
 
 	// Use this for initialization
 	void Start () {
@@ -58,15 +61,13 @@ public class CarpenterController : UIController {
         Destroy(typeRoomList[i]);
     }
 
-    for (int i = 0; i < this.ship.shipDisposition.rooms.Count; ++i) {
-			if (this.ship.shipDisposition.rooms [i].component != "") {
+		for (int i = 0; i < this.possibleTitles.Length; ++i) {
+			if (this.possibleDesc[i] != "blockBody") {
 				
 				GameObject newCard = Instantiate (TypeRoomCardPrefab) as GameObject;
 				TypeRoomCard card = newCard.GetComponent<TypeRoomCard> ();
 
-				card.source = this.ship.shipDisposition.rooms[i];
-
-				card.initCard (this);
+				card.initCard (this, this.possibleTitles[i], this.possibleDesc[i]);
 				newCard.transform.SetParent (this.CarpenterShop.transform);
 				newCard.transform.localScale = Vector3.one;
 				newCard.transform.localPosition = Vector3.one;
@@ -75,26 +76,22 @@ public class CarpenterController : UIController {
     }
   }
 
-	public void printType(Room room) {
-		Debug.Log(room.component);
-		this.selectedRoom = room;
-	}
-
-	public void selectRoom(Room room) {
-		this.selectedRoom = room;
-		print ("Selected room is now " + this.selectedRoom.component);
+	public void selectRoom(string title, string desc) {
+		this.selectedTitle = title;
+		this.selectedDesc = desc;
+		print ("Selected room is now " + this.selectedTitle);
 	}
 
 	public void setRoom (GameObject sr) {
-		print ("Setting room to " + this.selectedRoom.component);
+		print ("Setting room to " + this.selectedTitle);
 
-			if (selectedRoom.type != "blockBody") {
+			if (this.selectedDesc != "blockBody") {
 				GameObject newRoom = Instantiate(ShipRoomPrefab) as GameObject;
 				ShipRoom card = newRoom.GetComponent<ShipRoom>();
 
 			card.source = sr.GetComponent<ShipRoom>().source;
-			card.source.type = selectedRoom.type;
-			card.source.component = selectedRoom.component;
+			card.source.type = this.selectedDesc;
+			card.source.component = this.selectedTitle;
 
 				card.initCard(this);
 				newRoom.transform.SetParent(this.CarpenterShip.transform);

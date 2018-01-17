@@ -17,8 +17,8 @@ public class ShipRoom : MonoBehaviour {
 		case "Infirmary":
 			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Infirmary");
 			break;
-		case "CanonBall":
-			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/CanonBall");
+		case "Canonball":
+			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Canonball");
 			break;
 		case "Alcohol":
 			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Alcohol");
