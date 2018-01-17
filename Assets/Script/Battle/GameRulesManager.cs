@@ -74,8 +74,11 @@ public class GameRulesManager
             message = "Your opponent" + (this.characters.Count > 2 ? "s" : "") + " killed you";
         else if (status == GameStatus.ESCAPE)
             message = "You escape the fight";
-        GameRulesManager.GetInstance().guiAccess.endMessages[1].text = message;
+
         GameRulesManager.GetInstance().guiAccess.endPanel.gameObject.SetActive(true);
+        GameRulesManager.GetInstance().guiAccess.endPanel.sprite = Resources.Load<Sprite>((status == GameStatus.VICTORY ? "Sprites/panelVictory" : "Sprites/panelDefeat"));
+
+        Debug.Log("sprite: " + (status == GameStatus.VICTORY ? "panelVictory" : "panelDefeat") + ": " + GameRulesManager.GetInstance().guiAccess.endPanel.sprite);
 
         Dictionary<string, int> playerLoot = new Dictionary<string, int>();
         shareLoot(playerLoot);
@@ -84,16 +87,26 @@ public class GameRulesManager
 
     private void printPlayerGUILoot(GameStatus status, Dictionary<string, int> playerLoot)
     {
-        GameRulesManager.GetInstance().guiAccess.endMessagesLoot[0].text = (status == GameStatus.VICTORY ? "You successly loot: " : "Your enemies stole:");
-        SimpleObjectPool generator = GameObject.Find("LootItemPool").GetComponent<SimpleObjectPool>();
-        foreach (var loot in playerLoot)
+        if (playerLoot.Count == 0)
         {
-            GameObject item = generator.GetObject();
+            GameRulesManager.GetInstance().guiAccess.noLoot.gameObject.SetActive(true);
+            GameRulesManager.GetInstance().guiAccess.noLoot.text = (status == GameStatus.VICTORY ? "Captain ! They is no treasure there !" : "Your crew defended well your gold");
 
-            item.GetComponent<ManageLootLine>().initLootLine(loot.Key, loot.Value);
-            item.transform.SetParent(GameRulesManager.GetInstance().guiAccess.contentLootListTransform, false);
+            GameRulesManager.GetInstance().guiAccess.lootListView.gameObject.SetActive(false);
         }
-     //   GameRulesManager.GetInstance().guiAccess.contentLootList.GetComponent<VerticalLayoutGroup>().SetLayoutVertical();
+        else
+        {
+            GameRulesManager.GetInstance().guiAccess.noLoot.gameObject.SetActive(false);
+            GameRulesManager.GetInstance().guiAccess.lootListView.gameObject.SetActive(true);
+            SimpleObjectPool generator = GameObject.Find("LootItemPool").GetComponent<SimpleObjectPool>();
+            foreach (var loot in playerLoot)
+            {
+                GameObject item = generator.GetObject();
+
+                item.GetComponent<ManageLootLine>().initLootLine(loot.Key, loot.Value, (status == GameStatus.VICTORY ? new Color(75, 167, 45) : Color.red));
+                item.transform.SetParent(GameRulesManager.GetInstance().guiAccess.contentLootListTransform, false);
+            }
+        }
     }
 
     private void shareLoot(Dictionary<string, int> playerLoot)
@@ -114,6 +127,7 @@ public class GameRulesManager
                 {
                     this.combineLoot(playerLoot, lootFood);
                     this.combineLoot(playerLoot, lootWeapon);
+                    Debug.Log("player lost: " + playerLoot.Count);
                 }
             }
             else
@@ -164,25 +178,33 @@ public class GameRulesManager
     {
         int looted = 0;
 
-        foreach (var item in items)
+        for (var i = 0; i < items.Count; ++i)
         {
-            if (item.type == "Quest")
+            if (items[i].type == "Quest")
             {
-                loot.Add(item);
+                loot.Add(items[i]);
+                --i;
+                items.RemoveAt(i);
             }
             else if (status == DestroyedStatus.DESTROY_SHIP && Random.value <= 0.2f)
             {
-                loot.Add(item);
+                loot.Add(items[i]);
+                items.RemoveAt(i);
+                --i;
                 ++looted;
             }
             else if (status == DestroyedStatus.KILL_MEMBERS && Random.value <= 0.5f)
             {
-                loot.Add(item);
+                loot.Add(items[i]);
+                items.RemoveAt(i);
+                --i;
                 ++looted;
             }
             else if (status == DestroyedStatus.NONE && Random.value <= 0.1f)
             {
-                loot.Add(item);
+                loot.Add(items[i]);
+                items.RemoveAt(i);
+                --i;
                 ++looted;
             }
         }

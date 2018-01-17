@@ -17,9 +17,10 @@ public class ManageLootLine : MonoBehaviour {
 		
 	}
 
-    public void initLootLine(string lootName, int lootNumber)
+    public void initLootLine(string lootName, int lootNumber, Color color)
     {
         this.lootName.text = lootName;
         this.lootNumber.text = lootNumber.ToString();
+        this.lootNumber.color = color;
     }
 }
