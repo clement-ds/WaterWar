@@ -52,7 +52,7 @@ public class QuestGenerator {
       LoadFile("PlayerJson/Adjectif.txt", adjectifs);
 
       // Title
-      string name = JsonUtility.FromJson<Name>(names[UnityEngine.Random.Range(0, 4)]).name;
+      string name = JsonUtility.FromJson<Name>(names[UnityEngine.Random.Range(0, 32)]).name;
       string adjectif = JsonUtility.FromJson<Adjectif>(adjectifs[UnityEngine.Random.Range(0, 4)]).name;
 
       quest.title = "Kill" + " " + "Captain " + name;
