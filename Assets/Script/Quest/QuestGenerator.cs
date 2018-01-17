@@ -39,6 +39,11 @@ public class QuestGenerator {
     PlayerQuest quest = new PlayerQuest();
     List<string> objects = new List<string>();
     string islandName = currentIsland.name;
+    int nbrOfReward = UnityEngine.Random.Range(1, 3);
+    int maxReward = 0;
+    bool influence = false;
+    bool money = false;
+    LoadFile("PlayerJson/Objects.txt", objects);
 
     quest.rewards = new List<Reward>();
     quest.type = (PlayerQuest.QUEST)UnityEngine.Random.Range(0, 4);
@@ -74,7 +79,6 @@ public class QuestGenerator {
         quest.end = new InventoryObject(JsonUtility.FromJson<InventoryObject>(objects[UnityEngine.Random.Range(0, 1)]));
         quest.end.quantity = UnityEngine.Random.Range(1, 7);
       } else {
-        LoadFile("PlayerJson/Objects.txt", objects);
         quest.end = JsonUtility.FromJson<InventoryObject>(objects[UnityEngine.Random.Range(0, 11)]);
         quest.end.quantity = UnityEngine.Random.Range(5, 15);
       }
@@ -86,6 +90,7 @@ public class QuestGenerator {
       quest.description = "Bring " + quest.end.quantity.ToString()+ " " + quest.end.name + " " + "to" + " " + islandName;
 
       // MoneyReward outdated (just in case)
+      maxReward += quest.end.price * quest.end.quantity;
       quest.moneyReward = UnityEngine.Random.Range(5, 50);
     } else if (quest.type == PlayerQuest.QUEST.FIND) {
       if (UnityEngine.Random.Range(0, 20) > 18) {
@@ -106,6 +111,7 @@ public class QuestGenerator {
       quest.description = "Find " + quest.end.quantity.ToString()+ " " + quest.end.name;
 
       // MoneyReward outdated (just in case)
+      maxReward += quest.end.price * quest.end.quantity;
       quest.moneyReward = UnityEngine.Random.Range(5, 50);
     } else if (quest.type == PlayerQuest.QUEST.RECRUIT) {
       int amount = UnityEngine.Random.Range(1, 3);
@@ -118,11 +124,8 @@ public class QuestGenerator {
       quest.end.quantity = amount + PlayerManager.GetInstance().player.crew.crewMembers.Count;
     }
 
-    int nbrOfReward = UnityEngine.Random.Range(1, 3);
-    bool influence = false;
-    bool money = false;
-    LoadFile("PlayerJson/Objects.txt", objects);
-
+    // Generate Rewards
+    maxReward = Convert.ToInt32(maxReward * 1.3);
     for (int i = 0; i < nbrOfReward; i++) {
       Reward reward = new Reward();
       reward.type = (Reward.REWARD)UnityEngine.Random.Range(0, 2);
@@ -134,15 +137,20 @@ public class QuestGenerator {
           reward.amount = (int)UnityEngine.Random.Range(5, 15);
           reward.name = "influence";
           influence = true;
+          nbrOfReward++;
         }
       }
       if (reward.type == Reward.REWARD.MONEY) {
-        if (money) {
+        if (money || quest.type == PlayerQuest.QUEST.RECRUIT) {
           reward.type = Reward.REWARD.OBJECT;
         } else {
           reward.amount = UnityEngine.Random.Range(100, 300);
           reward.name = "money";
           money = true;
+          maxReward -= reward.amount;
+          if (maxReward < 0) {
+            i += 3;
+          } 
         }
       }
       if (reward.type == Reward.REWARD.OBJECT) {
@@ -154,10 +162,29 @@ public class QuestGenerator {
         reward.id = objectReward.id;
         reward.name = objectReward.name;
         reward.amount = UnityEngine.Random.Range(1, 5);
+        maxReward -= (reward.amount * objectReward.price);
+        if (maxReward < 0) {
+          i += 3;
+        }
       }
       quest.rewards.Add(reward);
     }
 
+    while (maxReward > 0) {
+      Reward reward = new Reward();
+      reward.type = Reward.REWARD.OBJECT;
+
+      InventoryObject objectReward = JsonUtility.FromJson<InventoryObject>(objects[UnityEngine.Random.Range(0, objects.Count)]);
+
+      while (quest.rewards.Find((r) => r.id == objectReward.id) != null) {
+        objectReward = JsonUtility.FromJson<InventoryObject>(objects[UnityEngine.Random.Range(0, objects.Count)]);
+      }
+      reward.id = objectReward.id;
+      reward.name = objectReward.name;
+      reward.amount = UnityEngine.Random.Range(1, 5);
+      maxReward -= (reward.amount * objectReward.price);
+      quest.rewards.Add(reward);
+    }
     return quest;
   }
 
