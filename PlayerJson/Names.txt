@@ -1,5 +1,32 @@
-{ "firstname": "Alex", "name": "Dana", "race": "human" } 
+﻿{ "firstname": "Alex", "name": "Dana", "race": "human" } 
 { "firstname": "Clément", "name": "Da Silva", "race": "human" } 
 { "firstname": "Kevin", "name": "Bego", "race": "bego" } 
 { "firstname": "Joseph", "name": "Barbosa", "race": "human" } 
-{ "firstname": "Roger", "name": "Barbosa", "race": "human" } 
+{ "firstname": "Roger", "name": "Silver Tooth", "race": "human" } 
+{ "firstname": "Roger", "name": "Handsome", "race": "human" } 
+{ "firstname": "Roger", "name": "Crabby", "race": "human" } 
+{ "firstname": "Roger", "name": "Sparrow", "race": "human" } 
+{ "firstname": "Roger", "name": "Fearless", "race": "human" } 
+{ "firstname": "Roger", "name": "Bull", "race": "human" } 
+{ "firstname": "Roger", "name": "One Eye", "race": "human" } 
+{ "firstname": "Roger", "name": "Striker", "race": "human" } 
+{ "firstname": "Roger", "name": "Golden Hair", "race": "human" } 
+{ "firstname": "Roger", "name": "Lazy Eye", "race": "human" } 
+{ "firstname": "Roger", "name": "Renegade", "race": "human" } 
+{ "firstname": "Roger", "name": "The Banished", "race": "human" } 
+{ "firstname": "Roger", "name": "Devil's Smile", "race": "human" } 
+{ "firstname": "Roger", "name": "Bond", "race": "human" } 
+{ "firstname": "Roger", "name": "Hawkins", "race": "human" } 
+{ "firstname": "Roger", "name": "Iron Chest", "race": "human" } 
+{ "firstname": "Roger", "name": "Johnson ", "race": "human" } 
+{ "firstname": "Roger", "name": "Morgan", "race": "human" } 
+{ "firstname": "Roger", "name": "Jeanette", "race": "human" } 
+{ "firstname": "Roger", "name": "Jessie", "race": "human" } 
+{ "firstname": "Roger", "name": "James", "race": "human" } 
+{ "firstname": "Roger", "name": "The Dog", "race": "human" } 
+{ "firstname": "Roger", "name": "Fishwife", "race": "human" } 
+{ "firstname": "Roger", "name": "Mary", "race": "human" } 
+{ "firstname": "Roger", "name": "Lucy", "race": "human" } 
+{ "firstname": "Roger", "name": "One-Eared", "race": "human" } 
+{ "firstname": "Roger", "name": "Yellow Teeth", "race": "human" } 
+{ "firstname": "Roger", "name": "Scar Face", "race": "human" } 

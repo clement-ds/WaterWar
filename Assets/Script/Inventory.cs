@@ -58,7 +58,7 @@ public class Inventory
         {
             return false;
         }
-        InventoryObject tmp = this.containsObject(obj);
+        InventoryObject tmp = food.Find((item) => item.name == obj.name);
         if (tmp != null)
         {
             tmp.quantity += quantity;
