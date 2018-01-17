@@ -46,12 +46,15 @@ public class CreateGameObject : MonoBehaviour
         Battle_Ship p = playerShip.GetComponent<Battle_Ship>();
         Battle_Ship e = aiShip.GetComponent<Battle_Ship>();
 
+        p.setId(player.id);
+        e.setId(ai.id);
         p.setWeaponForCrew(player.inventory.getCrewWeapon());
         e.setWeaponForCrew(ai.inventory.getCrewWeapon());
 
         GameRulesManager.GetInstance().ships.Add(p);
         GameRulesManager.GetInstance().ships.Add(e);
 
+        GameRulesManager.GetInstance().playerID = p.getId();
         GameRulesManager.GetInstance().characters.Add(p.getId(), new Pair<Player, DestroyedStatus>(player, DestroyedStatus.ALIVE));
         GameRulesManager.GetInstance().characters.Add(e.getId(), new Pair<Player, DestroyedStatus>(ai, DestroyedStatus.ALIVE));
 
