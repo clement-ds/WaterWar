@@ -16,7 +16,7 @@ public class ShopUIController : UIController
     private List<InventoryObject> selfTrade;
     private int transactionPrice = 0;
 
-
+    [SerializeField] private IntroSceneManager sceneManager;
 
     [Header("Player panels")]
     public GameObject RootSelf;
@@ -191,6 +191,7 @@ public class ShopUIController : UIController
             TransactionPriceText.SetText(0 + "£");
             TrimList(selfTrade);
             TrimList(shopTrade);
+            sceneManager.PlaySound("achat");
             Populate();
         }
     }

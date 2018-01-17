@@ -37,6 +37,7 @@ public class IntroSceneManager : MonoBehaviour {
     private const float positionOffset = .5f;
     private void SpawnMoney() {
         if (moneyCurrentlySpawned < wealth) {
+    //        PlaySound("piece");
             GameObject obj = GameObject.Instantiate(coinPrefab);
             obj.transform.SetParent(wealthSpawnPoint.transform, false);
             obj.transform.eulerAngles = new Vector3(Random.Range(0, 180), Random.Range(0, 180), Random.Range(0, 180));
