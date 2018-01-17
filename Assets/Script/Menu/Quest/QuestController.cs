@@ -10,7 +10,8 @@ using TMPro;
 public class QuestController : UIController
 {
     private List<PlayerQuest> questList;
-    public Button closeButton;
+    [SerializeField] private  Button nextPage;
+    [SerializeField] private  Button previousPage;
     public int nbrQuestByPage = 10;
     private int currentPage = 0;
 
@@ -25,6 +26,8 @@ public class QuestController : UIController
 
     void Start() {
         Populate();
+        nextPage.onClick.AddListener(NextPage);
+        previousPage.onClick.AddListener(PrevPage);
     }
 
     public override void Populate()
@@ -92,6 +95,16 @@ public class QuestController : UIController
                 questRow.SetActive(true);
             }
         }
+        if (i > 0 && currentPage < (i / nbrQuestByPage))
+            nextPage.gameObject.SetActive(true);
+        else 
+            nextPage.gameObject.SetActive(false);
+
+        if (currentPage > 0)
+            previousPage.gameObject.SetActive(true);
+        else 
+            previousPage.gameObject.SetActive(false);
+
     }
 
     // Necessary because of unity bug in lambda
@@ -110,12 +123,6 @@ public class QuestController : UIController
         });
     }
     // -----------------------------------------
-
-    public void OnClick()
-    {
-        TogglePanel();
-        closeButton.gameObject.SetActive(panel.gameObject.activeSelf);
-    }
 
     public void NextPage()
     {
