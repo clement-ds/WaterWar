@@ -100,7 +100,7 @@ public class IslandGenerator {
         LoadFile("PlayerJson/Food.txt");
         for (int i = 0; i < 5; ++i)
         {
-            int tmp = UnityEngine.Random.Range(0, 12);
+            int tmp = UnityEngine.Random.Range(0, 15);
             InventoryObject obj = JsonUtility.FromJson<InventoryObject>(json[tmp]);
             obj.quantity = UnityEngine.Random.Range(10, 101);
             if (CheckingDouble(obj, island))
@@ -115,7 +115,7 @@ public class IslandGenerator {
         LoadFile("PlayerJson/Food.txt");
         for (int i = 0; i < amount; i += 1)
         {
-            int tmp = UnityEngine.Random.Range(0, 12);
+            int tmp = UnityEngine.Random.Range(0, 15);
             InventoryObject obj = JsonUtility.FromJson<InventoryObject>(json[tmp]);
             island.inventory.addQuantityOfObject(obj, UnityEngine.Random.Range(10, 31));
         }
