@@ -70,6 +70,7 @@ public class PlayerManager
             enemie.name = quest.end.name.Substring(4);
             enemie.inventory.addObject(new InventoryObject("Flag " + enemie.name, "Quest", 1, 100, 10));
             enemies.Add(enemie);
+            //GameManager.Instance.spawnShips(GameObject.Find("mapPivot").GetComponent<GameObject>());
         }
 
         player.questLog.quests.Add(quest);
@@ -357,16 +358,10 @@ public class PlayerQuest
     public string localisation;
     public QUEST type;
     public string objective;
-    public Reward reward;
     public List<Reward> rewards;
     public InventoryObject end;
     public int moneyReward;
     public bool taken = false;
-
-    public String Describe()
-    {
-        return ("TITLE: " + title + "\tDESCRIPTION: " + description + "\tTYPE: " + type + "\tOBJECTIVE: " + objective + "\tREWARD: " + reward.id + ':' + reward.amount + ':' + reward.type);
-    }
 
     public List<string> GetRewardString() {
         List<string> rewardString = new List<string>();
