@@ -30,7 +30,6 @@ public class QuestInfosUIDisplayer : MonoBehaviour, IPointerEnterHandler, IPoint
 	}
     public void OnPointerEnter(PointerEventData eventData)
     {
-		sceneManager.PlaySound("page");
 		if (sceneManager.GetStateForBool("Quest")) {
 			UICanvas.SetActive(true);
 			title.SetText(playerQuest.title);
