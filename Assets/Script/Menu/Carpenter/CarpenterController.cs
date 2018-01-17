@@ -13,10 +13,13 @@ public class CarpenterController : UIController {
 	private List<GameObject> typeRoomList = new List<GameObject>();
 	private List<GameObject> ShipRoomList = new List<GameObject>();
 
-	string[] possibleTitles = { "Infirmary", "Canonball", "Alcohol", "PetitCanon", "GunPowder", "Canteen", "Wheel" };
-	string[] possibleDesc = { "defenseBody", "attackBody", "defenseBody", "attackBody", "defenseBody", "defenseBody", "blockBody" };
+	string[] possibleTitles = { "Infirmary", "Canonball", "Alcohol", "PetitCanon", "GunPowder"};
+	string[] possibleDesc = { "defenseBody", "attackBody", "defenseBody", "attackBody", "defenseBody"};
+	int[] possiblePrices = {200, 30, 120, 100, 20};
 	private string selectedTitle;
 	private string selectedDesc;
+	private int selectedPrice;
+
 
 	// Use this for initialization
 	void Start () {
@@ -67,7 +70,7 @@ public class CarpenterController : UIController {
 				GameObject newCard = Instantiate (TypeRoomCardPrefab) as GameObject;
 				TypeRoomCard card = newCard.GetComponent<TypeRoomCard> ();
 
-				card.initCard (this, this.possibleTitles[i], this.possibleDesc[i]);
+				card.initCard (this, this.possibleTitles[i], this.possibleDesc[i], this.possiblePrices[i]);
 				newCard.transform.SetParent (this.CarpenterShop.transform);
 				newCard.transform.localScale = Vector3.one;
 				newCard.transform.localPosition = Vector3.one;
@@ -76,33 +79,36 @@ public class CarpenterController : UIController {
     }
   }
 
-	public void selectRoom(string title, string desc) {
+	public void selectRoom(string title, string desc, int price) {
 		this.selectedTitle = title;
 		this.selectedDesc = desc;
-		print ("Selected room is now " + this.selectedTitle);
+		this.selectedPrice = price;
+		print ("Selected room is now " + this.selectedTitle + " which costs " + this.selectedPrice.ToString());
 	}
 
 	public void setRoom (GameObject sr) {
 		print ("Setting room to " + this.selectedTitle);
-
-			if (this.selectedDesc != "blockBody") {
-				GameObject newRoom = Instantiate(ShipRoomPrefab) as GameObject;
-				ShipRoom card = newRoom.GetComponent<ShipRoom>();
+		Player p = PlayerManager.GetInstance().player;
+		if (p.money >= this.selectedPrice && this.selectedDesc != "blockBody")
+		{
+			p.money -= this.selectedPrice;
+			GameObject newRoom = Instantiate(ShipRoomPrefab) as GameObject;
+			ShipRoom card = newRoom.GetComponent<ShipRoom>();
 
 			card.source = sr.GetComponent<ShipRoom>().source;
 			card.source.type = this.selectedDesc;
 			card.source.component = this.selectedTitle;
 
-				card.initCard(this);
-				newRoom.transform.SetParent(this.CarpenterShip.transform);
-				newRoom.transform.localScale = Vector3.one;
-				newRoom.transform.localPosition = new Vector3((int)((card.source.x - 250) * 1.7), (int)((card.source.y - 55) * 1.5), 0);
+			card.initCard(this);
+			newRoom.transform.SetParent(this.CarpenterShip.transform);
+			newRoom.transform.localScale = Vector3.one;
+			newRoom.transform.localPosition = new Vector3((int)((card.source.x - 250) * 1.7), (int)((card.source.y - 55) * 1.5), 0);
 
-				RectTransform rt = (RectTransform)newRoom.transform;
-				rt.sizeDelta = new Vector2(card.source.width, card.source.height);
+			RectTransform rt = (RectTransform)newRoom.transform;
+			rt.sizeDelta = new Vector2(card.source.width, card.source.height);
 
-				this.ShipRoomList.Add(newRoom);
-				Destroy(sr);
-			}
+			this.ShipRoomList.Add(newRoom);
+			Destroy(sr);
 		}
+	}
 }

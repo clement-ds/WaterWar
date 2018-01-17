@@ -2,10 +2,13 @@
 using UnityEngine.UI;
 using System.Collections;
 
+
+
 public class TypeRoomCard : MonoBehaviour {
   public Image Icon;
   public Text Title;
   public Text Description;
+	public Text Price;
 
   public Button btn;
 
@@ -42,13 +45,14 @@ public class TypeRoomCard : MonoBehaviour {
     }
   }
 
-	public void initCard(CarpenterController cl, string title, string desc) {
+	public void initCard(CarpenterController cl, string title, string desc, int price) {
     Title.text = title;
     Description.text = desc;
+	Price.text = price.ToString();
 	setIcon(title);
 
     btn = this.GetComponentInChildren<Button>();
-		btn.onClick.AddListener(delegate { cl.selectRoom(this.Title.text, this.Description.text); });
+		btn.onClick.AddListener(delegate { cl.selectRoom(this.Title.text, this.Description.text, int.Parse(this.Price.text)); });
   }
 
 /*  public void setRoom(Room room) {
