@@ -150,7 +150,7 @@ public class IslandGenerator {
 
     private void GenerateQuests(Island island)
     {
-        int a = UnityEngine.Random.Range(0, 10);
+        int a = UnityEngine.Random.Range(2, 6);
         QuestGenerator questGen = new QuestGenerator();
         for (int i = 0; i < a; ++i) {
             island.questLog.quests.Add(questGen.GenerateQuest(island));
