@@ -71,6 +71,7 @@ public class QuestGenerator {
       quest.end.quantity = 1;
 
       // MoneyReward outdated (just in case)
+      maxReward = UnityEngine.Random.Range(100, 300);
       quest.moneyReward = UnityEngine.Random.Range(100, 300);
     } else if (quest.type == PlayerQuest.QUEST.GET) {
       if (UnityEngine.Random.Range(0, 20) > 18) {
@@ -122,6 +123,7 @@ public class QuestGenerator {
       quest.description = "Recruit " + amount.ToString()+ " " + "sailors on your ship !";
       quest.end = new InventoryObject("CrewMember", "Quest", 1, 0, 0);
       quest.end.quantity = amount + PlayerManager.GetInstance().player.crew.crewMembers.Count;
+      maxReward = UnityEngine.Random.Range(1, 50);
     }
 
     // Generate Rewards
