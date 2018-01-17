@@ -47,3 +47,7 @@ Assets/Plugins/ConsoleE/
 
 # Mini profiler
 Assets/Mini\ Profiler/
+Assets/Tiled2Unity/Scripts/Runtime.meta
+Assets/Tiled2Unity/Scripts/Editor.meta
+Assets/Tiled2Unity/Scripts.meta
+Assets/Tiled2Unity.meta
