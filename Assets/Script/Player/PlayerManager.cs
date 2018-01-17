@@ -350,7 +350,7 @@ public class Reward
 [Serializable]
 public class PlayerQuest
 {
-    public enum QUEST { KILL = 0, FIND, GET, RECRUIT, SACK, MORAL, PRINCIPAL, INFLUENCE, DESTROY };
+    public enum QUEST { KILL = 0, GET, FIND, RECRUIT, SACK, MORAL, PRINCIPAL, INFLUENCE, DESTROY };
 
     public string description;
     public string title;
