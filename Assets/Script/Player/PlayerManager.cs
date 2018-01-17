@@ -69,8 +69,9 @@ public class PlayerManager
             enemie = JsonUtility.FromJson<EnemiesSave>(json[0]).enemies[lvlOfIA];
             enemie.name = quest.end.name.Substring(4);
             enemie.inventory.addObject(new InventoryObject("Flag " + enemie.name, "Quest", 1, 100, 10));
+            enemie.graphicAsset = Resources.Load("Ship/AiShip") as GameObject;
             enemies.Add(enemie);
-            //GameManager.Instance.spawnShips(GameObject.Find("mapPivot").GetComponent<GameObject>());
+            GameManager.Instance.spawnShips(GameObject.Find("MapPivot"));
         }
 
         player.questLog.quests.Add(quest);

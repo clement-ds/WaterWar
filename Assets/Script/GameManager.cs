@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -100,7 +101,14 @@ public class GameManager : MonoBehaviour
     public void spawnShips(GameObject mapPivot)
     {
         Island island = islandManager.islands[playerManager.player.currentIsland];
+        if (playerManager.player.mapShip != null)
+        {
+            Destroy(playerManager.player.mapShip);
+        }
+
         playerManager.player.mapShip = GameObject.Instantiate(playerManager.player.graphicAsset, (new Vector3(island.x * 50, island.y * 50, 8)), new Quaternion());
+        TextMeshProUGUI textMeshProUGUI = playerManager.player.mapShip.GetComponentInChildren<TextMeshProUGUI>();
+        textMeshProUGUI.SetText(playerManager.player.name);
         playerManager.player.mapShip.transform.SetParent(mapPivot.transform, false);
 
         int playerX = 0;
@@ -109,7 +117,13 @@ public class GameManager : MonoBehaviour
         {
             playerX += 150;
             island = islandManager.islands[enemy.currentIsland];
+            if (enemy.mapShip != null)
+            {
+                Destroy(enemy.mapShip);
+            }
             enemy.mapShip = GameObject.Instantiate(enemy.graphicAsset, (new Vector3(island.x * 50 + playerX, island.y * 50 + playerY, 8)), new Quaternion());
+            textMeshProUGUI = enemy.mapShip.GetComponentInChildren<TextMeshProUGUI>();
+            textMeshProUGUI.SetText(enemy.name);
             enemy.mapShip.transform.SetParent(mapPivot.transform, false);
         }
     }
