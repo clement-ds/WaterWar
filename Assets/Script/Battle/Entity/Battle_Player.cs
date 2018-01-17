@@ -114,13 +114,20 @@ public class Battle_Player : Battle_Ship
     private bool checkCrewMemberInSelfShip(Vector2 touchPos, bool hasClick)
     {
         bool result = false;
+        bool hasFocus = false;
 
         foreach (Battle_CrewMember item in this.crewMembers)
         {/*
             if (item == null)
                 break;*/
-            result = item.GetComponent<Collider2D>() == Physics2D.OverlapPoint(touchPos);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            result = item.transform.GetComponent<BoxCollider>().Raycast(ray, out hit, 100.0F);
 
+            if (result)
+            {
+                hasFocus = true;
+            }
             if (!hasClick)
             {
                 /* do hover here */
@@ -146,7 +153,7 @@ public class Battle_Player : Battle_Ship
                 this.selectedCrewMembers.Insert(0, item);
             }
         }
-        return result;
+        return hasFocus;
     }
 
     private bool checkSelfShip(Vector2 touchPos, bool hasClick)

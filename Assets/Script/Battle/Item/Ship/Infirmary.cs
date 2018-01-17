@@ -59,7 +59,7 @@ public class Infirmary : ShipElement
     /** AVAILABLE POSITION CREATOR **/
     public override void createAvailableCrewMemberPosition()
     {
-        this.availablePosition = new AvailablePosition(new Vector3(-0.1f, -0.1f, 0f));
+        this.availablePosition = new AvailablePosition(new Vector3(-0.1f, -0.1f, -1f));
     }
 
     /** ON HIT EFFECT **/

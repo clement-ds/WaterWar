@@ -126,19 +126,19 @@ public class RoomElement : GuiElement
 
             if (!(this.equipment.transform.localPosition.x < 0))
             {
-                this.availablePositions.Add(new AvailablePosition(new Vector3(-0.5f, 0, 0)));
+                this.availablePositions.Add(new AvailablePosition(new Vector3(-0.5f, 0, -1)));
             }
             if (!(this.equipment.transform.localPosition.x > 0))
             {
-                this.availablePositions.Add(new AvailablePosition(new Vector3(0.5f, 0, 0)));
+                this.availablePositions.Add(new AvailablePosition(new Vector3(0.5f, 0, -1)));
             }
             if (!(this.equipment.transform.localPosition.y < 0))
             {
-                this.availablePositions.Add(new AvailablePosition(new Vector3(0, -0.5f, 0)));
+                this.availablePositions.Add(new AvailablePosition(new Vector3(0, -0.5f, -1)));
             }
             if (!(this.equipment.transform.localPosition.y > 0))
             {
-                this.availablePositions.Add(new AvailablePosition(new Vector3(0, 0.5f, 0)));
+                this.availablePositions.Add(new AvailablePosition(new Vector3(0, 0.5f, -1)));
             }
         }
         else

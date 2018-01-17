@@ -47,6 +47,7 @@ public class QuestInfosUIDisplayer : MonoBehaviour, IPointerEnterHandler, IPoint
 	public void hideHud() {
 		UICanvas.SetActive(false);
 	}
+
     public void OnPointerExit(PointerEventData eventData)
     {
 		if (sceneManager.GetStateForBool("Quest")) {

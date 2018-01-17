@@ -9,6 +9,7 @@ using System;
 public class RecruitUIController : UIController
 {
     private List<CrewMember> crewList;
+    [SerializeField] private IntroSceneManager sceneManager;
     public int unitPriceMultiplier;
     public Button closeButton;
 
@@ -81,6 +82,7 @@ public class RecruitUIController : UIController
             IslandManager.GetInstance().islands[PlayerManager.GetInstance().player.currentIsland].removeCrewMember(member);
             player.crew.AddCrew(member);
             player.money -= price;
+            sceneManager.PlaySound("valid_quest");
         } else
         {
             //TODO : popup qui dit t'as pas de thune

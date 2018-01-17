@@ -20,6 +20,7 @@ public class QuestController : UIController
 	public TextMeshProUGUI description;
 	public TextMeshProUGUI rewards;
     private QuestInfosUIDisplayer UIDisplayer;
+    [SerializeField] private IntroSceneManager sceneManager;
 
 
     void Start() {
@@ -102,6 +103,7 @@ public class QuestController : UIController
             Island island = IslandManager.GetInstance().islands[player.currentIsland];
             QuestGenerator qgen = new QuestGenerator();
             if (qgen.ValidateQuest(quest, player, island)) {
+                sceneManager.PlaySound("valid_quest");
                 UIDisplayer.hideHud();
             }
             Populate();

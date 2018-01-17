@@ -40,7 +40,7 @@ public class CreateGameObject : MonoBehaviour
         GameObject.Find("Main Camera").GetComponent<FollowObjectInSpace>().init(playerShip);
 
         //TODO escape
-        //GameObject.Find("Escape").GetComponent<Button>().onClick.AddListener(playerShip.GetComponent<Battle_Ship>().escape);
+        GameObject.Find("Escape").GetComponent<Button>().onClick.AddListener(playerShip.GetComponent<Battle_Ship>().escape);
 
         // add stuff to ships
         Battle_Ship p = playerShip.GetComponent<Battle_Ship>();

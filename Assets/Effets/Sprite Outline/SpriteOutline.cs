@@ -2,7 +2,7 @@
 
 [ExecuteInEditMode]
 public class SpriteOutline : MonoBehaviour {
-    public Color color = Color.white;
+    public Color color;
 
     [Range(0, 16)]
     public int outlineSize = 1;
@@ -31,7 +31,7 @@ public class SpriteOutline : MonoBehaviour {
     {
         if (m_Material != null)
         {
-            m_Material.SetColor("_Color", outline ? Color.red : Color.white);
+            m_Material.SetColor("_Color", outline ? color : Color.white);
         }
         /*
         MaterialPropertyBlock mpb = new MaterialPropertyBlock();

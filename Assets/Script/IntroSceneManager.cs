@@ -10,6 +10,7 @@ public class IntroSceneManager : MonoBehaviour {
 
     private int wealth;
     private List<GameObject> spawnedMoney;
+    [SerializeField] private SoundManager soundManager;
 
     [SerializeField] private TextMeshProUGUI moneyText;
 
@@ -36,6 +37,7 @@ public class IntroSceneManager : MonoBehaviour {
     private const float positionOffset = .5f;
     private void SpawnMoney() {
         if (moneyCurrentlySpawned < wealth) {
+    //        PlaySound("piece");
             GameObject obj = GameObject.Instantiate(coinPrefab);
             obj.transform.SetParent(wealthSpawnPoint.transform, false);
             obj.transform.eulerAngles = new Vector3(Random.Range(0, 180), Random.Range(0, 180), Random.Range(0, 180));
@@ -55,6 +57,10 @@ public class IntroSceneManager : MonoBehaviour {
         moneyText.SetText(wealth + "£");
     }
 
+    public void PlaySound(string name) {
+        soundManager.PlaySingle(name);
+    }
+    
     public void CameraStateChange(string state, bool hasForcedState = false, bool forcedState = false) {
         cameraManager.StateChange(state, hasForcedState, forcedState);
     }

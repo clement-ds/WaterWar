@@ -15,13 +15,11 @@ public abstract class GuiElement : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("create new GuiElement");
         this.buttonObjectPool = GameObject.Find("SimpleActionMenuPool").GetComponent<SimpleObjectPool>();
         this.outline = GetComponent<SpriteOutline>();
 
         if (!this.GetComponentInParent<Battle_Enemy>())
         {
-            Debug.Log("add action list to new Gui");
             this.createActionMenu();
         }
     }
@@ -89,13 +87,10 @@ public abstract class GuiElement : MonoBehaviour
         this.createActionList();
         this.actionMenu = buttonObjectPool.GetObject();
         this.actionMenu.transform.SetParent(GameObject.Find("Battle_UI").gameObject.transform);
-
-        this.actionMenu.transform.localPosition = new Vector3(0, 0, 99);
-        this.actionMenu.GetComponent<RectTransform>().offsetMin = new Vector2(-100, -100);
-        this.actionMenu.GetComponent<RectTransform>().offsetMax = new Vector2(100, 100);
+        
+        this.actionMenu.transform.localPosition = new Vector3(GameRulesManager.GetInstance().guiAccess.ShortCutCanon.transform.parent.transform.localPosition.x - 50, GameRulesManager.GetInstance().guiAccess.ShortCutCanon.transform.parent.transform.localPosition.y - 10, GameRulesManager.GetInstance().guiAccess.ShortCutCanon.transform.parent.transform.localPosition.z);
         this.actionMenu.transform.localScale = new Vector3(1, 1, 1);
-
-        Debug.Log("item : " + this.actionMenu.GetComponentInChildren<ActionMenuList>());
+        
         this.actionMenu.GetComponentInChildren<ActionMenuList>().init(this.actionList);
         this.actionMenu.SetActive(false);
     }

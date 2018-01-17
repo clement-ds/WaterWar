@@ -8,10 +8,10 @@ public class GuiAccess : MonoBehaviour {
     public Button escapeButton;
     public Button boardingButton;
     public Image endPanel;
-    public Image endPanelLoot;
-    public List<Text> endMessages;
-    public List<Text> endMessagesLoot;
-    public GameObject contentLootList;
+    public Transform contentLootListTransform;
+    public Text noLoot;
+    public ScrollRect lootListView;
+    public Transform ShortCutCanon;
 
 
     void Start()
