@@ -6,7 +6,6 @@ public class TypeRoomCard : MonoBehaviour {
   public Image Icon;
   public Text Title;
   public Text Description;
-  public Room source;
 
   public Button btn;
 
@@ -18,8 +17,8 @@ public class TypeRoomCard : MonoBehaviour {
 		case "Infirmary":
 			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Infirmary");
 			break;
-		case "CanonBall":
-			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/CanonBall");
+		case "Canonball":
+			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Canonball");
 			break;
 		case "Alcohol":
 			Icon.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Alcohol");
@@ -43,17 +42,17 @@ public class TypeRoomCard : MonoBehaviour {
     }
   }
 
-  public void initCard(CarpenterController cl) {
-    Title.text = source.component;
-    Description.text = source.type.ToString();
-	setIcon(source.component);
+	public void initCard(CarpenterController cl, string title, string desc) {
+    Title.text = title;
+    Description.text = desc;
+	setIcon(title);
 
     btn = this.GetComponentInChildren<Button>();
-    btn.onClick.AddListener(delegate { cl.selectRoom(this.source); });
+		btn.onClick.AddListener(delegate { cl.selectRoom(this.Title.text, this.Description.text); });
   }
 
-  public void setRoom(Room room) {
+/*  public void setRoom(Room room) {
     Title.text = source.type;
     Description.text = source.component.ToString();
-  }
+  }*/
 }
