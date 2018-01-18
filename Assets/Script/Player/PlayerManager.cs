@@ -187,7 +187,7 @@ public class Player
         this.ship = JsonUtility.FromJson<PlayerShip>(FileUtils.readJSON("BoatJson/ship1.json"));
 
         //Set starter island
-        this.currentIsland = UnityEngine.Random.Range(0, GameManager.Instance.islandsAmount);
+        this.currentIsland = UnityEngine.Random.Range(0, (GameManager.Instance == null ? 0 : GameManager.Instance.islandsAmount));
 
         //Starter life and money
         this.life = 100;
