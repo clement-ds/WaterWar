@@ -61,6 +61,11 @@ public abstract class ShipElement : MonoBehaviour
 
     public abstract List<ActionMenuItem> createActionList();
 
+    protected void addGeneralActionsTo(List<ActionMenuItem> actions)
+    {
+        actions.Add(new ActionMenuItem("Call pirate !", callBestCrewMember));
+    }
+
     /** UPDATE **/
     void Update()
     {
@@ -105,6 +110,43 @@ public abstract class ShipElement : MonoBehaviour
         this.sliderTimer = (this.sliderTimer < 0 ? 0 : this.sliderTimer);
     }
 
+    /** AUTOMATISATION **/
+    public bool callBestCrewMember()
+    {
+        CrewMember_Job needed = CrewMember_Job.Pirate;
+
+        if (!this.isWorking())
+            needed = CrewMember_Job.Engineer;
+
+        List<Battle_CrewMember> members = new List<Battle_CrewMember>();
+        foreach (var member in this.getParentShip().getCrewMembers())
+        {
+            if (!member.isMoving() && member.isAlive() && (member.getEquipment() == null || !member.getEquipment().actionIsRunning()))
+            {
+                if (member.getProfile().job == needed)
+                {
+                    member.assignCrewMemberToRoom(this.parentRoom);
+                    return true;
+                }
+                members.Add(member);
+            }
+        }
+
+        foreach(var member in members)
+        {
+            if (member.getProfile().assignedRoom == this.type)
+            {
+                member.assignCrewMemberToRoom(this.parentRoom);
+                return true;
+            }
+        }
+        if (members.Count > 0)
+        {
+            members[0].assignCrewMemberToRoom(this.parentRoom);
+            return true;
+        }
+        return false;
+    }
 
     /** SLIDER HP **/
     public void updateSliderValue()

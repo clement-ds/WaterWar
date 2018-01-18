@@ -32,6 +32,7 @@ public class Wheel : ShipElement
             if (this.direction != Ship_Direction.LEFT)
                 actions.Add(new ActionMenuItem("Left", directionLeft));
         }
+        this.addGeneralActionsTo(actions);
         return actions;
     }
 

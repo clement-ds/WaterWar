@@ -374,6 +374,11 @@ public abstract class Battle_Ship : MonoBehaviour
         return this.rooms;
     }
 
+    public List<Battle_CrewMember> getCrewMembers()
+    {
+        return this.crewMembers;
+    }
+
     public RoomElement getFreeElement(Ship_Item type)
     {
         RoomElement result = null;

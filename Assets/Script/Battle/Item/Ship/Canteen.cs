@@ -21,8 +21,9 @@ public class Canteen : ShipElement {
     /** GUI CREATOR **/
     public override List<ActionMenuItem> createActionList()
     {
-        List<ActionMenuItem> actionList = new List<ActionMenuItem>();
-        return actionList;
+        List<ActionMenuItem> actions = new List<ActionMenuItem>();
+        this.addGeneralActionsTo(actions);
+        return actions;
     }
 
     /** AVAILABLE POSITION CREATOR **/

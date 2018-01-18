@@ -66,6 +66,7 @@ public class Canon : ShipElement
                 actions.Add(new ActionMenuItem("Load canon", doReload));
             actions.Add(new ActionMenuItem("Select Target", selectTarget));
         }
+        this.addGeneralActionsTo(actions);
         return actions;
     }
 

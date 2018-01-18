@@ -121,7 +121,7 @@ public class Battle_CrewMember : GuiElement
 
     public void launchRepairEquipment()
     {
-        if (this.equipment)
+        if (this.equipment && this.equipment.getParentShip().getId() == this.teamId)
             Invoke("repairEquipment", this.profile.getValueByCrewSkill(SkillAttribute.RepairTime, 1));
     }
 
@@ -247,6 +247,11 @@ public class Battle_CrewMember : GuiElement
     }
 
     /** GETTERS **/
+
+    public bool isAlive()
+    {
+        return this.alive;
+    }
 
     public List<ActionMenuItem> getParentActionList()
     {

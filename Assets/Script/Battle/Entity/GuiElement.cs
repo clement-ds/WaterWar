@@ -32,6 +32,7 @@ public abstract class GuiElement : MonoBehaviour
     {
         return hasInputMouse(clicked, false);
     }
+
     public int hasInputMouse(Boolean clicked, Boolean multipleSelect)
     {
         if (clicked)

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public enum CrewMember_Job { Captain, Pirate, Medic, Engineer };
+public enum CrewMember_Job { Captain, Pirate, Medic, Engineer, FIGHTER };
 
 public enum Effect { AVAILABLE, SPEED, MORAL, ENERGY }
 
@@ -97,7 +97,6 @@ public abstract class CrewMember
     public float life = 100f;
     public float satiety = 1f;
     public bool morale = true;
-
     public bool available = true;
     public CrewMember_Job job;
     public Ship_Item assignedRoom;

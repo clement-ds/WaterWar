@@ -8,6 +8,8 @@ public class Battle_Player : Battle_Ship
 {
     List<Battle_CrewMember> selectedCrewMembers;
 
+    protected float maxRayCastDistance = 100.0F;
+
     public Battle_Player() : base(200, true)
     {
         this.selectedCrewMembers = new List<Battle_CrewMember>();
@@ -84,20 +86,19 @@ public class Battle_Player : Battle_Ship
     private bool checkElementInSelfShip(Vector2 touchPos, bool hasClick)
     {
         bool result = false;
+        if (!hasClick)
+        {
+            return result;
+        }
         foreach (RoomElement item in this.rooms)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            result = item.transform.GetComponent<BoxCollider>().Raycast(ray, out hit, 100.0F);
-
-            if (!hasClick && result)
-            {
-                /* do hover here */
-                return result;
-            }
+            result = item.transform.GetComponent<BoxCollider>().Raycast(ray, out hit, this.maxRayCastDistance);
 
             if (result)
             {
+                Debug.Log("click on : " + item.getIdentifier());
                 foreach (RoomElement item2 in this.rooms)
                 {
                     if (item2 != null && item.getId() != item2.getId())
@@ -105,8 +106,8 @@ public class Battle_Player : Battle_Ship
                         item2.unfocus();
                     }
                 }
+                item.hasInputMouse(result);
             }
-            item.hasInputMouse(result);
         }
         return result;
     }
@@ -125,7 +126,7 @@ public class Battle_Player : Battle_Ship
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            result = item.transform.GetComponent<BoxCollider>().Raycast(ray, out hit, 100.0F);
+            result = item.transform.GetComponent<BoxCollider>().Raycast(ray, out hit, this.maxRayCastDistance);
 
             if (result)
             {
@@ -191,7 +192,7 @@ public class Battle_Player : Battle_Ship
                     {
                         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                         RaycastHit hit;
-                        if (tmp.transform.GetComponent<BoxCollider>().Raycast(ray, out hit, 100.0F))
+                        if (tmp.transform.GetComponent<BoxCollider>().Raycast(ray, out hit, this.maxRayCastDistance))
                         {
                             break;
                         }
@@ -225,7 +226,7 @@ public class Battle_Player : Battle_Ship
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (target.transform.GetComponent<BoxCollider>().Raycast(ray, out hit, 100.0F))
+            if (target.transform.GetComponent<BoxCollider>().Raycast(ray, out hit, this.maxRayCastDistance))
             {
                 if (MouseManager.getInstance().getCursorTexture() == ECursor.SEARCH_TARGET)
                 {

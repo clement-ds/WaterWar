@@ -29,7 +29,7 @@ public class TargetCollider : MonoBehaviour
                     Battle_Ship target2 = this.transform.GetComponent<Battle_Ship>();
                     if (target2 != null)
                     {
-                        target2.receiveDamage((canonBall.getAmmunition().getDamage() / 10));
+                        target2.receiveDamage((canonBall.getAmmunition().getDamage() / 3));
                     }
                 }
                 Destroy(col.gameObject);

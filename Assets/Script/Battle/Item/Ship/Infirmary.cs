@@ -29,11 +29,13 @@ public class Infirmary : ShipElement
 
         if (doctor != null)
         {
+            String teamId = this.getParentShip().getId();
             Battle_CrewMember[] members = this.transform.GetComponentsInParent<Battle_CrewMember>();
 
             foreach (Battle_CrewMember member in members)
             {
-                member.getProfile().healDamage(doctor.getProfile().getValueByCrewSkill(SkillAttribute.HealValue, this.baseHeal));
+                if (member.getTeamId() == teamId)
+                    member.getProfile().healDamage(doctor.getProfile().getValueByCrewSkill(SkillAttribute.HealValue, this.baseHeal));
             }
             launchHealCrew();
         }
@@ -42,7 +44,7 @@ public class Infirmary : ShipElement
     public void launchHealCrew()
     {
         Battle_CrewMember doctor = this.GetComponentInChildren<Battle_CrewMember>();
-        
+
         if (doctor != null)
         {
             Invoke("healCrew", doctor.getProfile().getValueByCrewSkill(SkillAttribute.HealTime, this.baseCooldown));
@@ -52,8 +54,9 @@ public class Infirmary : ShipElement
     /** GUI CREATOR **/
     public override List<ActionMenuItem> createActionList()
     {
-        List<ActionMenuItem> actionList = new List<ActionMenuItem>();
-        return actionList;
+        List<ActionMenuItem> actions = new List<ActionMenuItem>();
+        this.addGeneralActionsTo(actions);
+        return actions;
     }
 
     /** AVAILABLE POSITION CREATOR **/

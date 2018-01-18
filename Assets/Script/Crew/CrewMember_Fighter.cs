@@ -6,7 +6,7 @@ using System.Collections.Generic;
 [Serializable]
 public class CrewMember_Fighter : CrewMember {
 
-	public CrewMember_Fighter (string id) : base(id, CrewMember_Job.Pirate)
+	public CrewMember_Fighter (string id) : base(id, CrewMember_Job.FIGHTER)
     {
         this.wage = 2f;
         this.maxHunger = .5f;

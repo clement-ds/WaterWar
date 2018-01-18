@@ -212,8 +212,6 @@ public class Player
         //Gen ID
         id = Guid.NewGuid().ToString();
 
-        Debug.Log("PLAYER ID : " + id);
-
         //Gen name
         LoadFile("PlayerJson/Names.txt");
         int rng = UnityEngine.Random.Range(0, json.Count);
