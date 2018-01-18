@@ -68,11 +68,13 @@ public class PlayerManager
 
     public Player getCharacter(string id)
     {
-        if (this.player.id.Equals(id))
+        Debug.Log("id search : " + id);
+        if (this.player.id == id)
             return this.player;
         foreach (Player c in this.enemies)
         {
-            if (c.id.Equals(id))
+            Debug.Log("== " +c.id);
+            if (c.id == id)
             {
                 return c;
             }
