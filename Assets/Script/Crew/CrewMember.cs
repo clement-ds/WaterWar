@@ -243,7 +243,7 @@ public abstract class CrewMember
 
     public void purgeEffects()
     {
-        this.attributes.RemoveRange(0, this.attributes.Count - 1);
+        this.attributes = new List<CrewMember_Effect>();
     }
 
     public CrewMember_Effect getEffect(Effect effect)
