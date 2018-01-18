@@ -34,8 +34,9 @@ public class GameManager : MonoBehaviour
             this.SetIsInGame(0);
 
             playerManager = PlayerManager.GetInstance();
-            islandManager = IslandManager.GetInstance();
-            enemyAI = new EnemyAI();
+            islandManager = IslandManager.GetInstance(islandsAmount);
+            
+            //enemyAI = new EnemyAI();
             islandGenerator = new IslandGenerator();
             qgen = new QuestGenerator();
 
@@ -186,6 +187,10 @@ public class GameManager : MonoBehaviour
         }
 
         //Gen new enemies
+        if (turnCount % 5 == 0)
+        {
+            playerManager.enemies.Add(new Player());
+        }
 
         //Island iventory refresh
         if (turnCount % 5 == 0)

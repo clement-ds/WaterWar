@@ -10,10 +10,6 @@ public class IslandManager {
 
     private List<String> json = new List<string>();
 
-   
-
-    
-
     [Serializable]
     public class IslandsSave
     {
@@ -23,21 +19,16 @@ public class IslandManager {
     public IslandsSave islandsSave = new IslandsSave();
     public List<Island> islands;
 
-    protected IslandManager()
+    protected IslandManager(int islandAmount)
     {
         //LoadFile("PlayerJson/IslandSave.txt");
         //island = JsonUtility.FromJson<Island>(json[0]);
 
         islands = islandsSave.islands;
-        islands.Add(new Island());
-        islands.Add(new Island());
-        islands.Add(new Island());
-        islands.Add(new Island());
-        islands.Add(new Island());
-        islands.Add(new Island());
-        islands.Add(new Island());
-        islands.Add(new Island());
-        islands.Add(new Island());
+        for (int i = 0; i < islandAmount; i += 1)
+        {
+            islands.Add(new Island());
+        }
 
         IslandGenerator iGen = new IslandGenerator();
         Economy eco = new Economy();
@@ -46,19 +37,13 @@ public class IslandManager {
             islands[i] = iGen.GenerateIsland(islands[i]);
             eco.initInventoryPrices(islands[i].inventory);
         }
-
-        Debug.Log("island : " + islands[0].name);
-        Debug.Log("CHECK INVENTORY : " + islands[0].inventory.food.Count + " / " + islands[0].inventory.weapons.Count);
-//        Debug.Log("CHECK CREW : " + islands[0].crew.begos.Count + " / " + islands[0].crew.captains.Count + " / " + islands[0].crew.engineers.Count
-//            + " / " + islands[0].crew.fastUnits.Count + " / " + islands[0].crew.fighters.Count);
-        Debug.Log("CHECK QUEST : " + islands[0].questLog.quests.Count);
     }
 
-    public static IslandManager GetInstance()
+    public static IslandManager GetInstance(int islandAmount = 9)
     {
         if (instance == null)
         {
-            instance = new IslandManager();
+            instance = new IslandManager(islandAmount);
         }
         return instance;
     }

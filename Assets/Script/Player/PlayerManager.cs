@@ -30,18 +30,14 @@ public class PlayerManager
         player.graphicAsset = Resources.Load("Ship/PlayerShip") as GameObject;
         Debug.Log("player : " + player.name + "/" + player.life);
 
-        LoadFile("PlayerJson/AISave.json");
-        //for (int i = 0; i < maxEnemies / 2; i += 1)
-        //{
-            enemiesSave = JsonUtility.FromJson<EnemiesSave>(json[0]);
-            enemies = enemiesSave.enemies;
-        //}
+        //LoadFile("PlayerJson/AISave.json");
+        //enemiesSave = JsonUtility.FromJson<EnemiesSave>(json[0]);
+        enemies = enemiesSave.enemies;
 
-        foreach (Player enemy in enemies)
+        for (int i = 0; i < maxEnemies / 2; i += 1)
         {
-            enemy.graphicAsset = Resources.Load("Ship/AiShip") as GameObject;
+            enemies.Add(new Player());
         }
-        //Save();
 
         LoadFile("PlayerJson/Objects.txt", objectDictionary);
     }
@@ -65,8 +61,6 @@ public class PlayerManager
         quest.taken = true;
         if (quest.type == PlayerQuest.QUEST.KILL) {
             Player enemie = new Player();
-            int lvlOfIA = 0;
-            enemie = JsonUtility.FromJson<EnemiesSave>(json[0]).enemies[lvlOfIA];
             enemie.name = quest.end.name.Substring(4);
             enemie.inventory.addObject(new InventoryObject("Flag " + enemie.name, "Quest", 1, 100, 10));
             enemie.graphicAsset = Resources.Load("Ship/AiShip") as GameObject;
@@ -203,9 +197,67 @@ public class Player
     public QuestLog questLog = new QuestLog();
     public PlayerShip ship = new PlayerShip();
 
+    private List<String> json = new List<string>();
+
     public Player(String assetName = "AiShip")
     {
+        //Gen name
+        LoadFile("PlayerJson/Names.txt");
+        int rng = UnityEngine.Random.Range(0, json.Count);
+        Name name = JsonUtility.FromJson<Name>(json[rng]);
+        this.name = name.name;
+
+        //Set graphic asset
         graphicAsset = Resources.Load("Ship/" + assetName) as GameObject;
+
+        //Gen ship
+        LoadFile("BoatJson/ship1.json");
+        this.ship = JsonUtility.FromJson<PlayerShip>(json[0]);
+
+        //Set starter island
+        this.currentIsland = UnityEngine.Random.Range(0, GameManager.Instance.islandsAmount);
+
+        //Starter life and money
+        this.life = 100;
+        this.money = 100;
+
+        //Gen crew
+        this.crew.AddCrew(new CrewMember_Captain(Guid.NewGuid().ToString()));
+        this.crew.AddCrew(new CrewMember_Bego(Guid.NewGuid().ToString()));
+
+        //Gen inventory
+        this.inventory.addObject(new InventoryObject("Water", "Food", 5, 10, 10));
+        this.inventory.addObject(new InventoryObject("Bread", "Food", 5, 10, 10));
+    }
+
+    private bool LoadFile(string fileName)
+    {
+        json = new List<string>();
+        try
+        {
+            string line;
+            StreamReader theReader = new StreamReader(fileName, Encoding.Default);
+            using (theReader)
+            {
+                do
+                {
+                    line = theReader.ReadLine();
+
+                    if (line != null)
+                    {
+                        json.Add(line);
+                    }
+                }
+                while (line != null);
+                theReader.Close();
+                return true;
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            return false;
+        }
     }
 }
 
