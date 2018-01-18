@@ -1,0 +1,242 @@
+{
+  "type": "ship4",
+  "shipDisposition": {
+    "rooms": [
+        {
+          "id": "c6607d0f-8cad-4066-b2dc-f6ea19fa30b5",
+          "type": "blockBody",
+          "x": 300,
+          "y": 288,
+          "width": 64,
+          "height": 65,
+          "rotation": 0,
+          "component": "",
+          "links": [
+            "bf2195e2-ceb0-4188-8389-a19ced24dd74",
+            "4b1c7038-845e-4760-bfc1-3c63fe3e88a3",
+            "71d444d7-cb1b-4204-8727-a3667ec9223e"
+          ]
+        },
+        {
+          "id": "b4bdfb0c-ce11-496a-ae33-8c86f1231156",
+          "type": "defenseBody",
+          "x": 143,
+          "y": 286,
+          "width": 64,
+          "height": 65,
+          "rotation": 0,
+          "component": "",
+          "links": [
+            "bf2195e2-ceb0-4188-8389-a19ced24dd74"
+          ]
+        },
+        {
+          "id": "fca0a115-e597-4c8e-8672-5e9f6f711573",
+          "type": "attackBody",
+          "x": 462,
+          "y": 231,
+          "width": 64,
+          "height": 65,
+          "rotation": 0,
+          "component": "",
+          "links": [
+            "8cfb43d6-2c94-4d34-a5fe-4313764ae791",
+            "fd6713f7-eb93-4dcb-9863-262fb88c28fc",
+            "a1f3521f-4c58-44e6-aa37-465c8ee77397"
+          ]
+        },
+        {
+          "id": "fd6713f7-eb93-4dcb-9863-262fb88c28fc",
+          "type": "attackBody",
+          "x": 462,
+          "y": 342,
+          "width": 64,
+          "height": 65,
+          "rotation": 0,
+          "component": "",
+          "links": [
+            "8cfb43d6-2c94-4d34-a5fe-4313764ae791",
+            "fca0a115-e597-4c8e-8672-5e9f6f711573",
+            "bb5aa936-2520-42ec-b871-d8a1c63a6c38"
+          ]
+        },
+        {
+          "id": "bb5aa936-2520-42ec-b871-d8a1c63a6c38",
+          "type": "attackBody",
+          "x": 553,
+          "y": 348,
+          "width": 64,
+          "height": 65,
+          "rotation": 0,
+          "component": "",
+          "links": [
+            "fd6713f7-eb93-4dcb-9863-262fb88c28fc",
+            "c8121458-ef70-4b75-8bcb-d2b6d64b7a2b",
+            "e6919e70-3f75-4c66-889a-13ba11a3bc19"
+          ]
+        },
+        {
+          "id": "c8121458-ef70-4b75-8bcb-d2b6d64b7a2b",
+          "type": "attackBody",
+          "x": 618,
+          "y": 348,
+          "width": 64,
+          "height": 65,
+          "rotation": 0,
+          "component": "",
+          "links": [
+            "bb5aa936-2520-42ec-b871-d8a1c63a6c38",
+            "f5a750b1-2e80-4f99-9d56-fe860d74c3ed",
+            "f03b980d-2e89-4d7b-8d37-590c2dbaef4d"
+          ]
+        },
+        {
+          "id": "e98ad90d-28c0-4739-8c14-79b8678400ea",
+          "type": "attackBody",
+          "x": 622,
+          "y": 218,
+          "width": 64,
+          "height": 65,
+          "rotation": 0,
+          "component": "",
+          "links": [
+            "0f574ae4-5bcf-49fb-b560-4bd8f2368f34",
+            "a1f3521f-4c58-44e6-aa37-465c8ee77397",
+            "f03b980d-2e89-4d7b-8d37-590c2dbaef4d"
+          ]
+        },
+        {
+          "id": "0f574ae4-5bcf-49fb-b560-4bd8f2368f34",
+          "type": "attackBody",
+          "x": 719,
+          "y": 241,
+          "width": 64,
+          "height": 65,
+          "rotation": 0,
+          "component": "",
+          "links": [
+            "e98ad90d-28c0-4739-8c14-79b8678400ea",
+            "f5a750b1-2e80-4f99-9d56-fe860d74c3ed"
+          ]
+        },
+        {
+          "id": "f5a750b1-2e80-4f99-9d56-fe860d74c3ed",
+          "type": "attackBody",
+          "x": 721,
+          "y": 324,
+          "width": 64,
+          "height": 65,
+          "rotation": 0,
+          "component": "",
+          "links": [
+            "c8121458-ef70-4b75-8bcb-d2b6d64b7a2b",
+            "0f574ae4-5bcf-49fb-b560-4bd8f2368f34"
+          ]
+        },
+        {
+          "id": "8cfb43d6-2c94-4d34-a5fe-4313764ae791",
+          "type": "blockBody",
+          "x": 400,
+          "y": 287,
+          "width": 62,
+          "height": 67,
+          "rotation": 0,
+          "component": "",
+          "links": [
+            "71d444d7-cb1b-4204-8727-a3667ec9223e",
+            "4b1c7038-845e-4760-bfc1-3c63fe3e88a3",
+            "fca0a115-e597-4c8e-8672-5e9f6f711573",
+            "fd6713f7-eb93-4dcb-9863-262fb88c28fc"
+          ]
+        },
+        {
+          "id": "bf2195e2-ceb0-4188-8389-a19ced24dd74",
+          "type": "defenseBody",
+          "x": 218,
+          "y": 289,
+          "width": 70,
+          "height": 63,
+          "rotation": 0,
+          "component": "",
+          "links": [
+            "b4bdfb0c-ce11-496a-ae33-8c86f1231156",
+            "c6607d0f-8cad-4066-b2dc-f6ea19fa30b5"
+          ]
+        },
+        {
+          "id": "71d444d7-cb1b-4204-8727-a3667ec9223e",
+          "type": "blockBody",
+          "x": 355,
+          "y": 247,
+          "width": 56,
+          "height": 26,
+          "rotation": 0,
+          "component": "",
+          "links": [
+            "c6607d0f-8cad-4066-b2dc-f6ea19fa30b5",
+            "8cfb43d6-2c94-4d34-a5fe-4313764ae791"
+          ]
+        },
+        {
+          "id": "4b1c7038-845e-4760-bfc1-3c63fe3e88a3",
+          "type": "blockBody",
+          "x": 354,
+          "y": 362,
+          "width": 57,
+          "height": 30,
+          "rotation": 0,
+          "component": "",
+          "links": [
+            "c6607d0f-8cad-4066-b2dc-f6ea19fa30b5",
+            "8cfb43d6-2c94-4d34-a5fe-4313764ae791"
+          ]
+        },
+        {
+          "id": "e6919e70-3f75-4c66-889a-13ba11a3bc19",
+          "type": "defenseBody",
+          "x": 553,
+          "y": 282,
+          "width": 64,
+          "height": 65,
+          "rotation": 0,
+          "component": "",
+          "links": [
+            "a1f3521f-4c58-44e6-aa37-465c8ee77397",
+            "f03b980d-2e89-4d7b-8d37-590c2dbaef4d",
+            "bb5aa936-2520-42ec-b871-d8a1c63a6c38"
+          ]
+        },
+        {
+          "id": "f03b980d-2e89-4d7b-8d37-590c2dbaef4d",
+          "type": "defenseBody",
+          "x": 620,
+          "y": 283,
+          "width": 64,
+          "height": 65,
+          "rotation": 0,
+          "component": "",
+          "links": [
+            "e98ad90d-28c0-4739-8c14-79b8678400ea",
+            "e6919e70-3f75-4c66-889a-13ba11a3bc19",
+            "c8121458-ef70-4b75-8bcb-d2b6d64b7a2b"
+          ]
+        },
+        {
+          "id": "a1f3521f-4c58-44e6-aa37-465c8ee77397",
+          "type": "null",
+          "x": 549,
+          "y": 214,
+          "width": 64,
+          "height": 65,
+          "rotation": 0,
+          "component": "",
+          "links": [
+            "fca0a115-e597-4c8e-8672-5e9f6f711573",
+            "e98ad90d-28c0-4739-8c14-79b8678400ea",
+            "e6919e70-3f75-4c66-889a-13ba11a3bc19"
+          ]
+        }
+      ]
+    }
+  ]
+}
