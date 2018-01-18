@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
 
     public string SceneIntroMenuName = "Intro_Scene";
+    public string SceneStartMenu = "Start_Menu";
     public string SceneWorldMapName = "World_Map_Scene";
     public string SceneInteractionName = "Interaction_Scene";
     public string SceneFightName = "Fight";
@@ -103,6 +104,11 @@ public class GameManager : MonoBehaviour
     public void GoIntroMenu()
     {
         Instance.ChangeScene(SceneIntroMenuName);
+    }
+
+    public void GoStartMenu()
+    {
+        Instance.ChangeScene(SceneStartMenu);
     }
 
     public void GoWorldMap()

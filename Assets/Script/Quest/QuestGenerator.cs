@@ -90,10 +90,10 @@ public class QuestGenerator {
       string name = names[UnityEngine.Random.Range(0, names.Count)].name;
       string adjectif = adjectifs[UnityEngine.Random.Range(0, adjectifs.Count)].name;
 
-      quest.title = "Kill" + " " + "Captain " + name;
+      quest.title = "Kill" + " " + "Captain " + name + " for " + islandName;
 
       // Description
-      quest.description = "Kill " + adjectif + " " + "Captain " + name + " " + "<terrorizing>" + " " + islandName;
+      quest.description = "Kill " + adjectif + " " + "Captain " + name + " " + "terrorizing" + " " + islandName;
 
       // End
       quest.end = new InventoryObject("Flag " + name, "Quest", 1, 0, 0);
@@ -113,7 +113,7 @@ public class QuestGenerator {
       }
 
       // Title
-      quest.title = "Collect" + " " + quest.end.quantity.ToString()+ " " + quest.end.name;
+      quest.title = "Collect" + " " + quest.end.quantity.ToString()+ " " + quest.end.name + " for " + islandName;
 
       // Description
       quest.description = "Bring " + quest.end.quantity.ToString()+ " " + quest.end.name + " " + "to" + " " + islandName;
@@ -132,7 +132,7 @@ public class QuestGenerator {
       }
 
       // Title
-      quest.title = "Collect" + " " + quest.end.quantity.ToString()+ " " + quest.end.name;
+      quest.title = "Collect" + " " + quest.end.quantity.ToString()+ " " + quest.end.name + " for " + islandName;
 
       // Description
       quest.description = "Find " + quest.end.quantity.ToString()+ " " + quest.end.name;
@@ -143,10 +143,10 @@ public class QuestGenerator {
     } else if (quest.type == PlayerQuest.QUEST.RECRUIT) {
       int amount = UnityEngine.Random.Range(1, 3);
       // Title
-      quest.title = "Recruit" + " " + amount.ToString() + " sailors";
+      quest.title = "Recruit" + " " + amount.ToString() + " sailors for " + islandName;
 
       // Description
-      quest.description = "Recruit " + amount.ToString()+ " " + "sailors on your ship !";
+      quest.description = "Recruit " + amount.ToString()+ " " + "sailors on your ship for " + islandName;
       quest.end = new InventoryObject("CrewMember", "Quest", 1, 0, 0);
       quest.end.quantity = amount + PlayerManager.GetInstance().player.crew.crewMembers.Count;
       maxReward = UnityEngine.Random.Range(1, 50);
@@ -172,7 +172,7 @@ public class QuestGenerator {
         if (money || quest.type == PlayerQuest.QUEST.RECRUIT) {
           reward.type = Reward.REWARD.OBJECT;
         } else {
-          reward.amount = UnityEngine.Random.Range(100, 300);
+          reward.amount = UnityEngine.Random.Range(100, maxReward);
           reward.name = "money";
           money = true;
           maxReward -= reward.amount;
@@ -267,6 +267,7 @@ public class QuestGenerator {
       InventoryObject ret = player.inventory.food.Find((item) => item.name == quest.end.name);
       player.inventory.removeQuantityOfObject(ret, quest.end.quantity);
     }
+    island.influence += 5;
     player.questLog.quests.Remove(quest);
     return true;
   }
