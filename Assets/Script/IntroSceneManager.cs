@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 
 public class IntroSceneManager : MonoBehaviour {
-    public GameObject map, menu, coinPrefab;
+    public GameObject map, menu, coinPrefab, flag;
     private CameraAnimationManager cameraManager;
     public GameObject wealthSpawnPoint;
 
@@ -56,6 +56,10 @@ public class IntroSceneManager : MonoBehaviour {
     private void UpdateWealth() {
         wealth = PlayerManager.GetInstance().player.money;
         moneyText.SetText(wealth + "£");
+    }
+
+    public void DisplayInfluenceFlag(bool should) {
+        flag.SetActive(should);
     }
 
     public void PlaySound(string name) {

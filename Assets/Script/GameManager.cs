@@ -245,15 +245,19 @@ public class GameManager : MonoBehaviour
         }
 
         //Check for Game Victory
+        IntroSceneManager sceneManager = GameObject.Find("SceneManager").GetComponent<IntroSceneManager>();
         string victoryString = CheckGameVictory();
         if (shouldCheckGameVictory && victoryString != "") {
             shouldCheckGameVictory = false;
-            IntroSceneManager sceneManager = GameObject.Find("SceneManager").GetComponent<IntroSceneManager>();
             if (sceneManager) {
                 sceneManager.DisplayWinCanvas(victoryString);
             }
             return ;
         }
+
+        //Display influence flag
+        sceneManager.DisplayInfluenceFlag(islandManager.islands[playerManager.player.currentIsland].influence == 100);
+
 
         SaveGame();
 
