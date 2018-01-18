@@ -198,7 +198,7 @@ public class QuestGenerator {
       quest.rewards.Add(reward);
     }
 
-    while (maxReward > 0) {
+    while (maxReward > 0 && quest.rewards.Count < 4) {
       Reward reward = new Reward();
       reward.type = Reward.REWARD.OBJECT;
 
@@ -213,6 +213,20 @@ public class QuestGenerator {
       maxReward -= (reward.amount * objectReward.price);
       quest.rewards.Add(reward);
     }
+    if (maxReward > 0) {
+      bool isNew = false;
+      Reward reward = quest.rewards.Find((r) => r.name == "money");
+      
+      if (reward == null) {
+        isNew = true;
+        reward = new Reward();
+      }
+      reward.amount += maxReward + UnityEngine.Random.Range(0, 50);
+      reward.name = "money";
+      if (isNew)
+        quest.rewards.Add(reward);
+    }
+
     return quest;
   }
 
