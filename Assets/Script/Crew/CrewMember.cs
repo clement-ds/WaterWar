@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public enum CrewMember_Job { Captain, Pirate, Medic, Engineer };
 
-public enum Effect { SPEED, AVAILABLE, MORAL, ENERGY }
+public enum Effect { AVAILABLE, SPEED, MORAL, ENERGY }
 
 public class SkillAttribute
 {
@@ -239,6 +239,11 @@ public abstract class CrewMember
         {
             this.attributes.Remove(item);
         }
+    }
+
+    public void purgeEffects()
+    {
+        this.attributes.RemoveRange(0, this.attributes.Count - 1);
     }
 
     public CrewMember_Effect getEffect(Effect effect)

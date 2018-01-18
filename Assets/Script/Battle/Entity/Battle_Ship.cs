@@ -84,6 +84,12 @@ public abstract class Battle_Ship : MonoBehaviour
             battleCrewMember.getProfile().changePower(powerWeaponValue);
             crewMember.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(member.memberImage);
 
+            if (!member.morale)
+            {
+                battleCrewMember.getProfile().addEffect(Effect.MORAL, -1, 50);
+                battleCrewMember.getProfile().addEffect(Effect.SPEED, -1, 50);
+                battleCrewMember.getProfile().addEffect(Effect.ENERGY, -1, 50);
+            }
             List<RoomElement> items = this.parseShipElement(member.assignedRoom);
 
             if (this.assignateCrewMemberToRoom(battleCrewMember, items, true))

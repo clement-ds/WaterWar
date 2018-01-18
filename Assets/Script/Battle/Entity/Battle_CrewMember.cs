@@ -25,6 +25,7 @@ public class Battle_CrewMember : GuiElement
     public void initialize(CrewMember crewMember, string teamId)
     {
         this.profile = crewMember;
+        this.profile.purgeEffects();
         this.teamId = teamId;
     }
 
@@ -99,7 +100,7 @@ public class Battle_CrewMember : GuiElement
 
     public void launchAttackInRoom()
     {
-        if (this.profile.isAvailable() && this.room)
+        if (this.profile != null && this.profile.isAvailable() && this.room)
             Invoke("checkAttackInRoom", this.profile.getValueByCrewSkill(SkillAttribute.AttackTime, 2f));
     }
 

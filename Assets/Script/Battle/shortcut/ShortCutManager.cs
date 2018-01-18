@@ -31,6 +31,10 @@ public class ShortCutManager : MonoBehaviour {
     void OnGUI()
     {
         Event e = Event.current;
+
+        // unactive shortcut
+        return;
+
         if (e.type == EventType.KeyDown && e.control && e.keyCode == KeyCode.Alpha1)
         {
             if (!groups.ContainsKey(KeyCode.Alpha1))

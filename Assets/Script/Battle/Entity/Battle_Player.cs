@@ -138,7 +138,7 @@ public class Battle_Player : Battle_Ship
             }
 
             int isFocus = item.hasInputMouse(result);
-
+            /*
             if (isFocus == 0)
             {
                 this.selectedCrewMembers.Remove(item);
@@ -154,8 +154,8 @@ public class Battle_Player : Battle_Ship
                     this.selectedCrewMembers[0].select();
                 }
                 this.selectedCrewMembers.Insert(0, item);
-            }
-            if (result && canSelect)
+            }*/
+            if (result && canSelect && isFocus == 1)
             {
                 canSelect = false;
             }
