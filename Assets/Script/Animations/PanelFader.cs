@@ -25,7 +25,6 @@ public class PanelFader : MonoBehaviour {
 
 	IEnumerator FadeCoroutine(bool fadeIn) {
 		while (fadeIn ? canvas.alpha < 1 : canvas.alpha > 0) {
-			Debug.Log(canvas.alpha);
 			float amount = Time.deltaTime / time;
 			canvas.alpha += fadeIn ? amount : -amount;
 			yield return null;
