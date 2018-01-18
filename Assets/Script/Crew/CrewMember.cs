@@ -86,7 +86,7 @@ public class CrewMember_Effect
 }
 
 [Serializable]
-public abstract class CrewMember
+public class CrewMember
 {
     public string id;
     public string type;
