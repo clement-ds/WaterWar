@@ -17,7 +17,9 @@ public class GameManager : MonoBehaviour
     public PlayerManager playerManager;
     public IslandManager islandManager;
     private int inGame;
-    public int xMapSize, yMapSize, islandsAmount;
+    public int xMapSize = 100;
+    public int yMapSize = 100;
+    public int islandsAmount = 8;
     private bool shouldCheckGameVictory = true;
     EnemyAI enemyAI;
     QuestGenerator qgen;
@@ -32,8 +34,6 @@ public class GameManager : MonoBehaviour
             Debug.Log("GameManager: Creating Instance");
             Instance = this;
             this.SetIsInGame(0);
-
-            continueGame();
 
         }
 
