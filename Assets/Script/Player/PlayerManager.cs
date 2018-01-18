@@ -63,6 +63,40 @@ public class PlayerManager
         }
     }
 
+    public Player getCharacter(string id)
+    {
+        if (this.player.id.Equals(id))
+            return this.player;
+        foreach (Player c in this.enemies)
+        {
+            if (c.id.Equals(id))
+            {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    public List<Player> getCharacterForEnemy(int currentIsland)
+    {
+        List<Player> result = new List<Player>();
+
+        foreach (Player c in this.enemies)
+        {
+            if (c.currentIsland == currentIsland)
+            {
+                result.Add(c);
+            }
+        }
+
+        // remove for rendu !
+        if (result.Count == 0)
+        {
+            result.Add(enemies[0]);
+        }
+        return result;
+    }
+
     public string getNameForObjectId(int id)
     {
         return JsonUtility.FromJson<InventoryObject>(objectDictionary[id]).name;

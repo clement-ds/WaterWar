@@ -8,7 +8,6 @@ public class CreateGameObject : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
         bool isLeft = Random.Range(1, 3) == 1;
 
         // reset
@@ -29,7 +28,9 @@ public class CreateGameObject : MonoBehaviour
 
         // create enemy
         Debug.Log("enemy count: " + PlayerManager.GetInstance().enemies.Count);
-        Player ai = PlayerManager.GetInstance().enemies[0];
+        List<Player> enemies = PlayerManager.GetInstance().getCharacterForEnemy(PlayerManager.GetInstance().player.currentIsland);
+
+        Player ai = enemies[0];
         GameObject aiShip = GameObject.Find(ai.ship.type + "Pool").GetComponent<SimpleObjectPool>().GetObject();
         aiShip.name = "Enemy";
         aiShip.AddComponent<Battle_Enemy>();
