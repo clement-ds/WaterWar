@@ -225,7 +225,7 @@ public class Player
 
         //Gen ship
         Debug.Log(json);
-        this.ship = JsonUtility.FromJson<PlayerShip>(FileUtils.readJSON("PlayerJson/ship1.json"));
+        this.ship = JsonUtility.FromJson<PlayerShip>(FileUtils.readJSON("PlayerJson/ship5.json"));
 
         //Set starter island
         this.currentIsland = UnityEngine.Random.Range(0, (GameManager.Instance == null ? 0 : GameManager.Instance.islandsAmount));
