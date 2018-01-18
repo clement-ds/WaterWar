@@ -113,7 +113,6 @@ public abstract class Battle_Ship : MonoBehaviour
                 {
                     if (room.getEquipment() && room.getEquipment().hasAvailableCrewMemberPosition())
                     {
-                        Debug.Log("assign " + crewMember.getProfile().memberName);
                         if (crewMember.directAssignCrewMemberInElement(room.getEquipment(), room.getEquipment().chooseAvailableCrewMemberPosition(crewMember.GetInstanceID())))
                         {
                             result = true;
