@@ -22,6 +22,7 @@ public class QuestGenerator {
   private  List<InventoryObject> weapons;
   private  List<Name> names;
   private  List<Adjectif> adjectifs;
+  private  List<Adjectif> adverbs;
 
   public QuestGenerator() {
     stringJson = new List<string>();
@@ -30,6 +31,7 @@ public class QuestGenerator {
     foods = new List<InventoryObject>();
     weapons = new List<InventoryObject>();
     names = new List<Name>();
+    adverbs = new List<Adjectif>();
     adjectifs = new List<Adjectif>();
 
     LoadFile("PlayerJson/Objects.txt", stringJson);
@@ -50,6 +52,10 @@ public class QuestGenerator {
     LoadFile("PlayerJson/Adjectif.txt", stringJson);
     for (int i = 0; i < stringJson.Count; i++)
       adjectifs.Add(JsonUtility.FromJson<Adjectif>(stringJson[i]));
+
+    LoadFile("PlayerJson/Adverb.json", stringJson);
+    for (int i = 0; i < stringJson.Count; i++)
+      adverbs.Add(JsonUtility.FromJson<Adjectif>(stringJson[i]));
   }
 
 	private bool LoadFile(string fileName, List<string> json) {
@@ -93,7 +99,7 @@ public class QuestGenerator {
       quest.title = "Kill" + " " + "Captain " + name + " for " + islandName;
 
       // Description
-      quest.description = "Kill " + adjectif + " " + "Captain " + name + " " + "terrorizing" + " " + islandName;
+      quest.description = "Kill " + adjectif + " " + "Captain " + name + " " + adverbs[UnityEngine.Random.Range(0, adverbs.Count)].name + " for " + islandName;
 
       // End
       quest.end = new InventoryObject("Flag " + name, "Quest", 1, 0, 0);
