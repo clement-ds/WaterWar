@@ -14,6 +14,8 @@ public class IntroSceneManager : MonoBehaviour {
 
     [SerializeField] private TextMeshProUGUI moneyText;
 
+    [SerializeField] private GameObject winCanvas;
+
 	// Use this for initialization
 	void Start () {
         GameObject o = GameObject.FindGameObjectWithTag("MainCamera");
@@ -62,6 +64,14 @@ public class IntroSceneManager : MonoBehaviour {
     
     public void CameraStateChange(string state, bool hasForcedState = false, bool forcedState = false) {
         cameraManager.StateChange(state, hasForcedState, forcedState);
+    }
+
+    public void DisplayWinCanvas(string winString = "Yay!") {
+        winCanvas.SetActive(true);
+        TextMeshProUGUI winText = GameObject.Find("WinText").GetComponent<TextMeshProUGUI>();
+        if (winText) {
+            winText.SetText(winString);
+        }
     }
 
     void Update() {
