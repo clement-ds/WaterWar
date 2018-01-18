@@ -20,7 +20,7 @@ public class TileClick : MonoBehaviour
         }
         else if (tmp == "Center")
         {
-            variation = UnityEngine.Random.Range(1, 6);
+            variation = UnityEngine.Random.Range(1, 11);
         }
         else
         {

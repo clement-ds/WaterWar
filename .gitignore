@@ -51,3 +51,8 @@ Assets/Tiled2Unity/Scripts/Runtime.meta
 Assets/Tiled2Unity/Scripts/Editor.meta
 Assets/Tiled2Unity/Scripts.meta
 Assets/Tiled2Unity.meta
+
+# Saves
+/PlayerJson/AISave.json
+/PlayerJson/MapSave.json
+/PlayerJson/Save.json
