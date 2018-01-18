@@ -434,7 +434,7 @@ public class PlayerQuest
 
         rewards.ForEach((reward) => {
             if (reward.type == Reward.REWARD.MONEY) {
-                rewardString.Add(reward.amount.ToString() + "$");
+                rewardString.Add(reward.amount.ToString() + "£");
             } else if (reward.type == Reward.REWARD.INFLUENCE) {
                 rewardString.Add(reward.amount.ToString() + " influence on " + localisation);
             } else if (reward.type == Reward.REWARD.OBJECT) {
