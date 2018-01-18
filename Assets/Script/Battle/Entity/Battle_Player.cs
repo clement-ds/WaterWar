@@ -138,6 +138,7 @@ public class Battle_Player : Battle_Ship
             }
 
             int isFocus = item.hasInputMouse(result);
+            
             /*
             if (isFocus == 0)
             {
