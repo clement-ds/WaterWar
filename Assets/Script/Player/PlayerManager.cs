@@ -26,8 +26,9 @@ public class PlayerManager
 
     protected PlayerManager()
     {
-        player = JsonUtility.FromJson<Player>(FileUtils.readJSON("PlayerJson/Save.json"));
-        player.graphicAsset = Resources.Load("Ship/PlayerShip") as GameObject;
+        //player = JsonUtility.FromJson<Player>(FileUtils.readJSON("PlayerJson/Save.json"));
+        //player.graphicAsset = Resources.Load("Ship/PlayerShip") as GameObject;
+        player = new Player("PlayerShip");
         Debug.Log("player : " + player.name + "/" + player.life);
 
         //LoadFile("PlayerJson/AISave.json");

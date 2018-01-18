@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
             playerManager = PlayerManager.GetInstance();
             islandManager = IslandManager.GetInstance(islandsAmount);
             
-            //enemyAI = new EnemyAI();
+            enemyAI = new EnemyAI();
             islandGenerator = new IslandGenerator();
             qgen = new QuestGenerator();
 
