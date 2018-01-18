@@ -30,7 +30,7 @@ public class PlayerManager
         //player.graphicAsset = Resources.Load("Ship/PlayerShip") as GameObject;
         player = new Player("PlayerShip");
         Debug.Log("player : " + player.name + "/" + player.life);
-        Save();
+        //Save();
 
         //LoadFile("PlayerJson/AISave.json");
         //enemiesSave = JsonUtility.FromJson<EnemiesSave>(json[0]);
