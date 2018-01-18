@@ -5,16 +5,20 @@ using UnityEngine.Audio;
 
 public class SettingsMenu : MonoBehaviour {
 
-	public AudioMixer mixer;
+	private GameManager gameManager;
+
+	void Start() {
+		gameManager = GameManager.Instance;
+	}
 	public void SetMusicVolume(float volume) {
-		mixer.SetFloat("MusicVolume", volume);
+		gameManager.settings.SetMusicVolume(volume);
 	}
 
 	public void SetFXVolume(float volume) {
-		mixer.SetFloat("FXVolume", volume);
+		gameManager.settings.SetFXVolume(volume);
 	}
 
 	public void SetGraphicQuality(int quality) {
-		QualitySettings.SetQualityLevel(quality);
+		gameManager.settings.SetGraghicSettings(quality);
 	}
 }
