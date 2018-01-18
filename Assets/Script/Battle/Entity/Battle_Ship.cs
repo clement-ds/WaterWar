@@ -76,7 +76,7 @@ public abstract class Battle_Ship : MonoBehaviour
         List<CrewMember> members = PlayerManager.GetInstance().getCharacter(this.id).crew.crewMembers;
         SimpleObjectPool crewPool = GameObject.Find("CrewPool").GetComponent<SimpleObjectPool>();
 
-        float powerWeaponValue = this.weaponForCrew / members.Count;
+        float powerWeaponValue = (members.Count == 0 ? this.weaponForCrew : this.weaponForCrew / members.Count);
 
         foreach (CrewMember member in members)
         {
