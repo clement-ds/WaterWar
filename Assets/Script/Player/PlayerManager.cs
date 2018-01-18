@@ -24,33 +24,37 @@ public class PlayerManager
 
     int maxEnemies = 10;
 
-    protected PlayerManager()
+    protected PlayerManager(Boolean newGame)
     {
-        //player = JsonUtility.FromJson<Player>(FileUtils.readJSON("PlayerJson/Save.json"));
-        //player.graphicAsset = Resources.Load("Ship/PlayerShip") as GameObject;
-        player = new Player("PlayerShip");
-        Debug.Log("player : " + player.name + "/" + player.life);
-        //Save();
-
-        //LoadFile("PlayerJson/AISave.json");
-        //enemiesSave = JsonUtility.FromJson<EnemiesSave>(json[0]);
-        enemies = enemiesSave.enemies;
-
-        for (int i = 0; i < maxEnemies / 2; i += 1)
+        if (newGame)
         {
-            enemies.Add(new Player());
-        }
+            player = new Player("PlayerShip");
+            Debug.Log("player : " + player.name + "/" + player.life);
 
-        //SaveAI();
+            enemies = enemiesSave.enemies;
+            enemiesSave.enemies = enemies;
+            for (int i = 0; i < maxEnemies / 2; i += 1)
+            {
+                enemies.Add(new Player());
+            }
+        } else
+        {
+            player = JsonUtility.FromJson<Player>(FileUtils.readJSON("PlayerJson/Save.json"));
+            player.graphicAsset = Resources.Load("Ship/PlayerShip") as GameObject;
+
+            enemiesSave = JsonUtility.FromJson<EnemiesSave>(FileUtils.readJSON("PlayerJson/AISave.json"));
+            enemies = enemiesSave.enemies;
+            enemiesSave.enemies = enemies;
+        }
 
         LoadFile("PlayerJson/Objects.txt", objectDictionary);
     }
 
-    public static PlayerManager GetInstance()
+    public static PlayerManager GetInstance(Boolean newGame = true)
     {
         if (instance == null)
         {
-            instance = new PlayerManager();
+            instance = new PlayerManager(newGame);
         }
         return instance;
     }

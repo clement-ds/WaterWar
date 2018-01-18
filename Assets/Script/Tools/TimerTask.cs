@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class TimerTask
 {
+    
+    [Serializable]
     public delegate void TaskDelegate();
 
     public TaskDelegate taskDelegate;

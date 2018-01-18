@@ -23,8 +23,6 @@ public class GameManager : MonoBehaviour
 
     public MapGenerator mapGenerator;
 
-
-
     void Awake()
     {
         if (Instance == null)
@@ -33,15 +31,7 @@ public class GameManager : MonoBehaviour
             Instance = this;
             this.SetIsInGame(0);
 
-            playerManager = PlayerManager.GetInstance();
-            islandManager = IslandManager.GetInstance(islandsAmount);
-            
-            enemyAI = new EnemyAI();
-            islandGenerator = new IslandGenerator();
-            qgen = new QuestGenerator();
-
-            mapGenerator = new MapGenerator();
-            mapGenerator.spawnMap(xMapSize, yMapSize, islandsAmount);
+            continueGame();
 
         }
 
@@ -50,6 +40,46 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
+
+    #region Main menu
+
+    public void newGame()
+    {
+        playerManager = PlayerManager.GetInstance();
+        islandManager = IslandManager.GetInstance(islandsAmount);
+        mapGenerator = new MapGenerator();
+        mapGenerator.spawnMap(xMapSize, yMapSize, islandsAmount);
+
+        enemyAI = new EnemyAI();
+        islandGenerator = new IslandGenerator();
+        qgen = new QuestGenerator();
+
+        GoIntroMenu();
+    }
+
+    public void continueGame()
+    {
+        playerManager = PlayerManager.GetInstance(false);
+        islandManager = IslandManager.GetInstance(islandsAmount, false);
+        mapGenerator = new MapGenerator();
+        mapGenerator.loadMap(xMapSize, yMapSize);
+
+        enemyAI = new EnemyAI();
+        islandGenerator = new IslandGenerator();
+        qgen = new QuestGenerator();
+
+        GoIntroMenu();
+    }
+
+    public void SaveGame()
+    {
+        playerManager.Save();
+        playerManager.SaveAI();
+        islandManager.Save();
+        mapGenerator.Save();
+    }
+
+    #endregion
 
     public void SetIsInGame(int inGame)
     {
@@ -127,6 +157,8 @@ public class GameManager : MonoBehaviour
             textMeshProUGUI.SetText(enemy.name);
             enemy.mapShip.transform.SetParent(mapPivot.transform, false);
         }
+
+        SaveGame();
     }
 
     int turnCount = 0;
@@ -209,6 +241,8 @@ public class GameManager : MonoBehaviour
                 qgen.GenerateQuest(island);
             }
         }
+
+        SaveGame();
 
         foreach (Player enemy in playerManager.enemies)
         {

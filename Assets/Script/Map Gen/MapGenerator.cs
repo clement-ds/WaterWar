@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using IslandGraphic = System.Collections.Generic.List<System.Collections.Generic.List<MapTile>>;
-using SeaGraphic = System.Collections.Generic.List<System.Collections.Generic.List<MapTile>>;
-using WorldMap = System.Collections.Generic.List<System.Collections.Generic.List<MapTile>>;
+using System;
+using System.Text;
+using System.IO;
+using MapColumn = System.Collections.Generic.List<MapTile>;
+using IslandGraphic = System.Collections.Generic.List<MapGenerator.Column>;
+using SeaGraphic = System.Collections.Generic.List<MapGenerator.Column>;
+using WorldMap = System.Collections.Generic.List<MapGenerator.Column>;
+using Assets.Script.Battle.Tools;
 
 public class MapGenerator {
-
 
     public WorldMap worldMap = new WorldMap();
     int worldMapXSize = 200;
@@ -17,6 +21,45 @@ public class MapGenerator {
     int islandXMaxRange = 25;
     int islandYMaxRange = 25;
 
+    [Serializable]
+    public class Column
+    {
+        public MapColumn column = new MapColumn();
+    }
+
+    [Serializable]
+    public class WorldMapSave
+    {
+        public List<Column> worldMap = new List<Column>();
+    }
+
+    public WorldMapSave worldMapSave = new WorldMapSave();
+
+    public bool Save()
+    {
+        try
+        {
+            StreamWriter writer = new StreamWriter("PlayerJson/MapSave.json", false);
+            writer.Write(JsonUtility.ToJson(worldMapSave));
+            writer.Close();
+        }
+        catch (Exception e)
+        {
+            Debug.Log("SAVE MAP : " + e.Message);
+            return false;
+        }
+        return true;
+    }
+
+    public void loadMap(int xSize, int ySize)
+    {
+        worldMapSave = JsonUtility.FromJson<WorldMapSave>(FileUtils.readJSON("PlayerJson/MapSave.json"));
+        worldMap = worldMapSave.worldMap;
+        isMapGenerated = true;
+        worldMapXSize = xSize;
+        worldMapYSize = ySize;
+    }
+
     public IslandGraphic generateIsland()
     {
         IslandGraphic island = new IslandGraphic();
@@ -24,10 +67,10 @@ public class MapGenerator {
         int xMaxRange = UnityEngine.Random.Range(5, islandXMaxRange - 10);
         int yMaxRange = islandYMaxRange;
 
-        island.Add(new List<MapTile>());
+        island.Add(new Column());
         for (int y = 0; y < yMaxRange; y++)
         {
-            island[0].Add(new WaterTile());
+            island[0].column.Add(new WaterTile());
         }
         int previousStartCell = 0;
         for (int x = 1; x < xMaxRange; x++)
@@ -72,27 +115,27 @@ public class MapGenerator {
             }
             previousStartCell = startCell;
 
-            island.Add(new List<MapTile>());
+            island.Add(new Column());
             for (int y = 0; y < startCell; y++)
             {
-                island[x].Add(new WaterTile());
+                island[x].column.Add(new WaterTile());
             }
             for (int y = 0; y < yRange; y++)
             {
-                island[x].Add(new IslandTile());
+                island[x].column.Add(new IslandTile());
             }
-            for (int y = island[x].Count; y < yMaxRange; y++)
+            for (int y = island[x].column.Count; y < yMaxRange; y++)
             {
-                island[x].Add(new WaterTile());
+                island[x].column.Add(new WaterTile());
             }
         }
 
         for (int x = xMaxRange; x < islandXMaxRange; x++)
         {
-            island.Add(new List<MapTile>());
+            island.Add(new Column());
             for (int y = 0; y < yMaxRange; y++)
             {
-                island[x].Add(new WaterTile());
+                island[x].column.Add(new WaterTile());
             }
         }
         
@@ -108,17 +151,17 @@ public class MapGenerator {
         IslandGraphic islandAlt = new IslandGraphic();
         for (int x = 0; x < island.Count; x++)
         {
-            islandAlt.Add(new List<MapTile>());
-            for (int y = 0; y < island[x].Count; y++)
+            islandAlt.Add(new Column());
+            for (int y = 0; y < island[x].column.Count; y++)
             {
-                islandAlt[x].Add(null);
+                islandAlt[x].column.Add(null);
             }
         }
         for (int x = 0; x < island.Count; x++)
         {
-            for (int y = 0; y < island[x].Count; y++)
+            for (int y = 0; y < island[x].column.Count; y++)
             {
-                islandAlt[y][x] = island[x][y];
+                islandAlt[y].column[x] = island[x].column[y];
             }
         }
         return islandAlt;
@@ -128,10 +171,10 @@ public class MapGenerator {
     {
         for (int x = 0; x < worldMapXSize; x++)
         {
-            worldMap.Add(new List<MapTile>());
+            worldMap.Add(new Column());
             for (int y = 0; y < worldMapYSize; y++)
             {
-                worldMap[x].Add(new WaterTile());
+                worldMap[x].column.Add(new WaterTile());
             }
         }
     }
@@ -140,9 +183,9 @@ public class MapGenerator {
     {
         for (int xIndex = 0; xIndex < island.Count; xIndex++)
         {
-            for (int yIndex = 0; yIndex < island[xIndex].Count; yIndex++)
+            for (int yIndex = 0; yIndex < island[xIndex].column.Count; yIndex++)
             {
-                worldMap[xIndex + x][yIndex + y] = island[xIndex][yIndex];
+                worldMap[xIndex + x].column[yIndex + y] = island[xIndex].column[yIndex];
             }
         }
     }
@@ -153,7 +196,7 @@ public class MapGenerator {
         {
             for (int yIndex = y; yIndex < y + islandYMaxRange; yIndex++)
             {
-                if (worldMap[xIndex][yIndex].tileType == "Sand")
+                if (worldMap[xIndex].column[yIndex].tileType == "Sand")
                 {
                     return true;
                 }
@@ -168,9 +211,9 @@ public class MapGenerator {
         for (int i = 0; i < islandsAmount; i++)
         {
             IslandGraphic island = generateIsland();
-            foreach (List<MapTile> column in island)
+            foreach (Column column in island)
             {
-                foreach (MapTile tile in column)
+                foreach (MapTile tile in column.column)
                 {
                     if (tile.tileType == "Sand")
                     {
@@ -204,6 +247,7 @@ public class MapGenerator {
         worldMapYSize = ySize;
         this.islandsAmount = islandsAmount;
         spawnMapLoop();
+        worldMapSave.worldMap = worldMap;
     }
 
     public void displayMap(GameObject parent)
@@ -216,15 +260,14 @@ public class MapGenerator {
                 {
                     if (x == 0 || y == 0 || x == worldMapXSize - 1 || y == worldMapYSize - 1)
                     {
-                        GameObject tile = GameObject.Instantiate(worldMap[x][y].getGraphicAsset("", "", "", ""), (new Vector3(x * 50, y * 50, 10)), new Quaternion());
-                        tile.GetComponent<TileClick>().islandID = worldMap[x][y].islandID;
+                        GameObject tile = GameObject.Instantiate(worldMap[x].column[y].getGraphicAsset("", "", "", ""), (new Vector3(x * 50, y * 50, 10)), new Quaternion());
+                        tile.GetComponent<TileClick>().islandID = worldMap[x].column[y].islandID;
                         tile.transform.SetParent(parent.transform, false);
                     }
                     else
                     {
-                        //Debug.Log(worldMap[x][y - 1].tileType + " " + worldMap[x][y + 1].tileType + " " + worldMap[x - 1][y].tileType + " " + worldMap[x + 1][y].tileType);
-                        GameObject tile = GameObject.Instantiate(worldMap[x][y].getGraphicAsset(worldMap[x][y + 1].tileType, worldMap[x][y - 1].tileType, worldMap[x - 1][y].tileType, worldMap[x + 1][y].tileType), (new Vector3(x * 50, y * 50, 10)), new Quaternion());
-                        tile.GetComponent<TileClick>().islandID = worldMap[x][y].islandID;
+                        GameObject tile = GameObject.Instantiate(worldMap[x].column[y].getGraphicAsset(worldMap[x].column[y + 1].tileType, worldMap[x].column[y - 1].tileType, worldMap[x - 1].column[y].tileType, worldMap[x + 1].column[y].tileType), (new Vector3(x * 50, y * 50, 10)), new Quaternion());
+                        tile.GetComponent<TileClick>().islandID = worldMap[x].column[y].islandID;
                         tile.transform.SetParent(parent.transform, false);
                     }
                 }
@@ -241,34 +284,5 @@ public class MapGenerator {
             Debug.LogWarning("Map not generated yet /!\\");
         }
         
-    }
-
-
-    int xCin = 0;
-    int yCin = 0;
-
-    public void displayMapCinematic()
-    {
-        if (xCin < worldMapXSize)
-        {
-            if (yCin < worldMapYSize)
-            {
-                if (xCin == 0 || yCin == 0 || xCin == worldMapXSize - 1 || yCin == worldMapYSize - 1)
-                {
-                    Debug.Log(xCin + " " + yCin);
-                    GameObject.Instantiate(worldMap[xCin][yCin].getGraphicAsset("", "", "", ""), new Vector3(xCin * 50, yCin * 50, 10), new Quaternion());
-                }
-                else
-                {
-                    Debug.Log(worldMap[xCin][yCin - 1].tileType + " " + worldMap[xCin][yCin + 1].tileType + " " + worldMap[xCin - 1][yCin].tileType + " " + worldMap[xCin + 1][yCin].tileType);
-                    GameObject.Instantiate(worldMap[xCin][yCin].getGraphicAsset(worldMap[xCin][yCin + 1].tileType, worldMap[xCin][yCin - 1].tileType, worldMap[xCin - 1][yCin].tileType, worldMap[xCin + 1][yCin].tileType), new Vector3(xCin * 50, yCin * 50, 10), new Quaternion());
-                }
-                yCin++;
-            } else
-            {
-                yCin = 0;
-                xCin++;
-            }  
-        }
     }
 }
