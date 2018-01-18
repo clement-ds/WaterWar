@@ -220,6 +220,7 @@ public class GameManager : MonoBehaviour
             if (sceneManager) {
                 sceneManager.DisplayWinCanvas(victoryString);
             }
+            return ;
         }
 
 
