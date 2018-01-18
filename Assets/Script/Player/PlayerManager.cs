@@ -51,6 +51,17 @@ public class PlayerManager
         return instance;
     }
 
+    public void removeAI(string id)
+    {
+        for (var i = 0; i < this.enemies.Count; ++i)
+        {
+            if (this.enemies[i].id == id)
+            {
+                this.enemies.RemoveAt(i);
+            }
+        }
+    }
+
     public string getNameForObjectId(int id)
     {
         return JsonUtility.FromJson<InventoryObject>(objectDictionary[id]).name;
@@ -185,6 +196,7 @@ public class PlayerManager
 public class Player
 {
     public string name;
+    public string id;
     public int life;
     public int money;
     public int currentIsland;
@@ -201,6 +213,9 @@ public class Player
 
     public Player(String assetName = "AiShip")
     {
+        //Gen ID
+        id = Guid.NewGuid().ToString();
+
         //Gen name
         LoadFile("PlayerJson/Names.txt");
         int rng = UnityEngine.Random.Range(0, json.Count);

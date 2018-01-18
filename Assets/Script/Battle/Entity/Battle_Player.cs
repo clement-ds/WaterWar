@@ -115,11 +115,14 @@ public class Battle_Player : Battle_Ship
     {
         bool result = false;
         bool hasFocus = false;
+        bool canSelect = true;
 
+        if (!hasClick)
+        {
+            return result;
+        }
         foreach (Battle_CrewMember item in this.crewMembers)
-        {/*
-            if (item == null)
-                break;*/
+        {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             result = item.transform.GetComponent<BoxCollider>().Raycast(ray, out hit, 100.0F);
@@ -128,10 +131,10 @@ public class Battle_Player : Battle_Ship
             {
                 hasFocus = true;
             }
-            if (!hasClick)
+
+            if (!canSelect)
             {
-                /* do hover here */
-                return result;
+                result = false;
             }
 
             int isFocus = item.hasInputMouse(result);
@@ -151,6 +154,10 @@ public class Battle_Player : Battle_Ship
                     this.selectedCrewMembers[0].select();
                 }
                 this.selectedCrewMembers.Insert(0, item);
+            }
+            if (result && canSelect)
+            {
+                canSelect = false;
             }
         }
         return hasFocus;

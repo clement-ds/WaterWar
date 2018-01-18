@@ -13,6 +13,7 @@ public class GameRulesManager
     public GuiAccess guiAccess;
 
     public List<Battle_Ship> ships;
+    public string playerID;
 
     public Dictionary<string, Pair<Player, DestroyedStatus>> characters;
 
@@ -120,10 +121,10 @@ public class GameRulesManager
         {
             if (character.Value.V2 != DestroyedStatus.ALIVE)
             {
-                this.collectSpecificLoot(lootFood, character.Value.V1.inventory.food, character.Value.V2);
-                this.collectSpecificLoot(lootWeapon, character.Value.V1.inventory.weapons, character.Value.V2);
+                this.collectSpecificLoot(lootFood, character.Value.V1.inventory.food, character.Value.V2, character.Key != this.playerID);
+                this.collectSpecificLoot(lootWeapon, character.Value.V1.inventory.weapons, character.Value.V2, character.Key != this.playerID);
 
-                if (character.Key == "p")
+                if (character.Key == this.playerID)
                 {
                     this.combineLoot(playerLoot, lootFood);
                     this.combineLoot(playerLoot, lootWeapon);
@@ -151,7 +152,7 @@ public class GameRulesManager
                 Debug.Log("win Loot: " + item.name);
                 this.characters[winners[winnerId]].V1.inventory.food.Add(item);
 
-                if (winners[winnerId] == "p")
+                if (winners[winnerId] == this.playerID)
                 {
                     this.combineLoot(playerLoot, loot);
                 }
@@ -174,13 +175,13 @@ public class GameRulesManager
         }
     }
 
-    private void collectSpecificLoot(List<InventoryObject> loot, List<InventoryObject> items, DestroyedStatus status)
+    private void collectSpecificLoot(List<InventoryObject> loot, List<InventoryObject> items, DestroyedStatus status, bool takeQuest)
     {
         int looted = 0;
 
         for (var i = 0; i < items.Count; ++i)
         {
-            if (items[i].type == "Quest")
+            if (items[i].type == "Quest" && takeQuest)
             {
                 loot.Add(items[i]);
                 --i;
