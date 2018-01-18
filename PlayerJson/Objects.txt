@@ -14,7 +14,7 @@
 {"id": 13, "name": "Potato", "type": "Food", "quantity": 1, "price": 10, "basePrice": 10}
 {"id": 14, "name": "Tomato", "type": "Food", "quantity": 1, "price": 10, "basePrice": 10}
 {"id": 15, "name": "Chicken", "type": "Food", "quantity": 1, "price": 10, "basePrice": 10}
-{"id": 16, "name": "Canon", "type": "Weapon", "quantity": 10, "price": 10, "basePrice": 10}
+{"id": 16, "name": "Canon", "type": "Weapon", "quantity": 1, "price": 150, "basePrice": 100}
 {"id": 17, "name": "Diamond", "type": "Rare", "quantity": 1, "price": 100, "basePrice": 100}
 {"id": 18, "name": "Gold", "type": "Rare", "quantity": 1, "price": 100, "basePrice": 100}
-{"id": 19, "name": "Bed", "type": "Weapon", "quantity": 1, "price": 10, "basePrice": 10}
+{"id": 19, "name": "Bed", "type": "Weapon", "quantity": 1, "price": 200, "basePrice": 10}

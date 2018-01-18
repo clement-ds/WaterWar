@@ -182,7 +182,7 @@ public class QuestGenerator {
         }
       }
       if (reward.type == Reward.REWARD.OBJECT) {
-        InventoryObject objectReward = new InventoryObject((UnityEngine.Random.Range(0, 20) > 16) ? rares[UnityEngine.Random.Range(0, rares.Count)] : foods[UnityEngine.Random.Range(0, foods.Count)]);
+        InventoryObject objectReward = (UnityEngine.Random.Range(0, 20) > 16) ? rares[UnityEngine.Random.Range(0, rares.Count)] : foods[UnityEngine.Random.Range(0, foods.Count)];
 
         while (quest.rewards.Find((r) => r.id == objectReward.id) != null) {
           objectReward = (UnityEngine.Random.Range(0, 20) > 16) ? rares[UnityEngine.Random.Range(0, rares.Count)] : foods[UnityEngine.Random.Range(0, foods.Count)];
