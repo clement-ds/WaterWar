@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using TMPro;
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     public IslandManager islandManager;
     private int inGame;
     public int xMapSize, yMapSize, islandsAmount;
+    private bool shouldCheckGameVictory = true;
     EnemyAI enemyAI;
     QuestGenerator qgen;
     IslandGenerator islandGenerator;
@@ -242,6 +244,17 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        //Check for Game Victory
+        string victoryString = CheckGameVictory();
+        if (shouldCheckGameVictory && victoryString != "") {
+            shouldCheckGameVictory = false;
+            IntroSceneManager sceneManager = GameObject.Find("SceneManager").GetComponent<IntroSceneManager>();
+            if (sceneManager) {
+                sceneManager.DisplayWinCanvas(victoryString);
+            }
+            return ;
+        }
+
         SaveGame();
 
         foreach (Player enemy in playerManager.enemies)
@@ -253,6 +266,22 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
+    }
+
+    private string CheckGameVictory() {
+        IEnumerable<Island> islandWithTopInfluance = islandManager.islands.Where(island => island.influence == 100);
+
+        if (playerManager.player.money > 10000) {
+            return "You're rich!";
+        }
+        if (playerManager.enemies.Count == 0) {
+            return "Everybody around you is dead";
+        }
+        if (islandWithTopInfluance.Count() >= (islandsAmount / 2)) {
+            return "Everybody loves you!";
+        }
+
+        return "";
     }
     #endregion
 

@@ -1,5 +1,5 @@
-{ "name": "infâme" } 
+{ "name": "infame" } 
 { "name": "ignoble" } 
-{ "name": "méchant" } 
+{ "name": "mechant" } 
 { "name": "moche" } 
 { "name": "monstrueux" } 

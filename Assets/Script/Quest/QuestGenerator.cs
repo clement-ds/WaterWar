@@ -13,7 +13,45 @@ public class Name {
     public string name;
     public string race;
 }
-public class QuestGenerator {  
+
+public class QuestGenerator {
+  private  List<string> stringJson;
+  private  List<InventoryObject> objects;
+  private  List<InventoryObject> rares;
+  private  List<InventoryObject> foods;
+  private  List<InventoryObject> weapons;
+  private  List<Name> names;
+  private  List<Adjectif> adjectifs;
+
+  public QuestGenerator() {
+    stringJson = new List<string>();
+    objects = new List<InventoryObject>();
+    rares = new List<InventoryObject>();
+    foods = new List<InventoryObject>();
+    weapons = new List<InventoryObject>();
+    names = new List<Name>();
+    adjectifs = new List<Adjectif>();
+
+    LoadFile("PlayerJson/Objects.txt", stringJson);
+    for (int i = 0; i < stringJson.Count; i++) {
+      objects.Add(JsonUtility.FromJson<InventoryObject>(stringJson[i]));
+      if (objects[i].type == "Food")
+        foods.Add(objects[i]);
+      else if (objects[i].type == "Weapon")
+        weapons.Add(objects[i]);
+      else if (objects[i].type == "Rare")
+        rares.Add(objects[i]);
+    }
+
+    LoadFile("PlayerJson/Names.txt", stringJson);
+    for (int i = 0; i < stringJson.Count; i++)
+      names.Add(JsonUtility.FromJson<Name>(stringJson[i]));
+
+    LoadFile("PlayerJson/Adjectif.txt", stringJson);
+    for (int i = 0; i < stringJson.Count; i++)
+      adjectifs.Add(JsonUtility.FromJson<Adjectif>(stringJson[i]));
+  }
+
 	private bool LoadFile(string fileName, List<string> json) {
     try {
       string line;
@@ -37,28 +75,20 @@ public class QuestGenerator {
 
   public PlayerQuest GenerateQuest(Island currentIsland) {
     PlayerQuest quest = new PlayerQuest();
-    List<string> objects = new List<string>();
     string islandName = currentIsland.name;
     int nbrOfReward = UnityEngine.Random.Range(1, 3);
     int maxReward = 0;
     bool influence = false;
     bool money = false;
-    LoadFile("PlayerJson/Objects.txt", objects);
 
     quest.rewards = new List<Reward>();
     quest.type = (PlayerQuest.QUEST)UnityEngine.Random.Range(0, 4);
     quest.localisation = islandName;
 
     if (quest.type == PlayerQuest.QUEST.KILL) {
-      List<string> names = new List<string>();
-      List<string> adjectifs = new List<string>();
-
-      LoadFile("PlayerJson/Names.txt", names);
-      LoadFile("PlayerJson/Adjectif.txt", adjectifs);
-
       // Title
-      string name = JsonUtility.FromJson<Name>(names[UnityEngine.Random.Range(0, 32)]).name;
-      string adjectif = JsonUtility.FromJson<Adjectif>(adjectifs[UnityEngine.Random.Range(0, 4)]).name;
+      string name = names[UnityEngine.Random.Range(0, names.Count)].name;
+      string adjectif = adjectifs[UnityEngine.Random.Range(0, adjectifs.Count)].name;
 
       quest.title = "Kill" + " " + "Captain " + name;
 
@@ -75,12 +105,10 @@ public class QuestGenerator {
       quest.moneyReward = UnityEngine.Random.Range(100, 300);
     } else if (quest.type == PlayerQuest.QUEST.GET) {
       if (UnityEngine.Random.Range(0, 20) > 18) {
-        // rare stuff
-        LoadFile("PlayerJson/Rare.txt", objects);
-        quest.end = new InventoryObject(JsonUtility.FromJson<InventoryObject>(objects[UnityEngine.Random.Range(0, 1)]));
+        quest.end = new InventoryObject(rares[UnityEngine.Random.Range(0, rares.Count)]);
         quest.end.quantity = UnityEngine.Random.Range(1, 7);
       } else {
-        quest.end = JsonUtility.FromJson<InventoryObject>(objects[UnityEngine.Random.Range(0, 11)]);
+        quest.end = new InventoryObject(foods[UnityEngine.Random.Range(0, foods.Count)]);
         quest.end.quantity = UnityEngine.Random.Range(5, 15);
       }
 
@@ -96,12 +124,10 @@ public class QuestGenerator {
     } else if (quest.type == PlayerQuest.QUEST.FIND) {
       if (UnityEngine.Random.Range(0, 20) > 18) {
         // rare stuff
-        LoadFile("PlayerJson/Rare.txt", objects);
-        quest.end = new InventoryObject(JsonUtility.FromJson<InventoryObject>(objects[UnityEngine.Random.Range(0, 1)]));
+        quest.end = new InventoryObject(rares[UnityEngine.Random.Range(0, rares.Count)]);
         quest.end.quantity = UnityEngine.Random.Range(1, 7);
       } else {
-        LoadFile("PlayerJson/Objects.txt", objects);
-        quest.end = JsonUtility.FromJson<InventoryObject>(objects[UnityEngine.Random.Range(0, 11)]);
+        quest.end = new InventoryObject(foods[UnityEngine.Random.Range(0, foods.Count)]);
         quest.end.quantity = UnityEngine.Random.Range(5, 15);
       }
 
@@ -127,7 +153,7 @@ public class QuestGenerator {
     }
 
     // Generate Rewards
-    maxReward = Convert.ToInt32(maxReward * 1.3);
+    maxReward = Convert.ToInt32(maxReward * 1.2);
     for (int i = 0; i < nbrOfReward; i++) {
       Reward reward = new Reward();
       reward.type = (Reward.REWARD)UnityEngine.Random.Range(0, 2);
@@ -156,14 +182,14 @@ public class QuestGenerator {
         }
       }
       if (reward.type == Reward.REWARD.OBJECT) {
-        InventoryObject objectReward = JsonUtility.FromJson<InventoryObject>(objects[UnityEngine.Random.Range(0, objects.Count)]);
+        InventoryObject objectReward = (UnityEngine.Random.Range(0, 20) > 16) ? rares[UnityEngine.Random.Range(0, rares.Count)] : foods[UnityEngine.Random.Range(0, foods.Count)];
 
         while (quest.rewards.Find((r) => r.id == objectReward.id) != null) {
-          objectReward = JsonUtility.FromJson<InventoryObject>(objects[UnityEngine.Random.Range(0, objects.Count)]);
+          objectReward = (UnityEngine.Random.Range(0, 20) > 16) ? rares[UnityEngine.Random.Range(0, rares.Count)] : foods[UnityEngine.Random.Range(0, foods.Count)];
         }
         reward.id = objectReward.id;
         reward.name = objectReward.name;
-        reward.amount = UnityEngine.Random.Range(1, 5);
+        reward.amount = (objectReward.type == "Rare") ? 1 : UnityEngine.Random.Range(1, 5);
         maxReward -= (reward.amount * objectReward.price);
         if (maxReward < 0) {
           i += 3;
@@ -172,14 +198,14 @@ public class QuestGenerator {
       quest.rewards.Add(reward);
     }
 
-    while (maxReward > 0) {
+    while (maxReward > 0 && quest.rewards.Count < 4) {
       Reward reward = new Reward();
       reward.type = Reward.REWARD.OBJECT;
 
-      InventoryObject objectReward = JsonUtility.FromJson<InventoryObject>(objects[UnityEngine.Random.Range(0, objects.Count)]);
+      InventoryObject objectReward = new InventoryObject(objects[UnityEngine.Random.Range(0, objects.Count)]);
 
       while (quest.rewards.Find((r) => r.id == objectReward.id) != null) {
-        objectReward = JsonUtility.FromJson<InventoryObject>(objects[UnityEngine.Random.Range(0, objects.Count)]);
+        objectReward = new InventoryObject(objects[UnityEngine.Random.Range(0, objects.Count)]);
       }
       reward.id = objectReward.id;
       reward.name = objectReward.name;
@@ -187,6 +213,20 @@ public class QuestGenerator {
       maxReward -= (reward.amount * objectReward.price);
       quest.rewards.Add(reward);
     }
+    if (maxReward > 0) {
+      bool isNew = false;
+      Reward reward = quest.rewards.Find((r) => r.name == "money");
+      
+      if (reward == null) {
+        isNew = true;
+        reward = new Reward();
+      }
+      reward.amount += maxReward + UnityEngine.Random.Range(0, 50);
+      reward.name = "money";
+      if (isNew)
+        quest.rewards.Add(reward);
+    }
+
     return quest;
   }
 
@@ -212,19 +252,13 @@ public class QuestGenerator {
     if (!CheckQuest(quest, player, island))
       return false;
 
-    List<string> objects = new List<string>();
-
     quest.rewards.ForEach((reward) => {
       if (reward.type == Reward.REWARD.INFLUENCE) {
         island.influence += reward.amount;
       } else if (reward.type == Reward.REWARD.MONEY) {
         player.money += reward.amount;
       } else if (reward.type == Reward.REWARD.OBJECT) {
-        LoadFile("PlayerJson/Objects.txt", objects);
-        InventoryObject objectReward = JsonUtility.FromJson<InventoryObject>(objects[reward.id]);
-        Debug.Log("id: " + reward.id);
-        Debug.Log("name: " + reward.name);
-        Debug.Log("amount: " + reward.amount);
+        InventoryObject objectReward = new InventoryObject(objects[reward.id]);
         player.inventory.addQuantityOfObject(objectReward, reward.amount);
       }
     });

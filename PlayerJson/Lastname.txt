@@ -1,5 +1,0 @@
-{ "name": "Alex", "race": "human" } 
-{ "name": "Clément", "race": "human" } 
-{ "name": "Kevin", "race": "bego" } 
-{ "name": "Garance", "race": "human" } 
-{ "name": "Joseph", "race": "human" } 

@@ -44,13 +44,13 @@ MonoBehaviour:
     m_Settings:
       intensity: 0.22
       radius: 0.3
-      sampleCount: 10
+      sampleCount: 3
       downsampling: 1
       forceForwardCompatibility: 0
       ambientOnly: 0
       highPrecision: 0
   screenSpaceReflection:
-    m_Enabled: 1
+    m_Enabled: 0
     m_Settings:
       reflection:
         blendType: 0
@@ -97,14 +97,14 @@ MonoBehaviour:
       logMin: -8
       logMax: 4
   bloom:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
       bloom:
         intensity: 1.07
         threshold: 0.6
         softKnee: 0.5
         radius: 3.16
-        antiFlicker: 1
+        antiFlicker: 0
       lensDirt:
         texture: {fileID: 0}
         intensity: 3
