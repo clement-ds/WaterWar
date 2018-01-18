@@ -37,7 +37,6 @@ public abstract class Battle_Ship : MonoBehaviour
         this.aboarding = false;
         this.canEscapeAction = false;
         this.isPlayer = isPlayer;
-        this.id = (isPlayer ? "p" : "e");
 
         this.speed = 50;
         this.life = lifeValue;
@@ -52,6 +51,10 @@ public abstract class Battle_Ship : MonoBehaviour
 
     // Use this for initialization
     void Start()
+    {
+    }
+
+    public void init()
     {
         this.createRoom();
         this.createCrew();
@@ -110,6 +113,7 @@ public abstract class Battle_Ship : MonoBehaviour
                 {
                     if (room.getEquipment() && room.getEquipment().hasAvailableCrewMemberPosition())
                     {
+                        Debug.Log("assign " + crewMember.getProfile().memberName);
                         if (crewMember.directAssignCrewMemberInElement(room.getEquipment(), room.getEquipment().chooseAvailableCrewMemberPosition(crewMember.GetInstanceID())))
                         {
                             result = true;

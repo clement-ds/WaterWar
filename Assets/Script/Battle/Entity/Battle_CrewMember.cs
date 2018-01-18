@@ -179,7 +179,7 @@ public class Battle_CrewMember : GuiElement
     {
         this.changeParents(element, element.getEquipment());
         this.room.directAddMember(this);
-        this.transform.parent = element.transform;
+        this.transform.SetParent(element.transform);
         this.transform.localPosition = pos;
         //Debug.Log("create member with " + this.room + ", " + this.equipment);
         return true;
@@ -189,9 +189,8 @@ public class Battle_CrewMember : GuiElement
     {
         this.changeParents(element.getParentRoom(), element);
         this.room.directAddMember(this);
-        this.transform.parent = element.transform;
+        this.transform.SetParent(element.transform);
         this.transform.localPosition = pos;
-        //Debug.Log("create member with " + this.room + ", " + this.equipment);
         return true;
     }
 
