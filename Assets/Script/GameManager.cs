@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance = null;
     public PlayerManager playerManager;
     public IslandManager islandManager;
+
+    public Settings settings;
     private int inGame;
     public int xMapSize = 100;
     public int yMapSize = 100;

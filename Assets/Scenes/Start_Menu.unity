@@ -4181,6 +4181,10 @@ Prefab:
       propertyPath: islandsAmount
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 11427236, guid: 3430114ad69551f4e90210e38a64730c, type: 2}
+      propertyPath: settings
+      value: 
+      objectReference: {fileID: 1058257810}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3430114ad69551f4e90210e38a64730c, type: 2}
   m_IsPrefabParent: 0
@@ -5764,6 +5768,25 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1053503018}
+--- !u!1 &1058257809 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 181740, guid: 3430114ad69551f4e90210e38a64730c, type: 2}
+  m_PrefabInternal: {fileID: 423410315}
+--- !u!114 &1058257810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1058257809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56faad765f8fc554f8f8891492463411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 41c0538929bb3b84a85a8ea998731c79, type: 2}
+  musicVolume: 0
+  fxVolume: 0
+  graphicSetting: 2
 --- !u!1 &1087495024
 GameObject:
   m_ObjectHideFlags: 0
@@ -6962,8 +6985,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1649758793}
-  m_LocalRotation: {x: -0.0067688483, y: 0.8924981, z: 0.013401829, w: 0.4508012}
-  m_LocalPosition: {x: -305.727, y: 0.49120045, z: 39.440468}
+  m_LocalRotation: {x: -0.0052343314, y: 0.81414133, z: 0.007340409, w: 0.58059686}
+  m_LocalPosition: {x: -318.94705, y: -2.7358027, z: 49.429096}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 912824784}
