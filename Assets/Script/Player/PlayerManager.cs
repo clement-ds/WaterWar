@@ -30,6 +30,7 @@ public class PlayerManager
         //player.graphicAsset = Resources.Load("Ship/PlayerShip") as GameObject;
         player = new Player("PlayerShip");
         Debug.Log("player : " + player.name + "/" + player.life);
+        Save();
 
         //LoadFile("PlayerJson/AISave.json");
         //enemiesSave = JsonUtility.FromJson<EnemiesSave>(json[0]);
@@ -39,6 +40,8 @@ public class PlayerManager
         {
             enemies.Add(new Player());
         }
+
+        //SaveAI();
 
         LoadFile("PlayerJson/Objects.txt", objectDictionary);
     }
@@ -173,6 +176,8 @@ public class Player
         //Gen ID
         id = Guid.NewGuid().ToString();
 
+        Debug.Log("PLAYER ID : " + id);
+
         //Gen name
         LoadFile("PlayerJson/Names.txt");
         int rng = UnityEngine.Random.Range(0, json.Count);
@@ -194,12 +199,12 @@ public class Player
         this.money = 100;
 
         //Gen crew
-        this.crew.AddCrew(new CrewMember_Captain(Guid.NewGuid().ToString()));
-        this.crew.AddCrew(new CrewMember_Bego(Guid.NewGuid().ToString()));
+        this.crew.AddCrew("Captain");
+        this.crew.AddCrew("Bego");
 
         //Gen inventory
-        this.inventory.addObject(new InventoryObject("Water", "Food", 5, 10, 10));
-        this.inventory.addObject(new InventoryObject("Bread", "Food", 5, 10, 10));
+        this.inventory.food.Add(new InventoryObject("Water", "Food", 5, 10, 10));
+        this.inventory.weapons.Add(new InventoryObject("Bread", "Food", 5, 10, 10));
     }
 
     private bool LoadFile(string fileName)
@@ -262,10 +267,6 @@ public class PlayerCrew
 
     public PlayerCrew()
     {
-        AddCrew("Captain");
-        AddCrew("Bego");
-        AddCrew("Fighter");
-
     }
 
     public void AddCrew(CrewMember member)
