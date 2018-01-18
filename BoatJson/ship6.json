@@ -38,7 +38,7 @@
         "width": 64,
         "height": 65,
         "rotation": 0,
-        "component": "",
+        "component": "PetitCanon",
         "links": [
           "8cfb43d6-2c94-4d34-a5fe-4313764ae791",
           "fd6713f7-eb93-4dcb-9863-262fb88c28fc",
@@ -53,7 +53,7 @@
         "width": 64,
         "height": 65,
         "rotation": 0,
-        "component": "",
+        "component": "PetitCanon",
         "links": [
           "8cfb43d6-2c94-4d34-a5fe-4313764ae791",
           "fca0a115-e597-4c8e-8672-5e9f6f711573",
@@ -68,7 +68,7 @@
         "width": 64,
         "height": 65,
         "rotation": 0,
-        "component": "",
+        "component": "PetitCanon",
         "links": [
           "fd6713f7-eb93-4dcb-9863-262fb88c28fc",
           "c8121458-ef70-4b75-8bcb-d2b6d64b7a2b",
@@ -83,7 +83,7 @@
         "width": 64,
         "height": 65,
         "rotation": 0,
-        "component": "",
+        "component": "PetitCanon",
         "links": [
           "bb5aa936-2520-42ec-b871-d8a1c63a6c38",
           "f5a750b1-2e80-4f99-9d56-fe860d74c3ed",
@@ -98,7 +98,7 @@
         "width": 64,
         "height": 65,
         "rotation": 0,
-        "component": "",
+        "component": "PetitCanon",
         "links": [
           "0f574ae4-5bcf-49fb-b560-4bd8f2368f34",
           "a1f3521f-4c58-44e6-aa37-465c8ee77397",
@@ -113,7 +113,7 @@
         "width": 64,
         "height": 65,
         "rotation": 0,
-        "component": "",
+        "component": "PetitCanon",
         "links": [
           "e98ad90d-28c0-4739-8c14-79b8678400ea",
           "f5a750b1-2e80-4f99-9d56-fe860d74c3ed"
@@ -127,7 +127,7 @@
         "width": 64,
         "height": 65,
         "rotation": 0,
-        "component": "",
+        "component": "PetitCanon",
         "links": [
           "c8121458-ef70-4b75-8bcb-d2b6d64b7a2b",
           "0f574ae4-5bcf-49fb-b560-4bd8f2368f34"
