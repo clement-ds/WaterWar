@@ -73,7 +73,7 @@ public abstract class GuiElement : MonoBehaviour
 
     public void select()
     {
-        Debug.Log("Click on " + this.getIdentifier());
+        //Debug.Log("Click on " + this.getIdentifier());
         this.selected = true;
         if (this.outline)
             this.outline.enabled = true;

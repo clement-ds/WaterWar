@@ -188,7 +188,7 @@ public class Battle_Player : Battle_Ship
 
         foreach (Battle_CrewMember crewMember in this.crewMembers)
         {
-            if (crewMember.isFocused() && !crewMember.isMoving())
+            if (crewMember.isFocused() && !crewMember.isMoving() && crewMember.getProfile().job != CrewMember_Job.Captain)
             {
                 foreach (RoomElement tmp in RoomUtils.Rooms)
                 {
