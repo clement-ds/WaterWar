@@ -1,0 +1,1 @@
+{"title":"Captain Flint", "localisation":"Apple Island", "description":"Captain Flint", "type": 0, "reward":{"name":"Rhum","type":"Food","quantity":50, "price":10}, "moneyReward":50}

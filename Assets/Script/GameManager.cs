@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour
 
     public void continueGame()
     {
+        Debug.Log("HEQLLO");
         playerManager = PlayerManager.GetInstance(false);
         islandManager = IslandManager.GetInstance(islandsAmount, false);
         mapGenerator = new MapGenerator();
@@ -73,8 +74,9 @@ public class GameManager : MonoBehaviour
         enemyAI = new EnemyAI();
         islandGenerator = new IslandGenerator();
         qgen = new QuestGenerator();
-
+        Debug.Log("HEQLLO");
         GoIntroMenu();
+        Debug.Log("HEQLLO");
     }
 
     public void SaveGame()

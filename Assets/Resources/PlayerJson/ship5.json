@@ -1,0 +1,303 @@
+{
+  "type": "ship5",
+  "shipDisposition": {
+    "rooms": [
+      {
+        "id": "a806aba0-fba2-4b2c-b118-42848b2c856b",
+        "type": "defenseBody",
+        "x": 557,
+        "y": 285,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "Wheel",
+        "links": [
+          "240461a8-ccef-4944-bd0e-60aff80e83c9",
+          "c3f66f55-0e53-4706-a5e1-6d5da89d14f5",
+          "ed397507-d610-4a13-aafa-6d8b33eb755c",
+          "7ef6ffad-dc9e-403f-9053-4054fa41739e",
+          "9579b525-05e3-4908-b788-7c20ade64c68"
+        ]
+      },
+      {
+        "id": "ed397507-d610-4a13-aafa-6d8b33eb755c",
+        "type": "attackBody",
+        "x": 500,
+        "y": 367,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "PetitCanon",
+        "links": [
+          "c745c822-bba6-43fa-85ab-d1ca32b37300",
+          "7ef6ffad-dc9e-403f-9053-4054fa41739e",
+          "a806aba0-fba2-4b2c-b118-42848b2c856b"
+        ]
+      },
+      {
+        "id": "7ef6ffad-dc9e-403f-9053-4054fa41739e",
+        "type": "attackBody",
+        "x": 580,
+        "y": 369,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "PetitCanon",
+        "links": [
+          "ed397507-d610-4a13-aafa-6d8b33eb755c",
+          "7fb98a52-13e7-4e34-9a57-9cd21e2e3051",
+          "a806aba0-fba2-4b2c-b118-42848b2c856b",
+          "9579b525-05e3-4908-b788-7c20ade64c68"
+        ]
+      },
+      {
+        "id": "7fb98a52-13e7-4e34-9a57-9cd21e2e3051",
+        "type": "attackBody",
+        "x": 659,
+        "y": 368,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "PetitCanon",
+        "links": [
+          "7ef6ffad-dc9e-403f-9053-4054fa41739e",
+          "9579b525-05e3-4908-b788-7c20ade64c68",
+          "05f10e19-034f-4286-af67-45ace3bc6da9"
+        ]
+      },
+      {
+        "id": "240461a8-ccef-4944-bd0e-60aff80e83c9",
+        "type": "attackBody",
+        "x": 502,
+        "y": 200,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "PetitCanon",
+        "links": [
+          "b2a789bd-3d7e-402d-a408-86ce577f9bff",
+          "c3f66f55-0e53-4706-a5e1-6d5da89d14f5",
+          "a806aba0-fba2-4b2c-b118-42848b2c856b"
+        ]
+      },
+      {
+        "id": "c3f66f55-0e53-4706-a5e1-6d5da89d14f5",
+        "type": "attackBody",
+        "x": 581,
+        "y": 200,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "PetitCanon",
+        "links": [
+          "bd4d4b2c-1160-491c-8d74-9f6d858e2579",
+          "240461a8-ccef-4944-bd0e-60aff80e83c9",
+          "a806aba0-fba2-4b2c-b118-42848b2c856b",
+          "9579b525-05e3-4908-b788-7c20ade64c68"
+        ]
+      },
+      {
+        "id": "bd4d4b2c-1160-491c-8d74-9f6d858e2579",
+        "type": "attackBody",
+        "x": 661,
+        "y": 200,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "PetitCanon",
+        "links": [
+          "c3f66f55-0e53-4706-a5e1-6d5da89d14f5",
+          "9579b525-05e3-4908-b788-7c20ade64c68",
+          "ef214d11-21ed-40ce-8346-8534d2013465"
+        ]
+      },
+      {
+        "id": "b1142fde-835d-4fd0-9ab0-80e832c07a8d",
+        "type": "defenseBody",
+        "x": 87,
+        "y": 241,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "",
+        "links": [
+          "ceb2c8cb-d7a8-4b01-8109-5f8b2acb4030",
+          "fd27f665-997a-42fd-9c3e-c13a28017b91"
+        ]
+      },
+      {
+        "id": "fd27f665-997a-42fd-9c3e-c13a28017b91",
+        "type": "defenseBody",
+        "x": 85,
+        "y": 322,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "",
+        "links": [
+          "b1142fde-835d-4fd0-9ab0-80e832c07a8d",
+          "23ceaf17-7fec-44ba-a25f-f1804a4c5867"
+        ]
+      },
+      {
+        "id": "23ceaf17-7fec-44ba-a25f-f1804a4c5867",
+        "type": "attackBody",
+        "x": 172,
+        "y": 337,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "PetitCanon",
+        "links": [
+          "fd27f665-997a-42fd-9c3e-c13a28017b91",
+          "df6f2e4f-982c-4a81-9945-6aaf2882d27b"
+        ]
+      },
+      {
+        "id": "ceb2c8cb-d7a8-4b01-8109-5f8b2acb4030",
+        "type": "attackBody",
+        "x": 172,
+        "y": 234,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "PetitCanon",
+        "links": [
+          "b1142fde-835d-4fd0-9ab0-80e832c07a8d",
+          "098d1bf9-4b62-4aab-acd3-584610e10337"
+        ]
+      },
+      {
+        "id": "098d1bf9-4b62-4aab-acd3-584610e10337",
+        "type": "attackBody",
+        "x": 265,
+        "y": 221,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "PetitCanon",
+        "links": [
+          "ceb2c8cb-d7a8-4b01-8109-5f8b2acb4030",
+          "b2a789bd-3d7e-402d-a408-86ce577f9bff"
+        ]
+      },
+      {
+        "id": "b2a789bd-3d7e-402d-a408-86ce577f9bff",
+        "type": "defenseBody",
+        "x": 345,
+        "y": 208,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "GunPowder",
+        "links": [
+          "098d1bf9-4b62-4aab-acd3-584610e10337",
+          "11a18940-5103-4737-a3a0-c5bd0fc6dd18",
+          "240461a8-ccef-4944-bd0e-60aff80e83c9"
+        ]
+      },
+      {
+        "id": "df6f2e4f-982c-4a81-9945-6aaf2882d27b",
+        "type": "attackBody",
+        "x": 275,
+        "y": 347,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "PetitCanon",
+        "links": [
+          "23ceaf17-7fec-44ba-a25f-f1804a4c5867",
+          "c745c822-bba6-43fa-85ab-d1ca32b37300"
+        ]
+      },
+      {
+        "id": "c745c822-bba6-43fa-85ab-d1ca32b37300",
+        "type": "defenseBody",
+        "x": 357,
+        "y": 360,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "",
+        "links": [
+          "11a18940-5103-4737-a3a0-c5bd0fc6dd18",
+          "df6f2e4f-982c-4a81-9945-6aaf2882d27b",
+          "ed397507-d610-4a13-aafa-6d8b33eb755c"
+        ]
+      },
+      {
+        "id": "11a18940-5103-4737-a3a0-c5bd0fc6dd18",
+        "type": "blockBody",
+        "x": 428,
+        "y": 286,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "",
+        "links": [
+          "c745c822-bba6-43fa-85ab-d1ca32b37300",
+          "b2a789bd-3d7e-402d-a408-86ce577f9bff"
+        ]
+      },
+      {
+        "id": "9579b525-05e3-4908-b788-7c20ade64c68",
+        "type": "defenseBody",
+        "x": 641,
+        "y": 287,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "",
+        "links": [
+          "7ef6ffad-dc9e-403f-9053-4054fa41739e",
+          "7fb98a52-13e7-4e34-9a57-9cd21e2e3051",
+          "c3f66f55-0e53-4706-a5e1-6d5da89d14f5",
+          "bd4d4b2c-1160-491c-8d74-9f6d858e2579",
+          "a806aba0-fba2-4b2c-b118-42848b2c856b"
+        ]
+      },
+      {
+        "id": "05f10e19-034f-4286-af67-45ace3bc6da9",
+        "type": "attackBody",
+        "x": 741,
+        "y": 363,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "PetitCanon",
+        "links": [
+          "f47de6ce-34dc-43ed-a0f2-b4e2347a4305",
+          "7fb98a52-13e7-4e34-9a57-9cd21e2e3051"
+        ]
+      },
+      {
+        "id": "f47de6ce-34dc-43ed-a0f2-b4e2347a4305",
+        "type": "blockBody",
+        "x": 736,
+        "y": 287,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "",
+        "links": [
+          "05f10e19-034f-4286-af67-45ace3bc6da9",
+          "ef214d11-21ed-40ce-8346-8534d2013465"
+        ]
+      },
+      {
+        "id": "ef214d11-21ed-40ce-8346-8534d2013465",
+        "type": "attackBody",
+        "x": 741,
+        "y": 210,
+        "width": 78,
+        "height": 73,
+        "rotation": 0,
+        "component": "PetitCanon",
+        "links": [
+          "bd4d4b2c-1160-491c-8d74-9f6d858e2579",
+          "f47de6ce-34dc-43ed-a0f2-b4e2347a4305"
+        ]
+      }
+    ]
+  }
+}
