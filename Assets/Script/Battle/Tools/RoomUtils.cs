@@ -30,16 +30,16 @@ public class RoomUtils
         List<string> path = new List<string>();
         List<Vector3> route = new List<Vector3>();
 
-        Debug.Log(start.getId() + " to " + end.getId() + " : " + path.Count);
+        //Debug.Log(start.getId() + " to " + end.getId() + " : " + path.Count);
         if (findRoute(start, end, path))
         {
             foreach (string id in path)
             {
-                Debug.Log("->" + id);
+                //Debug.Log("->" + id);
                 route.Add(getRoom(id).transform.localPosition);
             }
         }
-        Debug.Log("return route");
+        //Debug.Log("return route");
         return route;
     }
 

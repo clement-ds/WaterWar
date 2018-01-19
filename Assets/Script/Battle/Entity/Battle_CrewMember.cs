@@ -143,12 +143,12 @@ public class Battle_CrewMember : GuiElement
     {
         this.moving = false;
         this.room.updateActionMenu();
-        Debug.Log("arrived at final pos : " + this.targetFocus);
+        //Debug.Log("arrived at final pos : " + this.targetFocus);
         if (this.targetFocus != null)
         {
             Debug.Log("Arrive at pos : " + finalMovePos);
             this.transform.localPosition = finalMovePos[finalMovePos.Count - 1];
-            Debug.Log("final pos: " + this.transform.localPosition);
+            //Debug.Log("final pos: " + this.transform.localPosition);
             this.targetFocus = null;
         }
     }

@@ -47,7 +47,7 @@ public class Battle_Enemy : Battle_Ship
 
     public void defineObjectiveAction()
     {
-        this.objective = ObjectiveAction.ABOARD;
+        this.objective = ObjectiveAction.SHOOT;
 
         if (this.objective == ObjectiveAction.ABOARD || this.objective == ObjectiveAction.ESCAPE)
         {
@@ -96,11 +96,43 @@ public class Battle_Enemy : Battle_Ship
 
     public void doScriptAction()
     {
-        this.manageCanon();
+        if (this.aboarding)
+        {
+            this.rushEnemyShip();
+        }
+        else
+        {
+            this.manageCanon();
+        }
+        this.repairCriticalPart();
     }
 
     /** UTILS **/
+    public bool isACriticalPart(RoomElement room)
+    {
+        foreach (var type in this.crucialItems)
+        {
+            if (type == room.getEquipment().getType())
+                return true;
+        }
+        return false;
+    }
 
+    public void rushEnemyShip()
+    {
+        this.manageCanon();
+    }
+
+    public void repairCriticalPart()
+    {
+        foreach (var room in this.rooms)
+        {
+            if (room.getEquipment() != null && this.isACriticalPart(room) && !room.getEquipment().isWorking() && room.getMembers().Count == 0)
+            {
+                room.getEquipment().callBestCrewMember(true);
+            }
+        }
+    }
 
     /** ATTACK **/
     public void manageCanon()
@@ -113,7 +145,6 @@ public class Battle_Enemy : Battle_Ship
             {
                 if (canon.setTarget(this.findTargetElement()))
                 {
-                    //Debug.Log("CANNON SHOOOT");
                     canon.doDamage();
                 }
             }

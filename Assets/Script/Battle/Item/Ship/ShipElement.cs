@@ -114,6 +114,11 @@ public abstract class ShipElement : MonoBehaviour
     /** AUTOMATISATION **/
     public bool callBestCrewMember()
     {
+        return callBestCrewMember(false);
+    }
+
+    public bool callBestCrewMember(bool priority)
+    {
         CrewMember_Job needed = CrewMember_Job.Pirate;
 
         if (!this.isWorking())
@@ -123,9 +128,9 @@ public abstract class ShipElement : MonoBehaviour
 
         foreach (var member in this.getParentShip().getCrewMembers())
         {
-            if (member.getEquipment() != null && !member.getEquipment().isWorking())
+            if (member.getEquipment() != null && !member.getEquipment().isWorking() && !priority) 
                 continue;
-            if (!member.isMoving() && member.isAlive() && (member.getEquipment() == null || !member.getEquipment().actionIsRunning()))
+            if (!member.isMoving() && member.isAlive() && (priority || member.getEquipment() == null || !member.getEquipment().actionIsRunning()))
             {
                 if (member.getProfile().job == needed)
                 {
@@ -138,7 +143,7 @@ public abstract class ShipElement : MonoBehaviour
 
         foreach (var member in members)
         {
-            if (member.getEquipment() != null && !member.getEquipment().isWorking())
+            if (member.getEquipment() != null && !member.getEquipment().isWorking() && !priority)
                 continue;
             if (member.getProfile().assignedRoom == this.type || this.getMember() != null)
             {
@@ -148,7 +153,9 @@ public abstract class ShipElement : MonoBehaviour
         }
         foreach (var member in members)
         {
-            if (member.getEquipment() != null && !member.getEquipment().isWorking())
+            if (member.getEquipment() != null && !member.getEquipment().isWorking() && !priority)
+                continue;
+            if (priority && member.getProfile().job != CrewMember_Job.Pirate)
                 continue;
             member.assignCrewMemberToRoom(this.parentRoom);
             return true;
