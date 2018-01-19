@@ -34,7 +34,7 @@ public class Battle_CrewMember : GuiElement
     {
         if (this.moving)
         {
-            float step = profile.getValueByCrewSkill(SkillAttribute.WalkValue, profile.walkSpeed) * Time.deltaTime;
+            float step = profile.getValueByCrewSkill(SkillAttribute.WalkValue, (profile == null ? 1 : profile.walkSpeed)) * Time.deltaTime;
             transform.localPosition = Vector3.MoveTowards(transform.localPosition, this.finalMovePos[indexMove], step);
             if (transform.localPosition == this.finalMovePos[indexMove])
             {
@@ -146,7 +146,7 @@ public class Battle_CrewMember : GuiElement
         //Debug.Log("arrived at final pos : " + this.targetFocus);
         if (this.targetFocus != null)
         {
-            Debug.Log("Arrive at pos : " + finalMovePos);
+            //Debug.Log("Arrive at pos : " + finalMovePos);
             this.transform.localPosition = finalMovePos[finalMovePos.Count - 1];
             //Debug.Log("final pos: " + this.transform.localPosition);
             this.targetFocus = null;

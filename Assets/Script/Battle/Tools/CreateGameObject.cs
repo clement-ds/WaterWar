@@ -20,7 +20,7 @@ public class CreateGameObject : MonoBehaviour
 
         playerShip.name = "Player";
         playerShip.AddComponent<SpriteRenderer>();
-        Debug.Log("ship: " + player.ship.type);
+        //Debug.Log("ship: " + player.ship.type);
         playerShip.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + player.ship.type);
         playerShip.AddComponent<Battle_Player>();
         playerShip.GetComponent<Battle_Player>().slider = playerShip.transform.Find("Canvas").transform.Find("HBar").GetComponent<Slider>();

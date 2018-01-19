@@ -217,7 +217,7 @@ public class RoomElement : GuiElement
 
     public bool moveMemberToRoom(Battle_CrewMember member)
     {
-        Debug.Log("move " + member.GetType() + " [" + member.getRoom() + ", " + member.getEquipment() + "]" + " to " + this.id);
+        //Debug.Log("move " + member.GetType() + " [" + member.getRoom() + ", " + member.getEquipment() + "]" + " to " + this.id);
         List<Vector3> path = RoomUtils.getRoute(member.getRoom(), this);
 
         if (path.Count == 0)

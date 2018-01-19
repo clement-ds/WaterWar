@@ -43,7 +43,7 @@ public class CanonPanelGuiManager : MonoBehaviour
                 check = true;
             }
         }
-        Debug.Log("check : " + check);
+        //Debug.Log("check : " + check);
         if (check)
         {
             this.buttons[0].gameObject.SetActive(false);

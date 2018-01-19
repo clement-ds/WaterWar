@@ -29,7 +29,7 @@ public class PlayerManager
         if (newGame)
         {
             player = new Player("PlayerShip");
-            Debug.Log("player : " + player.name + "/" + player.life);
+            //Debug.Log("player : " + player.name + "/" + player.life);
 
             enemies = enemiesSave.enemies;
             enemiesSave.enemies = enemies;
@@ -72,12 +72,12 @@ public class PlayerManager
 
     public Player getCharacter(string id)
     {
-        Debug.Log("id search : " + id);
+        //Debug.Log("id search : " + id);
         if (this.player.id == id)
             return this.player;
         foreach (Player c in this.enemies)
         {
-            Debug.Log("== " +c.id);
+            //Debug.Log("== " +c.id);
             if (c.id == id)
             {
                 return c;
@@ -226,7 +226,7 @@ public class Player
         graphicAsset = Resources.Load("Ship/" + assetName) as GameObject;
 
         //Gen ship
-        Debug.Log(json);
+        //Debug.Log(json);
         this.ship = JsonUtility.FromJson<PlayerShip>(FileUtils.readJSON("PlayerJson/ship5.json"));
 
         //Set starter island

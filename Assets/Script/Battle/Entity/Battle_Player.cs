@@ -244,7 +244,7 @@ public class Battle_Player : Battle_Ship
                 {
                     if (room.getEquipment() != null && room.getEquipment().getType() == Ship_Item.CANON && ((Canon)room.getEquipment()).isSelectingTarget())
                     {
-                        print("change target to : " + target);
+                        //print("change target to : " + target);
                         ((Canon)room.getEquipment()).setTarget(target);
                         targetClicked = true;
                     }

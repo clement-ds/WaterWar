@@ -188,16 +188,29 @@ public class CrewMember
 
     public float getValueByCrewSkill(SkillAttribute skill, float value)
     {
-        CrewMember_Effect effect = this.getEffect(skill.Range);
 
-        if (this.skills.Exists(x => x.Key.Name == skill.Name))
+        if (skill == null)
+            return value;
+        try
         {
-            value = value * this.skills.Find(x => x.Key.Name == skill.Name).Value / 100;
-        }
+            CrewMember_Effect effect = this.getEffect(skill.Range);
+            foreach (var item in this.skills)
+            {
+                if (item.Key.Name == skill.Name)
+                {
+                    value = value * item.Value / 100;
+                    break;
+                }
 
-        if (value != -1 && effect != null)
+            }
+
+            if (value != -1 && effect != null)
+            {
+                value -= (value * effect.value / 100);
+            }
+        } catch
         {
-            value -= (value * effect.value / 100);
+            return value;
         }
         return value;
     }
