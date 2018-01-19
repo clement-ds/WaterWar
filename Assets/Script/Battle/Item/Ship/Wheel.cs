@@ -62,6 +62,14 @@ public class Wheel : ShipElement
 
     }
 
+    protected override void applyMalusOnNotWorking()
+    {
+    }
+
+    protected override void applyChangeOnRevive()
+    {
+    }
+
     /** ACTIONS **/
     public override bool actionIsRunning()
     {

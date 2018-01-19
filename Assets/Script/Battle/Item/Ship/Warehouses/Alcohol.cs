@@ -3,11 +3,16 @@ using System.Collections.Generic;
 
 public class Alcohol : Warehouse
 {
-    public Alcohol() : base(40)
+    public Alcohol() : base(40, Ship_Item.ALCOHOL)
     { }
 
-    protected override void applyMalusOnDestroy()
+    protected override void applyMalusOnNotWorking()
     {
-        this.GetComponentInParent<Battle_Ship>().applyCrewAttributes(Effect.MORAL, 0, 50);
+        this.getParentShip().applyCrewAttributes(Effect.MORAL, 0, 50);
+    }
+
+    protected override void applyChangeOnRevive()
+    {
+        this.getParentShip().removeCrewAttributes(Effect.MORAL);
     }
 }

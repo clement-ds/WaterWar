@@ -38,7 +38,7 @@ public class Battle_Player : Battle_Ship
 
     /** ACTIONS **/
 
-    public override void aboardingEnemy()
+    public override void aboardingEnemy(bool status)
     {
     }
 

@@ -96,6 +96,14 @@ public class Canon : ShipElement
 
     }
 
+    protected override void applyMalusOnNotWorking()
+    {
+    }
+
+    protected override void applyChangeOnRevive()
+    {
+    }
+
     /** ACTIONS **/
     public bool none()
     {

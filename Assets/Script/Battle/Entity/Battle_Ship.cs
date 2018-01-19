@@ -27,6 +27,7 @@ public abstract class Battle_Ship : MonoBehaviour
 
     protected int weaponForCrew;
     protected int countDiedMember;
+    protected bool powderAvailable;
 
     protected Battle_Ship(float lifeValue, bool isPlayer)
     {
@@ -54,10 +55,11 @@ public abstract class Battle_Ship : MonoBehaviour
     {
     }
 
-    public void init()
+    public virtual void init()
     {
         this.createRoom();
         this.createCrew();
+        this.powderAvailable = this.transform.GetComponentInChildren<Gunpowder>() != null;
     }
 
     /** CREATOR **/
@@ -185,10 +187,7 @@ public abstract class Battle_Ship : MonoBehaviour
         }
         if (this.countDiedMember >= 1)
         {
-            foreach (var member in this.crewMembers)
-            {
-                member.getProfile().addEffect(Effect.MORAL, 60, 80);
-            }
+            this.applyCrewAttributes(Effect.MORAL, 60, 60);
             this.countDiedMember = 0;
         }
         if (this.crewMembers.Count == 0)
@@ -290,7 +289,7 @@ public abstract class Battle_Ship : MonoBehaviour
     }
 
     /** ACTIONS **/
-    public abstract void aboardingEnemy();
+    public abstract void aboardingEnemy(bool status);
 
     public abstract void escape();
 
@@ -320,6 +319,7 @@ public abstract class Battle_Ship : MonoBehaviour
                     }
                 }
             }
+            this.aboardingEnemy(true);
         }
         else
         {
@@ -328,6 +328,7 @@ public abstract class Battle_Ship : MonoBehaviour
             {
                 room.purgeExternLinks(this.getId());
             }
+            this.aboardingEnemy(false);
         }
         GameRulesManager.GetInstance().guiAccess.boardingButton.gameObject.SetActive(aboarding);
     }
@@ -397,7 +398,26 @@ public abstract class Battle_Ship : MonoBehaviour
         return this.id;
     }
 
+    public bool hasAvailablePowder()
+    {
+        return this.powderAvailable;
+    }
+    public float getSpeed()
+    {
+        return this.speed;
+    }
+
     /** SETTERS **/
+    public void setSpeed(float value)
+    {
+        this.speed = value;
+    }
+
+    public void setPowderAvailable(bool value)
+    {
+        this.powderAvailable = value;
+    }
+
     protected void setCurrentLife(float value)
     {
         this.currentLife = value;
@@ -413,6 +433,17 @@ public abstract class Battle_Ship : MonoBehaviour
 
     public void applyCrewAttributes(Effect effect, float time, float value)
     {
+        foreach (var member in this.crewMembers)
+        {
+            member.getProfile().addEffect(effect, time, value);
+        }
+    }
+    public void removeCrewAttributes(Effect effect)
+    {
+        foreach (var member in this.crewMembers)
+        {
+            member.getProfile().removeEffect(effect);
+        }
     }
 
     public void setWeaponForCrew(int value)

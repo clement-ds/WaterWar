@@ -1,18 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
 using System.Collections.Generic;
 
-public class Infirmary : ShipElement
+public class Sails : ShipElement
 {
-    protected float baseCooldown = 3.0f;
-    private float baseHeal = 10f;
 
+    public Ship_Direction direction;
     // Use this for initialization
-    public Infirmary() : base(100, Ship_Item.INFIRMARY)
+    public Sails() : base(100, Ship_Item.SAILS)
     {
-        this.baseCooldown = 3.0f;
-        this.baseHeal = 10f;
+        this.direction = Ship_Direction.FRONT;
     }
 
     public override void init()
@@ -22,39 +19,11 @@ public class Infirmary : ShipElement
     {
     }
 
-    /** SPECIFIC ACTION **/
-    private void healCrew()
-    {
-        Battle_CrewMember doctor = this.GetComponentInChildren<Battle_CrewMember>();
-
-        if (doctor != null)
-        {
-            String teamId = this.getParentShip().getId();
-            Battle_CrewMember[] members = this.transform.GetComponentsInParent<Battle_CrewMember>();
-
-            foreach (Battle_CrewMember member in members)
-            {
-                if (member.getTeamId() == teamId)
-                    member.getProfile().healDamage(doctor.getProfile().getValueByCrewSkill(SkillAttribute.HealValue, this.baseHeal));
-            }
-            launchHealCrew();
-        }
-    }
-
-    public void launchHealCrew()
-    {
-        Battle_CrewMember doctor = this.GetComponentInChildren<Battle_CrewMember>();
-
-        if (doctor != null)
-        {
-            Invoke("healCrew", doctor.getProfile().getValueByCrewSkill(SkillAttribute.HealTime, this.baseCooldown));
-        }
-    }
-
     /** GUI CREATOR **/
     public override List<ActionMenuItem> createActionList()
     {
         List<ActionMenuItem> actions = new List<ActionMenuItem>();
+
         this.addGeneralActionsTo(actions);
         return actions;
     }
@@ -68,27 +37,32 @@ public class Infirmary : ShipElement
     /** ON HIT EFFECT **/
     protected override void dealDamageAsRepercution(Battle_CanonBall canonBall)
     {
-        this.GetComponentInParent<Battle_Ship>().receiveDamage(canonBall.getAmmunition().getDamage() / 2);
+        this.getParentShip().receiveDamage(canonBall.getAmmunition().getDamage());
     }
 
     protected override void dealDamageOnDestroy()
     {
+        this.getParentShip().receiveDamage(20);
     }
 
     protected override void applyMalusOnHit(Battle_CanonBall canonBall)
     {
+
     }
 
     protected override void applyMalusOnDestroy()
     {
+
     }
 
     protected override void applyMalusOnNotWorking()
     {
+        this.getParentShip().setSpeed(this.getParentShip().getSpeed() / 2);
     }
 
     protected override void applyChangeOnRevive()
     {
+        this.getParentShip().setSpeed(this.getParentShip().getSpeed() * 2);
     }
 
     /** ACTIONS **/
@@ -128,7 +102,7 @@ public class Infirmary : ShipElement
     /** GETTERS **/
     public override bool isWorking()
     {
-        return this.isAvailable() && this.getPercentLife() > 70;
+        return this.isAvailable() && this.getPercentLife() > 50;
     }
 
 }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public abstract class Warehouse : ShipElement {
     
     // Use this for initialization
-    protected Warehouse(float life) : base(life, Ship_Item.WAREHOUSE)
+    protected Warehouse(float life, Ship_Item type) : base(life, type)
     {
     }
 
@@ -43,6 +43,10 @@ public abstract class Warehouse : ShipElement {
     protected override void applyMalusOnHit(Battle_CanonBall canonBall)
     {
 
+    }
+
+    protected override void applyMalusOnDestroy()
+    {
     }
 
     /** ACTIONS **/

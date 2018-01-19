@@ -24,7 +24,7 @@ public class Direction_Value
     public static readonly Dictionary<Ship_Direction, int> values = new Dictionary<Ship_Direction, int>() { { Ship_Direction.FRONT, 90 }, { Ship_Direction.LEFT, 100 }, { Ship_Direction.RIGHT, 80 }, { Ship_Direction.NONE, 90 } };
 }
 
-public enum Ship_Item { CANON, CANTEEN, WHEEL, INFIRMARY, WAREHOUSE, PLAYGROUND }
+public enum Ship_Item { CANON, CANTEEN, WHEEL, INFIRMARY, POWDER, ALCOHOL, PLAYGROUND, SAILS }
 
 public abstract class ShipElement : MonoBehaviour
 {
@@ -132,7 +132,7 @@ public abstract class ShipElement : MonoBehaviour
             }
         }
 
-        foreach(var member in members)
+        foreach (var member in members)
         {
             if (member.getProfile().assignedRoom == this.type)
             {
@@ -232,6 +232,10 @@ public abstract class ShipElement : MonoBehaviour
 
     protected abstract void applyMalusOnDestroy();
 
+    protected abstract void applyChangeOnRevive();
+
+    protected abstract void applyMalusOnNotWorking();
+
     /** ACTIONS **/
     public abstract bool actionIsRunning();
 
@@ -240,12 +244,14 @@ public abstract class ShipElement : MonoBehaviour
     /** REPAIR **/
     public void repair(float value)
     {
-        bool isWorking = this.isWorking();
-        this.currentLife += value;
-        if (this.currentLife > this.life)
-            this.currentLife = this.life;
-        if (!isWorking && this.isWorking())
-            this.updateParentActionMenu();
+        this.setCurrentLife(this.currentLife + value);
+    }
+
+    private void revive()
+    {
+        this.available = true;
+        this.applyChangeOnRevive();
+        this.updateParentActionMenu();
     }
 
     /** DO DAMAGE **/
@@ -366,10 +372,21 @@ public abstract class ShipElement : MonoBehaviour
     /** SETTERS **/
     public void setCurrentLife(float value)
     {
+        bool isWorking = this.isWorking();
         this.currentLife = (value < 0 ? 0 : value);
         this.currentLife = (this.currentLife > this.life ? this.life : this.currentLife);
+
         this.updateSliderValue();
         this.available = (this.currentLife > 0);
+
+        if (isWorking && !this.isWorking())
+        {
+            this.applyMalusOnNotWorking();
+        }
+        else if (!isWorking && this.isWorking())
+        {
+            this.applyChangeOnRevive();
+        }
         if (!available)
         {
             this.die();

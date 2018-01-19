@@ -53,6 +53,16 @@ public class Canteen : ShipElement {
 
     }
 
+    protected override void applyMalusOnNotWorking()
+    {
+        this.getParentShip().applyCrewAttributes(Effect.ENERGY, 0, 50);
+    }
+
+    protected override void applyChangeOnRevive()
+    {
+        this.getParentShip().removeCrewAttributes(Effect.ENERGY);
+    }
+
     /** ACTIONS **/
     public override bool actionIsRunning()
     {
