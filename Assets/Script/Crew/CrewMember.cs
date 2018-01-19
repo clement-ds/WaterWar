@@ -4,10 +4,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
+[Serializable]
 public enum CrewMember_Job { Captain, Pirate, Medic, Engineer, FIGHTER };
 
+[Serializable]
 public enum Effect { AVAILABLE, SPEED, MORAL, ENERGY }
 
+[Serializable]
 public class SkillAttribute
 {
     public static readonly SkillAttribute RCanonTime = new SkillAttribute(Effect.ENERGY, "RCanonTime");
@@ -49,6 +52,7 @@ public class SkillAttribute
     public string Name { get { return id; } }
 }
 
+[Serializable]
 public class CrewMember_Effect
 {
     public Effect effect;
@@ -82,9 +86,8 @@ public class CrewMember_Effect
 }
 
 [Serializable]
-public abstract class CrewMember
+public class CrewMember
 {
-
     public string id;
     public string type;
     public string memberName;
@@ -101,6 +104,7 @@ public abstract class CrewMember
     public CrewMember_Job job;
     public Ship_Item assignedRoom;
     public string memberImage = "None";
+    
     protected List<CrewMember_Effect> attributes;
     protected List<KeyValuePair<SkillAttribute, float>> skills;
 

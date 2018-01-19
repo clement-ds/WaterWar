@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.Audio;
 
 public class GameManager : MonoBehaviour
 {
 
     public string SceneIntroMenuName = "Intro_Scene";
+    public string SceneStartMenu = "Start_Menu";
     public string SceneWorldMapName = "World_Map_Scene";
     public string SceneInteractionName = "Interaction_Scene";
     public string SceneFightName = "Fight";
@@ -15,15 +18,18 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance = null;
     public PlayerManager playerManager;
     public IslandManager islandManager;
+
+    public Settings settings;
     private int inGame;
-    public int xMapSize, yMapSize, islandsAmount;
+    public int xMapSize = 100;
+    public int yMapSize = 100;
+    public int islandsAmount = 8;
+    private bool shouldCheckGameVictory = true;
     EnemyAI enemyAI;
     QuestGenerator qgen;
     IslandGenerator islandGenerator;
 
     public MapGenerator mapGenerator;
-
-
 
     void Awake()
     {
@@ -33,16 +39,6 @@ public class GameManager : MonoBehaviour
             Instance = this;
             this.SetIsInGame(0);
 
-            playerManager = PlayerManager.GetInstance();
-            islandManager = IslandManager.GetInstance(islandsAmount);
-            
-            enemyAI = new EnemyAI();
-            islandGenerator = new IslandGenerator();
-            qgen = new QuestGenerator();
-
-            mapGenerator = new MapGenerator();
-            mapGenerator.spawnMap(xMapSize, yMapSize, islandsAmount);
-
         }
 
         else if (Instance != this)
@@ -50,6 +46,46 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
+
+    #region Main menu
+
+    public void newGame()
+    {
+        playerManager = PlayerManager.GetInstance();
+        islandManager = IslandManager.GetInstance(islandsAmount);
+        mapGenerator = new MapGenerator();
+        mapGenerator.spawnMap(xMapSize, yMapSize, islandsAmount);
+
+        enemyAI = new EnemyAI();
+        islandGenerator = new IslandGenerator();
+        qgen = new QuestGenerator();
+
+        GoIntroMenu();
+    }
+
+    public void continueGame()
+    {
+        playerManager = PlayerManager.GetInstance(false);
+        islandManager = IslandManager.GetInstance(islandsAmount, false);
+        mapGenerator = new MapGenerator();
+        mapGenerator.loadMap(xMapSize, yMapSize);
+
+        enemyAI = new EnemyAI();
+        islandGenerator = new IslandGenerator();
+        qgen = new QuestGenerator();
+
+        GoIntroMenu();
+    }
+
+    public void SaveGame()
+    {
+        playerManager.Save();
+        playerManager.SaveAI();
+        islandManager.Save();
+        mapGenerator.Save();
+    }
+
+    #endregion
 
     public void SetIsInGame(int inGame)
     {
@@ -71,6 +107,11 @@ public class GameManager : MonoBehaviour
     public void GoIntroMenu()
     {
         Instance.ChangeScene(SceneIntroMenuName);
+    }
+
+    public void GoStartMenu()
+    {
+        Instance.ChangeScene(SceneStartMenu);
     }
 
     public void GoWorldMap()
@@ -127,6 +168,8 @@ public class GameManager : MonoBehaviour
             textMeshProUGUI.SetText(enemy.name);
             enemy.mapShip.transform.SetParent(mapPivot.transform, false);
         }
+
+        SaveGame();
     }
 
     int turnCount = 0;
@@ -210,6 +253,23 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        //Check for Game Victory
+        IntroSceneManager sceneManager = GameObject.Find("SceneManager").GetComponent<IntroSceneManager>();
+        string victoryString = CheckGameVictory();
+        if (shouldCheckGameVictory && victoryString != "") {
+            shouldCheckGameVictory = false;
+            if (sceneManager) {
+                sceneManager.DisplayWinCanvas(victoryString);
+            }
+            return ;
+        }
+
+        //Display influence flag
+        sceneManager.DisplayInfluenceFlag(islandManager.islands[playerManager.player.currentIsland].influence == 100);
+
+
+        SaveGame();
+
         foreach (Player enemy in playerManager.enemies)
         {
             if (enemy.currentIsland == playerManager.player.currentIsland)
@@ -219,6 +279,22 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
+    }
+
+    private string CheckGameVictory() {
+        IEnumerable<Island> islandWithTopInfluance = islandManager.islands.Where(island => island.influence == 100);
+
+        if (playerManager.player.money > 10000) {
+            return "You're rich!";
+        }
+        if (playerManager.enemies.Count == 0) {
+            return "Everybody around you is dead";
+        }
+        if (islandWithTopInfluance.Count() >= (islandsAmount / 2)) {
+            return "Everybody loves you!";
+        }
+
+        return "";
     }
     #endregion
 

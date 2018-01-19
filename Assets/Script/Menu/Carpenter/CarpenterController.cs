@@ -49,9 +49,12 @@ public class CarpenterController : UIController {
 			card.initCard(this);
 			newRoom.transform.SetParent(this.CarpenterShip.transform);
 			newRoom.transform.localScale = Vector3.one;
-			newRoom.transform.localPosition = new Vector3((int)((card.source.x - 250) * 1.7), (int)((card.source.y - 55) * 1.5), 0);
-			
-			RectTransform rt = (RectTransform)newRoom.transform;
+			//newRoom.transform.localPosition = new Vector3((int)((card.source.x - 250) * 1.7), (int)((card.source.y - 55) * 1.5), 0);
+				newRoom.transform.localPosition = new Vector3(card.source.x - 557, card.source.y - 285, 0);
+				//newRoom.transform.localPosition = new Vector3(0, 0, 0);
+				//newRoom.transform.localPosition = new Vector3(card.source.x, card.source.y, 0);
+				print ("Room " + card.source.component + " is at " + card.source.x.ToString() + "/" + card.source.y.ToString());
+				RectTransform rt = (RectTransform)newRoom.transform;
 			rt.sizeDelta = new Vector2(card.source.width, card.source.height);
 
 			this.ShipRoomList.Add(newRoom);
@@ -102,7 +105,9 @@ public class CarpenterController : UIController {
 			card.initCard(this);
 			newRoom.transform.SetParent(this.CarpenterShip.transform);
 			newRoom.transform.localScale = Vector3.one;
-			newRoom.transform.localPosition = new Vector3((int)((card.source.x - 250) * 1.7), (int)((card.source.y - 55) * 1.5), 0);
+			newRoom.transform.localPosition = new Vector3(card.source.x - 557, card.source.y - 285, 0);
+
+			//newRoom.transform.localPosition = new Vector3((int)((card.source.x - 250) * 1.7), (int)((card.source.y - 55) * 1.5), 0);
 
 			RectTransform rt = (RectTransform)newRoom.transform;
 			rt.sizeDelta = new Vector2(card.source.width, card.source.height);

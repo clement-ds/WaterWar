@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
+[Serializable]
 public class WaterTile : MapTile {
 
     public WaterTile()
@@ -12,6 +14,6 @@ public class WaterTile : MapTile {
 
     public override GameObject getGraphicAsset(string top, string bottom, string left, string right)
     {
-        return graphicAsset;
+        return Resources.Load("Tiles/WaterTile") as GameObject;
     }
 }

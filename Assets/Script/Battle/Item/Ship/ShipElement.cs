@@ -17,6 +17,7 @@ public class AvailablePosition
     }
 }
 
+[Serializable]
 public enum Ship_Direction { FRONT, RIGHT, LEFT, NONE };
 
 public class Direction_Value
@@ -24,6 +25,7 @@ public class Direction_Value
     public static readonly Dictionary<Ship_Direction, int> values = new Dictionary<Ship_Direction, int>() { { Ship_Direction.FRONT, 90 }, { Ship_Direction.LEFT, 100 }, { Ship_Direction.RIGHT, 80 }, { Ship_Direction.NONE, 90 } };
 }
 
+[Serializable]
 public enum Ship_Item { CANON, CANTEEN, WHEEL, INFIRMARY, POWDER, ALCOHOL, PLAYGROUND, SAILS }
 
 public abstract class ShipElement : MonoBehaviour

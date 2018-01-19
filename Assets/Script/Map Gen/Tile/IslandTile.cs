@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
+[Serializable]
 public class IslandTile : MapTile {
 
     TileAsset topRightCorner;
@@ -18,6 +20,26 @@ public class IslandTile : MapTile {
     public IslandTile()
     {
         tileType = "Sand";
+        loadGraphicAsset();
+    }
+
+    public override GameObject getGraphicAsset(string top, string bottom, string left, string right)
+    {
+        foreach (TileAsset tile in tiles)
+        {
+            if (tile.top == top && tile.bottom == bottom && tile.left == left && tile.right == right)
+            {
+                graphicAsset = tile.asset;
+                return tile.asset;
+            }
+        }
+        Debug.Log("RETURNS NULL");
+        return null;
+    }
+
+    public void loadGraphicAsset()
+    {
+        tiles = new List<TileAsset>();
 
         tiles.Add(new TileAsset("Water", "Sand", "Sand", "Water", Resources.Load("Tiles/TopRightCorner") as GameObject));
         tiles.Add(new TileAsset("Sand", "Water", "Sand", "Water", Resources.Load("Tiles/BottomRightCorner") as GameObject));
@@ -41,21 +63,9 @@ public class IslandTile : MapTile {
 
         tiles.Add(new TileAsset("Water", "Water", "Water", "Water", Resources.Load("Tiles/Center") as GameObject));
     }
-
-    public override GameObject getGraphicAsset(string top, string bottom, string left, string right)
-    {
-        foreach (TileAsset tile in tiles)
-        {
-            if (tile.top == top && tile.bottom == bottom && tile.left == left && tile.right == right)
-            {
-                return tile.asset;
-            }
-        }
-        Debug.Log("RETURNS NULL");
-        return null;
-    }
 }
 
+[Serializable]
 public class TileAsset
 {
     public string top;

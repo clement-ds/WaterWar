@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 
 public class IntroSceneManager : MonoBehaviour {
-    public GameObject map, menu, coinPrefab;
+    public GameObject map, menu, coinPrefab, flag;
     private CameraAnimationManager cameraManager;
     public GameObject wealthSpawnPoint;
 
@@ -13,6 +13,8 @@ public class IntroSceneManager : MonoBehaviour {
     [SerializeField] private SoundManager soundManager;
 
     [SerializeField] private TextMeshProUGUI moneyText;
+
+    [SerializeField] private GameObject winCanvas;
 
 	// Use this for initialization
 	void Start () {
@@ -56,12 +58,24 @@ public class IntroSceneManager : MonoBehaviour {
         moneyText.SetText(wealth + "£");
     }
 
+    public void DisplayInfluenceFlag(bool should) {
+        flag.SetActive(should);
+    }
+
     public void PlaySound(string name) {
         soundManager.PlaySingle(name);
     }
     
     public void CameraStateChange(string state, bool hasForcedState = false, bool forcedState = false) {
         cameraManager.StateChange(state, hasForcedState, forcedState);
+    }
+
+    public void DisplayWinCanvas(string winString = "Yay!") {
+        winCanvas.SetActive(true);
+        TextMeshProUGUI winText = GameObject.Find("WinText").GetComponent<TextMeshProUGUI>();
+        if (winText) {
+            winText.SetText(winString);
+        }
     }
 
     void Update() {
