@@ -24,13 +24,16 @@ public class CreateGameObject : MonoBehaviour
         playerShip.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + player.ship.type);
         playerShip.AddComponent<Battle_Player>();
         playerShip.GetComponent<Battle_Player>().slider = playerShip.transform.Find("Canvas").transform.Find("HBar").GetComponent<Slider>();
-        playerShip.transform.position = new Vector3((isLeft ? -3 : 3), 0, 100);
+        playerShip.transform.position = new Vector3((isLeft ? -4 : 4), 1, 100);
 
         Battle_Ship p = playerShip.GetComponent<Battle_Ship>();
         p.setId(player.id);
         p.setWeaponForCrew(player.inventory.getCrewWeapon());
         this.addRoomToShip(playerShip, player.ship.shipDisposition.rooms, playerShip.GetComponent<SpriteRenderer>().sprite.rect.width, playerShip.GetComponent<SpriteRenderer>().sprite.rect.height);
         p.init();
+        GameRulesManager.GetInstance().ships.Add(p);
+        GameRulesManager.GetInstance().characters.Add(p.getId(), new Pair<Player, DestroyedStatus>(player, DestroyedStatus.ALIVE));
+        GameRulesManager.GetInstance().playerID = p.getId();
 
         // create shortcut
         GameObject shortcutManager = new GameObject("ShortcutManager");
@@ -48,13 +51,15 @@ public class CreateGameObject : MonoBehaviour
         aiShip.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + ai.ship.type);
         aiShip.AddComponent<Battle_Enemy>();
         aiShip.GetComponent<Battle_Enemy>().slider = aiShip.transform.Find("Canvas").transform.Find("HBar").GetComponent<Slider>();
-        aiShip.transform.position = new Vector3((isLeft ? 3 : -3), 0, 100);
+        aiShip.transform.position = new Vector3((isLeft ? 4 : -4), 1, 100);
 
         Battle_Ship e = aiShip.GetComponent<Battle_Ship>();
         e.setId(ai.id);
         e.setWeaponForCrew(ai.inventory.getCrewWeapon());
         this.addRoomToShip(aiShip, ai.ship.shipDisposition.rooms, aiShip.GetComponent<SpriteRenderer>().sprite.rect.width, aiShip.GetComponent<SpriteRenderer>().sprite.rect.height);
         e.init();
+        GameRulesManager.GetInstance().ships.Add(e);
+        GameRulesManager.GetInstance().characters.Add(e.getId(), new Pair<Player, DestroyedStatus>(ai, DestroyedStatus.ALIVE));
 
 
         GameObject.Find("Distance").GetComponent<CheckDistanceBetweenObjects>().init(playerShip, aiShip);
@@ -63,12 +68,6 @@ public class CreateGameObject : MonoBehaviour
         //TODO escape
         GameObject.Find("Escape").GetComponent<Button>().onClick.AddListener(playerShip.GetComponent<Battle_Ship>().escape);
 
-        GameRulesManager.GetInstance().ships.Add(p);
-        GameRulesManager.GetInstance().ships.Add(e);
-
-        GameRulesManager.GetInstance().playerID = p.getId();
-        GameRulesManager.GetInstance().characters.Add(p.getId(), new Pair<Player, DestroyedStatus>(player, DestroyedStatus.ALIVE));
-        GameRulesManager.GetInstance().characters.Add(e.getId(), new Pair<Player, DestroyedStatus>(ai, DestroyedStatus.ALIVE));
     }
 
     private void addRoomToShip(GameObject ship, List<Room> rooms, float shipWidth, float shipHeight)

@@ -114,7 +114,7 @@ public class Battle_CrewMember : GuiElement
     {
         if (this.equipment != null)
         {
-            this.equipment.repair(this.profile.getValueByCrewSkill(SkillAttribute.RepairValue, 40));
+            this.equipment.repair(this.profile.getValueByCrewSkill(SkillAttribute.RepairValue, 10));
             this.launchRepairEquipment();
         }
     }
@@ -142,6 +142,7 @@ public class Battle_CrewMember : GuiElement
     private void crewMemberArrivedAtFinalPos()
     {
         this.moving = false;
+        this.room.updateActionMenu();
         Debug.Log("arrived at final pos : " + this.targetFocus);
         if (this.targetFocus != null)
         {

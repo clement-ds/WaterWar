@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 [Serializable]
-public enum CrewMember_Job { Captain, Pirate, Medic, Engineer, FIGHTER };
+public enum CrewMember_Job { Captain, Pirate, Medic, Engineer, Fighter };
 
 [Serializable]
 public enum Effect { AVAILABLE, SPEED, MORAL, ENERGY }

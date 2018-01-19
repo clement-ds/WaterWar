@@ -189,7 +189,7 @@
         "width": 78,
         "height": 73,
         "rotation": 0,
-        "component": "",
+        "component": "GunPowder",
         "links": [
           "098d1bf9-4b62-4aab-acd3-584610e10337",
           "11a18940-5103-4737-a3a0-c5bd0fc6dd18",

@@ -11,6 +11,8 @@ public class Battle_Enemy : Battle_Ship
     private ObjectiveAction objective;
     private List<Ship_Item> crucialItems;
 
+    private bool canPlay = false;
+
     public Battle_Enemy() : base(200, false)
     {
     }
@@ -20,6 +22,7 @@ public class Battle_Enemy : Battle_Ship
         this.createRoom();
         this.createCrew();
         this.enemy = GameRulesManager.GetInstance().getShip(GameRulesManager.GetInstance().playerID);
+
         this.canons = new List<Canon>();
         this.crucialItems = new List<Ship_Item>();
 
@@ -30,15 +33,18 @@ public class Battle_Enemy : Battle_Ship
         }
 
         this.defineObjectiveAction();
+
+        this.canPlay = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!GameRulesManager.GetInstance().isEndOfTheGame())
-            this.doScriptAction();
-        else
-            this.stopAllAction();
+        if (this.canPlay)
+            if (!GameRulesManager.GetInstance().isEndOfTheGame())
+                this.doScriptAction();
+            else
+                this.stopAllAction();
     }
 
     public void defineObjectiveAction()
@@ -49,7 +55,8 @@ public class Battle_Enemy : Battle_Ship
         {
             this.crucialItems.Add(Ship_Item.SAILS);
             this.crucialItems.Add(Ship_Item.WHEEL);
-        } else if (this.objective == ObjectiveAction.SHOOT)
+        }
+        else if (this.objective == ObjectiveAction.SHOOT)
         {
             this.crucialItems.Add(Ship_Item.POWDER);
         }
@@ -102,17 +109,24 @@ public class Battle_Enemy : Battle_Ship
     {
         foreach (var canon in this.canons)
         {
+            if (!canon.isInGoodPositionToShoot(this.enemy))
+                continue;
+            if (canon.isWorking() && canon.getMember() != null && !canon.isAttacking())
+            {
+                if (canon.setTarget(this.findTargetElement()))
+                {
+                    Debug.Log("CANNON SHOOOT");
+                    canon.doDamage();
+                }
+            }
+        }
+        foreach (var canon in this.canons)
+        {
+            if (!canon.isInGoodPositionToShoot(this.enemy))
+                continue;
             if (!canon.isWorking() || canon.getMember() == null)
             {
                 canon.callBestCrewMember();
-            }
-            else
-            {
-                if (!canon.isAttacking())
-                {
-                    canon.setTarget(this.findTargetElement());
-                    canon.doDamage();
-                }
             }
         }
     }
@@ -120,7 +134,8 @@ public class Battle_Enemy : Battle_Ship
     /** RESEARCH **/
     RoomElement findTargetElement()
     {
-
+        if (this.enemy == null)
+            return null;
         foreach (RoomElement room in this.enemy.getRooms())
         {
             if (room.getEquipment() != null && room.getEquipment().isAvailable())

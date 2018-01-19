@@ -10,7 +10,7 @@ public class CrewMember_Engineer : CrewMember {
     {
 		this.wage = 4f;
         this.useRangedWeapon = true;
-        this.assignedRoom = Ship_Item.WAREHOUSE;
+        this.assignedRoom = Ship_Item.POWDER;
         this.memberImage = "Sprites/loupe";
 
         this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RCanonTime, 70f));

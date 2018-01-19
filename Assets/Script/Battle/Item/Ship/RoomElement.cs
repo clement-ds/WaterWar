@@ -218,7 +218,7 @@ public class RoomElement : GuiElement
     public void moveMemberToRoom(Battle_CrewMember member)
     {
         Debug.Log("move " + member.GetType() + " [" + member.getRoom() + ", " + member.getEquipment() + "]" + " to " + this.id);
-        if (this.equipment && this.equipment.hasAvailableCrewMemberPosition())
+        if (this.equipment && this.equipment.hasAvailableCrewMemberPosition() && this.equipment.isWorking())
         {
             Vector3 pos = this.equipment.chooseAvailableCrewMemberPosition(member.GetInstanceID());
 

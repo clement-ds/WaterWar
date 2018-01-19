@@ -37,7 +37,6 @@ public abstract class ShipElement : MonoBehaviour
     protected Ship_Item type;
     protected bool available = true;
     protected bool attacking = false;
-    protected bool canAttack = true;
 
     public Slider slider = null;
     public float sliderTimer;
@@ -47,7 +46,7 @@ public abstract class ShipElement : MonoBehaviour
     {
         this.type = type;
         this.life = lifeValue;
-        this.setCurrentLife(life);
+        this.currentLife = this.life;
         this.sliderTimer = 0;
     }
 
@@ -123,6 +122,8 @@ public abstract class ShipElement : MonoBehaviour
         List<Battle_CrewMember> members = new List<Battle_CrewMember>();
         foreach (var member in this.getParentShip().getCrewMembers())
         {
+            if (member.getEquipment() != null && !member.getEquipment().isWorking())
+                continue;
             if (!member.isMoving() && member.isAlive() && (member.getEquipment() == null || !member.getEquipment().actionIsRunning()))
             {
                 if (member.getProfile().job == needed)
@@ -136,15 +137,19 @@ public abstract class ShipElement : MonoBehaviour
 
         foreach (var member in members)
         {
+            if (member.getEquipment() != null && !member.getEquipment().isWorking())
+                continue;
             if (member.getProfile().assignedRoom == this.type)
             {
                 member.assignCrewMemberToRoom(this.parentRoom);
                 return true;
             }
         }
-        if (members.Count > 0)
+        foreach (var member in members)
         {
-            members[0].assignCrewMemberToRoom(this.parentRoom);
+            if (member.getEquipment() != null && !member.getEquipment().isWorking())
+                continue;
+            member.assignCrewMemberToRoom(this.parentRoom);
             return true;
         }
         return false;
@@ -331,7 +336,14 @@ public abstract class ShipElement : MonoBehaviour
 
     public Battle_Ship getParentShip()
     {
-        return this.parentRoom.transform.GetComponentInParent<Battle_Ship>();
+        try
+        {
+            return this.parentRoom.transform.GetComponentInParent<Battle_Ship>();
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     public float getLife()
@@ -403,7 +415,5 @@ public abstract class ShipElement : MonoBehaviour
     protected void setAttacking(bool value)
     {
         this.attacking = value;
-        if (!this.attacking)
-            canAttack = true;
     }
 }

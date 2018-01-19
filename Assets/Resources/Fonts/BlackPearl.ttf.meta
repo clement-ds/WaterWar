@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 788549b0fcb78c44f8253258ba1c1d1a
+timeCreated: 1516326866
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: 1
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: BlackPearl
+  fontNames:
+  - BlackPearl
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: c9a6459e5b8678b49a279c80dd81245a
+timeCreated: 1516326988
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Galleon
+  fontNames:
+  - Galleon
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

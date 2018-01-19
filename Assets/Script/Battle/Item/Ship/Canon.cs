@@ -58,7 +58,7 @@ public class Canon : ShipElement
         {
             if (this.isAvailable() && this.getMember() && this.getTarget() && !this.attacking && !this.reloading)
                 actions.Add(new ActionMenuItem("Attack", doDamage));
-            if (this.attacking && this.canAttack)
+            if (this.attacking)
                 actions.Add(new ActionMenuItem("Stop Attack", stopAttack));
             if (this.reloading)
                 actions.Add(new ActionMenuItem("Reloading..", none));
@@ -112,7 +112,7 @@ public class Canon : ShipElement
 
     public override bool actionIsRunning()
     {
-        if (this.reloading)
+        if (this.reloading || this.attacking)
         {
             return true;
         }
@@ -130,7 +130,7 @@ public class Canon : ShipElement
 
     protected bool stopAttack()
     {
-        this.canAttack = false;
+        this.attacking = false;
         this.cancelEveryTask();
         this.updateParentActionMenu();
         return true;
@@ -219,21 +219,21 @@ public class Canon : ShipElement
 
                 Physics2D.IgnoreCollision(canonBall.transform.GetComponent<Collider2D>(), this.transform.GetComponent<Collider2D>(), true);
                 Physics2D.IgnoreCollision(canonBall.transform.GetComponent<Collider2D>(), this.getParentShip().transform.GetComponent<Collider2D>(), true);
-                if (enemy != null && canAttack)
+                if (enemy != null)
                 {
                     this.setAttacking(true);
                     this.ready = false;
                     result = true;
                 }
             }
-            if (canAttack)
+            if (!this.isReloading())
             {
                 this.reloadCanon();
             }
-            else
-            {
-                this.setAttacking(false);
-            }
+        }
+        else
+        {
+            this.setAttacking(false);
         }
         return result;
     }
@@ -356,14 +356,16 @@ public class Canon : ShipElement
     }
 
     /** SETTERS **/
-    public void setTarget(RoomElement target)
+    public bool setTarget(RoomElement target)
     {
-        if (this.isInGoodPositionToShoot(target))
+        if (target != null && this.isInGoodPositionToShoot(target))
         {
             this.target = target;
             this.selectingTarget = false;
             this.updateParentActionMenu();
+            return true;
         }
+        return false;
     }
 
     protected void setCanonReady()

@@ -94,9 +94,9 @@ public abstract class GuiElement : MonoBehaviour
     {
         this.createActionList();
         this.actionMenu = buttonObjectPool.GetObject();
-        this.actionMenu.transform.SetParent(GameObject.Find("Battle_UI").gameObject.transform);
+        this.actionMenu.transform.SetParent(GameObject.Find("TaskMenuArea").gameObject.transform);
 
-        this.actionMenu.transform.localPosition = new Vector3(GameRulesManager.GetInstance().guiAccess.ShortCutCanon.transform.parent.transform.localPosition.x - 50, GameRulesManager.GetInstance().guiAccess.ShortCutCanon.transform.parent.transform.localPosition.y - 10, GameRulesManager.GetInstance().guiAccess.ShortCutCanon.transform.parent.transform.localPosition.z);
+        this.actionMenu.transform.localPosition = new Vector3(GameRulesManager.GetInstance().guiAccess.ShortCutCanon.transform.parent.transform.localPosition.x - 40, GameRulesManager.GetInstance().guiAccess.ShortCutCanon.transform.parent.transform.localPosition.y + 80, GameRulesManager.GetInstance().guiAccess.ShortCutCanon.transform.parent.transform.localPosition.z);
         this.actionMenu.transform.localScale = new Vector3(1, 1, 1);
 
         this.actionMenu.GetComponentInChildren<ActionMenuList>().init(this.actionList);
