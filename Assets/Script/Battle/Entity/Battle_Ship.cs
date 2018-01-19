@@ -301,7 +301,7 @@ public abstract class Battle_Ship : MonoBehaviour
 
     public void doAboarding(Battle_Ship target, bool aboarding)
     {
-        Debug.LogError(this + " can[" + aboarding + "] aboard " + target);
+        //Debug.LogError(this + " can[" + aboarding + "] aboard " + target);
         this.aboarding = aboarding;
         if (aboarding)
         {

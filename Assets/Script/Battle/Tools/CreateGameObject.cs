@@ -12,7 +12,6 @@ public class CreateGameObject : MonoBehaviour
 
         // reset
         RoomUtils.reset();
-
         // create player
         Player player = PlayerManager.GetInstance().player;
         GameObject playerShip = GameObject.Find("BasicShipPool").GetComponent<SimpleObjectPool>().GetObject();

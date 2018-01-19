@@ -83,7 +83,7 @@ public class Canon : ShipElement
 
     protected override void dealDamageOnDestroy()
     {
-        this.GetComponentInParent<Battle_Ship>().receiveDamage(20);
+        this.getParentShip().receiveDamage(40);
     }
 
     protected override void applyMalusOnHit(Battle_CanonBall canonBall)
@@ -184,7 +184,7 @@ public class Canon : ShipElement
 
         if (this.target != null)
         {
-            if (ready)
+            if (ready && this.getMember() != null)
             {
                 MonoBehaviour finalTarget;
                 Battle_Ship enemy = this.target.GetComponentInParent<Battle_Ship>();
@@ -268,11 +268,11 @@ public class Canon : ShipElement
             x = 0.5f;
         else if (distance > 10)
             x = 0.6f;
-        else if (distance > 7)
+        else if (distance >= 8)
             x = 0.7f;
-        else if (distance > 3)
+        else if (distance > 5)
             x = 0.8f;
-        else if (distance <= 3)
+        else if (distance <= 4)
             x = 1f;
 
         y = ((1f - x) / 3) * 2;

@@ -103,7 +103,7 @@ public class Battle_Player : Battle_Ship
 
             if (result)
             {
-                Debug.Log("click on : " + item.getIdentifier());
+                //Debug.Log("click on : " + item.getIdentifier());
                 foreach (RoomElement item2 in this.rooms)
                 {
                     if (item2 != null && item.getId() != item2.getId())
@@ -209,7 +209,11 @@ public class Battle_Player : Battle_Ship
                     if (crewMember.getEquipment() == null || !crewMember.getEquipment().actionIsRunning())
                     {
                         if (target.hasAvailableCrewMemberPosition())
-                        {
+                        {/*
+                            if (crewMember.getEquipment().actionIsRunning())
+                            {
+                                crewMember.getEquipment().actionStopRunning();
+                            }*/
                             result = crewMember.assignCrewMemberToRoom(target);
                         }
                     }
