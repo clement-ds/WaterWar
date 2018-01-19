@@ -215,16 +215,21 @@ public class RoomElement : GuiElement
         }
     }
 
-    public void moveMemberToRoom(Battle_CrewMember member)
+    public bool moveMemberToRoom(Battle_CrewMember member)
     {
         Debug.Log("move " + member.GetType() + " [" + member.getRoom() + ", " + member.getEquipment() + "]" + " to " + this.id);
+        List<Vector3> path = RoomUtils.getRoute(member.getRoom(), this);
+
+        if (path.Count == 0)
+            return false;
+
         if (this.equipment && this.equipment.hasAvailableCrewMemberPosition() && this.equipment.isWorking())
         {
             Vector3 pos = this.equipment.chooseAvailableCrewMemberPosition(member.GetInstanceID());
 
-            List<Vector3> path = RoomUtils.getRoute(member.getRoom(), this);
             path.Add(pos);
             member.moveTo(this.equipment, path);
+            return true;
         }
         else
         {
@@ -235,13 +240,13 @@ public class RoomElement : GuiElement
                     pos.available = false;
                     pos.crewId = member.GetInstanceID();
 
-                    List<Vector3> path = RoomUtils.getRoute(member.getRoom(), this);
                     path.Add(pos.position);
                     member.moveTo(this, path);
-                    break;
+                    return true;
                 }
             }
         }
+        return false;
     }
 
     /** GETTERS **/

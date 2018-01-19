@@ -25,39 +25,35 @@ public class RoomUtils
         return null;
     }
 
-    public static bool hasRoute(RoomElement start, RoomElement end)
-    {
-        inc = 0;
-        Debug.Log("has Route ?");
-        return findRoute(start, end, new List<string>());
-    }
-
     public static List<Vector3> getRoute(RoomElement start, RoomElement end)
     {
         List<string> path = new List<string>();
         List<Vector3> route = new List<Vector3>();
 
-        //Debug.Log(start.getId() + " to " + end.getId() + " : " + path.Count);
+        Debug.Log(start.getId() + " to " + end.getId() + " : " + path.Count);
         if (findRoute(start, end, path))
         {
             foreach (string id in path)
             {
-                //Debug.Log("->" + id);
+                Debug.Log("->" + id);
                 route.Add(getRoom(id).transform.localPosition);
             }
         }
+        Debug.Log("return route");
         return route;
     }
 
-    private static int inc = 0;
-
     private static bool findRoute(RoomElement start, RoomElement end, List<string> history)
     {
+        
+        history.Add(end.getId());
+        return true;
+        
+
+
         List<string> newHistory = new List<string>();
         history.Add(start.getId());
-
-        ++inc;
-        Debug.Log("round START: " + inc);
+        
         newHistory.AddRange(history);
         int historyCount = history.Count;
 
@@ -90,7 +86,6 @@ public class RoomUtils
                 }
             }
         }
-        Debug.Log("round END: " + inc);
         return result;
     }
 }

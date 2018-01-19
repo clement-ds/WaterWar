@@ -212,7 +212,7 @@ public abstract class Battle_Ship : MonoBehaviour
         {
             this.leaveAboardTarget(target);
         }
-        if (distance <= 2)
+        if (distance <= 2.5)
         {
             this.movement = new Vector3(0, 0, 0);
         }
@@ -314,8 +314,8 @@ public abstract class Battle_Ship : MonoBehaviour
                     {
                         if (target.getRooms()[i2].getEquipment() != null && target.getRooms()[i2].getEquipment().getType() == Ship_Item.CANON && ((Canon)target.getRooms()[i2].getEquipment()).isInGoodPositionToShoot(this))
                         {
-                            Debug.LogError("LINK : " + this.rooms[i].getId() + " + " + target.getRooms()[i2].getId());
-                            this.rooms[i].addLink(target.getRooms()[i2].getId());
+                            //Debug.LogError("LINK : " + this.rooms[i].getId() + " + " + target.getRooms()[i2].getId());
+                            //this.rooms[i].addLink(target.getRooms()[i2].getId());
                             ++i2;
                             break;
                         }

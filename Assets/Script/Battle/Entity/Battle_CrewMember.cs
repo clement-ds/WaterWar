@@ -198,13 +198,10 @@ public class Battle_CrewMember : GuiElement
     /** PARENT MANAGER **/
     public bool assignCrewMemberToRoom(RoomElement target)
     {
-        if (!RoomUtils.hasRoute(this.room, target))
-        {
-            return false;
-        }
-        this.transform.parent = target.transform.parent;
 
-        target.moveMemberToRoom(this);
+
+        if (target.moveMemberToRoom(this))
+            this.transform.parent = target.transform.parent;
 
         if (this.equipment != null)
         {
