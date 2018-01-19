@@ -27,6 +27,8 @@ public class RoomUtils
 
     public static bool hasRoute(RoomElement start, RoomElement end)
     {
+        inc = 0;
+        Debug.Log("has Route ?");
         return findRoute(start, end, new List<string>());
     }
 
@@ -47,12 +49,15 @@ public class RoomUtils
         return route;
     }
 
+    private static int inc = 0;
+
     private static bool findRoute(RoomElement start, RoomElement end, List<string> history)
     {
         List<string> newHistory = new List<string>();
         history.Add(start.getId());
 
-
+        ++inc;
+        Debug.Log("round START: " + inc);
         newHistory.AddRange(history);
         int historyCount = history.Count;
 
@@ -85,6 +90,7 @@ public class RoomUtils
                 }
             }
         }
+        Debug.Log("round END: " + inc);
         return result;
     }
 }

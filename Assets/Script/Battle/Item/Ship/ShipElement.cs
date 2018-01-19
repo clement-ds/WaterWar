@@ -120,6 +120,7 @@ public abstract class ShipElement : MonoBehaviour
             needed = CrewMember_Job.Engineer;
 
         List<Battle_CrewMember> members = new List<Battle_CrewMember>();
+
         foreach (var member in this.getParentShip().getCrewMembers())
         {
             if (member.getEquipment() != null && !member.getEquipment().isWorking())
@@ -139,7 +140,7 @@ public abstract class ShipElement : MonoBehaviour
         {
             if (member.getEquipment() != null && !member.getEquipment().isWorking())
                 continue;
-            if (member.getProfile().assignedRoom == this.type)
+            if (member.getProfile().assignedRoom == this.type || this.getMember() != null)
             {
                 member.assignCrewMemberToRoom(this.parentRoom);
                 return true;
@@ -269,9 +270,9 @@ public abstract class ShipElement : MonoBehaviour
             if (this.doDamageAction())
             {
                 this.doDamageAnimation();
+                this.updateParentActionMenu();
+                return true;
             }
-            this.updateParentActionMenu();
-            return true;
         }
         else
         {

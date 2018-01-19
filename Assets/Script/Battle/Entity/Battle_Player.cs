@@ -15,6 +15,11 @@ public class Battle_Player : Battle_Ship
         this.selectedCrewMembers = new List<Battle_CrewMember>();
     }
 
+    protected override void selfInit()
+    {
+
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -139,7 +144,7 @@ public class Battle_Player : Battle_Ship
             }
 
             int isFocus = item.hasInputMouse(result);
-            
+
             /*
             if (isFocus == 0)
             {

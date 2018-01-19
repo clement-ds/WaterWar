@@ -136,7 +136,7 @@ public class Canon : ShipElement
         return true;
     }
 
-    protected bool selectTarget()
+    public bool selectTarget()
     {
         MouseManager.getInstance().setCursor(ECursor.SEARCH_TARGET);
         this.selectingTarget = true;
@@ -182,14 +182,14 @@ public class Canon : ShipElement
     {
         bool result = false;
 
-        if (target != null)
+        if (this.target != null)
         {
             if (ready)
             {
                 MonoBehaviour finalTarget;
-                Battle_Ship enemy = target.GetComponentInParent<Battle_Ship>();
+                Battle_Ship enemy = this.target.GetComponentInParent<Battle_Ship>();
 
-                if (target.getEquipment() != null && target.getEquipment().isAvailable())
+                if (this.target.getEquipment() != null && this.target.getEquipment().isAvailable())
                 {
                     finalTarget = target.getEquipment();
                 }
@@ -215,16 +215,14 @@ public class Canon : ShipElement
                 battleCanonBall.initialize(new CanonBall(this.baseDamage, this.GetComponentInChildren<Battle_CrewMember>().getProfile().getValueByCrewSkill(SkillAttribute.ShootCanonValue, 1)), finalTarget, this.getBulletAccuracy(this.GetComponentInChildren<Battle_CrewMember>()));
                 canonBall.transform.position = this.transform.position;
                 canonBall.transform.SetParent(this.transform);
-                canonBall.GetComponent<Rigidbody2D>().AddRelativeForce((target.transform.position - canonBall.transform.position).normalized * this.getBulletSpeed(battleCanonBall.getAmmunition()));
+                canonBall.GetComponent<Rigidbody2D>().AddRelativeForce((this.target.transform.position - canonBall.transform.position).normalized * this.getBulletSpeed(battleCanonBall.getAmmunition()));
 
                 Physics2D.IgnoreCollision(canonBall.transform.GetComponent<Collider2D>(), this.transform.GetComponent<Collider2D>(), true);
                 Physics2D.IgnoreCollision(canonBall.transform.GetComponent<Collider2D>(), this.getParentShip().transform.GetComponent<Collider2D>(), true);
-                if (enemy != null)
-                {
-                    this.setAttacking(true);
-                    this.ready = false;
-                    result = true;
-                }
+
+                this.setAttacking(true);
+                this.ready = false;
+                result = true;
             }
             if (!this.isReloading())
             {
@@ -343,6 +341,8 @@ public class Canon : ShipElement
 
     public bool isInGoodPositionToShoot(RoomElement target)
     {
+        if (target == null)
+            return false;
         bool canonIsRightPosition = this.transform.localPosition.y < 0;
         bool shipIsRightPosition = this.transform.root.transform.position.x < target.transform.root.transform.position.x;
         return (canonIsRightPosition && shipIsRightPosition || !canonIsRightPosition && !shipIsRightPosition);
@@ -350,6 +350,8 @@ public class Canon : ShipElement
 
     public bool isInGoodPositionToShoot(Battle_Ship target)
     {
+        if (target == null)
+            return false;
         bool canonIsRightPosition = this.transform.localPosition.y < 0;
         bool shipIsRightPosition = this.transform.root.transform.position.x < target.transform.position.x;
         return (canonIsRightPosition && shipIsRightPosition || !canonIsRightPosition && !shipIsRightPosition);

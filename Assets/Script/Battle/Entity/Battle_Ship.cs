@@ -55,11 +55,15 @@ public abstract class Battle_Ship : MonoBehaviour
     {
     }
 
-    public virtual void init()
+    protected abstract void selfInit();
+
+    public void init()
     {
         this.createRoom();
         this.createCrew();
         this.powderAvailable = this.transform.GetComponentInChildren<Gunpowder>() != null;
+
+        this.selfInit();
     }
 
     /** CREATOR **/
@@ -195,20 +199,20 @@ public abstract class Battle_Ship : MonoBehaviour
             this.die(DestroyedStatus.KILL_MEMBERS);
         }
     }
-    
+
     /** COLLISION **/
 
-   public void distanceWith(Battle_Ship target, float distance)
+    public void distanceWith(Battle_Ship target, float distance)
     {
-        if (distance < 2.5 && !this.aboarding)
+        if (distance < 3 && !this.aboarding)
         {
             this.onAboardTarget(target);
         }
-        else if (distance >= 2.5 && this.aboarding)
+        else if (distance >= 3 && this.aboarding)
         {
             this.leaveAboardTarget(target);
         }
-        if (distance <= 1.5)
+        if (distance <= 2)
         {
             this.movement = new Vector3(0, 0, 0);
         }

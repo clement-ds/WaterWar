@@ -24,7 +24,7 @@ public class CreateGameObject : MonoBehaviour
         playerShip.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + player.ship.type);
         playerShip.AddComponent<Battle_Player>();
         playerShip.GetComponent<Battle_Player>().slider = playerShip.transform.Find("Canvas").transform.Find("HBar").GetComponent<Slider>();
-        playerShip.transform.position = new Vector3((isLeft ? -4 : 4), 1, 100);
+        playerShip.transform.position = new Vector3((isLeft ? -3 : 5), 1, 100);
 
         Battle_Ship p = playerShip.GetComponent<Battle_Ship>();
         p.setId(player.id);
@@ -51,7 +51,7 @@ public class CreateGameObject : MonoBehaviour
         aiShip.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + ai.ship.type);
         aiShip.AddComponent<Battle_Enemy>();
         aiShip.GetComponent<Battle_Enemy>().slider = aiShip.transform.Find("Canvas").transform.Find("HBar").GetComponent<Slider>();
-        aiShip.transform.position = new Vector3((isLeft ? 4 : -4), 1, 100);
+        aiShip.transform.position = new Vector3((isLeft ? 5 : -3), 1, 100);
 
         Battle_Ship e = aiShip.GetComponent<Battle_Ship>();
         e.setId(ai.id);
@@ -66,7 +66,12 @@ public class CreateGameObject : MonoBehaviour
         GameObject.Find("Main Camera").GetComponent<FollowObjectInSpace>().init(playerShip);
 
         //TODO escape
-        GameObject.Find("Escape").GetComponent<Button>().onClick.AddListener(playerShip.GetComponent<Battle_Ship>().escape);
+        Button btn = GameObject.Find("Escape").GetComponent<Button>();
+        btn.onClick.AddListener(playerShip.GetComponent<Battle_Ship>().escape);
+        btn.gameObject.SetActive(false);
+
+        CanonPanelGuiManager manager = GameObject.Find("CanonPanel").GetComponent<CanonPanelGuiManager>();
+        manager.initCanons(p, e);
 
     }
 

@@ -146,7 +146,7 @@ public class GameRulesManager
         foreach (var item in loot)
         {
             int winnerId = Random.Range(0, winners.Count - 1);
-            
+
             if (winnerId >= 0 && winnerId < winners.Count)
             {
                 Debug.Log("win Loot: " + item.name);
@@ -215,10 +215,20 @@ public class GameRulesManager
     /** GETTERS **/
     public Battle_Ship getShip(string id)
     {
-
         foreach (var ship in this.ships)
         {
             if (ship.getId() == id)
+            {
+                return ship;
+            }
+        }
+        return null;
+    }
+    public Battle_Ship getNextShip(string id)
+    {
+        foreach (var ship in this.ships)
+        {
+            if (ship.getId() != id)
             {
                 return ship;
             }

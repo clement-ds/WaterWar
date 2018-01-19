@@ -17,10 +17,8 @@ public class Battle_Enemy : Battle_Ship
     {
     }
 
-    public override void init()
+    protected override void selfInit()
     {
-        this.createRoom();
-        this.createCrew();
         this.enemy = GameRulesManager.GetInstance().getShip(GameRulesManager.GetInstance().playerID);
 
         this.canons = new List<Canon>();
@@ -115,7 +113,7 @@ public class Battle_Enemy : Battle_Ship
             {
                 if (canon.setTarget(this.findTargetElement()))
                 {
-                    Debug.Log("CANNON SHOOOT");
+                    //Debug.Log("CANNON SHOOOT");
                     canon.doDamage();
                 }
             }
@@ -138,7 +136,7 @@ public class Battle_Enemy : Battle_Ship
             return null;
         foreach (RoomElement room in this.enemy.getRooms())
         {
-            if (room.getEquipment() != null && room.getEquipment().isAvailable())
+            if (room.getEquipment() != null && room.getEquipment().isAvailable() && room.getEquipment().getType() != Ship_Item.WHEEL)
             {
                 return room;
             }
