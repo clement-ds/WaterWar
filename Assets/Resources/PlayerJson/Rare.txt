@@ -1,0 +1,2 @@
+{"id": 0, "name": "Diamond", "type": "Rare", "quantity": 1, "price": 100}
+{"id": 1, "name": "Gold", "type": "Rare", "quantity": 1, "price": 100}

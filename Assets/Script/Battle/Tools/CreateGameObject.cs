@@ -12,7 +12,6 @@ public class CreateGameObject : MonoBehaviour
 
         // reset
         RoomUtils.reset();
-
         // create player
         Player player = PlayerManager.GetInstance().player;
         GameObject playerShip = GameObject.Find("BasicShipPool").GetComponent<SimpleObjectPool>().GetObject();
@@ -95,11 +94,14 @@ public class CreateGameObject : MonoBehaviour
             if (item.component != "")
             {
                 GameObject obj = GameObject.Find(item.component + "Pool").GetComponent<SimpleObjectPool>().GetObject();
-                obj.transform.parent = room.transform;
-                obj.transform.localPosition = new Vector3(0, 0, -1);
-                obj.transform.localRotation = Quaternion.Euler(0, 0, item.rotation);
-                obj.GetComponent<ShipElement>().changeParentRoom(roomElem);
-                obj.AddComponent<TargetCollider>();
+                if (obj != null)
+                {
+                    obj.transform.parent = room.transform;
+                    obj.transform.localPosition = new Vector3(0, 0, -1);
+                    obj.transform.localRotation = Quaternion.Euler(0, 0, item.rotation);
+                    obj.GetComponent<ShipElement>().changeParentRoom(roomElem);
+                    obj.AddComponent<TargetCollider>();
+                }
             }
             roomElem.StartMyself();
             ship.GetComponent<Battle_Ship>().addShipElement(roomElem);

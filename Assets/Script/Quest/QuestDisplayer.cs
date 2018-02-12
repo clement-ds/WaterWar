@@ -25,7 +25,7 @@ public class QuestDisplayer : MonoBehaviour {
 	}
 
 	void Update() {
-		if (currentIslandID != PMInstance.player.currentIsland) {
+		if (PMInstance != null && PMInstance.player != null && currentIslandID != PMInstance.player.currentIsland) {
 			ClearQuests();
 			SwapCurrentQuests(PMInstance.player.currentIsland);
 		}

@@ -37,23 +37,25 @@ public class MapGenerator {
 
     public bool Save()
     {
-        try
-        {
-            StreamWriter writer = new StreamWriter("PlayerJson/MapSave.json", false);
-            writer.Write(JsonUtility.ToJson(worldMapSave));
-            writer.Close();
-        }
-        catch (Exception e)
-        {
-            Debug.Log("SAVE MAP : " + e.Message);
-            return false;
-        }
+        PlayerPrefs.SetString("MapSave", JsonUtility.ToJson(worldMapSave));
+        PlayerPrefs.Save();
+        //try
+        //{
+        //    StreamWriter writer = new StreamWriter("Assets/Resources/PlayerJson/MapSave.json", false);
+        //    writer.Write(JsonUtility.ToJson(worldMapSave));
+        //    writer.Close();
+        //}
+        //catch (Exception e)
+        //{
+        //    Debug.Log("SAVE MAP : " + e.Message);
+        //    return false;
+        //}
         return true;
     }
 
     public void loadMap(int xSize, int ySize)
     {
-        worldMapSave = JsonUtility.FromJson<WorldMapSave>(FileUtils.readJSON("PlayerJson/MapSave.json"));
+        worldMapSave = JsonUtility.FromJson<WorldMapSave>(PlayerPrefs.GetString("MapSave"));
         worldMap = worldMapSave.worldMap;
         isMapGenerated = true;
         worldMapXSize = xSize;

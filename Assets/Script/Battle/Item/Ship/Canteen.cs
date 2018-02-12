@@ -35,7 +35,7 @@ public class Canteen : ShipElement {
     /** ON HIT EFFECT **/
     protected override void dealDamageAsRepercution(Battle_CanonBall canonBall)
     {
-        this.GetComponentInParent<Battle_Ship>().receiveDamage(canonBall.getAmmunition().getDamage() / 4);
+        this.GetComponentInParent<Battle_Ship>().receiveDamage(canonBall.getAmmunition().getDamage() / 2);
     }
 
     protected override void dealDamageOnDestroy()

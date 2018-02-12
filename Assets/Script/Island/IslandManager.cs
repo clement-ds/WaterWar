@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using Assets.Script.Battle.Tools;
 
 public class IslandManager {
 
@@ -38,8 +39,8 @@ public class IslandManager {
             }
         } else
         {
-            LoadFile("PlayerJson/IslandSave.txt");
-            islandsSave = JsonUtility.FromJson<IslandsSave>(json[0]);
+            //json = FileUtils.LoadFile("PlayerJson/IslandSave");
+            islandsSave = JsonUtility.FromJson<IslandsSave>(PlayerPrefs.GetString("IslandSave"));
             islands = islandsSave.islands;
         }
     }
@@ -55,48 +56,50 @@ public class IslandManager {
 
     public bool Save()
     {
-        try
-        {
-            StreamWriter writer = new StreamWriter("PlayerJson/IslandSave.txt", false);
-            writer.Write(JsonUtility.ToJson(islandsSave));
-            writer.Close();
-        } catch (Exception e)
-        {
-            Debug.Log("SAVE ISLAND : " + e.Message);
-            return false;
-        }
+        PlayerPrefs.SetString("IslandSave", JsonUtility.ToJson(islandsSave));
+        PlayerPrefs.Save();
+        //try
+        //{
+        //    StreamWriter writer = new StreamWriter("Assets/Resources/PlayerJson/IslandSave.txt", false);
+        //    writer.Write(JsonUtility.ToJson(islandsSave));
+        //    writer.Close();
+        //} catch (Exception e)
+        //{
+        //    Debug.Log("SAVE ISLAND : " + e.Message);
+        //    return false;
+        //}
         return true;
     }
 
-    private bool LoadFile(string fileName)
-    {
-        json = new List<string>();
-        try
-        {
-            string line;
-            StreamReader theReader = new StreamReader(fileName, Encoding.Default);
-            using (theReader)
-            {
-                do
-                {
-                    line = theReader.ReadLine();
+    //private bool LoadFile(string fileName)
+    //{
+    //    json = new List<string>();
+    //    try
+    //    {
+    //        string line;
+    //        StreamReader theReader = new StreamReader(fileName, Encoding.Default);
+    //        using (theReader)
+    //        {
+    //            do
+    //            {
+    //                line = theReader.ReadLine();
 
-                    if (line != null)
-                    {
-                        json.Add(line);
-                    }
-                }
-                while (line != null);    
-                theReader.Close();
-                return true;
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.Message);
-            return false;
-        }
-    }
+    //                if (line != null)
+    //                {
+    //                    json.Add(line);
+    //                }
+    //            }
+    //            while (line != null);    
+    //            theReader.Close();
+    //            return true;
+    //        }
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        Debug.Log(e.Message);
+    //        return false;
+    //    }
+    //}
 }
 
 [Serializable]

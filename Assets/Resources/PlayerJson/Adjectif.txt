@@ -1,0 +1,5 @@
+{ "name": "infame" } 
+{ "name": "ignoble" } 
+{ "name": "mechant" } 
+{ "name": "moche" } 
+{ "name": "monstrueux" }

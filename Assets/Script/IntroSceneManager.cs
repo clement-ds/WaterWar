@@ -79,7 +79,7 @@ public class IntroSceneManager : MonoBehaviour {
     }
 
     void Update() {
-        if (GameManager.Instance.IsInGame() == 45) { // TODO: remplacer ca par mouvement de la camera render / display/not display
+        if (GameManager.Instance != null && GameManager.Instance.IsInGame() == 45) { // TODO: remplacer ca par mouvement de la camera render / display/not display
             if (!map.activeSelf)
             {
                 map.SetActive(true);

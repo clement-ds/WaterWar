@@ -22,5 +22,15 @@ public class StartMenuManager : MonoBehaviour {
 		}
 
 	}
-	
+
+    public void ContinueGame()
+    {
+            GameManager.Instance.continueGame();
+    }
+
+    public void NewGame()
+    {
+            GameManager.Instance.newGame();
+    }
+
 }

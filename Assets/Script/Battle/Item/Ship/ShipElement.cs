@@ -128,7 +128,7 @@ public abstract class ShipElement : MonoBehaviour
 
         foreach (var member in this.getParentShip().getCrewMembers())
         {
-            if (member.getEquipment() != null && !member.getEquipment().isWorking() && !priority) 
+            if (member.getProfile().job == CrewMember_Job.Captain || (member.getEquipment() != null && !member.getEquipment().isWorking() && !priority)) 
                 continue;
             if (!member.isMoving() && member.isAlive() && (priority || member.getEquipment() == null || !member.getEquipment().actionIsRunning()))
             {
@@ -143,7 +143,7 @@ public abstract class ShipElement : MonoBehaviour
 
         foreach (var member in members)
         {
-            if (member.getEquipment() != null && !member.getEquipment().isWorking() && !priority)
+            if (member.getProfile().job == CrewMember_Job.Captain || (member.getEquipment() != null && !member.getEquipment().isWorking() && !priority))
                 continue;
             if (member.getProfile().assignedRoom == this.type || this.getMember() != null)
             {
@@ -153,7 +153,7 @@ public abstract class ShipElement : MonoBehaviour
         }
         foreach (var member in members)
         {
-            if (member.getEquipment() != null && !member.getEquipment().isWorking() && !priority)
+            if (member.getProfile().job == CrewMember_Job.Captain || (member.getEquipment() != null && !member.getEquipment().isWorking() && !priority))
                 continue;
             if (priority && member.getProfile().job != CrewMember_Job.Pirate)
                 continue;

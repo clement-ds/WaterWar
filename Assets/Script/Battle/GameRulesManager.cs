@@ -19,15 +19,14 @@ public class GameRulesManager
 
     protected GameRulesManager()
     {
-        this.endOfTheGame = false;
-        this.ships = new List<Battle_Ship>();
-        this.characters = new Dictionary<string, Pair<Player, DestroyedStatus>>();
     }
 
     /** INIT **/
     public void init()
     {
         this.endOfTheGame = false;
+        this.ships = new List<Battle_Ship>();
+        this.characters = new Dictionary<string, Pair<Player, DestroyedStatus>>();
     }
 
     public void initializeGui()

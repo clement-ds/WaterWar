@@ -12,7 +12,7 @@ public class CrewMember_Captain : CrewMember {
         this.maxLife = 200f;
         this.life = this.maxLife;
         this.useRangedWeapon = true;
-        this.assignedRoom = Ship_Item.CANON;
+        this.assignedRoom = Ship_Item.WHEEL;
         this.memberImage = "Sprites/capt";
 
         this.skills.Add(new KeyValuePair<SkillAttribute, float>(SkillAttribute.RCanonTime, 100f));

@@ -39,15 +39,15 @@ public class PlayerManager
             }
         } else
         {
-            player = JsonUtility.FromJson<Player>(FileUtils.readJSON("PlayerJson/Save.json"));
+            player = JsonUtility.FromJson<Player>(PlayerPrefs.GetString("PlayerSave"));
             player.graphicAsset = Resources.Load("Ship/PlayerShip") as GameObject;
 
-            enemiesSave = JsonUtility.FromJson<EnemiesSave>(FileUtils.readJSON("PlayerJson/AISave.json"));
+            enemiesSave = JsonUtility.FromJson<EnemiesSave>(PlayerPrefs.GetString("AISave"));
             enemies = enemiesSave.enemies;
             enemiesSave.enemies = enemies;
         }
 
-        LoadFile("PlayerJson/Objects.txt", objectDictionary);
+        objectDictionary = FileUtils.LoadFile("PlayerJson/Objects");
     }
 
     public static PlayerManager GetInstance(Boolean newGame = true)
@@ -134,62 +134,66 @@ public class PlayerManager
 
     public bool Save()
     {
-        try
-        {
-            StreamWriter writer = new StreamWriter("PlayerJson/Save.json", false);
-            writer.Write(JsonUtility.ToJson(player));
-            writer.Close();
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.Message);
-            return false;
-        }
+        PlayerPrefs.SetString("PlayerSave", JsonUtility.ToJson(player));
+        PlayerPrefs.Save();
+        //try
+        //{
+        //    StreamWriter writer = new StreamWriter("Assets/Resources/PlayerJson/Save.json", false);
+        //    writer.Write(JsonUtility.ToJson(player));
+        //    writer.Close();
+        //}
+        //catch (Exception e)
+        //{
+        //    Debug.Log(e.Message);
+        //    return false;
+        //}
         return true;
     }
 
     public bool SaveAI()
     {
-        try
-        {
-            StreamWriter writer = new StreamWriter("PlayerJson/AISave.json", false);
-            writer.Write(JsonUtility.ToJson(enemiesSave));
-            writer.Close();
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.Message);
-            return false;
-        }
+        PlayerPrefs.SetString("AISave", JsonUtility.ToJson(enemiesSave));
+        PlayerPrefs.Save();
+        //try
+        //{
+        //    StreamWriter writer = new StreamWriter("Assets/Resources/PlayerJson/AISave.json", false);
+        //    writer.Write(JsonUtility.ToJson(enemiesSave));
+        //    writer.Close();
+        //}
+        //catch (Exception e)
+        //{
+        //    Debug.Log(e.Message);
+        //    return false;
+        //}
         return true;
     }
 
-    private bool LoadFile(string fileName, List<string> json)
-    {
-        try
-        {
-            string line;
-            StreamReader theReader = new StreamReader(fileName, Encoding.Default);
-            using (theReader)
-            {
-                do
-                {
-                    line = theReader.ReadLine();
-                    if (line != null)
-                    {
-                        json.Add(line);
-                    }
-                } while (line != null);
-                theReader.Close();
-                return true;
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.Message);
-            return false;
-        }
-    }
+    //private bool LoadFile(string fileName, List<string> json)
+    //{
+    //    try
+    //    {
+    //        string line;
+    //        StreamReader theReader = new StreamReader(fileName, Encoding.Default);
+    //        using (theReader)
+    //        {
+    //            do
+    //            {
+    //                line = theReader.ReadLine();
+    //                if (line != null)
+    //                {
+    //                    json.Add(line);
+    //                }
+    //            } while (line != null);
+    //            theReader.Close();
+    //            return true;
+    //        }
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        Debug.Log(e.Message);
+    //        return false;
+    //    }
+    //}
 }
 
 [Serializable]
@@ -217,7 +221,7 @@ public class Player
         id = Guid.NewGuid().ToString();
 
         //Gen name
-        LoadFile("PlayerJson/Names.txt");
+        json = FileUtils.LoadFile("PlayerJson/Names");
         int rng = UnityEngine.Random.Range(0, json.Count);
         Name name = JsonUtility.FromJson<Name>(json[rng]);
         this.name = name.name;
@@ -227,7 +231,7 @@ public class Player
 
         //Gen ship
         //Debug.Log(json);
-        this.ship = JsonUtility.FromJson<PlayerShip>(FileUtils.readJSON("PlayerJson/ship5.json"));
+        this.ship = JsonUtility.FromJson<PlayerShip>(FileUtils.readJSON("PlayerJson/ship5"));
 
         //Set starter island
         this.currentIsland = UnityEngine.Random.Range(0, (GameManager.Instance == null ? 0 : GameManager.Instance.islandsAmount));
@@ -243,36 +247,6 @@ public class Player
         //Gen inventory
         this.inventory.food.Add(new InventoryObject("Water", "Food", 5, 10, 10));
         this.inventory.weapons.Add(new InventoryObject("Bread", "Food", 5, 10, 10));
-    }
-
-    private bool LoadFile(string fileName)
-    {
-        json = new List<string>();
-        try
-        {
-            string line;
-            StreamReader theReader = new StreamReader(fileName, Encoding.Default);
-            using (theReader)
-            {
-                do
-                {
-                    line = theReader.ReadLine();
-
-                    if (line != null)
-                    {
-                        json.Add(line);
-                    }
-                }
-                while (line != null);
-                theReader.Close();
-                return true;
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.Log(e.Message);
-            return false;
-        }
     }
 }
 
