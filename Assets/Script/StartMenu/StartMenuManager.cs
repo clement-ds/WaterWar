@@ -25,12 +25,25 @@ public class StartMenuManager : MonoBehaviour {
 
     public void ContinueGame()
     {
-            GameManager.Instance.continueGame();
+	fader.FadeIn(.01f);
+
+        Invoke("ContinueGameDelayed", 2);
     }
 
     public void NewGame()
     {
-            GameManager.Instance.newGame();
+	fader.FadeIn(.01f);
+
+	Invoke("NewGameDelayed", 2);
     }
+
+    private void ContinueGameDelayed() {
+	GameManager.Instance.continueGame();    
+    }
+
+    private void NewGameDelayed() {
+	GameManager.Instance.newGame();    
+    }
+
 
 }

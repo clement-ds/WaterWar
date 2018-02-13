@@ -7,25 +7,25 @@ public class PanelFader : MonoBehaviour {
 	[SerializeField] private CanvasGroup canvas;
 	[SerializeField] private float time = 2;
 
-	public void FadeOut() {
+	public void FadeOut(float addedSpeed = 0) {
 		if (!canvas.gameObject.activeSelf) {
 			canvas.gameObject.SetActive(true);
 		}
 		canvas.alpha = 1;
-		StartCoroutine(FadeCoroutine(false));
+		StartCoroutine(FadeCoroutine(false, addedSpeed));
 	}
 
-	public void FadeIn() {
+	public void FadeIn(float addedSpeed = 0) {
 		if (!canvas.gameObject.activeSelf) {
 			canvas.gameObject.SetActive(true);
 		}
 		canvas.alpha = 0;
-		StartCoroutine(FadeCoroutine(true));
+		StartCoroutine(FadeCoroutine(true, addedSpeed));
 	}
 
-	IEnumerator FadeCoroutine(bool fadeIn) {
+	IEnumerator FadeCoroutine(bool fadeIn, float addedSpeed) {
 		while (fadeIn ? canvas.alpha < 1 : canvas.alpha > 0) {
-			float amount = Time.deltaTime / time;
+			float amount = (Time.deltaTime / time) + addedSpeed;
 			canvas.alpha += fadeIn ? amount : -amount;
 			yield return null;
 		}
