@@ -6,6 +6,8 @@ using UnityEngine;
 public class StartMenuManager : MonoBehaviour {
 	public List<GameObject> canvases;
 	PanelFader fader;
+	public GameObject LoadingCanvas;
+
 	// Use this for initialization
 	void Start () {
 		fader = GetComponent<PanelFader>();
@@ -27,6 +29,9 @@ public class StartMenuManager : MonoBehaviour {
     {
 	fader.FadeIn(.01f);
 
+	if (LoadingCanvas) {
+		LoadingCanvas.SetActive(true);
+	}
         Invoke("ContinueGameDelayed", 2);
     }
 
@@ -34,6 +39,9 @@ public class StartMenuManager : MonoBehaviour {
     {
 	fader.FadeIn(.01f);
 
+	if (LoadingCanvas) {
+		LoadingCanvas.SetActive(true);
+	}
 	Invoke("NewGameDelayed", 2);
     }
 
